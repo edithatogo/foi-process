@@ -1,0 +1,52 @@
+[submodule "cli-legislation-nz"]
+	path = cli-legislation-nz
+	url = https://github.com/edithatogo/nz-legislation.git
+	branch = main
+[submodule "corpus-cases-medilegal-nz"]
+	path = corpus-cases-medilegal-nz
+	url = https://github.com/edithatogo/corpus-cases-medilegal-nz.git
+	branch = master
+[submodule "corpus-law-nz"]
+	path = corpus-law-nz
+	url = https://github.com/edithatogo/corpus-legislation-nz.git
+	branch = codex/historical-batch-0005-seed
+[submodule "corpus-nz-hansard"]
+	path = corpus-nz-hansard
+	url = https://github.com/edithatogo/corpus-nz-hansard.git
+	branch = main
+[submodule "hathi-nz"]
+	path = hathi-nz
+	url = https://github.com/edithatogo/hathi-nz.git
+	branch = master
+[submodule "nlp-policy-nz"]
+	path = nlp-policy-nz
+	url = https://github.com/edithatogo/nlp-policy-nz.git
+	branch = master
+[submodule "sm-govt-nz"]
+	path = sm-govt-nz
+	url = https://github.com/edithatogo/sm-govt-nz.git
+	branch = master
+[submodule "open_social_data"]
+	path = open_social_data
+	url = https://github.com/edithatogo/open_social_data.git
+	branch = main
+[submodule "openfisca-aotearoa"]
+	path = openfisca-aotearoa
+	url = https://github.com/edithatogo/openfisca-aotearoa.git
+	branch = main
+[submodule "sourceright"]
+	path = sourceright
+	url = https://github.com/edithatogo/sourceright.git
+	branch = main
+[submodule "dnz"]
+	path = dnz
+	url = https://github.com/edithatogo/dnz.git
+	branch = main
+[submodule "fyi-cli"]
+	path = fyi-cli
+	url = https://github.com/edithatogo/fyi-cli
+
+[submodule "fyi-archive"]
+	path = fyi-archive
+	url = https://github.com/edithatogo/fyi-archive.git
+	branch = main

@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+quality-report.json
+*.log
+.env
+.env.*
+!.env.example
+.env.local
+.git.broken-backup
+tests/_runtime_tmp/
+
+# Coverage
+coverage/
+.coverage
+*.lcov
