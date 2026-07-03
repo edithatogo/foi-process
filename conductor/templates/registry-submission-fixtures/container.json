@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": {
+    "name": "example-container",
+    "owning_repo": "cli-legislation-nz",
+    "artifact_type": "container",
+    "version": "0.0.0",
+    "license": "TBD",
+    "public_contracts": [
+      "container entrypoint",
+      "published image tags"
+    ],
+    "release_notes_path": "CHANGELOG.md",
+    "support_policy_path": "SECURITY.md"
+  },
+  "registries": [
+    {
+      "registry_id": "ghcr",
+      "registry_kind": "container",
+      "submission_status": "requirements_inventory",
+      "requirements": [
+        {
+          "id": "image-build",
+          "description": "Container image builds reproducibly with pinned base image and labels.",
+          "status": "pending"
+        },
+        {
+          "id": "image-scan",
+          "description": "Container vulnerability scan is reviewed.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "registry_id": "docker_hub",
+      "registry_kind": "container",
+      "submission_status": "not_applicable",
+      "requirements": [
+        {
+          "id": "docker-hub-decision",
+          "description": "Docker Hub publication decision recorded.",
+          "status": "not_applicable"
+        }
+      ]
+    }
+  ],
+  "quality_gates": [
+    {
+      "name": "Container build",
+      "command_or_workflow": "docker build",
+      "status": "pending"
+    }
+  ],
+  "security_gates": [
+    {
+      "name": "Vulnerability scan",
+      "status": "pending"
+    },
+    {
+      "name": "No credentials baked into image",
+      "status": "pending"
+    }
+  ],
+  "submission_workflow": {
+    "phases": [
+      {
+        "name": "Image readiness",
+        "status": "pending",
+        "tasks": [
+          "Confirm tags, labels, SBOM, provenance, and scan evidence."
+        ]
+      }
+    ],
+    "commit_policy": "Commit manifest and image metadata in the owning repo only.",
+    "review_policy": "Review Dockerfile, base image, permissions, and registry visibility before publication.",
+    "actions_policy": "Check owning repo image build and scan workflows before publication."
+  }
+}

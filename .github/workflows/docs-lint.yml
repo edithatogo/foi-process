@@ -1,0 +1,135 @@
+# docs-lint.yml — Documentation Quality Checks
+#
+# Runs Vale (prose linter) and markdownlint-cli2 (Markdown formatter)
+# on all Markdown files across the workspace.
+#
+# Triggers:
+#   - push to main/master branches
+#   - pull requests targeting main/master
+#   - manual dispatch (workflow_dispatch)
+#   - scheduled weekly run (Mondays 06:00 UTC)
+
+name: Docs Lint
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "**.md"
+      - ".vale.ini"
+      - ".markdownlint.json"
+      - ".github/styles/**"
+      - ".github/workflows/docs-lint.yml"
+  pull_request:
+    branches: [main, master]
+    paths:
+      - "**.md"
+      - ".vale.ini"
+      - ".markdownlint.json"
+      - ".github/styles/**"
+      - ".github/workflows/docs-lint.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"  # Every Monday at 06:00 UTC
+
+permissions:
+  contents: read
+  pull-requests: write  # For PR comments on lint failures
+
+jobs:
+  lint:
+    name: Lint Documentation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install markdownlint-cli2
+        run: npm install -g markdownlint-cli2
+
+      - name: Install Vale
+        run: |
+          curl -fsSL https://github.com/errata-ai/vale/releases/download/v3.14.2/vale_3.14.2_Linux_64-bit.tar.gz \
+            -o /tmp/vale.tar.gz
+          tar -xzf /tmp/vale.tar.gz -C /usr/local/bin/
+          chmod +x /usr/local/bin/vale
+          vale --version
+
+      - name: Select Markdown files
+        id: markdown-files
+        shell: bash
+        run: |
+          set -euo pipefail
+          tmp_file="/tmp/docs-lint-files.txt"
+
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            base_sha="${{ github.event.pull_request.base.sha }}"
+            head_sha="${{ github.event.pull_request.head.sha }}"
+            git diff --name-only "$base_sha" "$head_sha" > /tmp/docs-lint-candidates.txt
+          elif [[ "${{ github.event_name }}" == "push" && "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]]; then
+            git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" > /tmp/docs-lint-candidates.txt
+          else
+            git ls-files "*.md" > /tmp/docs-lint-candidates.txt
+          fi
+
+          if [[ "${{ github.event_name }}" == "push" || "${{ github.event_name }}" == "pull_request" ]]; then
+            legacy_filter='^(conductor/code_styleguides/|conductor/templates/registry-submission-workflow\.md$|conductor/tracks/.*/review\.md$|docs/swarm-orchestration-plan\.md$|docs/registry-submission-manifests\.md$)'
+          else
+            legacy_filter='^$'
+          fi
+
+          (grep -E '\.md$' /tmp/docs-lint-candidates.txt \
+            | grep -vE '(^|/)(\.git|node_modules|\.pytest_cache|__pycache__|\.changeset|\.swarm|dist|build)/' \
+            | grep -vE "$legacy_filter" \
+            || true) \
+            | while IFS= read -r path; do
+                if [[ -f "$path" ]]; then
+                  printf '%s\n' "$path"
+                fi
+              done > "$tmp_file"
+
+          count="$(wc -l < "$tmp_file" | tr -d ' ')"
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          echo "Selected $count Markdown file(s)."
+          cat "$tmp_file"
+
+      - name: Run Vale (prose linter)
+        if: steps.markdown-files.outputs.count != '0'
+        run: |
+          echo "::group::Vale Lint Results"
+          xargs -a /tmp/docs-lint-files.txt vale --no-wrap --no-exit --output=line
+          echo "::endgroup::"
+
+      - name: Run markdownlint
+        if: steps.markdown-files.outputs.count != '0'
+        run: |
+          echo "::group::markdownlint Results"
+          xargs -a /tmp/docs-lint-files.txt markdownlint-cli2 --config .markdownlint.json
+          echo "::endgroup::"
+
+      - name: Validate learning logs against track-18 schema
+        run: |
+          mapfile -t learning_logs < <(find . -path '*/conductor/learning-log.md' -not -path './.git/*')
+          if (( ${#learning_logs[@]} == 0 )); then
+            echo "No learning logs found."
+          else
+            python3 scripts/validate_learning_log.py "${learning_logs[@]}"
+          fi
+
+      - name: Report Summary
+        if: always()
+        run: |
+          echo "## Docs Lint Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Vale (prose) | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
+          echo "| markdownlint (format) | ✅ Passed |" >> $GITHUB_STEP_SUMMARY

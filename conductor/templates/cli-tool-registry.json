@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "2026-06-15",
+  "policy": "cli-first",
+  "selection_order": [
+    "package_cli",
+    "package_script",
+    "maintained_repo_script",
+    "importable_library_api",
+    "new_cli_command",
+    "temporary_custom_code_with_documented_exception"
+  ],
+  "repositories": [
+    {
+      "id": "legal-nz",
+      "path": ".",
+      "role": "root_orchestration",
+      "command_surfaces": [
+        "python workspace-doctor.py",
+        "python scripts/check_naming.py",
+        "python scripts/check_lint.py",
+        "python scripts/swarm_orchestrator.py",
+        "python scripts/swarm_agent.py",
+        "node scripts/validate-documents.js",
+        "node scripts/quality-report.js",
+        "scripts/*.ps1"
+      ],
+      "custom_code_policy": "Prefer root orchestration CLIs and maintained scripts; do not duplicate subrepo implementation logic in root."
+    },
+    {
+      "id": "cli-legislation-nz",
+      "path": "cli-legislation-nz",
+      "role": "cli_and_mcp",
+      "command_surfaces": [
+        "nzlegislation",
+        "anzlegislation",
+        "nzlegislation-mcp",
+        "anzlegislation-mcp",
+        "corepack pnpm <script>"
+      ],
+      "commands": [
+        "search",
+        "get",
+        "export",
+        "cite",
+        "capabilities",
+        "config",
+        "cache",
+        "batch",
+        "stream",
+        "generate"
+      ],
+      "custom_code_policy": "Use the CLI or add a CLI command; do not write one-off legislation API clients."
+    },
+    {
+      "id": "corpus-law-nz",
+      "path": "corpus-law-nz",
+      "role": "legislation_corpus_pipeline",
+      "command_surfaces": [
+        "nzlc"
+      ],
+      "commands": [
+        "doctor",
+        "sync",
+        "discover-work-ids",
+        "split-work-id-batches",
+        "reconcile-work-ids",
+        "validate",
+        "manifest",
+        "metadata-packages",
+        "validate-metadata-packages",
+        "hf-upload",
+        "archive",
+        "zenodo-upload",
+        "smoke-fixture",
+        "coverage-report",
+        "rss-feed"
+      ],
+      "custom_code_policy": "Use nzlc for corpus operations; extend nzlc before adding new standalone corpus scripts."
+    },
+    {
+      "id": "corpus-nz-hansard",
+      "path": "corpus-nz-hansard",
+      "role": "hansard_corpus_pipeline",
+      "command_surfaces": [
+        "python scripts/<maintained-script>.py"
+      ],
+      "custom_code_policy": "Use existing maintained scripts; repeated workflows should be consolidated into a package CLI track."
+    },
+    {
+      "id": "corpus-cases-medilegal-nz",
+      "path": "corpus-cases-medilegal-nz",
+      "role": "medilegal_cases_pipeline",
+      "command_surfaces": [
+        "importable package modules",
+        "config-driven pipeline surfaces"
+      ],
+      "custom_code_policy": "Use package APIs and config surfaces; create a first-class CLI before repeated operational runs."
+    },
+    {
+      "id": "hathi-nz",
+      "path": "hathi-nz",
+      "role": "hathitrust_historical_materials",
+      "command_surfaces": [
+        "python scripts/fetch_hathitrust.py"
+      ],
+      "custom_code_policy": "Use maintained scripts; create a package CLI before repeated archive/fetch workflows expand."
+    },
+    {
+      "id": "nlp-policy-nz",
+      "path": "nlp-policy-nz",
+      "role": "nlp_benchmarks_rag_policy",
+      "command_surfaces": [
+        "nlp-policy-nz"
+      ],
+      "custom_code_policy": "Use nlp-policy-nz CLI for NLP, graph, benchmark, and integration workflows; add commands rather than ad hoc notebooks/scripts."
+    },
+    {
+      "id": "sm-govt-nz",
+      "path": "sm-govt-nz",
+      "role": "government_social_media_corpus",
+      "command_surfaces": [
+        "python scripts/<maintained-script>.py",
+        "importable src modules"
+      ],
+      "custom_code_policy": "Use maintained scripts/modules; promote repeated archive/syndication workflows into a first-class CLI."
+    },
+    {
+      "id": "fyi-cli",
+      "path": "fyi-cli",
+      "role": "auxiliary_cli",
+      "command_surfaces": [
+        "fyi",
+        "fyi-cli",
+        "fyi-system",
+        "repo-local package scripts"
+      ],
+      "custom_code_policy": "Use the Python package entrypoints for stable workflows; use Rust binaries only for Rust migration tracks."
+    },
+    {
+      "id": "dnz",
+      "path": "dnz",
+      "role": "digitalnz_integration_hub",
+      "command_surfaces": [
+        "dnz",
+        "dnz-mcp",
+        "Python FFI package surface"
+      ],
+      "custom_code_policy": "Use dnz CLI and MCP surfaces before writing custom DigitalNZ integration scripts."
+    }
+  ]
+}

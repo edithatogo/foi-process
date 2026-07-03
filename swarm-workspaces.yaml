@@ -1,0 +1,132 @@
+# Root Antigravity swarm workspace inventory.
+#
+# This file is the control-plane list for running Conductor work from the
+# legal-nz root. Subprojects may also have their own swarm files, but the root
+# swarm can dispatch against every workspace listed here.
+
+version: 1
+root: .
+default_preset: all_conductor
+
+workspaces:
+  - id: legal-nz
+    path: .
+    conductor: conductor/tracks.md
+    swarm_config: swarm-config.yaml
+    subagents: subagents.yaml
+    task_plan: task_plan.md
+    notes: Root workspace. Tracks 1-9 complete; Track 10 local work exhausted, remaining items gated.
+  - id: cli-legislation-nz
+    path: cli-legislation-nz
+    conductor: cli-legislation-nz/conductor/tracks.md
+    swarm_config: inherited:root
+    subagents: inherited:root
+    task_plan: generated:root
+    notes: No local swarm files found; root swarm controls this workspace.
+  - id: corpus-cases-medilegal-nz
+    path: corpus-cases-medilegal-nz
+    conductor: corpus-cases-medilegal-nz/conductor/tracks.md
+    swarm_config: corpus-cases-medilegal-nz/swarm-config.yaml
+    subagents: corpus-cases-medilegal-nz/subagents.yaml
+    task_plan: corpus-cases-medilegal-nz/task_plan.md
+    notes: Local swarm files exist; root swarm can also dispatch from here.
+  - id: corpus-law-nz
+    path: corpus-law-nz
+    conductor: corpus-law-nz/conductor/tracks.md
+    swarm_config: corpus-law-nz/swarm-config.yaml
+    subagents: corpus-law-nz/subagents.yaml
+    task_plan: corpus-law-nz/task_plan.md
+    notes: Local swarm files exist; root swarm can also dispatch from here.
+  - id: corpus-nz-hansard
+    path: corpus-nz-hansard
+    conductor: corpus-nz-hansard/conductor/tracks.md
+    swarm_config: corpus-nz-hansard/swarm-config.yaml
+    subagents: corpus-nz-hansard/subagents.yaml
+    task_plan: corpus-nz-hansard/task_plan.md
+    notes: Local swarm files exist; root swarm can also dispatch from here.
+  - id: hathi-nz
+    path: hathi-nz
+    conductor: hathi-nz/conductor/tracks.md
+    swarm_config: hathi-nz/swarm-config.yaml
+    subagents: hathi-nz/subagents.yaml
+    task_plan: hathi-nz/task_plan.md
+    notes: Local swarm files exist; root swarm can also dispatch from here.
+  - id: nlp-policy-nz
+    path: nlp-policy-nz
+    conductor: nlp-policy-nz/conductor/tracks.md
+    swarm_config: inherited:root
+    subagents: nlp-policy-nz/subagents.yaml
+    task_plan: nlp-policy-nz/task_plan.md
+    notes: No local swarm-config.yaml found; root swarm supplies the preset.
+  - id: sm-govt-nz
+    path: sm-govt-nz
+    conductor: sm-govt-nz/conductor/tracks.md
+    swarm_config: inherited:root
+    subagents: sm-govt-nz/subagents.yaml
+    task_plan: sm-govt-nz/task_plan.md
+    notes: No local swarm-config.yaml found; root swarm supplies the preset.
+  - id: fyi-cli
+    path: fyi-cli
+    conductor: fyi-cli/.conductor/tracks.md
+    swarm_config: inherited:root
+    subagents: inherited:root
+    task_plan: generated:root
+    notes: Auxiliary CLI repo mapped on 2026-06-15; exact role, submodule promotion, and CLI entrypoint audit pending.
+  - id: dnz
+    path: dnz
+    conductor: dnz/conductor/tracks.md
+    swarm_config: inherited:root
+    subagents: dnz/subagents.yaml
+    task_plan: generated:root
+    notes: Promoted on 2026-06-15 as DigitalNZ Rust integration hub at https://github.com/edithatogo/dnz; root swarm can dispatch from here.
+  - id: friction
+    path: Friction
+    conductor: unknown
+    swarm_config: disabled:reference-only
+    subagents: disabled:reference-only
+    task_plan: generated:root
+    notes: Classified on 2026-06-15 as comparative UK open-law service-design reference material; not a Legal NZ implementation submodule.
+  - id: open-social-data
+    path: open_social_data
+    conductor: unknown
+    swarm_config: inherited:root
+    subagents: inherited:root
+    task_plan: generated:root
+    notes: Approved submodule on 2026-06-15 at https://github.com/edithatogo/open_social_data; conductor surface not yet detected.
+  - id: openfisca-aotearoa
+    path: openfisca-aotearoa
+    conductor: unknown
+    swarm_config: inherited:root
+    subagents: inherited:root
+    task_plan: generated:root
+    notes: Approved submodule on 2026-06-15 at https://github.com/edithatogo/openfisca-aotearoa; conductor surface not yet detected.
+  - id: sourceright
+    path: sourceright
+    conductor: sourceright/conductor/tracks.md
+    swarm_config: inherited:root
+    subagents: inherited:root
+    task_plan: generated:root
+    notes: Approved submodule on 2026-06-15 at https://github.com/edithatogo/sourceright; conductor surface exists.
+
+gates:
+  local:
+    - file edits
+    - local tests
+    - local parsing
+    - documentation updates
+    - non-authenticated inspection
+  chrome:
+    - browser profile access
+    - OAuth
+    - authenticated web consoles
+    - screenshots
+  external_write:
+    - git commit
+    - git push
+    - uploads
+    - Hugging Face mutation
+    - Zenodo mutation
+    - OSF mutation
+    - social platform posting
+    - account setting changes
+    - .env creation or synchronization

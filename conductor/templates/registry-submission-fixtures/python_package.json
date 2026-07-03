@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": {
+    "name": "example-python-package",
+    "owning_repo": "nlp-policy-nz",
+    "artifact_type": "python_package",
+    "version": "0.0.0",
+    "license": "TBD",
+    "public_contracts": [
+      "import package",
+      "console script",
+      "public Python API"
+    ],
+    "release_notes_path": "CHANGELOG.md",
+    "changelog_path": "CHANGELOG.md",
+    "support_policy_path": "SECURITY.md"
+  },
+  "registries": [
+    {
+      "registry_id": "pypi",
+      "registry_kind": "package",
+      "submission_status": "requirements_inventory",
+      "requirements": [
+        {
+          "id": "metadata",
+          "description": "Package metadata, classifiers, README, license, and project URLs are complete.",
+          "status": "pending"
+        },
+        {
+          "id": "build-artifacts",
+          "description": "Wheel and source distribution build successfully and are checked.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "registry_id": "conda_forge",
+      "registry_kind": "package",
+      "submission_status": "requirements_inventory",
+      "requirements": [
+        {
+          "id": "recipe",
+          "description": "Feedstock recipe requirements, license file, tests, and maintainers are mapped.",
+          "status": "pending"
+        }
+      ]
+    }
+  ],
+  "quality_gates": [
+    {
+      "name": "Unit tests",
+      "command_or_workflow": "owning repo test command",
+      "status": "pending"
+    },
+    {
+      "name": "Build check",
+      "command_or_workflow": "python -m build",
+      "status": "pending"
+    },
+    {
+      "name": "Twine check",
+      "command_or_workflow": "python -m twine check dist/*",
+      "status": "pending"
+    }
+  ],
+  "security_gates": [
+    {
+      "name": "Dependency and license review",
+      "status": "pending"
+    },
+    {
+      "name": "No secrets in source distribution",
+      "status": "pending"
+    }
+  ],
+  "submission_workflow": {
+    "phases": [
+      {
+        "name": "Package readiness",
+        "status": "pending",
+        "tasks": [
+          "Confirm metadata, version, build artifacts, tests, and dry-run checks."
+        ]
+      }
+    ],
+    "commit_policy": "Commit manifest and evidence in the owning Python package repo only.",
+    "review_policy": "Review package metadata, dependencies, license, README, and release notes before upload.",
+    "actions_policy": "Check owning repo test, build, and package workflows before upload."
+  }
+}

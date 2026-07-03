@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "2026-06-15",
+  "policy": "astro-plugin-baseline",
+  "required": {
+    "framework": "astro",
+    "docs_framework": "@astrojs/starlight",
+    "integrations": [
+      "@astrojs/mdx",
+      "@astrojs/sitemap"
+    ],
+    "style": "shared-legal-nz-starlight-theme",
+    "scripts": [
+      "docs:dev",
+      "docs:build",
+      "docs:check"
+    ]
+  },
+  "conditional": {
+    "typedoc": "TypeScript API reference generation only; publish through Astro/Starlight.",
+    "openapi_generators": "API reference generation only; publish through Astro/Starlight.",
+    "rss": "Only for changelog/news feeds.",
+    "tailwind": "Only for component-heavy docs after Starlight CSS is insufficient.",
+    "ui_framework_integrations": "Only for justified interactive islands.",
+    "partytown": "Only after privacy review for third-party scripts.",
+    "extra_search": "Only when Starlight default search is insufficient."
+  },
+  "disallowed_as_docs_site_platforms": [
+    "docusaurus",
+    "mkdocs",
+    "sphinx",
+    "vitepress",
+    "nextra",
+    "vuepress",
+    "docsify",
+    "mintlify"
+  ],
+  "repositories": {
+    "legal-nz": {
+      "baseline": "required",
+      "extras": [],
+      "role": "aggregate docs portal and shared style source"
+    },
+    "cli-legislation-nz": {
+      "baseline": "required",
+      "extras": [
+        "typedoc_as_input"
+      ],
+      "role": "CLI, MCP, provider, command reference, release docs"
+    },
+    "corpus-law-nz": {
+      "baseline": "required",
+      "extras": [
+        "schema_reference_as_input",
+        "dataset_card_embedding"
+      ],
+      "role": "corpus pipeline, schema, release, nzlc docs"
+    },
+    "corpus-nz-hansard": {
+      "baseline": "required",
+      "extras": [
+        "schema_reference_as_input",
+        "large_table_rendering"
+      ],
+      "role": "Hansard corpus, scripts, schemas, provenance"
+    },
+    "corpus-cases-medilegal-nz": {
+      "baseline": "required_private_ok",
+      "extras": [
+        "privacy_rights_callouts"
+      ],
+      "role": "private or gated medilegal corpus docs"
+    },
+    "hathi-nz": {
+      "baseline": "required",
+      "extras": [
+        "rights_source_callouts"
+      ],
+      "role": "historical source and archive workflow docs"
+    },
+    "nlp-policy-nz": {
+      "baseline": "required",
+      "extras": [
+        "api_reference_as_input",
+        "interactive_examples_conditional"
+      ],
+      "role": "NLP, benchmarks, RAG, API, DigitalNZ probes"
+    },
+    "sm-govt-nz": {
+      "baseline": "required",
+      "extras": [
+        "privacy_platform_terms_callouts",
+        "rss_conditional"
+      ],
+      "role": "social media source, privacy, platform terms docs"
+    },
+    "fyi-cli": {
+      "baseline": "required_if_promoted",
+      "extras": [
+        "command_reference_conditional"
+      ],
+      "role": "auxiliary CLI docs pending role decision"
+    },
+    "dnz": {
+      "baseline": "required",
+      "extras": [
+        "digitalnz_integration_docs"
+      ],
+      "role": "DigitalNZ integration documentation surface"
+    }
+  }
+}

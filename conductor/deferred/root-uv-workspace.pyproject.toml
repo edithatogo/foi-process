@@ -1,0 +1,9 @@
+[tool.uv.workspace]
+members = [
+    "corpus-law-nz",
+    "corpus-nz-hansard",
+    "corpus-cases-medilegal-nz",
+    "nlp-policy-nz",
+    "hathi-nz",
+    "openfisca-aotearoa"
+]

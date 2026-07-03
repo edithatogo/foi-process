@@ -1,0 +1,10 @@
+# Rejected terms — workspace-wide
+# These terms should be flagged wherever they appear.
+dummy
+placeholder
+TBD
+TODO
+FIXME
+XXX
+HACK
+BUG

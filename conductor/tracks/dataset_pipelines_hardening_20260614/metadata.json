@@ -1,0 +1,8 @@
+{
+  "track_id": "dataset_pipelines_hardening_20260614",
+  "type": "feature",
+  "status": "archived",
+  "created_at": "2026-06-14T02:14:00Z",
+  "updated_at": "2026-06-14T02:14:00Z",
+  "description": "Harden ingestion engines, implement idempotent checks, and build separate GitHub Actions workflows to build, version-tag, and release each dataset independently to Hugging Face and Zenodo."
+}

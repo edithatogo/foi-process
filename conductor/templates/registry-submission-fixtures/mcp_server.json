@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": {
+    "name": "example-mcp-server",
+    "owning_repo": "cli-legislation-nz",
+    "artifact_type": "mcp_server",
+    "version": "0.0.0",
+    "license": "TBD",
+    "public_contracts": [
+      "MCP tool schema",
+      "MCP resource schema",
+      "permission model"
+    ],
+    "release_notes_path": "CHANGELOG.md",
+    "support_policy_path": "SECURITY.md"
+  },
+  "registries": [
+    {
+      "registry_id": "smithery",
+      "registry_kind": "mcp_distribution",
+      "submission_status": "requirements_inventory",
+      "requirements": [
+        {
+          "id": "tool-schema",
+          "description": "Tool schemas, descriptions, examples, and permissions are documented.",
+          "status": "pending"
+        },
+        {
+          "id": "install-config",
+          "description": "Install, runtime, and environment variable configuration is documented without secret values.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "registry_id": "mcp_registry",
+      "registry_kind": "mcp_distribution",
+      "submission_status": "requirements_inventory",
+      "requirements": [
+        {
+          "id": "registry-metadata",
+          "description": "Registry metadata, package URL, support URL, and security notes are ready.",
+          "status": "pending"
+        }
+      ]
+    }
+  ],
+  "quality_gates": [
+    {
+      "name": "MCP smoke test",
+      "command_or_workflow": "owning repo MCP smoke test command",
+      "status": "pending"
+    },
+    {
+      "name": "Schema validation",
+      "command_or_workflow": "owning repo MCP schema validation command",
+      "status": "pending"
+    }
+  ],
+  "security_gates": [
+    {
+      "name": "Least-privilege permissions",
+      "status": "pending"
+    },
+    {
+      "name": "Prompt-injection and untrusted-content notes",
+      "status": "pending"
+    },
+    {
+      "name": "No secret values in config examples",
+      "status": "pending"
+    }
+  ],
+  "submission_workflow": {
+    "phases": [
+      {
+        "name": "MCP readiness",
+        "status": "pending",
+        "tasks": [
+          "Document tools, resources, permissions, install config, and security notes."
+        ]
+      }
+    ],
+    "commit_policy": "Commit manifest and evidence in the owning MCP repo only.",
+    "review_policy": "Review tool behavior, permissions, prompt-injection notes, and install path before submission.",
+    "actions_policy": "Check owning repo tests, package build, and MCP smoke workflow before submission."
+  }
+}

@@ -1,0 +1,77 @@
+# Antigravity Swarm Configuration
+version: 1
+
+# Spawn backend: auto | tmux | thread
+backend: thread
+
+# Default model for agents
+default_model: deepseek-v4-flash
+
+# Execution engine: gemini | qwen | cline
+engine: cline
+
+# Maximum parallel agents
+max_parallel: 8
+
+# Mailbox polling interval (milliseconds)
+poll_interval_ms: 1000
+
+# Permission mode: auto | ask | deny
+permission_mode: auto
+
+# Audit trail
+audit_enabled: true
+
+# TUI refresh rate (frames per second)
+tui_refresh_rate: 10
+
+# Context compaction threshold (lines before compacting)
+compaction_threshold: 50
+
+# Team presets (reusable team configurations)
+presets:
+  all_conductor:
+    description: "Root control-plane swarm for every Conductor workspace under legal-nz"
+    agents:
+      - {name: Architect_Oracle, mode: parallel}
+      - {name: General_Coder, mode: parallel}
+      - {name: Codex_GPT55_Engineer, mode: parallel}
+      - {name: Xiaomi_MiMo_Code, mode: parallel}
+      - {name: Chrome_Operator, mode: serial}
+      - {name: Quality_Validator, mode: validator}
+  track_swarm:
+    description: "Conductor track execution team using Cline deepseek-v4-flash, Codex gpt-5.5, and Chrome-gated operator lanes"
+    agents:
+      - {name: Architect_Oracle, mode: parallel}
+      - {name: General_Coder, mode: parallel}
+      - {name: Codex_GPT55_Engineer, mode: parallel}
+      - {name: Xiaomi_MiMo_Code, mode: parallel}
+      - {name: Chrome_Operator, mode: serial}
+      - {name: Quality_Validator, mode: validator}
+  track10_schema:
+    description: "Track 10 schema unification and multi-corpus feature extraction"
+    agents:
+      - {name: Architect_Oracle, mode: parallel}
+      - {name: General_Coder, mode: parallel}
+      - {name: Codex_GPT55_Engineer, mode: parallel}
+      - {name: Chrome_Operator, mode: serial}
+      - {name: Quality_Validator, mode: validator}
+  fullstack:
+    description: "Full-stack development team"
+    agents:
+      - {name: Oracle, mode: parallel}
+      - {name: Frontend, mode: parallel}
+      - {name: Junior, mode: parallel}
+      - {name: Quality_Validator, mode: validator}
+  analysis:
+    description: "Deep analysis and planning team"
+    agents:
+      - {name: Prometheus, mode: serial}
+      - {name: Momus, mode: serial}
+      - {name: Librarian, mode: parallel}
+      - {name: Quality_Validator, mode: validator}
+  quick:
+    description: "Fast single-agent execution"
+    agents:
+      - {name: Junior, mode: serial}
+      - {name: Quality_Validator, mode: validator}

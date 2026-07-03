@@ -1,0 +1,172 @@
+# Shared NZ Legal Vocabulary — accepted terms
+# These are workspace-wide accepted terms that would otherwise
+# trigger Vale alerts. Add project-specific terms in subproject
+# .vale.ini vocab sections.
+#
+# Legislation & Governance
+Act
+Acts
+Bill
+Bills
+Regulation
+Regulations
+Regulatory
+Statutory
+Legislation
+Legislative
+Parliament
+Parliamentary
+Hansard
+Debate
+Debates
+Select Committee
+Select Committees
+Submission
+Submissions
+Petition
+Petitions
+Gazette
+Gazetted
+Amendments
+Amendment
+
+# Courts & Legal
+Judgment
+Judgments
+Tribunal
+Tribunals
+Jurisdiction
+Jurisdictional
+Appeal
+Appeals
+Appellate
+Defendant
+Plaintiff
+Prosecution
+Defence
+Applicant
+Respondent
+Intervenor
+Amicus
+Curiae
+Certiorari
+Mandamus
+Injunction
+Injunctions
+
+# NZ-specific
+Aotearoa
+Tiriti
+Waitangi
+Te Reo
+Māori
+Māori
+iwi
+hapū
+hapū
+whānau
+whānau
+kāinga
+kāwanatanga
+rangatiratanga
+Pākehā
+Pākehā
+Tangata Whenua
+tangata whenua
+Kōhanga
+Kura
+Wānanga
+Rūnanga
+Rūnanga
+Aotea
+Te Waipounamu
+Ākonga
+Whare
+Mana
+Mana Motuhake
+Kaitiaki
+Kaitiakitanga
+Whakapapa
+Kaumātua
+Kaumātua
+Pōwhiri
+Pōwhiri
+Hui
+Karakia
+Waiata
+Tikanga
+
+# Technical domains
+Parquet
+JSONL
+JSON
+XML
+DuckDB
+PyArrow
+Polars
+Pydantic
+Anthropic
+Claude
+Zenodo
+HuggingFace
+Hugging Face
+Xet
+GitHub
+Git LFS
+Akoma Ntoso
+ParlaMint
+ParlaCLARIN
+CoNLL-U
+Popolo
+Open Civic Data
+SPARQL
+RDF
+OWL
+PROV-O
+DCAT
+DataCite
+RO-Crate
+Croissant
+OSF
+PreTeXt
+Zotero
+Crossref
+ORCID
+ISNI
+VIAF
+
+# Tools & Infrastructure
+CLI
+MCP
+SDK
+API
+pnpm
+Node.js
+TypeScript
+Ruff
+Mypy
+Pyright
+Vale
+pre-commit
+Renovate
+CodeQL
+zi zmor
+taplo
+
+# NZ-specific entities
+HDC
+HPDT
+DPR
+MPs
+MPs'
+MP
+MP's
+NZLS
+NZLC
+MBIE
+MSD
+IRD
+MOH
+MOE
+DOC
+LINZ

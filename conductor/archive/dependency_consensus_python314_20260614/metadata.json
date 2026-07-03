@@ -1,0 +1,8 @@
+{
+  "track_id": "dependency_consensus_python314_20260614",
+  "type": "feature",
+  "status": "phase2_3_complete",
+  "created_at": "2026-06-14T07:00:00Z",
+  "updated_at": "2026-06-23T00:00:00Z",
+  "description": "Create consensus dependency baseline for all subrepos, establish Python 3.14 as target runtime, and produce per-subrepo maturity checklists with blocker documentation. Phases 2-3 completed: ruff target-version py314 across all subrepos, sm-govt-nz promoted to >=3.14, CI workflows added, version consistency tests added."
+}

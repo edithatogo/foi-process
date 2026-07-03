@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://legal-nz.local/schemas/registry-submission.schema.json",
+  "title": "Registry Submission Plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "artifact",
+    "registries",
+    "quality_gates",
+    "security_gates",
+    "submission_workflow"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "owning_repo",
+        "artifact_type",
+        "version",
+        "license",
+        "public_contracts"
+      ],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "owning_repo": { "type": "string", "minLength": 1 },
+        "artifact_type": {
+          "type": "string",
+          "enum": [
+            "cli",
+            "mcp_server",
+            "mcp_app",
+            "python_package",
+            "node_package",
+            "container",
+            "homebrew_formula",
+            "dataset",
+            "model",
+            "documentation_site"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^v?\\d+\\.\\d+\\.\\d+([-.+][0-9A-Za-z.-]+)?$"
+        },
+        "license": { "type": "string", "minLength": 1 },
+        "public_contracts": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "release_notes_path": { "type": "string" },
+        "changelog_path": { "type": "string" },
+        "support_policy_path": { "type": "string" }
+      }
+    },
+    "registries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "registry_id",
+          "registry_kind",
+          "submission_status",
+          "requirements"
+        ],
+        "properties": {
+          "registry_id": {
+            "type": "string",
+            "enum": [
+              "npm",
+              "github_packages",
+              "github_releases",
+              "github_marketplace",
+              "ghcr",
+              "docker_hub",
+              "homebrew_core",
+              "homebrew_tap",
+              "smithery",
+              "mcp_registry",
+              "pypi",
+              "conda_forge",
+              "hugging_face",
+              "zenodo",
+              "osf",
+              "other"
+            ]
+          },
+          "registry_kind": {
+            "type": "string",
+            "enum": [
+              "package",
+              "container",
+              "cli_distribution",
+              "mcp_distribution",
+              "marketplace",
+              "dataset_archive",
+              "model_archive",
+              "doi_archive",
+              "source_archive"
+            ]
+          },
+          "submission_status": {
+            "type": "string",
+            "enum": [
+              "not_started",
+              "requirements_inventory",
+              "local_ready",
+              "ci_ready",
+              "submitted",
+              "accepted",
+              "rejected",
+              "blocked",
+              "not_applicable"
+            ]
+          },
+          "requirements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "description", "status"],
+              "properties": {
+                "id": { "type": "string", "minLength": 1 },
+                "description": { "type": "string", "minLength": 1 },
+                "status": {
+                  "type": "string",
+                  "enum": ["pending", "met", "blocked", "not_applicable"]
+                },
+                "evidence_path": { "type": "string" },
+                "evidence_url": { "type": "string" },
+                "blocker": { "type": "string" }
+              }
+            }
+          },
+          "submission_url": { "type": "string" },
+          "review_url": { "type": "string" },
+          "registry_metadata_path": { "type": "string" }
+        }
+      }
+    },
+    "quality_gates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "command_or_workflow", "status"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "command_or_workflow": { "type": "string", "minLength": 1 },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "passing", "failing", "blocked", "not_applicable"]
+          },
+          "evidence_url": { "type": "string" },
+          "evidence_path": { "type": "string" },
+          "blocker": { "type": "string" }
+        }
+      }
+    },
+    "security_gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "status"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "passing", "failing", "blocked", "not_applicable"]
+          },
+          "evidence_url": { "type": "string" },
+          "evidence_path": { "type": "string" },
+          "blocker": { "type": "string" }
+        }
+      }
+    },
+    "submission_workflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["phases", "commit_policy", "review_policy", "actions_policy"],
+      "properties": {
+        "phases": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "status", "tasks"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "status": {
+                "type": "string",
+                "enum": ["pending", "in_progress", "complete", "blocked"]
+              },
+              "tasks": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "evidence_path": { "type": "string" },
+              "blocker": { "type": "string" }
+            }
+          }
+        },
+        "commit_policy": { "type": "string" },
+        "review_policy": { "type": "string" },
+        "actions_policy": { "type": "string" }
+      }
+    },
+    "self_improvement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "learning_log_path": { "type": "string" },
+        "reflection_cadence": { "type": "string" },
+        "improvement_backlog_path": { "type": "string" },
+        "promotion_policy": { "type": "string" }
+      }
+    }
+  }
+}

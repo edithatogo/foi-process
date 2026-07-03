@@ -1,6 +1,44 @@
-# Recovery workspace: ignore everything except the metadata files we are
-# intentionally keeping in this parent repo.
-/*
-!/.gitignore
-!/.gitmodules
-!/.env.example
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+quality-report.json
+*.log
+.env
+.env.*
+!.env.example
+.env.local
+.git.broken-backup
+/con
+.swarm/
+.tmp/
+logs/
+Friction/
+UOGTO/
+1.9.0
+nlp-policy-nz-track34-review/
+winget.msixbundle
+tests/_runtime_tmp/
+
+# Coverage
+coverage/
+.coverage
+*.lcov

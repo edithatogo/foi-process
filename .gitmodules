@@ -50,3 +50,7 @@
 	path = fyi-archive
 	url = https://github.com/edithatogo/fyi-archive.git
 	branch = main
+[submodule "rulespec-nz"]
+	path = rulespec-nz
+	url = https://github.com/edithatogo/rulespec-nz.git
+	branch = main

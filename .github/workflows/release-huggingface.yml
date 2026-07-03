@@ -1,0 +1,185 @@
+﻿name: Release to Hugging Face
+
+on:
+  workflow_dispatch:
+    inputs:
+      hf_repo_id:
+        description: "Hugging Face dataset repo (namespace/name)"
+        required: true
+        default: "edithatogo/corpus-legislation-nz"
+      corpus_dir:
+        description: "Corpus data directory relative to repo root"
+        required: true
+        default: "corpus-law-nz"
+      confirm_publish:
+        description: "Set to true to upload to Hugging Face. Any other value validates only."
+        required: true
+        default: "false"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate dataset inputs
+    runs-on: ubuntu-latest
+    outputs:
+      manifest_sha256: ${{ steps.manifest.outputs.manifest_sha256 }}
+      content_sha256: ${{ steps.manifest.outputs.content_sha256 }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install validation dependencies
+        run: python -m pip install --upgrade jsonschema
+
+      - name: Validate corpus directory
+        env:
+          CORPUS_DIR: ${{ inputs.corpus_dir }}
+        run: |
+          test -d "$CORPUS_DIR"
+          test -d "$CORPUS_DIR/schemas"
+          test -d "$CORPUS_DIR/data"
+
+      - name: Validate schemas and records
+        env:
+          CORPUS_DIR: ${{ inputs.corpus_dir }}
+        run: |
+          python - <<'PY'
+          import json
+          import pathlib
+          import sys
+          from jsonschema import Draft202012Validator
+
+          corpus = pathlib.Path(__import__('os').environ['CORPUS_DIR'])
+          schema_dir = corpus / 'schemas'
+          schemas = sorted(schema_dir.glob('*.schema.json'))
+          if not schemas:
+              raise SystemExit(f'No schema files found in {schema_dir}')
+          for schema_path in schemas:
+              schema = json.loads(schema_path.read_text(encoding='utf-8-sig'))
+              Draft202012Validator.check_schema(schema)
+              print(f'OK schema: {schema_path.name}')
+
+          records = corpus / 'data' / 'records.jsonl'
+          record_schema = schema_dir / 'legislation_record.schema.json'
+          if records.exists() and record_schema.exists():
+              validator = Draft202012Validator(json.loads(record_schema.read_text(encoding='utf-8-sig')))
+              errors = []
+              with records.open(encoding='utf-8') as fh:
+                  for line_no, line in enumerate(fh, 1):
+                      if not line.strip():
+                          continue
+                      record = json.loads(line)
+                      errors.extend(f'Line {line_no}: {error.message}' for error in validator.iter_errors(record))
+              if errors:
+                  print('\n'.join(errors))
+                  sys.exit(1)
+              print('records.jsonl valid')
+          else:
+              print('records.jsonl validation skipped')
+          PY
+
+      - name: Build release manifest
+        id: manifest
+        env:
+          CORPUS_DIR: ${{ inputs.corpus_dir }}
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import hashlib
+          import json
+          import pathlib
+          import time
+          import os
+
+          data_dir = pathlib.Path(os.environ['CORPUS_DIR']) / 'data'
+          files = []
+          for path in sorted(data_dir.rglob('*')):
+              if not path.is_file():
+                  continue
+              if any(part.startswith('.') or part == '__pycache__' for part in path.parts):
+                  continue
+              rel = path.relative_to(data_dir).as_posix()
+              files.append({'path': rel, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'size_bytes': path.stat().st_size})
+          manifest = {
+              'schema_version': '1.0',
+              'record_schema_version': '1.0',
+              'generated_at_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
+              'workflow': 'release-huggingface',
+              'github_run_id': os.environ['GITHUB_RUN_ID'],
+              'files': files,
+          }
+          content = {k: v for k, v in manifest.items() if k not in {'generated_at_utc', 'github_run_id', 'workflow'}}
+          manifest['content_sha256'] = hashlib.sha256(json.dumps(content, sort_keys=True).encode()).hexdigest()
+          manifest_sha256 = hashlib.sha256(json.dumps(manifest, sort_keys=True).encode()).hexdigest()
+          print(f'manifest_sha256={manifest_sha256}')
+          print(f'content_sha256={manifest["content_sha256"]}')
+          PY
+
+  publish:
+    name: Publish to Hugging Face
+    needs: validate
+    if: ${{ inputs.confirm_publish == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Hugging Face Hub
+        run: python -m pip install --upgrade huggingface_hub[hf_xet]
+
+      - name: Upload corpus data
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_REPO_ID: ${{ inputs.hf_repo_id }}
+          CORPUS_DIR: ${{ inputs.corpus_dir }}
+        run: |
+          python - <<'PY'
+          import os
+          from huggingface_hub import HfApi
+
+          token = os.environ.get('HF_TOKEN')
+          if not token:
+              raise SystemExit('HF_TOKEN secret is required when confirm_publish=true')
+          repo_id = os.environ['HF_REPO_ID']
+          folder = os.path.join(os.environ['CORPUS_DIR'], 'data')
+          api = HfApi(token=token)
+          api.create_repo(repo_id=repo_id, repo_type='dataset', private=False, exist_ok=True)
+          api.upload_folder(repo_id=repo_id, repo_type='dataset', folder_path=folder, commit_message='Root gated Hugging Face sync')
+          print(f'Published https://huggingface.co/datasets/{repo_id}')
+          PY
+
+      - name: Record registry submission feedback candidate
+        if: failure()
+        run: |
+          python3 scripts/record_learning_candidate.py \
+            --backlog conductor/improvement-backlog.md \
+            --snapshot conductor/.tmp/registry-feedback-huggingface-${{ github.run_id }}.md \
+            --message "Registry submission review feedback required for Hugging Face publish (`${{ github.event.inputs.hf_repo_id }}`)" \
+            --evidence "workflow=${{ github.workflow }}" \
+            --evidence "run=${{ github.run_id }}" \
+            --evidence "status=${{ job.status }}" \
+            --evidence "repo=${{ github.repository }}"
+
+      - name: Upload registry feedback snapshot
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: registry-feedback-huggingface-${{ github.run_id }}
+          path: conductor/.tmp/registry-feedback-huggingface-${{ github.run_id }}.md

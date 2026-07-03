@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": {
+    "name": "example-cli",
+    "owning_repo": "cli-legislation-nz",
+    "artifact_type": "cli",
+    "version": "0.0.0",
+    "license": "TBD",
+    "public_contracts": [
+      "example-cli --help",
+      "example-cli command"
+    ],
+    "release_notes_path": "CHANGELOG.md",
+    "changelog_path": "CHANGELOG.md",
+    "support_policy_path": "SECURITY.md"
+  },
+  "registries": [
+    {
+      "registry_id": "github_releases",
+      "registry_kind": "cli_distribution",
+      "submission_status": "requirements_inventory",
+      "requirements": [
+        {
+          "id": "release-artifacts",
+          "description": "Release binaries, checksums, and source archive are present.",
+          "status": "pending",
+          "evidence_path": "conductor/registry-submissions/example-cli/evidence.md"
+        }
+      ]
+    },
+    {
+      "registry_id": "homebrew_tap",
+      "registry_kind": "cli_distribution",
+      "submission_status": "requirements_inventory",
+      "requirements": [
+        {
+          "id": "formula",
+          "description": "Formula, checksum, license, and test block are ready for review.",
+          "status": "pending"
+        }
+      ]
+    }
+  ],
+  "quality_gates": [
+    {
+      "name": "CLI smoke",
+      "command_or_workflow": "example-cli --help",
+      "status": "pending"
+    },
+    {
+      "name": "Package build",
+      "command_or_workflow": "owning repo package build command",
+      "status": "pending"
+    }
+  ],
+  "security_gates": [
+    {
+      "name": "No secrets in release artifacts",
+      "status": "pending"
+    }
+  ],
+  "submission_workflow": {
+    "phases": [
+      {
+        "name": "Registry inventory",
+        "status": "in_progress",
+        "tasks": [
+          "Confirm target registries.",
+          "Record exact metadata and artifact requirements."
+        ]
+      },
+      {
+        "name": "Submission",
+        "status": "pending",
+        "tasks": [
+          "Submit only after local readiness, CI evidence, and review approval."
+        ]
+      }
+    ],
+    "commit_policy": "Commit manifest and evidence in the owning repo only.",
+    "review_policy": "Review manifest, artifacts, and registry requirements before submission.",
+    "actions_policy": "Check owning repo GitHub Actions after each committed phase."
+  },
+  "self_improvement": {
+    "enabled": true,
+    "learning_log_path": "conductor/learning-log.md",
+    "reflection_cadence": "after each registry review result",
+    "improvement_backlog_path": "conductor/improvement-backlog.md",
+    "promotion_policy": "Promote reusable checks to root templates only after review."
+  }
+}

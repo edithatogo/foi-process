@@ -1,0 +1,8 @@
+{
+  "track_id": "schema_unification_20260614",
+  "type": "feature",
+  "status": "archived",
+  "created_at": "2026-06-14T05:05:00Z",
+  "updated_at": "2026-06-23T00:00:00Z",
+  "description": "Establish a single canonical schema system in the NLP directory, unify core schemas, extract additional committee features, commit and push changes, and systematize HF, Zenodo, and GitHub accounts."
+}
