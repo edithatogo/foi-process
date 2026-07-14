@@ -216,7 +216,11 @@ def build(output: Path) -> None:
     (output / "README.md").write_bytes(dataset_card().replace("\r\n", "\n").encode("utf-8"))
 
     files = []
-    for path in sorted(output.rglob("*")):
+    paths = sorted(
+        output.rglob("*"),
+        key=lambda path: path.relative_to(output).as_posix().casefold(),
+    )
+    for path in paths:
         if not path.is_file() or path.name == "manifest.json":
             continue
         relative = path.relative_to(output).as_posix()
