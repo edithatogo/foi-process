@@ -1,6 +1,6 @@
 # Codex Completion Report
 
-**Date:** 2026-07-13  
+**Date:** 2026-07-15  
 **Repository:** `foi-process` package directory in the dirty `legal-nz` parent checkout  
 **Starting branch:** `master` as reported by the parent checkout  
 **Starting state:** this package directory contained only `foi_process_codex_handoff_20260712.zip`; no nested `.git` directory or package files were present. Existing sibling worktree changes were left untouched.
@@ -98,8 +98,15 @@ No commit was made. The parent checkout contains substantial pre-existing siblin
 
 ## Remaining blocker
 
-The isolated all-features compile was retried with clean target directories and a separate Cargo
-home reusing the downloaded registry. The first retry exposed stale mixed MSVC/GNU artefacts; the
-isolated retry progressed into the optional dependency graph but did not finish after extended
-compilation on this workstation. No source error was produced. The pinned MSVC toolchain remains
-unavailable because Rustup recovery and the linker environment are broken locally.
+The original local all-features attempt was superseded by the hosted CI feature matrix. GitHub
+Actions now passes all-features compilation, all self-contained feature tests, clippy, docs, and
+dependency policy. DuckDB runtime linking remains an explicit environment gate because the hosted
+runner does not provide `libduckdb`.
+
+## Post-report execution
+
+- Pushed the package to `https://github.com/edithatogo/foi-process`.
+- Published immutable release tag `v0.1.0` with GitHub release metadata.
+- Added and validated `CITATION.cff` and `.zenodo.json`; Zenodo preservation is not claimed complete.
+- GitHub Actions run `29339015413` passed all jobs, including dependency policy and the Rust feature matrix.
+- The remaining human and external gates are tracked in GitHub issue #9.
