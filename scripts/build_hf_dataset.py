@@ -25,13 +25,14 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
 
 def write_json(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    content = json.dumps(value, indent=2, ensure_ascii=False) + "\n"
+    path.write_bytes(content.encode("utf-8"))
 
 
 def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     content = "".join(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n" for row in rows)
-    path.write_text(content, encoding="utf-8")
+    path.write_bytes(content.encode("utf-8"))
 
 
 def require_fixture_review(privacy: dict[str, Any], subject: str) -> None:
@@ -210,8 +211,9 @@ def build(output: Path) -> None:
     for name, value in artifacts.items():
         write_json(output / "artifacts" / name, value)
 
-    shutil.copytree(ROOT / "schemas/portable", output / "schemas")
-    (output / "README.md").write_text(dataset_card(), encoding="utf-8")
+    for schema_path in sorted((ROOT / "schemas/portable").glob("*.json")):
+        write_json(output / "schemas" / schema_path.name, read_json(schema_path))
+    (output / "README.md").write_bytes(dataset_card().replace("\r\n", "\n").encode("utf-8"))
 
     files = []
     for path in sorted(output.rglob("*")):
