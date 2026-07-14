@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+title: "FOI Process Workpack"
+message: "If you use this software, please cite it using this file."
+type: software
+authors:
+  - family-names: Mordaunt
+    given-names: Dylan A.
+    orcid: "https://orcid.org/0000-0002-9775-0603"
+repository-code: "https://github.com/edithatogo/foi-process"
+url: "https://github.com/edithatogo/foi-process"
+license: Apache-2.0
+version: 0.1.0
+date-released: 2026-07-14
+abstract: >-
+  Rust-first event spine, replay engine, and Rust4PM integration for FOI
+  process intelligence. The workpack integrates evidence and process signals
+  while leaving FOI-O authoritative for legal semantics and jurisdictional
+  profiles.
+keywords:
+  - freedom of information
+  - FOI
+  - process mining
+  - OCEL
+  - evidence provenance
+  - Rust
