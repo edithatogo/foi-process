@@ -1,0 +1,100 @@
+{
+  "policy_id": "urn:foi-process:publication:dashboard-default",
+  "events": [
+    {
+      "event_id": "urn:foi-process:event:sha256:c839e8ca669caf4d0e5a040212842d90c4201edb2b35c0eae5df690dfe791155",
+      "logical_event_id": "urn:foi-process:event-logical:sha256:d0403ca0233c913f7b7feead8adb73b7460aab4a3426ec988e2c135b1e29fb00",
+      "site": "urn:alaveteli:site:fyi.org.nz",
+      "jurisdiction": "jurisdiction:NZ",
+      "case_id": "urn:fyi-nz:request:demo-1",
+      "activity": "foio:RequestSent",
+      "event_time": {
+        "timestamp": "2025-01-06T09:00:00+13:00",
+        "precision": "second"
+      },
+      "assertion_status": "observed",
+      "evidence": [
+        {
+          "evidence_id": "urn:foi-process:evidence:sha256:a33d1928732a74c3599dbe63ead7177d6bd97d0c3f0f5a955da5b075ec054690",
+          "uri": "https://fyi.org.nz/request/demo/1",
+          "media_type": "application/json",
+          "content_sha256": "b47b0689920bfb13bd9dfc74eea1dbd8cddc3461e43e17100ecb10285e145713"
+        }
+      ],
+      "attributes": {
+        "native_activity": "request_sent",
+        "authority_id": "nz:agency:demo"
+      }
+    },
+    {
+      "event_id": "urn:foi-process:event:sha256:63133db96b2cfc43af6121bdae5c109f243eeb8dd4c2675ffeeb81502be356e4",
+      "logical_event_id": "urn:foi-process:event-logical:sha256:463374c43d69f59db741832292be233e9d217f1e7b51d5c86f1da02c67b9b736",
+      "site": "urn:alaveteli:site:fyi.org.nz",
+      "jurisdiction": "jurisdiction:NZ",
+      "case_id": "urn:fyi-nz:request:demo-1",
+      "activity": "foio:AuthorityResponseReceived",
+      "event_time": {
+        "timestamp": "2025-01-07T11:00:00+13:00",
+        "precision": "second"
+      },
+      "assertion_status": "observed",
+      "evidence": [
+        {
+          "evidence_id": "urn:foi-process:evidence:sha256:4eb715686da5d7e69f69d2b46d2a8a5bfb5eda59de3827c95d17c68063452c56",
+          "uri": "https://fyi.org.nz/request/demo/2",
+          "media_type": "application/json",
+          "content_sha256": "3ef25c849197ef76226ed8bb9b8aa4dc0212702980f2eb38b1ab98ee0c9a9647"
+        }
+      ],
+      "attributes": {
+        "native_activity": "authority_response",
+        "authority_id": "nz:agency:demo"
+      }
+    },
+    {
+      "event_id": "urn:foi-process:event:sha256:c64cef1478af1ff8fcade29f53fe02cd8787f4dabff63777736f3a84dd620ffb",
+      "logical_event_id": "urn:foi-process:event-logical:sha256:af3bdad4de31368f7ff488cb74381f4753a4d7146b51b24355fcf27b41d22f78",
+      "site": "urn:alaveteli:site:fyi.org.nz",
+      "jurisdiction": "jurisdiction:NZ",
+      "case_id": "urn:fyi-nz:request:demo-1",
+      "activity": "foio:ExtensionNotified",
+      "event_time": {
+        "timestamp": "2025-01-20T10:15:00+13:00",
+        "precision": "second"
+      },
+      "assertion_status": "observed",
+      "evidence": [
+        {
+          "evidence_id": "urn:foi-process:evidence:sha256:916da5d65c80f9b71594a441cc7985fb547c7f27f03d727fc6cade23d8fff636",
+          "uri": "https://fyi.org.nz/request/demo/3",
+          "media_type": "application/json",
+          "content_sha256": "1bc5ba35cb9794ff3a9a5fbc49425f0c42c4f24594a4b999955984261bc5e566"
+        }
+      ],
+      "attributes": {
+        "native_activity": "extension",
+        "authority_id": "nz:agency:demo"
+      }
+    },
+    {
+      "event_id": "urn:foi-process:event:sha256:7c54702656367adb4a244c447ad61e943feaf71e8b6a64e03d4a0eb36a700cb1",
+      "logical_event_id": "urn:foi-process:event-logical:sha256:b167f61da0363ba7de1faa5255caf0da5507b4da757d56ebd1a7407ddc99c2e2",
+      "site": "urn:alaveteli:site:fyi.org.nz",
+      "jurisdiction": "jurisdiction:NZ",
+      "case_id": "urn:fyi-nz:request:demo-1",
+      "activity": "foio:ClosedObserved",
+      "event_time": {
+        "timestamp": "2025-02-14T16:00:00+13:00",
+        "precision": "second"
+      },
+      "assertion_status": "observed",
+      "evidence": [],
+      "attributes": {
+        "native_activity": "closed",
+        "authority_id": "nz:agency:demo"
+      }
+    }
+  ],
+  "withheld_event_count": 0,
+  "metadata_only_event_count": 1
+}

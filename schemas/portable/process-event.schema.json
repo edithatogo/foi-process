@@ -1,0 +1,503 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/foi-process/schema/process-event.schema.json",
+  "title": "Process Event",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "event_id",
+    "logical_event_id",
+    "revision",
+    "operation",
+    "site",
+    "jurisdiction",
+    "case_id",
+    "activity",
+    "observed_at",
+    "captured_at",
+    "processed_at",
+    "position",
+    "assertion_status",
+    "provenance",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "logical_event_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "operation": {
+      "enum": [
+        "upsert",
+        "retract"
+      ]
+    },
+    "site": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "jurisdiction": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "case_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "activity": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "event_time": {
+      "type": "object",
+      "required": [
+        "timestamp"
+      ],
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "precision": {
+          "enum": [
+            "second",
+            "minute",
+            "hour",
+            "day",
+            "month",
+            "year",
+            "unknown"
+          ]
+        },
+        "source_timezone": {
+          "type": "string"
+        },
+        "uncertainty_seconds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_text": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "captured_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "processed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "position": {
+      "type": "object",
+      "required": [
+        "source",
+        "partition",
+        "sequence"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 512,
+          "pattern": "^\\S+:\\S+$"
+        },
+        "partition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "assertion_status": {
+      "enum": [
+        "observed",
+        "candidate",
+        "inferred",
+        "asserted",
+        "human_certified",
+        "unknown"
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "object_id",
+          "object_type",
+          "qualifier"
+        ],
+        "properties": {
+          "object_id": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          },
+          "object_type": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          },
+          "qualifier": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "evidence_id"
+        ],
+        "properties": {
+          "evidence_id": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          },
+          "selector": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "start",
+                  "end"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "bytes"
+                  },
+                  "start": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "end": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "span"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "text"
+                  },
+                  "span": {
+                    "type": "object",
+                    "required": [
+                      "start",
+                      "end"
+                    ],
+                    "properties": {
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "page"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "page"
+                  },
+                  "page": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "bbox"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "bounding_box"
+                  },
+                  "bbox": {
+                    "type": "object",
+                    "required": [
+                      "page",
+                      "x",
+                      "y",
+                      "width",
+                      "height"
+                    ],
+                    "properties": {
+                      "page": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      },
+                      "width": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "height": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "coordinate_system": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "pointer"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "json_pointer"
+                  },
+                  "pointer": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "warc_payload"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          },
+          "role": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "document_signal_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 512,
+        "pattern": "^\\S+:\\S+$"
+      }
+    },
+    "rule_result_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 512,
+        "pattern": "^\\S+:\\S+$"
+      }
+    },
+    "supersedes_event_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "retracts_event_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "causation_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "producer",
+        "producer_version"
+      ],
+      "properties": {
+        "producer": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 512,
+          "pattern": "^\\S+:\\S+$"
+        },
+        "producer_version": {
+          "type": "string"
+        },
+        "software_commit": {
+          "type": "string"
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 512,
+          "pattern": "^\\S+:\\S+$"
+        },
+        "input_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          }
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "privacy": {
+      "type": "object",
+      "required": [
+        "sensitivity",
+        "access_tier",
+        "disposition"
+      ],
+      "properties": {
+        "sensitivity": {
+          "enum": [
+            "public",
+            "personal",
+            "sensitive_personal",
+            "restricted",
+            "unknown"
+          ]
+        },
+        "access_tier": {
+          "enum": [
+            "public",
+            "research",
+            "restricted",
+            "embargoed"
+          ]
+        },
+        "disposition": {
+          "enum": [
+            "publish",
+            "publish_metadata_only",
+            "withhold",
+            "needs_review"
+          ]
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assessed_by": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 512,
+          "pattern": "^\\S+:\\S+$"
+        },
+        "human_reviewed": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "attributes": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

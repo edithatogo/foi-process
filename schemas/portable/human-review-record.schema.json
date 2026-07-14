@@ -1,0 +1,259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/foi-process/schema/human-review-record.schema.json",
+  "title": "Human Review Record",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "review_id",
+    "subject_id",
+    "reviewer_id",
+    "profile_id",
+    "reviewed_at",
+    "decision",
+    "previous_status",
+    "resulting_status"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "review_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "subject_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "reviewer_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "profile_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "decision": {
+      "enum": [
+        "confirm",
+        "correct",
+        "reject",
+        "defer",
+        "escalate"
+      ]
+    },
+    "previous_status": {
+      "enum": [
+        "observed",
+        "candidate",
+        "inferred",
+        "asserted",
+        "human_certified",
+        "unknown"
+      ]
+    },
+    "resulting_status": {
+      "enum": [
+        "observed",
+        "candidate",
+        "inferred",
+        "asserted",
+        "human_certified",
+        "unknown"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "evidence_id"
+        ],
+        "properties": {
+          "evidence_id": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          },
+          "selector": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "start",
+                  "end"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "bytes"
+                  },
+                  "start": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "end": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "span"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "text"
+                  },
+                  "span": {
+                    "type": "object",
+                    "required": [
+                      "start",
+                      "end"
+                    ],
+                    "properties": {
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "page"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "page"
+                  },
+                  "page": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "bbox"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "bounding_box"
+                  },
+                  "bbox": {
+                    "type": "object",
+                    "required": [
+                      "page",
+                      "x",
+                      "y",
+                      "width",
+                      "height"
+                    ],
+                    "properties": {
+                      "page": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      },
+                      "width": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "height": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "coordinate_system": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "pointer"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "json_pointer"
+                  },
+                  "pointer": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "warc_payload"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          },
+          "role": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "corrected_values": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

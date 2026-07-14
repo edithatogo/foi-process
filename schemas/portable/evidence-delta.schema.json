@@ -1,0 +1,294 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/foi-process/schema/evidence-delta.schema.json",
+  "title": "Evidence Delta",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "delta_id",
+    "logical_record_id",
+    "revision",
+    "operation",
+    "site",
+    "jurisdiction",
+    "position",
+    "observed_at",
+    "captured_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "delta_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "logical_record_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "operation": {
+      "enum": [
+        "upsert",
+        "delete",
+        "recapture",
+        "repair"
+      ]
+    },
+    "site": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "jurisdiction": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "position": {
+      "type": "object",
+      "required": [
+        "source",
+        "partition",
+        "sequence"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 512,
+          "pattern": "^\\S+:\\S+$"
+        },
+        "partition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "captured_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "previous_content_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "current_content_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "evidence_id",
+        "logical_record_id",
+        "revision",
+        "source_kind",
+        "media_type",
+        "locator",
+        "content_sha256",
+        "captured_at",
+        "privacy"
+      ],
+      "properties": {
+        "schema_version": {
+          "type": "string"
+        },
+        "evidence_id": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 512,
+          "pattern": "^\\S+:\\S+$"
+        },
+        "logical_record_id": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 512,
+          "pattern": "^\\S+:\\S+$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_kind": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 512,
+          "pattern": "^\\S+:\\S+$"
+        },
+        "media_type": {
+          "type": "string"
+        },
+        "locator": {
+          "type": "object",
+          "required": [],
+          "properties": {
+            "uri": {
+              "type": "string",
+              "format": "uri"
+            },
+            "warc_record_id": {
+              "type": "string"
+            },
+            "wacz_path": {
+              "type": "string"
+            },
+            "blob_path": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byte_length": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "captured_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_time": {
+          "type": "object",
+          "required": [
+            "timestamp"
+          ],
+          "properties": {
+            "timestamp": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "precision": {
+              "enum": [
+                "second",
+                "minute",
+                "hour",
+                "day",
+                "month",
+                "year",
+                "unknown"
+              ]
+            },
+            "source_timezone": {
+              "type": "string"
+            },
+            "uncertainty_seconds": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "source_text": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "privacy": {
+          "type": "object",
+          "required": [
+            "sensitivity",
+            "access_tier",
+            "disposition"
+          ],
+          "properties": {
+            "sensitivity": {
+              "enum": [
+                "public",
+                "personal",
+                "sensitive_personal",
+                "restricted",
+                "unknown"
+              ]
+            },
+            "access_tier": {
+              "enum": [
+                "public",
+                "research",
+                "restricted",
+                "embargoed"
+              ]
+            },
+            "disposition": {
+              "enum": [
+                "publish",
+                "publish_metadata_only",
+                "withhold",
+                "needs_review"
+              ]
+            },
+            "reason_codes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "assessed_by": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 512,
+              "pattern": "^\\S+:\\S+$"
+            },
+            "human_reviewed": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "attributes": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "request_hint": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "supersedes_delta_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "causation_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "attributes": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

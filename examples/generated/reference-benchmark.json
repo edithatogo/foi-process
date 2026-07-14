@@ -1,0 +1,21 @@
+{
+  "warning": "Python development oracle only; not representative of Rust4PM/foi-process performance.",
+  "runs": [
+    {
+      "cases": 1000,
+      "input_event_revisions": 5050,
+      "materialized_events": 5000,
+      "seconds": 0.102206,
+      "events_per_second": 49409.8,
+      "peak_python_bytes": 551688
+    },
+    {
+      "cases": 10000,
+      "input_event_revisions": 50500,
+      "materialized_events": 50000,
+      "seconds": 1.193476,
+      "events_per_second": 42313.4,
+      "peak_python_bytes": 6447112
+    }
+  ]
+}

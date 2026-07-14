@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0-draft.1",
+  "snapshot_id": "urn:foi-process:replay-snapshot:sha256:1ecea3b152c8de700642df5f2dd0e32ddffb006b7498f2381b3e3adaa08adaf1",
+  "consumer": "urn:foi-process:consumer:fixture",
+  "created_at": "2026-07-09T00:05:00Z",
+  "records": [
+    {
+      "logical_record_id": "urn:fyi-nz:message:1",
+      "revision": 1,
+      "current_digest": "b47b0689920bfb13bd9dfc74eea1dbd8cddc3461e43e17100ecb10285e145713",
+      "last_delta_id": "urn:foi-process:delta:sha256:7a6b684ec955b07f426d31eafaec0122e8b8fe064f78d8b442267850a74ceed1",
+      "last_event_id": "urn:foi-process:event:sha256:c839e8ca669caf4d0e5a040212842d90c4201edb2b35c0eae5df690dfe791155"
+    },
+    {
+      "logical_record_id": "urn:fyi-nz:message:2",
+      "revision": 1,
+      "current_digest": "3ef25c849197ef76226ed8bb9b8aa4dc0212702980f2eb38b1ab98ee0c9a9647",
+      "last_delta_id": "urn:foi-process:delta:sha256:4533c518312e40734eedec265546aca351a9e79284d78cd1c0a3e68b01a51ee8",
+      "last_event_id": "urn:foi-process:event:sha256:63133db96b2cfc43af6121bdae5c109f243eeb8dd4c2675ffeeb81502be356e4"
+    },
+    {
+      "logical_record_id": "urn:fyi-nz:message:3",
+      "revision": 2,
+      "current_digest": "1bc5ba35cb9794ff3a9a5fbc49425f0c42c4f24594a4b999955984261bc5e566",
+      "last_delta_id": "urn:foi-process:delta:sha256:55f4fad97dda71f13fd9be924dee0271587cc1218b8ae215ccc6f4492b309d1b",
+      "last_event_id": "urn:foi-process:event:sha256:c64cef1478af1ff8fcade29f53fe02cd8787f4dabff63777736f3a84dd620ffb"
+    },
+    {
+      "logical_record_id": "urn:fyi-nz:message:4",
+      "revision": 1,
+      "current_digest": "c3eefb58d7c42440a9d4abec51d629544d635a6d936ff3c4d3fca96d611b3cf3",
+      "last_delta_id": "urn:foi-process:delta:sha256:213c85d929979191d2d4580b4034b89f221bf01cf246e81b075959f5a8b8bc3a",
+      "last_event_id": "urn:foi-process:event:sha256:7c54702656367adb4a244c447ad61e943feaf71e8b6a64e03d4a0eb36a700cb1"
+    }
+  ],
+  "partitions": [
+    {
+      "source": "urn:fyi-cli:site:fyi.org.nz",
+      "partition": "requests",
+      "last_sequence": 5
+    }
+  ],
+  "state_hash": "1d81492e6657003a86391ab9a4f9d907752bb1266d336cd011bd59f69c7c51c6"
+}

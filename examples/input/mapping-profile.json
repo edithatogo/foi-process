@@ -1,0 +1,15 @@
+{
+  "profile_id": "urn:foi-process:profile:fyi-minimal",
+  "profile_version": "1.0.0-draft.1",
+  "platform_activities": {
+    "request_sent": "foio:RequestSent",
+    "authority_response": "foio:AuthorityResponseReceived",
+    "extension": "foio:ExtensionNotified",
+    "closed": "foio:ClosedObserved"
+  },
+  "event_attribute_allowlist": [
+    "authority_id",
+    "platform_state",
+    "message_direction"
+  ]
+}

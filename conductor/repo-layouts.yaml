@@ -1,0 +1,22 @@
+repositories:
+  fyi-cli:
+    conductor_root: .conductor
+    notes: preserve existing project-sync automation and master branch conventions
+  fyi-archive:
+    conductor_root: conductor
+  foi-o:
+    conductor_root: conductor
+  propel:
+    conductor_root: conductor
+  nlp-policy-nz:
+    conductor_root: conductor
+  fe-reader:
+    conductor_root: conductor
+  axiom-rules-engine:
+    conductor_root: conductor
+  kairos:
+    conductor_root: conductor
+  rulesandprocesses:
+    conductor_root: conductor
+  foi-process:
+    conductor_root: conductor

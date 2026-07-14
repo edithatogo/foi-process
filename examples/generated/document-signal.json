@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0-draft.1",
+  "signal_id": "urn:foi-process:signal:sha256:480e9c5ee35898a8c002d8bd26ff0d4996948cdb7c5437fa940c98320fbc9bed",
+  "signal_type": "foip:ExtensionSignal",
+  "assertion_status": "candidate",
+  "confidence": 0.92,
+  "document_id": "urn:fyi-nz:document:demo-extension",
+  "evidence": [
+    {
+      "evidence_id": "urn:foi-process:evidence:sha256:916da5d65c80f9b71594a441cc7985fb547c7f27f03d727fc6cade23d8fff636",
+      "selector": {
+        "selector_type": "bounding_box",
+        "bbox": {
+          "page": 1,
+          "x": 72.0,
+          "y": 110.0,
+          "width": 420.0,
+          "height": 24.0,
+          "coordinate_system": "pdf_points_top_left"
+        }
+      },
+      "role": "prov:primarySource"
+    }
+  ],
+  "proposed_activity": "foio:ExtensionNotified",
+  "extracted_values": {
+    "duration_working_days": 15
+  },
+  "producer": {
+    "name": "nlp-policy-nz",
+    "version": "0.1.0-draft",
+    "runtime": "rust/python",
+    "license": "repository-license"
+  },
+  "privacy": {
+    "sensitivity": "public",
+    "access_tier": "public",
+    "disposition": "publish",
+    "reason_codes": [
+      "privacy:fixture_reviewed"
+    ],
+    "human_reviewed": true
+  }
+}

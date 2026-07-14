@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/foi-process/schema/ocel-projection.schema.json",
+  "title": "Ocel Projection",
+  "type": "object",
+  "required": [
+    "events",
+    "objects",
+    "event_object_links",
+    "object_object_links",
+    "object_changes"
+  ],
+  "properties": {
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "event_object_links": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "object_object_links": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "object_changes": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "additionalProperties": false
+}

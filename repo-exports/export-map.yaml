@@ -1,0 +1,73 @@
+exports:
+- repo: edithatogo/fyi-cli
+  branch: master
+  conductor_root: .conductor
+  issue_body: repo-exports/fyi-cli/evidence-delta-emitter.md
+  artefacts:
+  - schemas/portable/evidence-delta.schema.json
+- repo: edithatogo/fyi-archive
+  branch: main
+  conductor_root: conductor
+  issue_body: repo-exports/fyi-archive/process-snapshot-manifest.md
+  artefacts:
+  - schemas/portable/mining-run-manifest.schema.json
+- repo: edithatogo/foi-o
+  branch: main
+  conductor_root: conductor
+  issue_body: repo-exports/foi-o/promote-rust-contracts.md
+  artefacts:
+  - schemas/portable/evidence-record.schema.json
+  - schemas/portable/process-event.schema.json
+  - schemas/portable/document-signal.schema.json
+  - schemas/portable/conformance-trace.schema.json
+  - schemas/portable/human-review-record.schema.json
+- repo: aarkue/rust4pm
+  branch: main
+  conductor_root: null
+  issue_body: repo-exports/rust4pm/01-appendable-ocel-integration-tests.md
+  artefacts: []
+- repo: edithatogo/propel
+  branch: main
+  conductor_root: conductor
+  issue_body: repo-exports/propel/foi-process-profile.md
+  artefacts:
+  - schemas/portable/public-projection.schema.json
+  - schemas/portable/dashboard-summary.schema.json
+- repo: edithatogo/fe-reader
+  branch: main
+  conductor_root: conductor
+  issue_body: repo-exports/fe-reader/document-bundle-and-selective-ocr.md
+  artefacts:
+  - schemas/portable/document-bundle.schema.json
+- repo: edithatogo/nlp-policy-nz
+  branch: main
+  conductor_root: conductor
+  issue_body: repo-exports/nlp-policy-nz/evidence-grounded-document-signals.md
+  artefacts:
+  - schemas/portable/document-signal.schema.json
+- repo: edithatogo/axiom-rules-engine
+  branch: main
+  conductor_root: conductor
+  issue_body: repo-exports/axiom-rules-engine/oia-conformance-trace-adapter.md
+  artefacts:
+  - schemas/portable/conformance-trace.schema.json
+- repo: edithatogo/kairos
+  branch: main
+  conductor_root: conductor
+  issue_body: repo-exports/kairos/foi-synthetic-ocel.md
+  artefacts:
+  - schemas/portable/process-event.schema.json
+- repo: edithatogo/sourceright
+  branch: main
+  conductor_root: conductor
+  issue_body: repo-exports/sourceright/review-and-source-evidence.md
+  artefacts:
+  - schemas/portable/evidence-record.schema.json
+  - schemas/portable/human-review-record.schema.json
+- repo: edithatogo/rulesandprocesses
+  branch: main
+  conductor_root: conductor
+  issue_body: repo-exports/rulesandprocesses/adoption-study.md
+  artefacts:
+  - schemas/portable/conformance-trace.schema.json
+  - schemas/portable/human-review-record.schema.json

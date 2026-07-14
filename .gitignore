@@ -1,0 +1,11 @@
+/target/
+/schemas/generated/
+/.venv/
+__pycache__/
+*.pyc
+.DS_Store
+target/
+target-*/
+examples/generated/fyi-archive-*
+benchmarks/generated/
+foi_process_codex_handoff_*.zip

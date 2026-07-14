@@ -1,0 +1,313 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/foi-process/schema/document-signal.schema.json",
+  "title": "Document Signal",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "signal_id",
+    "signal_type",
+    "assertion_status",
+    "document_id",
+    "producer",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "signal_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "signal_type": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "assertion_status": {
+      "enum": [
+        "observed",
+        "candidate",
+        "inferred",
+        "asserted",
+        "human_certified",
+        "unknown"
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "document_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "evidence_id"
+        ],
+        "properties": {
+          "evidence_id": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          },
+          "selector": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "start",
+                  "end"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "bytes"
+                  },
+                  "start": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "end": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "span"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "text"
+                  },
+                  "span": {
+                    "type": "object",
+                    "required": [
+                      "start",
+                      "end"
+                    ],
+                    "properties": {
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "page"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "page"
+                  },
+                  "page": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "bbox"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "bounding_box"
+                  },
+                  "bbox": {
+                    "type": "object",
+                    "required": [
+                      "page",
+                      "x",
+                      "y",
+                      "width",
+                      "height"
+                    ],
+                    "properties": {
+                      "page": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      },
+                      "width": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "height": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "coordinate_system": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type",
+                  "pointer"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "json_pointer"
+                  },
+                  "pointer": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "selector_type"
+                ],
+                "properties": {
+                  "selector_type": {
+                    "const": "warc_payload"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          },
+          "role": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "proposed_activity": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "extracted_values": {
+      "type": "object"
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "name",
+        "version"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "runtime": {
+          "type": "string"
+        },
+        "model_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "license": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "privacy": {
+      "type": "object",
+      "required": [
+        "sensitivity",
+        "access_tier",
+        "disposition"
+      ],
+      "properties": {
+        "sensitivity": {
+          "enum": [
+            "public",
+            "personal",
+            "sensitive_personal",
+            "restricted",
+            "unknown"
+          ]
+        },
+        "access_tier": {
+          "enum": [
+            "public",
+            "research",
+            "restricted",
+            "embargoed"
+          ]
+        },
+        "disposition": {
+          "enum": [
+            "publish",
+            "publish_metadata_only",
+            "withhold",
+            "needs_review"
+          ]
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assessed_by": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 512,
+          "pattern": "^\\S+:\\S+$"
+        },
+        "human_reviewed": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0.0-draft.1",
+  "trace_id": "urn:foi-process:conformance-trace:sha256:ac5ac0bc369184915b78d59aa3b58c175501e44a5c3308a0726b40152fb7c2d6",
+  "case_id": "urn:fyi-nz:request:demo-1",
+  "profile_id": "urn:rulespec-nz:oia:deadline-profile:fixture",
+  "engine_id": "urn:axiom-rules-engine:runtime",
+  "engine_version": "fixture",
+  "created_at": "2026-07-09T00:06:00Z",
+  "assertion_status": "inferred",
+  "steps": [
+    {
+      "step_id": "urn:foi-process:trace-step:request-time",
+      "kind": "input",
+      "label": "Read observed request-sent timestamp",
+      "input_ids": [
+        "urn:foi-process:event:sha256:c839e8ca669caf4d0e5a040212842d90c4201edb2b35c0eae5df690dfe791155"
+      ],
+      "output_ids": [],
+      "evidence": [
+        {
+          "evidence_id": "urn:foi-process:evidence:sha256:a33d1928732a74c3599dbe63ead7177d6bd97d0c3f0f5a955da5b075ec054690",
+          "role": "prov:primarySource"
+        }
+      ],
+      "details": {}
+    },
+    {
+      "step_id": "urn:foi-process:trace-step:deadline",
+      "kind": "calculation",
+      "label": "Apply fixture working-day profile",
+      "input_ids": [
+        "urn:foi-process:event:sha256:c839e8ca669caf4d0e5a040212842d90c4201edb2b35c0eae5df690dfe791155"
+      ],
+      "output_ids": [],
+      "evidence": [],
+      "details": {
+        "indicative_due_date": "2025-02-04"
+      }
+    },
+    {
+      "step_id": "urn:foi-process:trace-step:extension",
+      "kind": "evidence_check",
+      "label": "Check observed extension evidence",
+      "input_ids": [
+        "urn:foi-process:event:sha256:c64cef1478af1ff8fcade29f53fe02cd8787f4dabff63777736f3a84dd620ffb"
+      ],
+      "output_ids": [],
+      "evidence": [
+        {
+          "evidence_id": "urn:foi-process:evidence:sha256:916da5d65c80f9b71594a441cc7985fb547c7f27f03d727fc6cade23d8fff636",
+          "selector": {
+            "selector_type": "bounding_box",
+            "bbox": {
+              "page": 1,
+              "x": 72.0,
+              "y": 110.0,
+              "width": 420.0,
+              "height": 24.0,
+              "coordinate_system": "pdf_points_top_left"
+            }
+          },
+          "role": "prov:primarySource"
+        }
+      ],
+      "details": {
+        "duration_working_days": 15
+      }
+    }
+  ],
+  "findings": [
+    {
+      "rule_id": "oia-nz:IndicativeDeadlineCalculated",
+      "layer": "statutory",
+      "severity": "info",
+      "message": "An indicative deadline was calculated from observed request timing; this is not a certified legal conclusion.",
+      "subject_id": "urn:fyi-nz:request:demo-1",
+      "evidence": [
+        {
+          "evidence_id": "urn:foi-process:evidence:sha256:a33d1928732a74c3599dbe63ead7177d6bd97d0c3f0f5a955da5b075ec054690",
+          "role": "prov:primarySource"
+        }
+      ],
+      "requires_human_review": false,
+      "details": {
+        "calendar_profile": "nz:working-days:fixture"
+      }
+    }
+  ]
+}

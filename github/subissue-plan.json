@@ -1,0 +1,99 @@
+{
+  "generated_at": "2026-07-09",
+  "parents": [
+    {
+      "track": "T00",
+      "title": "[T00] Contracts and promotion",
+      "body_file": "github/issues/01-t00-contracts-and-promotion.md",
+      "repos": [
+        "foi-process",
+        "foi-o",
+        "fyi-cli"
+      ]
+    },
+    {
+      "track": "T01",
+      "title": "[T01] Deterministic replay",
+      "body_file": "github/issues/02-t01-deterministic-replay.md",
+      "repos": [
+        "foi-process"
+      ]
+    },
+    {
+      "track": "T02",
+      "title": "[T02] Rust4PM, OCEL, and mining",
+      "body_file": "github/issues/03-t02-rust4pm-ocel-and-mining.md",
+      "repos": [
+        "foi-process",
+        "rust4pm"
+      ]
+    },
+    {
+      "track": "T03",
+      "title": "[T03] Archive and live adapters",
+      "body_file": "github/issues/04-t03-archive-and-live-adapters.md",
+      "repos": [
+        "fyi-archive",
+        "fyi-cli",
+        "foi-process"
+      ]
+    },
+    {
+      "track": "T04",
+      "title": "[T04] Document, OCR, and semantic signals",
+      "body_file": "github/issues/05-t04-document-ocr-and-semantic-signals.md",
+      "repos": [
+        "fe-reader",
+        "nlp-policy-nz"
+      ]
+    },
+    {
+      "track": "T05",
+      "title": "[T05] FOI-O and RuleSpec conformance",
+      "body_file": "github/issues/06-t05-foi-o-and-rulespec-conformance.md",
+      "repos": [
+        "foi-o",
+        "axiom-rules-engine",
+        "rulespec-nz"
+      ]
+    },
+    {
+      "track": "T06",
+      "title": "[T06] Privacy and publication",
+      "body_file": "github/issues/07-t06-privacy-and-publication.md",
+      "repos": [
+        "foi-process",
+        "foi-o",
+        "propel"
+      ]
+    },
+    {
+      "track": "T07",
+      "title": "[T07] Propel and Hugging Face dashboard",
+      "body_file": "github/issues/08-t07-propel-and-hugging-face-dashboard.md",
+      "repos": [
+        "propel",
+        "foi-process"
+      ]
+    },
+    {
+      "track": "T08",
+      "title": "[T08] Scale, release, and governance",
+      "body_file": "github/issues/09-t08-scale-release-and-governance.md",
+      "repos": [
+        "foi-process",
+        "fyi-archive"
+      ]
+    },
+    {
+      "track": "T09",
+      "title": "[T09] Simulation, research, and adoption",
+      "body_file": "github/issues/10-t09-simulation-research-and-adoption.md",
+      "repos": [
+        "kairos",
+        "rulesandprocesses",
+        "sourceright"
+      ]
+    }
+  ]
+}
