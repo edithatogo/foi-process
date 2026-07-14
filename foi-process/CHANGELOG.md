@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### Hugging Face publication
+
+- Added a deterministic, public-safe Dataset bundle containing active event logs, revision logs,
+  EvidenceDelta streams, process edges and variants, OCEL tables, conformance findings, schemas,
+  dashboard artefacts, and SHA-256 manifests.
+- Added a fail-closed GitHub workflow that validates the dataset on every run and uploads only
+  when explicitly dispatched with an `HF_TOKEN` secret.
+- Marked the initial deposit as synthetic reviewed fixture data; real FOI data remains gated by
+  privacy, tikanga/data-governance, licensing, removal/appeal, and threat-model review.
+
 ## v3 — 2026-07-09
 
 ### Architecture

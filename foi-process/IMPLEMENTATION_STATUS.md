@@ -18,6 +18,10 @@
 - Rust-derived schema generator plus independently validated portable draft schemas.
 - Conductor tracks, GitHub issue/sub-issue material, repo-specific promotion packets, funding work packages, CI, dependency policy, and dry-run export scripts.
 - `CITATION.cff` and `.zenodo.json` release metadata for the citable `v0.1.0` workpack.
+- Deterministic Hugging Face Dataset publication bundle and fail-closed upload workflow, covering
+  event logs, revision history, EvidenceDelta streams, process edges and variants, OCEL tables,
+  conformance findings, schemas, dashboard artefacts, and checksums. The reviewed fixture bundle
+  is locally verified; live upload awaits Hugging Face authentication.
 
 ## Validation completed in this work environment
 

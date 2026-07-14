@@ -71,3 +71,7 @@ docs/                    review, architecture, privacy, OCR, scaling, promotion
 ```
 
 See `IMPLEMENTATION_STATUS.md`, `CHANGELOG.md`, `docs/REVIEW_AND_DECISIONS.md`, and `docs/canonical-identifiers.md` for the audit, completed implementation, and remaining gates.
+
+The Hugging Face dashboard publication bundle, including reviewed event logs, revision history,
+EvidenceDelta streams, OCEL tables, process edges and variants, is documented in
+`docs/hugging-face-dataset-publication.md`.
