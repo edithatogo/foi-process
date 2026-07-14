@@ -1,0 +1,49 @@
+name: publish-hf-dataset
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo_id:
+        description: Hugging Face dataset repository
+        required: true
+        default: edithatogo/foi-process-event-logs
+      publish:
+        description: Upload the validated bundle to Hugging Face
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  dataset:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Build public-safe fixture dataset
+        run: python scripts/build_hf_dataset.py --output /tmp/foi-process-event-logs
+      - name: Verify manifest and JSON Lines
+        run: |
+          python -m json.tool /tmp/foi-process-event-logs/manifest.json >/dev/null
+          find /tmp/foi-process-event-logs -name '*.jsonl' -print0 | xargs -0 -n1 sh -c 'while IFS= read -r line; do printf "%s" "$line" | python -m json.tool >/dev/null; done < "$0"'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: foi-process-event-logs
+          path: /tmp/foi-process-event-logs
+      - name: Install Hugging Face CLI
+        if: ${{ inputs.publish }}
+        run: python -m pip install --upgrade huggingface_hub
+      - name: Publish dataset
+        if: ${{ inputs.publish }}
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          REPO_ID: ${{ inputs.repo_id }}
+        run: |
+          test -n "${HF_TOKEN:-}" || { echo 'HF_TOKEN secret is required'; exit 1; }
+          hf repos create "$REPO_ID" --type dataset --exist-ok
+          hf upload "$REPO_ID" /tmp/foi-process-event-logs . --type dataset \
+            --commit-message "Publish reviewed foi-process fixture event logs"
