@@ -1,7 +1,7 @@
 # FOI Process Workpack v3
 
-**Review date:** 2026-07-13  
-**Status:** locally compiled and tested Rust-first integration candidate with executable fixtures and repo-specific promotion packets.
+**Review date:** 2026-07-15  
+**Status:** `v0.1.0` released Rust-first integration workpack; hosted CI passes, with external governance and live-adapter gates remaining.
 
 This workpack is the reviewed successor to v2. It keeps the strategic direction—Rust-first, OCEL-first, event-sourced, FOI-O bounded—but corrects several implementation assumptions and reduces the new maintenance surface.
 

@@ -1,7 +1,7 @@
 # Implementation status
 
-**Reviewed:** 2026-07-13  
-**Release state:** locally compiled/tested integration candidate; not yet a GitHub release
+**Reviewed:** 2026-07-15  
+**Release state:** `v0.1.0` is published on GitHub; Zenodo preservation remains a human-controlled gate
 
 ## Implemented
 
@@ -17,6 +17,7 @@
 - Privacy-safe public projection with publish, metadata-only, withhold, and review dispositions.
 - Rust-derived schema generator plus independently validated portable draft schemas.
 - Conductor tracks, GitHub issue/sub-issue material, repo-specific promotion packets, funding work packages, CI, dependency policy, and dry-run export scripts.
+- `CITATION.cff` and `.zenodo.json` release metadata for the citable `v0.1.0` workpack.
 
 ## Validation completed in this work environment
 
@@ -29,25 +30,26 @@
   clippy, documentation, CLI vertical slice, and scale benchmarks passed. The pinned 1.88 MSVC
   toolchain could not complete Rustup recovery on this workstation; MSVC linking also lacks the
   required linker environment.
+- GitHub Actions run [29339015413](https://github.com/edithatogo/foi-process/actions/runs/29339015413):
+  contracts, dependency policy, Rust 1.88, stable Rust, and feature-matrix jobs all passed.
+  The matrix compiles all features and executes all self-contained feature tests; DuckDB runtime
+  linking remains excluded because the hosted runner does not provide `libduckdb`.
 
-## Mandatory first export gates
+## Remaining gates
 
-1. Install Rust 1.88+ and run `scripts/ci-local.sh`.
-2. Re-run the feature-gated matrix on the pinned CI toolchain, including Parquet tests and all
-   feature combinations.
-3. Re-run `cargo deny check` in CI and resolve or explicitly retain the five unmatched
-   allow-list warnings reported by cargo-deny 0.20.2.
-4. Compare Rust-generated schemas with the portable compatibility schemas and record intentional differences.
-5. Run RFC 8785 parity vectors in Rust and at least one independent implementation.
-6. Map and validate a real, representative `fyi-archive-nz` sample, including WARC/WACZ and attachment records.
-7. Add bounded Parquet/Arrow writers and measure 1k, 10k, 200k-request, and revision-heavy workloads.
-8. Complete privacy, tikanga/data-governance, and threat-model review before publishing OCR text, embeddings, or semantic search.
+1. Compare Rust-generated schemas with the portable compatibility schemas and record intentional differences.
+2. Run RFC 8785 parity vectors in Rust and at least one independent implementation.
+3. Map and validate a real, representative `fyi-archive-nz` sample, including WARC/WACZ and attachment records.
+4. Complete privacy, tikanga/data-governance, and threat-model review before publishing OCR text, embeddings, or semantic search.
+5. Complete production `fyi-cli`/`fyi-archive` adapter integration and validate live evidence flows.
+6. Deploy and verify the Propel/Hugging Face dashboard.
+7. Preserve the GitHub release in Zenodo and record DOI evidence without overstating publication state.
 
 ## Deliberately not claimed as complete
 
 - Production `fyi-cli` emitter or `fyi-archive` adapter.
 - Durable transactional database state beyond atomic file snapshots and deterministic replay.
-- Full all-feature validation, including optional SQLite/DuckDB/dataframe integrations.
+- DuckDB runtime validation; all-features compilation is covered by CI, while hosted execution lacks `libduckdb`.
 - Full process discovery or conformance algorithms outside Rust4PM.
 - OCR engine selection or trained FOI signal models.
 - Certified statutory/legal conclusions.
