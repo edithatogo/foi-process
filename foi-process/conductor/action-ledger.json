@@ -1,0 +1,53 @@
+{
+  "reviewed_at": "2026-07-09",
+  "next_actions": [
+    {
+      "priority": 1,
+      "repo": "foi-process",
+      "action": "export branch and run Rust 1.88 CI",
+      "gate": "compile"
+    },
+    {
+      "priority": 2,
+      "repo": "foi-process",
+      "action": "compile RFC 8785 IDs, Rust4PM adapter, property tests, and generate Cargo.lock",
+      "gate": "compile_and_identity"
+    },
+    {
+      "priority": 3,
+      "repo": "foi-process/fyi-archive",
+      "action": "map a real 100-request archive sample",
+      "gate": "vertical_slice"
+    },
+    {
+      "priority": 4,
+      "repo": "fyi-cli",
+      "action": "implement EvidenceDelta emitter behind experimental flag",
+      "gate": "live_fixture"
+    },
+    {
+      "priority": 5,
+      "repo": "foi-o",
+      "action": "review vocabulary and promote event schemas",
+      "gate": "semantic_review"
+    },
+    {
+      "priority": 6,
+      "repo": "fe-reader",
+      "action": "emit first DocumentBundle from born-digital and scanned PDFs",
+      "gate": "document_fixture"
+    },
+    {
+      "priority": 7,
+      "repo": "rust4pm",
+      "action": "integration test existing AppendableOCEL then scope missing durability semantics",
+      "gate": "upstream_evidence"
+    },
+    {
+      "priority": 8,
+      "repo": "propel",
+      "action": "consume public projection and revision-aware summary",
+      "gate": "ui_consumer"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+gates:
+  compile:
+  - rust_1_88_msrv
+  - stable_rust
+  - rust4pm_feature
+  contracts:
+  - schema_examples_valid
+  - deterministic_ids
+  - backward_compatibility_report
+  - rfc8785_cross_language_vectors
+  - rust_portable_schema_reconciliation
+  replay:
+  - duplicate_idempotence
+  - stale_revision
+  - revision_gap
+  - conflict
+  - supersession
+  - retraction
+  - partition_position_gap
+  - partition_position_regression
+  - checkpoint_does_not_advance_on_quarantine
+  - restart_from_snapshot
+  - snapshot_state_hash_verified
+  - resume_journals_append_without_truncation
+  - checkpoint_written_after_state
+  - complete_normalized_table_journals
+  safety:
+  - human_certification_boundary
+  - privacy_projection
+  - no_unreviewed_ocr_publication
+  - explicit_human_review_record
+  - privacy_and_tikanga_review
+  performance:
+  - benchmark_1k
+  - benchmark_10k
+  - benchmark_full_corpus
+  - deterministic_output_hash
+  - correction_retraction_overhead
+  - bounded_memory_writer
+  promotion:
+  - named_consumer
+  - owner_repo_acceptance
+  - fixtures_and_docs
+  - duplicate_definition_removed
+  supply_chain:
+  - cargo_lock_committed
+  - cargo_deny_passes
+  - sbom_emitted
+  - github_actions_reviewed

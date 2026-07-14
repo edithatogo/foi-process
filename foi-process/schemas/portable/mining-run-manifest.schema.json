@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/foi-process/schema/mining-run-manifest.schema.json",
+  "title": "Mining Run Manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "run_id",
+    "created_at",
+    "source_dataset",
+    "source_revision",
+    "software_commit",
+    "rust_version",
+    "rust4pm_version",
+    "foi_process_version",
+    "privacy_profile",
+    "inputs",
+    "outputs"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_dataset": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "source_revision": {
+      "type": "string"
+    },
+    "source_manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "software_commit": {
+      "type": "string"
+    },
+    "rust_version": {
+      "type": "string"
+    },
+    "rust4pm_version": {
+      "type": "string"
+    },
+    "foi_process_version": {
+      "type": "string"
+    },
+    "parameters": {
+      "type": "object"
+    },
+    "privacy_profile": {
+      "type": "object",
+      "required": [
+        "sensitivity",
+        "access_tier",
+        "disposition"
+      ],
+      "properties": {
+        "sensitivity": {
+          "enum": [
+            "public",
+            "personal",
+            "sensitive_personal",
+            "restricted",
+            "unknown"
+          ]
+        },
+        "access_tier": {
+          "enum": [
+            "public",
+            "research",
+            "restricted",
+            "embargoed"
+          ]
+        },
+        "disposition": {
+          "enum": [
+            "publish",
+            "publish_metadata_only",
+            "withhold",
+            "needs_review"
+          ]
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assessed_by": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 512,
+          "pattern": "^\\S+:\\S+$"
+        },
+        "human_reviewed": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "sbom_artifact_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "environment": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

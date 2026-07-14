@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "generated_at": "2026-06-29T11:47:00Z",
+    "source": "https://fyi.org.nz",
+    "instance_id": "nz-fyi",
+    "jurisdiction": "NZ",
+    "version": "1",
+    "record_count": 2,
+    "schema": "fyi-archive-manifest",
+    "schema_version": "1.0.0",
+    "fetched_at": "2026-06-29T11:47:00Z",
+    "fyi_cli_version": "0.0.0-fixture"
+  },
+  "requests": [
+    {
+      "request_id": 1002,
+      "url_title": "second-request",
+      "title": "Second request",
+      "description": "Fixture request with an attachment",
+      "authority": "Fixture Authority",
+      "request_url": "https://fyi.org.nz/request/1002/second-request",
+      "json_api_url": "https://fyi.org.nz/request/1002/second-request.json",
+      "state": "successful",
+      "content_sha256": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "html_captured": true,
+      "attachments": [
+        {
+          "url": "https://fyi.org.nz/request/1002/response/1/attach/1/example.pdf",
+          "filename": "example.pdf",
+          "mime_type": "application/pdf",
+          "size_bytes": 12345
+        }
+      ],
+      "warc_record_ids": ["<urn:uuid:00000000-0000-0000-0000-000000001002>"],
+      "first_seen": "2026-06-01T00:00:00Z",
+      "last_updated": "2026-06-20T00:00:00Z"
+    },
+    {
+      "request_id": 1001,
+      "url_title": "first-request",
+      "title": "First request",
+      "authority": "Another Fixture Authority",
+      "state": "waiting_response",
+      "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "html_captured": true,
+      "warc_record_ids": [],
+      "first_seen": "2026-05-01T00:00:00Z",
+      "last_updated": "2026-06-10T00:00:00Z"
+    }
+  ]
+}

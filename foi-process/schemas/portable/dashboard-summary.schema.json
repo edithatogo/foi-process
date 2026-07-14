@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/foi-process/schema/dashboard-summary.schema.json",
+  "title": "Dashboard Summary",
+  "type": "object",
+  "required": [
+    "case_count",
+    "active_event_count",
+    "activities",
+    "edges",
+    "variants",
+    "waiting_time_histogram"
+  ],
+  "properties": {
+    "case_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "active_event_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "activities": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "waiting_time_histogram": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "additionalProperties": false
+}

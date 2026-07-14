@@ -1,0 +1,41 @@
+artefacts:
+  EvidenceDelta:
+    incubator: foi-process
+    destination: fyi-cli/crates/fyi-core
+    status: fixture_ready
+    gate: live_emitter_and_replay_consumer_pass
+  ProcessEvent:
+    incubator: foi-process
+    destination: foi-o/rust-contracts
+    status: fixture_ready
+    gate: archive_vertical_slice_and_schema_review
+  DocumentBundle:
+    incubator: foi-process
+    destination: fe-reader
+    status: contract_ready
+    gate: real_pdf_fixture
+  DocumentSignal:
+    incubator: foi-process
+    destination: nlp-policy-nz_and_foi-o
+    status: contract_ready
+    gate: evidence_grounded_signal_fixture
+  AppendableOCELAdapter:
+    incubator: foi-process
+    destination: remains_adapter
+    status: implemented
+    gate: rust4pm_feature_compile
+  GenericStreamingMining:
+    incubator: rust4pm_fork
+    destination: rust4pm_upstream
+    status: scoped
+    gate: benchmark_and_generic_api
+  ConformanceTrace:
+    incubator: foi-process
+    destination: axiom-rules-engine_and_foi-o
+    status: fixture_ready
+    gate: axiom_adapter_and_trace_schema_review
+  HumanReviewRecord:
+    incubator: foi-process
+    destination: foi-o_and_sourceright
+    status: fixture_ready
+    gate: review_workflow_consumer_and_privacy_review

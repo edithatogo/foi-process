@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/foi-process/schema/public-projection.schema.json",
+  "title": "Public Projection",
+  "type": "object",
+  "required": [
+    "policy_id",
+    "events",
+    "withheld_event_count",
+    "metadata_only_event_count"
+  ],
+  "properties": {
+    "policy_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "withheld_event_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "metadata_only_event_count": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false
+}

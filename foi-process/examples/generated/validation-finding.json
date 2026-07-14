@@ -1,0 +1,17 @@
+{
+  "rule_id": "oia-nz:IndicativeDeadlineCalculated",
+  "layer": "statutory",
+  "severity": "info",
+  "message": "An indicative deadline was calculated from observed request timing; this is not a certified legal conclusion.",
+  "subject_id": "urn:fyi-nz:request:demo-1",
+  "evidence": [
+    {
+      "evidence_id": "urn:foi-process:evidence:sha256:a33d1928732a74c3599dbe63ead7177d6bd97d0c3f0f5a955da5b075ec054690",
+      "role": "prov:primarySource"
+    }
+  ],
+  "requires_human_review": false,
+  "details": {
+    "calendar_profile": "nz:working-days:fixture"
+  }
+}

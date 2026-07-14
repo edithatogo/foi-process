@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/foi-process/schema/stream-checkpoint.schema.json",
+  "title": "Stream Checkpoint",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "checkpoint_id",
+    "consumer",
+    "created_at",
+    "partitions"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "checkpoint_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "consumer": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "partitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source",
+          "partition",
+          "last_sequence"
+        ],
+        "properties": {
+          "source": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          },
+          "partition": {
+            "type": "string"
+          },
+          "last_sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "watermark": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "state_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "attributes": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

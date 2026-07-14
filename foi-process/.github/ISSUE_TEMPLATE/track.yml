@@ -1,0 +1,23 @@
+name: Conductor track work
+about: Implement a task linked to a Conductor track
+labels: [track]
+body:
+  - type: input
+    id: track
+    attributes: {label: Conductor track, placeholder: T01}
+    validations: {required: true}
+  - type: input
+    id: owner
+    attributes: {label: Owning repository}
+    validations: {required: true}
+  - type: textarea
+    id: outcome
+    attributes: {label: Outcome and acceptance criteria}
+    validations: {required: true}
+  - type: textarea
+    id: evidence
+    attributes: {label: Fixtures, tests, benchmark, and privacy evidence}
+    validations: {required: true}
+  - type: input
+    id: promotion
+    attributes: {label: Promotion/upstream destination}

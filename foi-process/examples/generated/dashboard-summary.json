@@ -1,0 +1,88 @@
+{
+  "case_count": 1,
+  "active_event_count": 4,
+  "activities": [
+    {
+      "activity": "foio:AuthorityResponseReceived",
+      "count": 1
+    },
+    {
+      "activity": "foio:ClosedObserved",
+      "count": 1
+    },
+    {
+      "activity": "foio:ExtensionNotified",
+      "count": 1
+    },
+    {
+      "activity": "foio:RequestSent",
+      "count": 1
+    }
+  ],
+  "edges": [
+    {
+      "edge": {
+        "from": "foio:AuthorityResponseReceived",
+        "to": "foio:ExtensionNotified"
+      },
+      "count": 1
+    },
+    {
+      "edge": {
+        "from": "foio:ExtensionNotified",
+        "to": "foio:ClosedObserved"
+      },
+      "count": 1
+    },
+    {
+      "edge": {
+        "from": "foio:RequestSent",
+        "to": "foio:AuthorityResponseReceived"
+      },
+      "count": 1
+    }
+  ],
+  "variants": [
+    {
+      "activities": [
+        "foio:RequestSent",
+        "foio:AuthorityResponseReceived",
+        "foio:ExtensionNotified",
+        "foio:ClosedObserved"
+      ],
+      "count": 1
+    }
+  ],
+  "waiting_time_histogram": [
+    {
+      "key": {
+        "edge": {
+          "from": "foio:AuthorityResponseReceived",
+          "to": "foio:ExtensionNotified"
+        },
+        "log2_bucket": 21
+      },
+      "count": 1
+    },
+    {
+      "key": {
+        "edge": {
+          "from": "foio:ExtensionNotified",
+          "to": "foio:ClosedObserved"
+        },
+        "log2_bucket": 22
+      },
+      "count": 1
+    },
+    {
+      "key": {
+        "edge": {
+          "from": "foio:RequestSent",
+          "to": "foio:AuthorityResponseReceived"
+        },
+        "log2_bucket": 17
+      },
+      "count": 1
+    }
+  ]
+}

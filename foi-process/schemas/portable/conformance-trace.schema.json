@@ -1,0 +1,521 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/foi-process/schema/conformance-trace.schema.json",
+  "title": "Conformance Trace",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "trace_id",
+    "case_id",
+    "profile_id",
+    "engine_id",
+    "engine_version",
+    "created_at",
+    "assertion_status",
+    "steps",
+    "findings"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "trace_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "case_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "profile_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "engine_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "engine_version": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "assertion_status": {
+      "enum": [
+        "observed",
+        "candidate",
+        "inferred",
+        "asserted",
+        "human_certified",
+        "unknown"
+      ]
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "step_id",
+          "kind",
+          "label"
+        ],
+        "properties": {
+          "step_id": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          },
+          "kind": {
+            "enum": [
+              "input",
+              "evidence_check",
+              "calculation",
+              "decision",
+              "process_constraint",
+              "notice",
+              "external_reference"
+            ]
+          },
+          "label": {
+            "type": "string"
+          },
+          "input_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 512,
+              "pattern": "^\\S+:\\S+$"
+            }
+          },
+          "output_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 512,
+              "pattern": "^\\S+:\\S+$"
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "evidence_id"
+              ],
+              "properties": {
+                "evidence_id": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 512,
+                  "pattern": "^\\S+:\\S+$"
+                },
+                "selector": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "selector_type",
+                        "start",
+                        "end"
+                      ],
+                      "properties": {
+                        "selector_type": {
+                          "const": "bytes"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "end": {
+                          "type": "integer",
+                          "minimum": 0
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "selector_type",
+                        "span"
+                      ],
+                      "properties": {
+                        "selector_type": {
+                          "const": "text"
+                        },
+                        "span": {
+                          "type": "object",
+                          "required": [
+                            "start",
+                            "end"
+                          ],
+                          "properties": {
+                            "start": {
+                              "type": "integer",
+                              "minimum": 0
+                            },
+                            "end": {
+                              "type": "integer",
+                              "minimum": 0
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "selector_type",
+                        "page"
+                      ],
+                      "properties": {
+                        "selector_type": {
+                          "const": "page"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "selector_type",
+                        "bbox"
+                      ],
+                      "properties": {
+                        "selector_type": {
+                          "const": "bounding_box"
+                        },
+                        "bbox": {
+                          "type": "object",
+                          "required": [
+                            "page",
+                            "x",
+                            "y",
+                            "width",
+                            "height"
+                          ],
+                          "properties": {
+                            "page": {
+                              "type": "integer",
+                              "minimum": 1
+                            },
+                            "x": {
+                              "type": "number"
+                            },
+                            "y": {
+                              "type": "number"
+                            },
+                            "width": {
+                              "type": "number",
+                              "minimum": 0
+                            },
+                            "height": {
+                              "type": "number",
+                              "minimum": 0
+                            },
+                            "coordinate_system": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "selector_type",
+                        "pointer"
+                      ],
+                      "properties": {
+                        "selector_type": {
+                          "const": "json_pointer"
+                        },
+                        "pointer": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "selector_type"
+                      ],
+                      "properties": {
+                        "selector_type": {
+                          "const": "warc_payload"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "role": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 512,
+                  "pattern": "^\\S+:\\S+$"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "details": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "rule_id",
+          "layer",
+          "severity",
+          "message"
+        ],
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          },
+          "layer": {
+            "enum": [
+              "structural",
+              "semantic",
+              "process",
+              "statutory",
+              "privacy",
+              "data_quality"
+            ]
+          },
+          "severity": {
+            "enum": [
+              "info",
+              "warning",
+              "review_needed",
+              "error",
+              "critical"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "subject_id": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "evidence_id"
+              ],
+              "properties": {
+                "evidence_id": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 512,
+                  "pattern": "^\\S+:\\S+$"
+                },
+                "selector": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "selector_type",
+                        "start",
+                        "end"
+                      ],
+                      "properties": {
+                        "selector_type": {
+                          "const": "bytes"
+                        },
+                        "start": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "end": {
+                          "type": "integer",
+                          "minimum": 0
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "selector_type",
+                        "span"
+                      ],
+                      "properties": {
+                        "selector_type": {
+                          "const": "text"
+                        },
+                        "span": {
+                          "type": "object",
+                          "required": [
+                            "start",
+                            "end"
+                          ],
+                          "properties": {
+                            "start": {
+                              "type": "integer",
+                              "minimum": 0
+                            },
+                            "end": {
+                              "type": "integer",
+                              "minimum": 0
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "selector_type",
+                        "page"
+                      ],
+                      "properties": {
+                        "selector_type": {
+                          "const": "page"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "selector_type",
+                        "bbox"
+                      ],
+                      "properties": {
+                        "selector_type": {
+                          "const": "bounding_box"
+                        },
+                        "bbox": {
+                          "type": "object",
+                          "required": [
+                            "page",
+                            "x",
+                            "y",
+                            "width",
+                            "height"
+                          ],
+                          "properties": {
+                            "page": {
+                              "type": "integer",
+                              "minimum": 1
+                            },
+                            "x": {
+                              "type": "number"
+                            },
+                            "y": {
+                              "type": "number"
+                            },
+                            "width": {
+                              "type": "number",
+                              "minimum": 0
+                            },
+                            "height": {
+                              "type": "number",
+                              "minimum": 0
+                            },
+                            "coordinate_system": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "selector_type",
+                        "pointer"
+                      ],
+                      "properties": {
+                        "selector_type": {
+                          "const": "json_pointer"
+                        },
+                        "pointer": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "selector_type"
+                      ],
+                      "properties": {
+                        "selector_type": {
+                          "const": "warc_payload"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "role": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 512,
+                  "pattern": "^\\S+:\\S+$"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "requires_human_review": {
+            "type": "boolean"
+          },
+          "details": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

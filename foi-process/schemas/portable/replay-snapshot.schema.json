@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/foi-process/schema/replay-snapshot.schema.json",
+  "title": "Replay Snapshot",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "snapshot_id",
+    "consumer",
+    "created_at",
+    "records",
+    "partitions",
+    "state_hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "snapshot_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "consumer": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^\\S+:\\S+$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "logical_record_id",
+          "revision",
+          "last_delta_id"
+        ],
+        "properties": {
+          "logical_record_id": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "current_digest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "last_delta_id": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          },
+          "last_event_id": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "partitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source",
+          "partition",
+          "last_sequence"
+        ],
+        "properties": {
+          "source": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "pattern": "^\\S+:\\S+$"
+          },
+          "partition": {
+            "type": "string"
+          },
+          "last_sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "watermark": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "state_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "additionalProperties": false
+}

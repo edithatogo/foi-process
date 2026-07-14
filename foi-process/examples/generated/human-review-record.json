@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0-draft.1",
+  "review_id": "urn:foi-process:human-review:sha256:a3f3db0ba0c4b1c8f0e90794edd1943f7bdfc48719c3883264683a9f5c0f413e",
+  "subject_id": "urn:foi-process:signal:sha256:480e9c5ee35898a8c002d8bd26ff0d4996948cdb7c5437fa940c98320fbc9bed",
+  "reviewer_id": "urn:foi-process:reviewer:fixture-human",
+  "profile_id": "urn:foi-process:review-profile:foi-o-v0",
+  "reviewed_at": "2026-07-09T00:06:00Z",
+  "decision": "confirm",
+  "previous_status": "candidate",
+  "resulting_status": "human_certified",
+  "evidence": [
+    {
+      "evidence_id": "urn:foi-process:evidence:sha256:916da5d65c80f9b71594a441cc7985fb547c7f27f03d727fc6cade23d8fff636",
+      "selector": {
+        "selector_type": "bounding_box",
+        "bbox": {
+          "page": 1,
+          "x": 72.0,
+          "y": 110.0,
+          "width": 420.0,
+          "height": 24.0,
+          "coordinate_system": "pdf_points_top_left"
+        }
+      },
+      "role": "prov:primarySource"
+    }
+  ],
+  "rationale": "Fixture demonstrating an explicit human promotion boundary.",
+  "corrected_values": {}
+}

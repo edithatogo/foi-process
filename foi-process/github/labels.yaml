@@ -1,0 +1,12 @@
+labels:
+  - {name: "track", color: "1d76db"}
+  - {name: "contract", color: "5319e7"}
+  - {name: "rust4pm", color: "dea584"}
+  - {name: "archive", color: "0e8a16"}
+  - {name: "live", color: "0052cc"}
+  - {name: "ocr", color: "fbca04"}
+  - {name: "privacy", color: "b60205"}
+  - {name: "conformance", color: "d93f0b"}
+  - {name: "upstream", color: "c5def5"}
+  - {name: "promotion-gate", color: "bfdadc"}
+  - {name: "funding-evidence", color: "7057ff"}
