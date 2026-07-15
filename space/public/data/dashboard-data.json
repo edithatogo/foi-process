@@ -4,17 +4,18 @@
     "classification": "synthetic-fixture",
     "source_release": "v0.1.0",
     "generated_at": "2026-07-09T00:05:00Z",
-    "manifest_sha256": "1d1600aa87d759ef734982ffac7354466ce183737b513014094fbb6067a0c627"
+    "manifest_sha256": "6f5672ba9b017906f04ea4170d16abc19047d584e86d2a3b81dd32ae65a7fe03"
   },
   "metrics": {
     "case_count": 1,
     "active_event_count": 4,
     "activity_count": 4,
     "variant_count": 1,
-    "finding_count": 1
+    "finding_count": 1,
+    "scenario_count": 4
   },
   "quality": {
-    "manifest_file_count": 30,
+    "manifest_file_count": 38,
     "checksums_verified": true,
     "timestamp_coverage": 1.0,
     "evidence_coverage": 0.75,
@@ -235,6 +236,1569 @@
         "event_id": "urn:foi-process:event:sha256:7c54702656367adb4a244c447ad61e943feaf71e8b6a64e03d4a0eb36a700cb1",
         "object_id": "urn:fyi-nz:request:demo-1",
         "qualifier": "foip:case"
+      }
+    ]
+  },
+  "simulation": {
+    "summaries": [
+      {
+        "scenario_id": "baseline",
+        "label": "Baseline",
+        "description": "Stable demand and processing capacity.",
+        "case_count": 48,
+        "event_count": 192,
+        "revision_count": 192,
+        "corrected_case_count": 0,
+        "correction_rate": 0.0,
+        "median_cycle_days": 9.834,
+        "p90_cycle_days": 12.792,
+        "peak_backlog": 25,
+        "variant_count": 1,
+        "dominant_variant": [
+          "foio:RequestSent",
+          "foio:RequestAcknowledged",
+          "foio:DecisionIssued",
+          "foio:ClosedObserved"
+        ]
+      },
+      {
+        "scenario_id": "demand_surge",
+        "label": "Demand surge",
+        "description": "A concentrated request surge exceeds short-run closure capacity.",
+        "case_count": 84,
+        "event_count": 336,
+        "revision_count": 343,
+        "corrected_case_count": 7,
+        "correction_rate": 0.0833,
+        "median_cycle_days": 20.875,
+        "p90_cycle_days": 27.5,
+        "peak_backlog": 74,
+        "variant_count": 1,
+        "dominant_variant": [
+          "foio:RequestSent",
+          "foio:RequestAcknowledged",
+          "foio:DecisionIssued",
+          "foio:ClosedObserved"
+        ]
+      },
+      {
+        "scenario_id": "concept_drift",
+        "label": "Concept drift",
+        "description": "Later cases introduce clarification work and a slower path.",
+        "case_count": 60,
+        "event_count": 271,
+        "revision_count": 273,
+        "corrected_case_count": 2,
+        "correction_rate": 0.0333,
+        "median_cycle_days": 15.396,
+        "p90_cycle_days": 22.708,
+        "peak_backlog": 32,
+        "variant_count": 2,
+        "dominant_variant": [
+          "foio:RequestSent",
+          "foio:RequestAcknowledged",
+          "foio:ClarificationRequested",
+          "foio:DecisionIssued",
+          "foio:ClosedObserved"
+        ]
+      },
+      {
+        "scenario_id": "correction_stress",
+        "label": "Correction stress",
+        "description": "High revision pressure tests latest-revision materialisation.",
+        "case_count": 60,
+        "event_count": 240,
+        "revision_count": 267,
+        "corrected_case_count": 27,
+        "correction_rate": 0.45,
+        "median_cycle_days": 9.625,
+        "p90_cycle_days": 12.875,
+        "peak_backlog": 27,
+        "variant_count": 1,
+        "dominant_variant": [
+          "foio:RequestSent",
+          "foio:RequestAcknowledged",
+          "foio:DecisionIssued",
+          "foio:ClosedObserved"
+        ]
+      }
+    ],
+    "daily_metrics": [
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-03",
+        "arrivals": 4,
+        "closures": 0,
+        "backlog": 4,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-04",
+        "arrivals": 1,
+        "closures": 0,
+        "backlog": 5,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-05",
+        "arrivals": 3,
+        "closures": 0,
+        "backlog": 8,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-06",
+        "arrivals": 1,
+        "closures": 0,
+        "backlog": 9,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-07",
+        "arrivals": 3,
+        "closures": 0,
+        "backlog": 12,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-08",
+        "arrivals": 4,
+        "closures": 0,
+        "backlog": 16,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-09",
+        "arrivals": 1,
+        "closures": 0,
+        "backlog": 17,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-10",
+        "arrivals": 6,
+        "closures": 0,
+        "backlog": 23,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-11",
+        "arrivals": 1,
+        "closures": 0,
+        "backlog": 24,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-12",
+        "arrivals": 1,
+        "closures": 0,
+        "backlog": 25,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-13",
+        "arrivals": 1,
+        "closures": 2,
+        "backlog": 24,
+        "mean_closed_cycle_days": 7.958,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-14",
+        "arrivals": 2,
+        "closures": 2,
+        "backlog": 24,
+        "mean_closed_cycle_days": 10.188,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-15",
+        "arrivals": 1,
+        "closures": 2,
+        "backlog": 23,
+        "mean_closed_cycle_days": 8.438,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-16",
+        "arrivals": 0,
+        "closures": 4,
+        "backlog": 19,
+        "mean_closed_cycle_days": 11.906,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-17",
+        "arrivals": 2,
+        "closures": 4,
+        "backlog": 17,
+        "mean_closed_cycle_days": 9.698,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-18",
+        "arrivals": 4,
+        "closures": 6,
+        "backlog": 15,
+        "mean_closed_cycle_days": 8.743,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-19",
+        "arrivals": 2,
+        "closures": 0,
+        "backlog": 17,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-20",
+        "arrivals": 0,
+        "closures": 3,
+        "backlog": 14,
+        "mean_closed_cycle_days": 8.93,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-21",
+        "arrivals": 2,
+        "closures": 2,
+        "backlog": 14,
+        "mean_closed_cycle_days": 10.812,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-22",
+        "arrivals": 4,
+        "closures": 1,
+        "backlog": 17,
+        "mean_closed_cycle_days": 7.458,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-23",
+        "arrivals": 1,
+        "closures": 2,
+        "backlog": 16,
+        "mean_closed_cycle_days": 10.062,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-24",
+        "arrivals": 1,
+        "closures": 2,
+        "backlog": 15,
+        "mean_closed_cycle_days": 8.416,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-25",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 15,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-26",
+        "arrivals": 3,
+        "closures": 0,
+        "backlog": 18,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-27",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 18,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-28",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 16,
+        "mean_closed_cycle_days": 8.291,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-29",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 14,
+        "mean_closed_cycle_days": 9.166,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-30",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 12,
+        "mean_closed_cycle_days": 12.562,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-03-31",
+        "arrivals": 0,
+        "closures": 3,
+        "backlog": 9,
+        "mean_closed_cycle_days": 10.861,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-04-01",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 8,
+        "mean_closed_cycle_days": 13.458,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-04-02",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 6,
+        "mean_closed_cycle_days": 8.75,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-04-03",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 4,
+        "mean_closed_cycle_days": 12.021,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-04-04",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 3,
+        "mean_closed_cycle_days": 12.542,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-04-05",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 2,
+        "mean_closed_cycle_days": 10.125,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-04-06",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 1,
+        "mean_closed_cycle_days": 12.75,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "baseline",
+        "date": "2025-04-07",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 0,
+        "mean_closed_cycle_days": 12.458,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-03",
+        "arrivals": 3,
+        "closures": 0,
+        "backlog": 3,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-04",
+        "arrivals": 1,
+        "closures": 0,
+        "backlog": 4,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-05",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 4,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-06",
+        "arrivals": 2,
+        "closures": 0,
+        "backlog": 6,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-07",
+        "arrivals": 1,
+        "closures": 0,
+        "backlog": 7,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-08",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 7,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-09",
+        "arrivals": 2,
+        "closures": 0,
+        "backlog": 9,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-10",
+        "arrivals": 3,
+        "closures": 0,
+        "backlog": 12,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-11",
+        "arrivals": 14,
+        "closures": 0,
+        "backlog": 26,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-12",
+        "arrivals": 7,
+        "closures": 3,
+        "backlog": 30,
+        "mean_closed_cycle_days": 8.722,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-13",
+        "arrivals": 14,
+        "closures": 0,
+        "backlog": 44,
+        "mean_closed_cycle_days": null,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-14",
+        "arrivals": 6,
+        "closures": 1,
+        "backlog": 49,
+        "mean_closed_cycle_days": 10.417,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-15",
+        "arrivals": 11,
+        "closures": 0,
+        "backlog": 60,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-16",
+        "arrivals": 7,
+        "closures": 2,
+        "backlog": 65,
+        "mean_closed_cycle_days": 9.542,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-17",
+        "arrivals": 1,
+        "closures": 1,
+        "backlog": 65,
+        "mean_closed_cycle_days": 10.833,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-18",
+        "arrivals": 1,
+        "closures": 0,
+        "backlog": 66,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-19",
+        "arrivals": 1,
+        "closures": 2,
+        "backlog": 65,
+        "mean_closed_cycle_days": 10.0,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-20",
+        "arrivals": 1,
+        "closures": 0,
+        "backlog": 66,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-21",
+        "arrivals": 2,
+        "closures": 0,
+        "backlog": 68,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-22",
+        "arrivals": 2,
+        "closures": 0,
+        "backlog": 70,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-23",
+        "arrivals": 1,
+        "closures": 0,
+        "backlog": 71,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-24",
+        "arrivals": 4,
+        "closures": 1,
+        "backlog": 74,
+        "mean_closed_cycle_days": 6.875,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-25",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 73,
+        "mean_closed_cycle_days": 6.167,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-26",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 72,
+        "mean_closed_cycle_days": 8.542,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-27",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 72,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-28",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 70,
+        "mean_closed_cycle_days": 11.438,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-29",
+        "arrivals": 0,
+        "closures": 3,
+        "backlog": 67,
+        "mean_closed_cycle_days": 18.014,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-30",
+        "arrivals": 0,
+        "closures": 3,
+        "backlog": 64,
+        "mean_closed_cycle_days": 13.806,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-03-31",
+        "arrivals": 0,
+        "closures": 6,
+        "backlog": 58,
+        "mean_closed_cycle_days": 15.66,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-01",
+        "arrivals": 0,
+        "closures": 4,
+        "backlog": 54,
+        "mean_closed_cycle_days": 18.667,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-02",
+        "arrivals": 0,
+        "closures": 5,
+        "backlog": 49,
+        "mean_closed_cycle_days": 11.608,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-03",
+        "arrivals": 0,
+        "closures": 6,
+        "backlog": 43,
+        "mean_closed_cycle_days": 20.132,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-04",
+        "arrivals": 0,
+        "closures": 5,
+        "backlog": 38,
+        "mean_closed_cycle_days": 23.467,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-05",
+        "arrivals": 0,
+        "closures": 7,
+        "backlog": 31,
+        "mean_closed_cycle_days": 21.256,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-06",
+        "arrivals": 0,
+        "closures": 5,
+        "backlog": 26,
+        "mean_closed_cycle_days": 22.208,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-07",
+        "arrivals": 0,
+        "closures": 4,
+        "backlog": 22,
+        "mean_closed_cycle_days": 24.531,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-08",
+        "arrivals": 0,
+        "closures": 5,
+        "backlog": 17,
+        "mean_closed_cycle_days": 26.408,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-09",
+        "arrivals": 0,
+        "closures": 7,
+        "backlog": 10,
+        "mean_closed_cycle_days": 26.571,
+        "correction_events": 2
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-10",
+        "arrivals": 0,
+        "closures": 5,
+        "backlog": 5,
+        "mean_closed_cycle_days": 26.658,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-11",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 4,
+        "mean_closed_cycle_days": 28.458,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-12",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 3,
+        "mean_closed_cycle_days": 29.542,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-13",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 3,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-14",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 1,
+        "mean_closed_cycle_days": 29.542,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "demand_surge",
+        "date": "2025-04-15",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 0,
+        "mean_closed_cycle_days": 29.583,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-03",
+        "arrivals": 3,
+        "closures": 0,
+        "backlog": 3,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-04",
+        "arrivals": 2,
+        "closures": 0,
+        "backlog": 5,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-05",
+        "arrivals": 3,
+        "closures": 0,
+        "backlog": 8,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-06",
+        "arrivals": 2,
+        "closures": 0,
+        "backlog": 10,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-07",
+        "arrivals": 2,
+        "closures": 0,
+        "backlog": 12,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-08",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 12,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-09",
+        "arrivals": 3,
+        "closures": 0,
+        "backlog": 15,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-10",
+        "arrivals": 3,
+        "closures": 2,
+        "backlog": 16,
+        "mean_closed_cycle_days": 6.917,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-11",
+        "arrivals": 3,
+        "closures": 0,
+        "backlog": 19,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-12",
+        "arrivals": 4,
+        "closures": 1,
+        "backlog": 22,
+        "mean_closed_cycle_days": 9.375,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-13",
+        "arrivals": 2,
+        "closures": 2,
+        "backlog": 22,
+        "mean_closed_cycle_days": 8.25,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-14",
+        "arrivals": 2,
+        "closures": 0,
+        "backlog": 24,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-15",
+        "arrivals": 2,
+        "closures": 1,
+        "backlog": 25,
+        "mean_closed_cycle_days": 9.5,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-16",
+        "arrivals": 2,
+        "closures": 2,
+        "backlog": 25,
+        "mean_closed_cycle_days": 9.771,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-17",
+        "arrivals": 4,
+        "closures": 1,
+        "backlog": 28,
+        "mean_closed_cycle_days": 12.125,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-18",
+        "arrivals": 6,
+        "closures": 3,
+        "backlog": 31,
+        "mean_closed_cycle_days": 10.333,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-19",
+        "arrivals": 2,
+        "closures": 3,
+        "backlog": 30,
+        "mean_closed_cycle_days": 10.375,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-20",
+        "arrivals": 3,
+        "closures": 2,
+        "backlog": 31,
+        "mean_closed_cycle_days": 10.021,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-21",
+        "arrivals": 3,
+        "closures": 2,
+        "backlog": 32,
+        "mean_closed_cycle_days": 10.292,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-22",
+        "arrivals": 2,
+        "closures": 5,
+        "backlog": 29,
+        "mean_closed_cycle_days": 10.083,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-23",
+        "arrivals": 3,
+        "closures": 2,
+        "backlog": 30,
+        "mean_closed_cycle_days": 11.729,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-24",
+        "arrivals": 2,
+        "closures": 0,
+        "backlog": 32,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-25",
+        "arrivals": 0,
+        "closures": 3,
+        "backlog": 29,
+        "mean_closed_cycle_days": 11.75,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-26",
+        "arrivals": 2,
+        "closures": 0,
+        "backlog": 31,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-27",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 31,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-28",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 31,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-29",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 31,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-30",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 31,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-03-31",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 31,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-01",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 31,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-02",
+        "arrivals": 0,
+        "closures": 3,
+        "backlog": 28,
+        "mean_closed_cycle_days": 15.945,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-03",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 28,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-04",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 26,
+        "mean_closed_cycle_days": 18.209,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-05",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 25,
+        "mean_closed_cycle_days": 18.667,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-06",
+        "arrivals": 0,
+        "closures": 3,
+        "backlog": 22,
+        "mean_closed_cycle_days": 20.514,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-07",
+        "arrivals": 0,
+        "closures": 3,
+        "backlog": 19,
+        "mean_closed_cycle_days": 20.139,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-08",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 17,
+        "mean_closed_cycle_days": 19.521,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-09",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 15,
+        "mean_closed_cycle_days": 20.083,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-10",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 13,
+        "mean_closed_cycle_days": 22.271,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-11",
+        "arrivals": 0,
+        "closures": 5,
+        "backlog": 8,
+        "mean_closed_cycle_days": 19.608,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-12",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 7,
+        "mean_closed_cycle_days": 26.458,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-13",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 5,
+        "mean_closed_cycle_days": 21.688,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-14",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 4,
+        "mean_closed_cycle_days": 24.875,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-15",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 3,
+        "mean_closed_cycle_days": 22.0,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-16",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 1,
+        "mean_closed_cycle_days": 23.354,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-17",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 1,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-18",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 1,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "concept_drift",
+        "date": "2025-04-19",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 0,
+        "mean_closed_cycle_days": 24.25,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-03",
+        "arrivals": 5,
+        "closures": 0,
+        "backlog": 5,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-04",
+        "arrivals": 3,
+        "closures": 0,
+        "backlog": 8,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-05",
+        "arrivals": 1,
+        "closures": 0,
+        "backlog": 9,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-06",
+        "arrivals": 4,
+        "closures": 0,
+        "backlog": 13,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-07",
+        "arrivals": 3,
+        "closures": 0,
+        "backlog": 16,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-08",
+        "arrivals": 2,
+        "closures": 0,
+        "backlog": 18,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-09",
+        "arrivals": 2,
+        "closures": 0,
+        "backlog": 20,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-10",
+        "arrivals": 4,
+        "closures": 0,
+        "backlog": 24,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-11",
+        "arrivals": 1,
+        "closures": 3,
+        "backlog": 22,
+        "mean_closed_cycle_days": 7.43,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-12",
+        "arrivals": 3,
+        "closures": 0,
+        "backlog": 25,
+        "mean_closed_cycle_days": null,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-13",
+        "arrivals": 4,
+        "closures": 2,
+        "backlog": 27,
+        "mean_closed_cycle_days": 8.459,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-14",
+        "arrivals": 1,
+        "closures": 4,
+        "backlog": 24,
+        "mean_closed_cycle_days": 8.5,
+        "correction_events": 2
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-15",
+        "arrivals": 1,
+        "closures": 2,
+        "backlog": 23,
+        "mean_closed_cycle_days": 10.104,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-16",
+        "arrivals": 1,
+        "closures": 2,
+        "backlog": 22,
+        "mean_closed_cycle_days": 10.812,
+        "correction_events": 3
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-17",
+        "arrivals": 4,
+        "closures": 2,
+        "backlog": 24,
+        "mean_closed_cycle_days": 11.188,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-18",
+        "arrivals": 2,
+        "closures": 3,
+        "backlog": 23,
+        "mean_closed_cycle_days": 7.778,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-19",
+        "arrivals": 1,
+        "closures": 4,
+        "backlog": 20,
+        "mean_closed_cycle_days": 10.458,
+        "correction_events": 3
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-20",
+        "arrivals": 2,
+        "closures": 1,
+        "backlog": 21,
+        "mean_closed_cycle_days": 10.375,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-21",
+        "arrivals": 2,
+        "closures": 2,
+        "backlog": 21,
+        "mean_closed_cycle_days": 13.417,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-22",
+        "arrivals": 5,
+        "closures": 2,
+        "backlog": 24,
+        "mean_closed_cycle_days": 7.958,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-23",
+        "arrivals": 4,
+        "closures": 4,
+        "backlog": 24,
+        "mean_closed_cycle_days": 10.323,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-24",
+        "arrivals": 2,
+        "closures": 2,
+        "backlog": 24,
+        "mean_closed_cycle_days": 10.896,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-25",
+        "arrivals": 1,
+        "closures": 1,
+        "backlog": 24,
+        "mean_closed_cycle_days": 6.333,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-26",
+        "arrivals": 2,
+        "closures": 2,
+        "backlog": 24,
+        "mean_closed_cycle_days": 10.75,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-27",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 23,
+        "mean_closed_cycle_days": 10.375,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-28",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 22,
+        "mean_closed_cycle_days": 12.5,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-29",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 21,
+        "mean_closed_cycle_days": 12.208,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-30",
+        "arrivals": 0,
+        "closures": 4,
+        "backlog": 17,
+        "mean_closed_cycle_days": 9.261,
+        "correction_events": 5
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-03-31",
+        "arrivals": 0,
+        "closures": 4,
+        "backlog": 13,
+        "mean_closed_cycle_days": 10.667,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-04-01",
+        "arrivals": 0,
+        "closures": 7,
+        "backlog": 6,
+        "mean_closed_cycle_days": 10.226,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-04-02",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 4,
+        "mean_closed_cycle_days": 9.041,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-04-03",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 4,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-04-04",
+        "arrivals": 0,
+        "closures": 2,
+        "backlog": 2,
+        "mean_closed_cycle_days": 10.271,
+        "correction_events": 1
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-04-05",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 1,
+        "mean_closed_cycle_days": 13.125,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-04-06",
+        "arrivals": 0,
+        "closures": 0,
+        "backlog": 1,
+        "mean_closed_cycle_days": null,
+        "correction_events": 0
+      },
+      {
+        "scenario_id": "correction_stress",
+        "date": "2025-04-07",
+        "arrivals": 0,
+        "closures": 1,
+        "backlog": 0,
+        "mean_closed_cycle_days": 11.75,
+        "correction_events": 0
       }
     ]
   }
