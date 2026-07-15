@@ -83,6 +83,13 @@ type ScenarioDaily = {
   correction_events: number;
 };
 
+type ScenarioProcessModel = {
+  scenario_id: string;
+  activities: { activity: string; count: number }[];
+  edges: { source: string; target: string; count: number; mean_wait_days: number }[];
+  variants: { rank: number; activities: string[]; count: number; share: number }[];
+};
+
 type DashboardData = {
   meta: {
     dataset_id: string;
@@ -109,7 +116,7 @@ type DashboardData = {
   variants: VariantRow[];
   cases: CaseRow[];
   findings: FindingRow[];
-  simulation: { summaries: ScenarioSummary[]; daily_metrics: ScenarioDaily[] };
+  simulation: { summaries: ScenarioSummary[]; daily_metrics: ScenarioDaily[]; process_models: ScenarioProcessModel[] };
 };
 
 type Tab = "overview" | "process" | "variants" | "scenarios" | "cases" | "quality";
@@ -190,6 +197,10 @@ function Panel({ title, subtitle, children, action }: { title: string; subtitle?
       {children}
     </section>
   );
+}
+
+function ChartLegend({ items }: { items: { label: string; color: string }[] }) {
+  return <div className="scenario-chart-legend">{items.map((item) => <span key={item.label}><i style={{ background: item.color }} />{item.label}</span>)}</div>;
 }
 
 function Overview({ data, events, cases }: { data: DashboardData; events: EventRow[]; cases: CaseRow[] }) {
@@ -328,10 +339,10 @@ function ScenariosView({ data }: { data: DashboardData }) {
   const [selected, setSelected] = useState(summaries[0]?.scenario_id ?? "baseline");
   const current = summaries.find((item) => item.scenario_id === selected) ?? summaries[0];
   const daily = data.simulation.daily_metrics.filter((item) => item.scenario_id === current?.scenario_id);
+  const process = data.simulation.process_models.find((item) => item.scenario_id === current?.scenario_id);
   const comparison = {
     color: [palette.coral, palette.blue], tooltip: { trigger: "axis", renderMode: "richText" },
-    legend: { bottom: 0, data: ["Peak backlog", "P90 cycle"] },
-    grid: { left: 16, right: 18, top: 20, bottom: 44, containLabel: true },
+    grid: { left: 16, right: 18, top: 20, bottom: 16, containLabel: true },
     xAxis: { type: "category", data: summaries.map((item) => item.label), axisLabel: { interval: 0 } },
     yAxis: [{ type: "value", name: "Cases", splitLine: { lineStyle: { color: palette.grid } } }, { type: "value", name: "Days", splitLine: { show: false } }],
     series: [
@@ -341,16 +352,42 @@ function ScenariosView({ data }: { data: DashboardData }) {
   };
   const trajectory = {
     color: [palette.green, palette.blue, palette.gold, palette.coral], tooltip: { trigger: "axis", renderMode: "richText" },
-    legend: { bottom: 0, data: ["Backlog", "Arrivals", "Closures", "Corrections"] },
-    grid: { left: 15, right: 16, top: 20, bottom: 48, containLabel: true },
+    grid: { left: 15, right: 16, top: 20, bottom: 20, containLabel: true },
     xAxis: { type: "category", data: daily.map((item) => item.date.slice(5)), axisLabel: { interval: Math.max(0, Math.floor(daily.length / 8) - 1) } },
     yAxis: { type: "value", minInterval: 1, splitLine: { lineStyle: { color: palette.grid } } },
     series: [
       { name: "Backlog", type: "line", smooth: true, showSymbol: false, areaStyle: { opacity: 0.12 }, data: daily.map((item) => item.backlog) },
       { name: "Arrivals", type: "bar", stack: "flow", barMaxWidth: 9, data: daily.map((item) => item.arrivals) },
       { name: "Closures", type: "bar", stack: "flow", barMaxWidth: 9, data: daily.map((item) => -item.closures) },
-      { name: "Corrections", type: "scatter", symbolSize: 7, data: daily.map((item) => item.correction_events) },
+      { name: "Corrections", type: "line", showSymbol: true, symbol: "diamond", symbolSize: 7, lineStyle: { width: 0 }, data: daily.map((item) => item.correction_events) },
     ],
+  };
+  const activityRows = [...(process?.activities ?? [])].reverse();
+  const activityMix = {
+    color: [palette.teal], tooltip: { trigger: "axis", renderMode: "richText" },
+    grid: { left: 10, right: 20, top: 16, bottom: 16, containLabel: true },
+    xAxis: { type: "value", minInterval: 1, splitLine: { lineStyle: { color: palette.grid } } },
+    yAxis: { type: "category", data: activityRows.map((item) => shortActivity(item.activity)), axisLine: { show: false }, axisTick: { show: false } },
+    series: [{ type: "bar", data: activityRows.map((item) => item.count), barMaxWidth: 25, itemStyle: { borderRadius: [0, 3, 3, 0] } }],
+  };
+  const processFlow = {
+    tooltip: { renderMode: "richText", formatter: (item: { dataType: string; data: { name?: string; count?: number; source?: string; target?: string; mean_wait_days?: number } }) => item.dataType === "node"
+      ? `${item.data.name}\n${item.data.count} events`
+      : `${item.data.source} to ${item.data.target}\n${item.data.count} transitions · ${item.data.mean_wait_days?.toFixed(1)} days mean` },
+    series: [{
+      type: "sankey", left: 18, right: 112, top: 18, bottom: 18, nodeWidth: 20, nodeGap: 18,
+      emphasis: { focus: "adjacency" }, draggable: false,
+      label: { color: palette.ink, fontSize: 10, width: 94, overflow: "break", lineHeight: 13 },
+      lineStyle: { color: "gradient", opacity: 0.45, curveness: 0.5 },
+      data: (process?.activities ?? []).map((item, index) => ({
+        name: shortActivity(item.activity), count: item.count,
+        itemStyle: { color: [palette.green, palette.blue, palette.gold, palette.coral, palette.teal][index % 5] },
+      })),
+      links: (process?.edges ?? []).map((edge) => ({
+        source: shortActivity(edge.source), target: shortActivity(edge.target), value: edge.count,
+        count: edge.count, mean_wait_days: edge.mean_wait_days,
+      })),
+    }],
   };
   if (!current) return <Panel title="Simulation scenarios"><div className="empty-state">No scenario projection deposited.</div></Panel>;
   return (
@@ -365,8 +402,19 @@ function ScenariosView({ data }: { data: DashboardData }) {
         <Metric label="Correction rate" value={Math.round(current.correction_rate * 100) + "%"} detail={current.corrected_case_count + " corrected cases"} icon={FileCheck2} />
       </div>
       <div className="scenario-grid">
-        <Panel title="Comparative pressure" subtitle="Peak open cases and tail cycle time across scenarios"><ReactECharts option={comparison} style={{ height: 350 }} /></Panel>
-        <Panel title={current.label + " trajectory"} subtitle={current.description}><ReactECharts option={trajectory} style={{ height: 350 }} /></Panel>
+        <Panel title="Comparative pressure" subtitle="Peak open cases and tail cycle time across scenarios"><ReactECharts option={comparison} style={{ height: 315 }} /><ChartLegend items={[{ label: "Peak backlog", color: palette.coral }, { label: "P90 cycle", color: palette.blue }]} /></Panel>
+        <Panel title={current.label + " trajectory"} subtitle={current.description}><ReactECharts option={trajectory} style={{ height: 315 }} /><ChartLegend items={[{ label: "Backlog", color: palette.green }, { label: "Arrivals", color: palette.blue }, { label: "Closures", color: palette.gold }, { label: "Corrections", color: palette.coral }]} /></Panel>
+      </div>
+      <div className="scenario-mining-grid">
+        <Panel title="Activity mix" subtitle={`${current.event_count} active events`}><ReactECharts option={activityMix} style={{ height: 330 }} /></Panel>
+        <Panel title="Directly-follows flow" subtitle={`${process?.edges.length ?? 0} observed transitions`}><ReactECharts option={processFlow} style={{ height: 330 }} /></Panel>
+        <Panel title="Trace variants" subtitle={`${process?.variants.length ?? 0} observed path${process?.variants.length === 1 ? "" : "s"}`}>
+          <div className="scenario-variant-list">{(process?.variants ?? []).map((variant) => <article key={variant.rank}>
+            <header><strong>Variant {variant.rank}</strong><span>{Math.round(variant.share * 100)}% · {variant.count} cases</span></header>
+            <div className="variant-path">{variant.activities.map((activity, index) => <span key={`${activity}-${index}`}>{shortActivity(activity)}{index < variant.activities.length - 1 && <ChevronRight size={12} />}</span>)}</div>
+            <div className="variant-share"><i style={{ width: `${Math.max(3, variant.share * 100)}%` }} /></div>
+          </article>)}</div>
+        </Panel>
       </div>
       <Panel title="Scenario catalogue" subtitle="Deterministic workload and revision stress profiles">
         <div className="scenario-catalogue">{summaries.map((item) => <article key={item.scenario_id} className={item.scenario_id === current.scenario_id ? "active" : ""}>
