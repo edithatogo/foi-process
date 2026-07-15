@@ -59,10 +59,27 @@ jobs:
           SPACE_ID: ${{ inputs.space_id }}
         run: |
           test -n "${HF_TOKEN:-}" || { echo 'HF_TOKEN secret is required'; exit 1; }
-          hf repos create "$SPACE_ID" --type space --space-sdk static --exist-ok
-          hf upload "$SPACE_ID" space . --type space \
-            --exclude 'node_modules/**' \
-            --commit-message "Publish verified foi-process explorer"
+          hf repo create "$SPACE_ID" --repo-type space --space-sdk static --exist-ok
+          python - <<'PY'
+          import os
+          import shutil
+          import tempfile
+          from pathlib import Path
+
+          from huggingface_hub import HfApi
+
+          with tempfile.TemporaryDirectory(prefix="foi-process-space-publish-") as temp:
+              publish = Path(temp)
+              shutil.copytree("space", publish, dirs_exist_ok=True, ignore=shutil.ignore_patterns("node_modules"))
+              shutil.copytree("space/dist", publish, dirs_exist_ok=True)
+              HfApi(token=os.environ["HF_TOKEN"]).upload_folder(
+                  repo_id=os.environ["SPACE_ID"],
+                  repo_type="space",
+                  folder_path=publish,
+                  path_in_repo=".",
+                  commit_message="Publish verified foi-process explorer",
+              )
+          PY
       - name: Verify published Space revision and runtime
         if: ${{ inputs.publish }}
         env:
