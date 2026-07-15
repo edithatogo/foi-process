@@ -1,0 +1,203 @@
+{
+  "schema_version": "1.0.0",
+  "created_at": "2026-07-15T02:19:34.012759Z",
+  "warning": "Host-specific benchmark evidence; compare like-for-like runners and release builds.",
+  "software_commit": "f26017d59b9193083ff75283f7c614f8960d9abb-dirty",
+  "rustc": "rustc 1.97.0 (2d8144b78 2026-07-07)",
+  "host": {
+    "platform": "Windows-11-10.0.26100-SP0",
+    "machine": "AMD64",
+    "logical_cpu_count": 22
+  },
+  "parameters": {
+    "events_per_case": 5,
+    "correction_every": 20,
+    "retraction_every": 1000,
+    "repetitions": 3
+  },
+  "runs": [
+    {
+      "profile": "1k",
+      "cases": 1000,
+      "baseline": {
+        "schema_version": "1.0.0",
+        "cases": 1000,
+        "events_per_case": 5,
+        "input_revisions": 5000,
+        "corrections": 0,
+        "retractions": 0,
+        "active_cases": 1000,
+        "active_events": 5000,
+        "output_json_bytes": 1226,
+        "output_sha256": "c330e979bdf106c665a5adc1e515674179dfce9145c4f185116b71396d33defc",
+        "elapsed_seconds": {
+          "median": 0.0836783,
+          "minimum": 0.0811379,
+          "maximum": 0.0889021,
+          "samples": [
+            0.0889021,
+            0.0811379,
+            0.0836783
+          ]
+        },
+        "revisions_per_second": {
+          "median": 59752.6479385934,
+          "minimum": 56241.64108609358,
+          "maximum": 61623.48298390764
+        },
+        "peak_resident_bytes_max": 9273344
+      },
+      "correction_retraction": {
+        "schema_version": "1.0.0",
+        "cases": 1000,
+        "events_per_case": 5,
+        "input_revisions": 5255,
+        "corrections": 250,
+        "retractions": 5,
+        "active_cases": 1000,
+        "active_events": 4995,
+        "output_json_bytes": 1337,
+        "output_sha256": "f5c4075c4cf228adcf6eca49cb7abf909f98be3776090983f7af48383db122b0",
+        "elapsed_seconds": {
+          "median": 0.0778301,
+          "minimum": 0.058318,
+          "maximum": 0.168236,
+          "samples": [
+            0.058318,
+            0.168236,
+            0.0778301
+          ]
+        },
+        "revisions_per_second": {
+          "median": 67518.86480937323,
+          "minimum": 31235.882926365346,
+          "maximum": 90109.40018519154
+        },
+        "peak_resident_bytes_max": 9363456
+      },
+      "stress_elapsed_ratio": 0.9301109128651036
+    },
+    {
+      "profile": "10k",
+      "cases": 10000,
+      "baseline": {
+        "schema_version": "1.0.0",
+        "cases": 10000,
+        "events_per_case": 5,
+        "input_revisions": 50000,
+        "corrections": 0,
+        "retractions": 0,
+        "active_cases": 10000,
+        "active_events": 50000,
+        "output_json_bytes": 1242,
+        "output_sha256": "3f68ad7ebbba356fa906264f04d49585eb04be29b3de417121fcadc7c4c08c71",
+        "elapsed_seconds": {
+          "median": 1.3822005,
+          "minimum": 1.1176098,
+          "maximum": 2.2617032,
+          "samples": [
+            2.2617032,
+            1.1176098,
+            1.3822005
+          ]
+        },
+        "revisions_per_second": {
+          "median": 36174.20193380049,
+          "minimum": 22107.233168348528,
+          "maximum": 44738.33354002443
+        },
+        "peak_resident_bytes_max": 41156608
+      },
+      "correction_retraction": {
+        "schema_version": "1.0.0",
+        "cases": 10000,
+        "events_per_case": 5,
+        "input_revisions": 52550,
+        "corrections": 2500,
+        "retractions": 50,
+        "active_cases": 10000,
+        "active_events": 49950,
+        "output_json_bytes": 1354,
+        "output_sha256": "67c01815a475c374590d66dfa3f33e0cde35673e7365db0c131b537c614859f4",
+        "elapsed_seconds": {
+          "median": 2.4202935,
+          "minimum": 1.6672169000000001,
+          "maximum": 2.4262682,
+          "samples": [
+            2.4262682,
+            2.4202935,
+            1.6672169000000001
+          ]
+        },
+        "revisions_per_second": {
+          "median": 21712.24275072424,
+          "minimum": 21658.7762226781,
+          "maximum": 31519.594121196827
+        },
+        "peak_resident_bytes_max": 41107456
+      },
+      "stress_elapsed_ratio": 1.751043716161295
+    },
+    {
+      "profile": "full",
+      "cases": 200000,
+      "baseline": {
+        "schema_version": "1.0.0",
+        "cases": 200000,
+        "events_per_case": 5,
+        "input_revisions": 1000000,
+        "corrections": 0,
+        "retractions": 0,
+        "active_cases": 200000,
+        "active_events": 1000000,
+        "output_json_bytes": 1259,
+        "output_sha256": "b8ff0ca3ca84b342dde4bdaf57dbdbfad0b78333b0c71aec1837d3555f4c64f8",
+        "elapsed_seconds": {
+          "median": 21.0323347,
+          "minimum": 18.2727357,
+          "maximum": 112.3007372,
+          "samples": [
+            112.3007372,
+            18.2727357,
+            21.0323347
+          ]
+        },
+        "revisions_per_second": {
+          "median": 47545.839026610774,
+          "minimum": 8904.661046160969,
+          "maximum": 54726.34291974136
+        },
+        "peak_resident_bytes_max": 814088192
+      },
+      "correction_retraction": {
+        "schema_version": "1.0.0",
+        "cases": 200000,
+        "events_per_case": 5,
+        "input_revisions": 1051000,
+        "corrections": 50000,
+        "retractions": 1000,
+        "active_cases": 200000,
+        "active_events": 999000,
+        "output_json_bytes": 1376,
+        "output_sha256": "1f6138ee86dae799ba14457fe409214214c0c20c215bd273344f1cfb13b4d89c",
+        "elapsed_seconds": {
+          "median": 46.8482115,
+          "minimum": 30.6868946,
+          "maximum": 47.4551269,
+          "samples": [
+            30.6868946,
+            47.4551269,
+            46.8482115
+          ]
+        },
+        "revisions_per_second": {
+          "median": 22434.154183239207,
+          "minimum": 22147.2382154772,
+          "maximum": 34249.14816893854
+        },
+        "peak_resident_bytes_max": 813510656
+      },
+      "stress_elapsed_ratio": 2.2274375226636156
+    }
+  ]
+}
