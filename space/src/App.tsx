@@ -11,6 +11,7 @@ import {
   Database,
   FileCheck2,
   Filter,
+  FlaskConical,
   GitBranch,
   LayoutDashboard,
   ListTree,
@@ -56,6 +57,32 @@ type FindingRow = {
   requires_human_review: boolean;
 };
 
+type ScenarioSummary = {
+  scenario_id: string;
+  label: string;
+  description: string;
+  case_count: number;
+  event_count: number;
+  revision_count: number;
+  corrected_case_count: number;
+  correction_rate: number;
+  median_cycle_days: number;
+  p90_cycle_days: number;
+  peak_backlog: number;
+  variant_count: number;
+  dominant_variant: string[];
+};
+
+type ScenarioDaily = {
+  scenario_id: string;
+  date: string;
+  arrivals: number;
+  closures: number;
+  backlog: number;
+  mean_closed_cycle_days: number | null;
+  correction_events: number;
+};
+
 type DashboardData = {
   meta: {
     dataset_id: string;
@@ -82,9 +109,10 @@ type DashboardData = {
   variants: VariantRow[];
   cases: CaseRow[];
   findings: FindingRow[];
+  simulation: { summaries: ScenarioSummary[]; daily_metrics: ScenarioDaily[] };
 };
 
-type Tab = "overview" | "process" | "variants" | "cases" | "quality";
+type Tab = "overview" | "process" | "variants" | "scenarios" | "cases" | "quality";
 
 const palette = {
   ink: "#24312b",
@@ -100,6 +128,7 @@ const tabs: { id: Tab; label: string; icon: typeof Activity }[] = [
   { id: "overview", label: "Overview", icon: LayoutDashboard },
   { id: "process", label: "Process", icon: GitBranch },
   { id: "variants", label: "Variants", icon: ListTree },
+  { id: "scenarios", label: "Scenarios", icon: FlaskConical },
   { id: "cases", label: "Cases", icon: Clock3 },
   { id: "quality", label: "Quality", icon: ShieldCheck },
 ];
@@ -294,6 +323,61 @@ function CasesView({ cases, events, selectedCase, onSelect }: { cases: CaseRow[]
   );
 }
 
+function ScenariosView({ data }: { data: DashboardData }) {
+  const summaries = data.simulation.summaries;
+  const [selected, setSelected] = useState(summaries[0]?.scenario_id ?? "baseline");
+  const current = summaries.find((item) => item.scenario_id === selected) ?? summaries[0];
+  const daily = data.simulation.daily_metrics.filter((item) => item.scenario_id === current?.scenario_id);
+  const comparison = {
+    color: [palette.coral, palette.blue], tooltip: { trigger: "axis", renderMode: "richText" },
+    legend: { bottom: 0, data: ["Peak backlog", "P90 cycle"] },
+    grid: { left: 16, right: 18, top: 20, bottom: 44, containLabel: true },
+    xAxis: { type: "category", data: summaries.map((item) => item.label), axisLabel: { interval: 0 } },
+    yAxis: [{ type: "value", name: "Cases", splitLine: { lineStyle: { color: palette.grid } } }, { type: "value", name: "Days", splitLine: { show: false } }],
+    series: [
+      { name: "Peak backlog", type: "bar", data: summaries.map((item) => item.peak_backlog), barMaxWidth: 34, itemStyle: { borderRadius: [3, 3, 0, 0] } },
+      { name: "P90 cycle", type: "line", yAxisIndex: 1, smooth: true, symbolSize: 8, data: summaries.map((item) => item.p90_cycle_days) },
+    ],
+  };
+  const trajectory = {
+    color: [palette.green, palette.blue, palette.gold, palette.coral], tooltip: { trigger: "axis", renderMode: "richText" },
+    legend: { bottom: 0, data: ["Backlog", "Arrivals", "Closures", "Corrections"] },
+    grid: { left: 15, right: 16, top: 20, bottom: 48, containLabel: true },
+    xAxis: { type: "category", data: daily.map((item) => item.date.slice(5)), axisLabel: { interval: Math.max(0, Math.floor(daily.length / 8) - 1) } },
+    yAxis: { type: "value", minInterval: 1, splitLine: { lineStyle: { color: palette.grid } } },
+    series: [
+      { name: "Backlog", type: "line", smooth: true, showSymbol: false, areaStyle: { opacity: 0.12 }, data: daily.map((item) => item.backlog) },
+      { name: "Arrivals", type: "bar", stack: "flow", barMaxWidth: 9, data: daily.map((item) => item.arrivals) },
+      { name: "Closures", type: "bar", stack: "flow", barMaxWidth: 9, data: daily.map((item) => -item.closures) },
+      { name: "Corrections", type: "scatter", symbolSize: 7, data: daily.map((item) => item.correction_events) },
+    ],
+  };
+  if (!current) return <Panel title="Simulation scenarios"><div className="empty-state">No scenario projection deposited.</div></Panel>;
+  return (
+    <>
+      <div className="scenario-switcher" role="group" aria-label="Simulation scenario">
+        {summaries.map((item) => <button key={item.scenario_id} className={item.scenario_id === current.scenario_id ? "active" : ""} onClick={() => setSelected(item.scenario_id)}>{item.label}</button>)}
+      </div>
+      <div className="metrics-grid">
+        <Metric label="Peak backlog" value={String(current.peak_backlog)} detail="Open cases at maximum pressure" icon={Database} />
+        <Metric label="Median cycle" value={current.median_cycle_days.toFixed(1) + " days"} detail="Request to closure" icon={Clock3} />
+        <Metric label="P90 cycle" value={current.p90_cycle_days.toFixed(1) + " days"} detail="Tail processing time" icon={BarChart3} />
+        <Metric label="Correction rate" value={Math.round(current.correction_rate * 100) + "%"} detail={current.corrected_case_count + " corrected cases"} icon={FileCheck2} />
+      </div>
+      <div className="scenario-grid">
+        <Panel title="Comparative pressure" subtitle="Peak open cases and tail cycle time across scenarios"><ReactECharts option={comparison} style={{ height: 350 }} /></Panel>
+        <Panel title={current.label + " trajectory"} subtitle={current.description}><ReactECharts option={trajectory} style={{ height: 350 }} /></Panel>
+      </div>
+      <Panel title="Scenario catalogue" subtitle="Deterministic workload and revision stress profiles">
+        <div className="scenario-catalogue">{summaries.map((item) => <article key={item.scenario_id} className={item.scenario_id === current.scenario_id ? "active" : ""}>
+          <header><strong>{item.label}</strong><span>{item.case_count} cases</span></header><p>{item.description}</p>
+          <dl><div><dt>Events</dt><dd>{item.event_count}</dd></div><div><dt>Revisions</dt><dd>{item.revision_count}</dd></div><div><dt>Variants</dt><dd>{item.variant_count}</dd></div></dl>
+        </article>)}</div>
+      </Panel>
+    </>
+  );
+}
+
 function QualityView({ data, findings }: { data: DashboardData; findings: FindingRow[] }) {
   const gauges = [
     { name: "Timestamp coverage", value: data.quality.timestamp_coverage, color: palette.green },
@@ -379,6 +463,7 @@ export default function App() {
         {tab === "overview" && <Overview data={data} events={filteredEvents} cases={filteredCases} />}
         {tab === "process" && <ProcessView edges={data.edges} events={filteredEvents} />}
         {tab === "variants" && <VariantsView variants={data.variants} />}
+        {tab === "scenarios" && <ScenariosView data={data} />}
         {tab === "cases" && <CasesView cases={filteredCases} events={filteredEvents} selectedCase={selectedCase} onSelect={setSelectedCase} />}
         {tab === "quality" && <QualityView data={data} findings={data.findings.filter((finding) => caseIds.has(finding.case_id))} />}
       </main>

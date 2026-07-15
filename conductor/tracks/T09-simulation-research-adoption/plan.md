@@ -1,7 +1,7 @@
 # Plan
 
-- [ ] Synthetic OCEL generator
-- [ ] Drift/correction stress scenarios
-- [ ] Adoption and funding evidence packet
-- [ ] Update promotion/adoption ledger
-- [ ] Close with benchmark, fixtures, and decision record
+- [x] Synthetic OCEL generator
+- [x] Drift/correction stress scenarios
+- [x] Adoption and funding evidence packet
+- [x] Update promotion/adoption ledger
+- [x] Close with benchmark, fixtures, and decision record

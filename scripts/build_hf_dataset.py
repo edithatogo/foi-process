@@ -10,6 +10,8 @@ import shutil
 from pathlib import Path
 from typing import Any
 
+from generate_synthetic_scenarios import generate as generate_scenarios
+
 
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED_DISPOSITIONS = {"publish", "publish_metadata_only"}
@@ -101,6 +103,38 @@ configs:
   data_files:
   - split: demo
     path: data/ocel_event_object_links/*.jsonl
+- config_name: simulation_event_log
+  data_files:
+  - split: simulation
+    path: data/simulation_event_log/*.jsonl
+- config_name: simulation_event_revisions
+  data_files:
+  - split: simulation
+    path: data/simulation_event_revisions/*.jsonl
+- config_name: simulation_cases
+  data_files:
+  - split: simulation
+    path: data/simulation_cases/*.jsonl
+- config_name: simulation_daily_metrics
+  data_files:
+  - split: simulation
+    path: data/simulation_daily_metrics/*.jsonl
+- config_name: simulation_summaries
+  data_files:
+  - split: simulation
+    path: data/simulation_summaries/*.jsonl
+- config_name: simulation_ocel_events
+  data_files:
+  - split: simulation
+    path: data/simulation_ocel_events/*.jsonl
+- config_name: simulation_ocel_objects
+  data_files:
+  - split: simulation
+    path: data/simulation_ocel_objects/*.jsonl
+- config_name: simulation_ocel_event_object_links
+  data_files:
+  - split: simulation
+    path: data/simulation_ocel_event_object_links/*.jsonl
 ---
 
 # FOI Process Event Logs
@@ -121,6 +155,8 @@ fixtures.
 - process-map edges and variants;
 - OCEL events, objects and event-object links;
 - synthetic conformance findings;
+- deterministic baseline, demand-surge, concept-drift and correction-stress event logs;
+- synthetic scenario revision history, OCEL links, daily metrics and comparative summaries;
 - dashboard, public projection, OCEL and mining-run artefacts;
 - portable JSON Schemas and a SHA-256 publication manifest.
 
@@ -198,6 +234,7 @@ def build(output: Path) -> None:
         "ocel_objects": ocel["objects"],
         "ocel_event_object_links": ocel["event_object_links"],
     }
+    datasets.update(generate_scenarios())
     for name, rows in datasets.items():
         write_jsonl(output / "data" / name / "demo-00000-of-00001.jsonl", rows)
 
