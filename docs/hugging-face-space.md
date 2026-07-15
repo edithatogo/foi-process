@@ -1,6 +1,6 @@
 # Hugging Face Space dashboard
 
-`space/` contains the Static Space profile for `edithatogo/foi-process-explorer`. It consumes a
+`space/` contains the Docker Space profile for `edithatogo/foi-process-explorer`. It consumes a
 browser projection generated from the reviewed event-log Dataset bundle; it does not mine raw
 correspondence or recalculate legal conclusions in the browser.
 
@@ -42,24 +42,27 @@ demonstration data; the accepted limits are recorded in ADR 0005.
 ## Publication boundary
 
 The `publish-hf-space` workflow always regenerates the Dataset and dashboard data, compiles the
-Static Space, and uploads the build as a GitHub artifact. The compiled `dist/` is overlaid at the
-Space repository root while the auditable source is retained alongside it, so Hugging Face can
-serve the application without running Node on the Hub. Hub publication occurs only when the
+dashboard, and uploads the build as a GitHub artifact. The compiled `dist/` is copied into a small
+Docker image while the auditable source is retained alongside it, so Hugging Face can serve the
+application without running Node on the Hub. Hub publication occurs only when the
 workflow is explicitly dispatched with `publish: true` and an `HF_TOKEN` secret is available.
-After upload, the workflow compares the published dashboard source and generated data with the
-validated local build, waits for the public Static Space to report `RUNNING`, requests the public
-host, and records the remote revision and source checksums in a
+After upload, the workflow compares the published dashboard source, generated data, and Dockerfile
+with the validated local build, waits for the public Docker Space to report `RUNNING`, requests the
+public host, and records the remote revision and source checksums in a
 `hf-space-publication-attestation` workflow artifact.
 
-Runtime activation remains subject to Hugging Face account policy. If the Hub reports a terminal
-stage such as `CONFIG_ERROR` because credits are required, verification fails immediately and the
-Space remains deposited-but-unverified until that account-level gate is resolved.
+The Space explicitly suggests the free `cpu-basic` hardware tier. This dashboard does not need
+GPU inference, so ZeroGPU is not part of the deployment: HF documents ZeroGPU as a Gradio-only
+GPU option whose hosting requires PRO for personal accounts. If an account-level policy still
+prevents Docker Spaces from starting, verification fails immediately and the Space remains
+deposited-but-unverified.
 
 The same verified `space/dist` artifact can be deployed to GitHub Pages with
 `deploy-pages.yml` as a free operational fallback. This does not replace the Hugging Face Space
 record or its runtime attestation; it provides a public dashboard URL while the Hub account gate
 remains unresolved.
 
-A Static Space is intentional. The dashboard is client-side and does not require a persistent
-Python or Docker runtime, which reduces infrastructure and avoids treating compute-tier access as a
-functional dependency. Production data remains subject to the Dataset privacy and governance gate.
+A Docker Space is used here because the current Static Space path is credit-gated for this account.
+The HTTP server is only a lightweight delivery wrapper around the already-built client dashboard;
+it does not mine data or create a second analytical engine. Production data remains subject to the
+Dataset privacy and governance gate.
