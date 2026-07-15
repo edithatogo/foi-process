@@ -75,3 +75,7 @@ See `IMPLEMENTATION_STATUS.md`, `CHANGELOG.md`, `docs/REVIEW_AND_DECISIONS.md`, 
 The Hugging Face dashboard publication bundle, including reviewed event logs, revision history,
 EvidenceDelta streams, OCEL tables, process edges and variants, is documented in
 `docs/hugging-face-dataset-publication.md`.
+
+The operational Static Space dashboard in `space/` adds process, variant, case-timeline,
+conformance, and provenance views over that verified bundle. Its reproducible build and
+fail-closed publication boundary are documented in `docs/hugging-face-space.md`.

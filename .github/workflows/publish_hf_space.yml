@@ -1,0 +1,63 @@
+name: publish-hf-space
+
+on:
+  workflow_dispatch:
+    inputs:
+      space_id:
+        description: Hugging Face Space repository
+        required: true
+        default: edithatogo/foi-process-explorer
+      publish:
+        description: Upload the validated Static Space to Hugging Face
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  space:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: space/package-lock.json
+      - name: Build public-safe fixture dataset
+        run: python scripts/build_hf_dataset.py --output /tmp/foi-process-event-logs
+      - name: Build verified dashboard projection
+        run: |
+          python scripts/build_hf_space_data.py \
+            --bundle /tmp/foi-process-event-logs \
+            --output space/public/data/dashboard-data.json
+      - name: Build Static Space
+        working-directory: space
+        run: |
+          npm ci
+          npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: foi-process-explorer-space
+          path: |
+            space/dist
+            space/public/data/dashboard-data.json
+      - name: Install Hugging Face CLI
+        if: ${{ inputs.publish }}
+        run: python -m pip install --upgrade huggingface_hub
+      - name: Publish Static Space
+        if: ${{ inputs.publish }}
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          SPACE_ID: ${{ inputs.space_id }}
+        run: |
+          test -n "${HF_TOKEN:-}" || { echo 'HF_TOKEN secret is required'; exit 1; }
+          hf repos create "$SPACE_ID" --type space --space-sdk static --exist-ok
+          hf upload "$SPACE_ID" space . --type space \
+            --exclude 'node_modules/**' \
+            --commit-message "Publish verified foi-process explorer"
