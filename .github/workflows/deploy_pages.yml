@@ -1,0 +1,57 @@
+name: deploy-pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "space/**"
+      - "scripts/build_hf_dataset.py"
+      - "scripts/build_hf_space_data.py"
+      - "scripts/check_hf_space_budget.py"
+      - ".github/workflows/deploy_pages.yml"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: space/package-lock.json
+      - name: Build verified dashboard projection
+        run: |
+          python scripts/build_hf_dataset.py --output /tmp/foi-process-event-logs
+          python scripts/build_hf_space_data.py \
+            --bundle /tmp/foi-process-event-logs \
+            --output space/public/data/dashboard-data.json
+      - name: Build dashboard
+        working-directory: space
+        run: |
+          npm ci
+          npm run build
+      - name: Enforce dashboard budget
+        run: python scripts/check_hf_space_budget.py --dist space/dist --dashboard-data space/public/data/dashboard-data.json
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: space/dist
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
