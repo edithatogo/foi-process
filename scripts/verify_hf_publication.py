@@ -115,6 +115,21 @@ def verify_dataset(repo_id: str, expected_bundle: Path, output: Path) -> None:
         )
 
 
+def verify_local(bundle: Path) -> None:
+    manifest = verify_manifest(bundle)
+    print(
+        json.dumps(
+            {
+                "classification": manifest["classification"],
+                "manifest_file_count": len(manifest["files"]),
+                "manifest_sha256": sha256(bundle / "manifest.json"),
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+
+
 def wait_for_space(repo_id: str, timeout_seconds: int) -> dict[str, Any]:
     deadline = time.monotonic() + timeout_seconds
     last_stage = "unknown"
@@ -170,6 +185,9 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest="surface", required=True)
 
+    local = subparsers.add_parser("local")
+    local.add_argument("--bundle", type=Path, required=True)
+
     dataset = subparsers.add_parser("dataset")
     dataset.add_argument("--repo-id", required=True)
     dataset.add_argument("--bundle", type=Path, required=True)
@@ -182,7 +200,9 @@ def main() -> None:
     space.add_argument("--timeout-seconds", type=int, default=600)
 
     args = parser.parse_args()
-    if args.surface == "dataset":
+    if args.surface == "local":
+        verify_local(args.bundle.resolve())
+    elif args.surface == "dataset":
         verify_dataset(args.repo_id, args.bundle.resolve(), args.output.resolve())
     else:
         verify_space(args.repo_id, args.source.resolve(), args.output.resolve(), args.timeout_seconds)
