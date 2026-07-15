@@ -37,5 +37,5 @@ tracks:
   owner: foi-process/fyi-archive
 - id: T09
   slug: simulation-research-adoption
-  status: planned
+  status: repository_implemented_publication_pending
   owner: kairos/rulesandprocesses/sourceright

@@ -63,3 +63,18 @@ jobs:
           hf upload "$SPACE_ID" space . --type space \
             --exclude 'node_modules/**' \
             --commit-message "Publish verified foi-process explorer"
+      - name: Verify published Space revision and runtime
+        if: ${{ inputs.publish }}
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          SPACE_ID: ${{ inputs.space_id }}
+        run: |
+          python scripts/verify_hf_publication.py space \
+            --repo-id "$SPACE_ID" \
+            --source space \
+            --output /tmp/hf-space-publication-attestation.json
+      - uses: actions/upload-artifact@v4
+        if: ${{ inputs.publish }}
+        with:
+          name: hf-space-publication-attestation
+          path: /tmp/hf-space-publication-attestation.json

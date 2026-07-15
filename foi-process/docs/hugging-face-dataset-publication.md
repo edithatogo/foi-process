@@ -22,6 +22,10 @@ python scripts/build_hf_dataset.py --output target/huggingface/foi-process-event
 
 The `publish-hf-dataset` workflow always builds and validates the bundle. It uploads only when its
 `publish` input is true and the GitHub repository has an `HF_TOKEN` secret with write access.
+After upload, the workflow downloads the public revision, compares its manifest with the locally
+built manifest, rechecks every declared byte length, row count and SHA-256 digest, and records the
+remote revision in a `hf-dataset-publication-attestation` workflow artifact. Upload success alone is
+not treated as publication proof.
 
 ## Production gate
 

@@ -111,9 +111,28 @@ footer { min-height: 38px; padding: 8px clamp(18px, 3vw, 42px); display: flex; g
 .pulse { animation: pulse 1.2s infinite ease-in-out; }
 @keyframes pulse { 50% { opacity: .4; transform: scale(.94); } }
 
+.scenario-switcher { display: flex; width: fit-content; max-width: 100%; margin: 0 0 16px; border: 1px solid #cbd4ce; border-radius: 5px; background: #fff; overflow-x: auto; }
+.scenario-switcher button { min-height: 38px; padding: 0 15px; border: 0; border-right: 1px solid #dce2de; background: transparent; color: #65716b; cursor: pointer; white-space: nowrap; }
+.scenario-switcher button:last-child { border-right: 0; }
+.scenario-switcher button:hover { background: #f3f6f4; color: #2f6f54; }
+.scenario-switcher button.active { background: #2f6f54; color: #fff; font-weight: 600; }
+.scenario-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+.scenario-catalogue { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding: 16px; }
+.scenario-catalogue article { min-width: 0; padding: 14px; border: 1px solid #dfe5e1; border-radius: 5px; background: #fafbfa; }
+.scenario-catalogue article.active { border-color: #2f6f54; box-shadow: inset 0 3px #2f6f54; background: #f3f8f5; }
+.scenario-catalogue header { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; font-size: 12px; }
+.scenario-catalogue header span { color: #2f6f54; font-size: 10px; white-space: nowrap; }
+.scenario-catalogue p { min-height: 48px; margin: 10px 0 12px; color: #68736d; font-size: 11px; line-height: 1.45; }
+.scenario-catalogue dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 0; }
+.scenario-catalogue dl div { display: grid; gap: 3px; }
+.scenario-catalogue dt { color: #8a938e; font-size: 9px; }
+.scenario-catalogue dd { margin: 0; font-size: 13px; font-weight: 600; }
+.empty-state { padding: 28px; color: #7a847f; font-size: 12px; }
+
 @media (max-width: 900px) {
   .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .overview-grid, .process-layout, .variants-layout, .quality-layout { grid-template-columns: 1fr; }
+  .overview-grid, .process-layout, .variants-layout, .quality-layout, .scenario-grid { grid-template-columns: 1fr; }
+  .scenario-catalogue { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .quality-layout > .panel:last-child { grid-column: auto; }
   .process-layout > .panel:first-child { min-height: 510px; }
 }
@@ -138,5 +157,7 @@ footer { min-height: 38px; padding: 8px clamp(18px, 3vw, 42px); display: flex; g
   .panel-heading { padding: 13px; }
   .legend-line { display: none; }
   .provenance > div { grid-template-columns: 1fr; gap: 4px; }
+  .scenario-catalogue { grid-template-columns: 1fr; padding: 10px; }
+  .scenario-catalogue p { min-height: 0; }
   footer { flex-wrap: wrap; gap: 5px 13px; }
 }

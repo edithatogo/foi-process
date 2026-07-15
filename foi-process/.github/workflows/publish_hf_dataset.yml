@@ -27,9 +27,7 @@ jobs:
       - name: Build public-safe fixture dataset
         run: python scripts/build_hf_dataset.py --output /tmp/foi-process-event-logs
       - name: Verify manifest and JSON Lines
-        run: |
-          python -m json.tool /tmp/foi-process-event-logs/manifest.json >/dev/null
-          find /tmp/foi-process-event-logs -name '*.jsonl' -print0 | xargs -0 -n1 sh -c 'while IFS= read -r line; do printf "%s" "$line" | python -m json.tool >/dev/null; done < "$0"'
+        run: python scripts/verify_hf_publication.py local --bundle /tmp/foi-process-event-logs
       - uses: actions/upload-artifact@v4
         with:
           name: foi-process-event-logs
@@ -47,3 +45,18 @@ jobs:
           hf repos create "$REPO_ID" --type dataset --exist-ok
           hf upload "$REPO_ID" /tmp/foi-process-event-logs . --type dataset \
             --commit-message "Publish reviewed foi-process fixture event logs"
+      - name: Verify published dataset revision
+        if: ${{ inputs.publish }}
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          REPO_ID: ${{ inputs.repo_id }}
+        run: |
+          python scripts/verify_hf_publication.py dataset \
+            --repo-id "$REPO_ID" \
+            --bundle /tmp/foi-process-event-logs \
+            --output /tmp/hf-dataset-publication-attestation.json
+      - uses: actions/upload-artifact@v4
+        if: ${{ inputs.publish }}
+        with:
+          name: hf-dataset-publication-attestation
+          path: /tmp/hf-dataset-publication-attestation.json

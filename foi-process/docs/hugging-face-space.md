@@ -44,6 +44,10 @@ demonstration data; the accepted limits are recorded in ADR 0005.
 The `publish-hf-space` workflow always regenerates the Dataset and dashboard data, compiles the
 Static Space, and uploads the build as a GitHub artifact. Hub publication occurs only when the
 workflow is explicitly dispatched with `publish: true` and an `HF_TOKEN` secret is available.
+After upload, the workflow compares the published dashboard source and generated data with the
+validated local build, waits for the public Static Space to report `RUNNING`, requests the public
+host, and records the remote revision and source checksums in a
+`hf-space-publication-attestation` workflow artifact.
 
 A Static Space is intentional. The dashboard is client-side and does not require a persistent
 Python or Docker runtime, which reduces infrastructure and avoids treating compute-tier access as a
