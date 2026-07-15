@@ -42,7 +42,7 @@ def make_event(scenario_id: str, case_id: str, activity: str, timestamp: datetim
     return {
         "scenario_id": scenario_id, "event_id": stable_id("event", logical_id, revision),
         "logical_event_id": logical_id, "case_id": case_id, "activity": activity,
-        "timestamp": iso(timestamp), "authority_id": "nz:agency:synthetic",
+        "timestamp": iso(timestamp), "recorded_at": iso(timestamp), "authority_id": "nz:agency:synthetic",
         "site": "synthetic-simulation", "jurisdiction": "NZ", "assertion_status": "observed",
         "evidence_count": 1, "revision": revision, "correction_of": correction_of, "synthetic": True,
     }
@@ -70,7 +70,8 @@ def generate_case(config: dict[str, Any], index: int, rng: random.Random) -> tup
         latest = original
         if activity == DECISION and rng.random() < config["correction_rate"]:
             corrected = True
-            latest = make_event(scenario_id, case_id, activity, timestamp + timedelta(hours=6), sequence, 2, original["event_id"])
+            latest = make_event(scenario_id, case_id, activity, timestamp, sequence, 2, original["event_id"])
+            latest["recorded_at"] = iso(timestamp + timedelta(hours=6))
             revisions.append(latest)
         active.append(latest)
     end = datetime.fromisoformat(active[-1]["timestamp"].replace("Z", "+00:00"))
@@ -84,7 +85,7 @@ def generate_case(config: dict[str, Any], index: int, rng: random.Random) -> tup
 def daily_metrics(scenario_id: str, cases: list[dict[str, Any]], revisions: list[dict[str, Any]]) -> list[dict[str, Any]]:
     arrivals = Counter(case["started_at"][:10] for case in cases)
     closures = Counter(case["ended_at"][:10] for case in cases)
-    corrections = Counter(event["timestamp"][:10] for event in revisions if event["revision"] > 1)
+    corrections = Counter(event["recorded_at"][:10] for event in revisions if event["revision"] > 1)
     cycles: dict[str, list[float]] = defaultdict(list)
     for case in cases: cycles[case["ended_at"][:10]].append(case["cycle_days"])
     current = datetime.fromisoformat(min(arrivals)).replace(tzinfo=timezone.utc)
@@ -106,7 +107,7 @@ def generate(seed: int = 20250715) -> dict[str, list[dict[str, Any]]]:
             case_active, case_revisions, case = generate_case(config, index, rng)
             active.extend(case_active); revisions.extend(case_revisions); cases.append(case)
         active.sort(key=lambda row: (row["timestamp"], row["event_id"]))
-        revisions.sort(key=lambda row: (row["timestamp"], row["event_id"]))
+        revisions.sort(key=lambda row: (row["recorded_at"], row["event_id"]))
         cases.sort(key=lambda row: row["case_id"])
         daily = daily_metrics(config["scenario_id"], cases, revisions)
         variants = Counter(tuple(case["variant"]) for case in cases)

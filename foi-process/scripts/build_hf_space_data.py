@@ -52,6 +52,73 @@ def parse_time(value: str) -> datetime:
     return datetime.fromisoformat(value.replace("Z", "+00:00"))
 
 
+def scenario_process_models(
+    events: list[dict[str, Any]],
+    scenario_ids: list[str],
+) -> list[dict[str, Any]]:
+    events_by_scenario_case: dict[str, dict[str, list[dict[str, Any]]]] = {}
+    for event in events:
+        events_by_scenario_case.setdefault(event["scenario_id"], {}).setdefault(
+            event["case_id"], []
+        ).append(event)
+
+    models = []
+    for scenario_id in scenario_ids:
+        cases = events_by_scenario_case.get(scenario_id, {})
+        activity_counts: Counter[str] = Counter()
+        edge_counts: Counter[tuple[str, str]] = Counter()
+        edge_waits: dict[tuple[str, str], list[float]] = {}
+        variants: Counter[tuple[str, ...]] = Counter()
+
+        for case_events in cases.values():
+            ordered = sorted(case_events, key=lambda row: (row["timestamp"], row["event_id"]))
+            activities = tuple(event["activity"] for event in ordered)
+            variants[activities] += 1
+            activity_counts.update(activities)
+            for previous, current in zip(ordered, ordered[1:]):
+                edge = (previous["activity"], current["activity"])
+                edge_counts[edge] += 1
+                wait_days = (
+                    parse_time(current["timestamp"]) - parse_time(previous["timestamp"])
+                ).total_seconds() / 86400
+                edge_waits.setdefault(edge, []).append(wait_days)
+
+        ranked_variants = sorted(variants.items(), key=lambda item: (-item[1], item[0]))
+        case_count = len(cases)
+        models.append(
+            {
+                "scenario_id": scenario_id,
+                "activities": [
+                    {"activity": activity, "count": count}
+                    for activity, count in sorted(
+                        activity_counts.items(), key=lambda item: (-item[1], item[0])
+                    )
+                ],
+                "edges": [
+                    {
+                        "source": source,
+                        "target": target,
+                        "count": count,
+                        "mean_wait_days": round(sum(edge_waits[(source, target)]) / count, 3),
+                    }
+                    for (source, target), count in sorted(
+                        edge_counts.items(), key=lambda item: (-item[1], item[0])
+                    )
+                ],
+                "variants": [
+                    {
+                        "rank": rank,
+                        "activities": list(activities),
+                        "count": count,
+                        "share": round(count / case_count, 4) if case_count else 0,
+                    }
+                    for rank, (activities, count) in enumerate(ranked_variants, start=1)
+                ],
+            }
+        )
+    return models
+
+
 def build(bundle: Path, output: Path) -> None:
     manifest = verify_manifest(bundle)
     events = table(bundle, "event_log")
@@ -65,6 +132,7 @@ def build(bundle: Path, output: Path) -> None:
     ocel_links = table(bundle, "ocel_event_object_links")
     simulation_summaries = table(bundle, "simulation_summaries")
     simulation_daily = table(bundle, "simulation_daily_metrics")
+    simulation_events = table(bundle, "simulation_event_log")
 
     events_by_case: dict[str, list[dict[str, Any]]] = {}
     for event in events:
@@ -144,7 +212,14 @@ def build(bundle: Path, output: Path) -> None:
         "cases": cases,
         "findings": findings,
         "ocel": {"events": ocel_events, "objects": ocel_objects, "links": ocel_links},
-        "simulation": {"summaries": simulation_summaries, "daily_metrics": simulation_daily},
+        "simulation": {
+            "summaries": simulation_summaries,
+            "daily_metrics": simulation_daily,
+            "process_models": scenario_process_models(
+                simulation_events,
+                [summary["scenario_id"] for summary in simulation_summaries],
+            ),
+        },
     }
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes((json.dumps(output_value, indent=2, ensure_ascii=False) + "\n").encode("utf-8"))

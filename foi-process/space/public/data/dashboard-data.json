@@ -4,7 +4,7 @@
     "classification": "synthetic-fixture",
     "source_release": "v0.1.0",
     "generated_at": "2026-07-09T00:05:00Z",
-    "manifest_sha256": "6f5672ba9b017906f04ea4170d16abc19047d584e86d2a3b81dd32ae65a7fe03"
+    "manifest_sha256": "5150fcaf43627bf7d4020e65f59c845eb6f5256b7d6ddd7329930f30144db4b6"
   },
   "metrics": {
     "case_count": 1,
@@ -1799,6 +1799,252 @@
         "backlog": 0,
         "mean_closed_cycle_days": 11.75,
         "correction_events": 0
+      }
+    ],
+    "process_models": [
+      {
+        "scenario_id": "baseline",
+        "activities": [
+          {
+            "activity": "foio:ClosedObserved",
+            "count": 48
+          },
+          {
+            "activity": "foio:DecisionIssued",
+            "count": 48
+          },
+          {
+            "activity": "foio:RequestAcknowledged",
+            "count": 48
+          },
+          {
+            "activity": "foio:RequestSent",
+            "count": 48
+          }
+        ],
+        "edges": [
+          {
+            "source": "foio:DecisionIssued",
+            "target": "foio:ClosedObserved",
+            "count": 48,
+            "mean_wait_days": 0.78
+          },
+          {
+            "source": "foio:RequestAcknowledged",
+            "target": "foio:DecisionIssued",
+            "count": 48,
+            "mean_wait_days": 8.518
+          },
+          {
+            "source": "foio:RequestSent",
+            "target": "foio:RequestAcknowledged",
+            "count": 48,
+            "mean_wait_days": 0.71
+          }
+        ],
+        "variants": [
+          {
+            "rank": 1,
+            "activities": [
+              "foio:RequestSent",
+              "foio:RequestAcknowledged",
+              "foio:DecisionIssued",
+              "foio:ClosedObserved"
+            ],
+            "count": 48,
+            "share": 1.0
+          }
+        ]
+      },
+      {
+        "scenario_id": "demand_surge",
+        "activities": [
+          {
+            "activity": "foio:ClosedObserved",
+            "count": 84
+          },
+          {
+            "activity": "foio:DecisionIssued",
+            "count": 84
+          },
+          {
+            "activity": "foio:RequestAcknowledged",
+            "count": 84
+          },
+          {
+            "activity": "foio:RequestSent",
+            "count": 84
+          }
+        ],
+        "edges": [
+          {
+            "source": "foio:DecisionIssued",
+            "target": "foio:ClosedObserved",
+            "count": 84,
+            "mean_wait_days": 0.77
+          },
+          {
+            "source": "foio:RequestAcknowledged",
+            "target": "foio:DecisionIssued",
+            "count": 84,
+            "mean_wait_days": 18.152
+          },
+          {
+            "source": "foio:RequestSent",
+            "target": "foio:RequestAcknowledged",
+            "count": 84,
+            "mean_wait_days": 0.688
+          }
+        ],
+        "variants": [
+          {
+            "rank": 1,
+            "activities": [
+              "foio:RequestSent",
+              "foio:RequestAcknowledged",
+              "foio:DecisionIssued",
+              "foio:ClosedObserved"
+            ],
+            "count": 84,
+            "share": 1.0
+          }
+        ]
+      },
+      {
+        "scenario_id": "concept_drift",
+        "activities": [
+          {
+            "activity": "foio:ClosedObserved",
+            "count": 60
+          },
+          {
+            "activity": "foio:DecisionIssued",
+            "count": 60
+          },
+          {
+            "activity": "foio:RequestAcknowledged",
+            "count": 60
+          },
+          {
+            "activity": "foio:RequestSent",
+            "count": 60
+          },
+          {
+            "activity": "foio:ClarificationRequested",
+            "count": 31
+          }
+        ],
+        "edges": [
+          {
+            "source": "foio:DecisionIssued",
+            "target": "foio:ClosedObserved",
+            "count": 60,
+            "mean_wait_days": 0.729
+          },
+          {
+            "source": "foio:RequestSent",
+            "target": "foio:RequestAcknowledged",
+            "count": 60,
+            "mean_wait_days": 0.728
+          },
+          {
+            "source": "foio:ClarificationRequested",
+            "target": "foio:DecisionIssued",
+            "count": 31,
+            "mean_wait_days": 16.664
+          },
+          {
+            "source": "foio:RequestAcknowledged",
+            "target": "foio:ClarificationRequested",
+            "count": 31,
+            "mean_wait_days": 2.356
+          },
+          {
+            "source": "foio:RequestAcknowledged",
+            "target": "foio:DecisionIssued",
+            "count": 29,
+            "mean_wait_days": 8.621
+          }
+        ],
+        "variants": [
+          {
+            "rank": 1,
+            "activities": [
+              "foio:RequestSent",
+              "foio:RequestAcknowledged",
+              "foio:ClarificationRequested",
+              "foio:DecisionIssued",
+              "foio:ClosedObserved"
+            ],
+            "count": 31,
+            "share": 0.5167
+          },
+          {
+            "rank": 2,
+            "activities": [
+              "foio:RequestSent",
+              "foio:RequestAcknowledged",
+              "foio:DecisionIssued",
+              "foio:ClosedObserved"
+            ],
+            "count": 29,
+            "share": 0.4833
+          }
+        ]
+      },
+      {
+        "scenario_id": "correction_stress",
+        "activities": [
+          {
+            "activity": "foio:ClosedObserved",
+            "count": 60
+          },
+          {
+            "activity": "foio:DecisionIssued",
+            "count": 60
+          },
+          {
+            "activity": "foio:RequestAcknowledged",
+            "count": 60
+          },
+          {
+            "activity": "foio:RequestSent",
+            "count": 60
+          }
+        ],
+        "edges": [
+          {
+            "source": "foio:DecisionIssued",
+            "target": "foio:ClosedObserved",
+            "count": 60,
+            "mean_wait_days": 0.736
+          },
+          {
+            "source": "foio:RequestAcknowledged",
+            "target": "foio:DecisionIssued",
+            "count": 60,
+            "mean_wait_days": 8.467
+          },
+          {
+            "source": "foio:RequestSent",
+            "target": "foio:RequestAcknowledged",
+            "count": 60,
+            "mean_wait_days": 0.738
+          }
+        ],
+        "variants": [
+          {
+            "rank": 1,
+            "activities": [
+              "foio:RequestSent",
+              "foio:RequestAcknowledged",
+              "foio:DecisionIssued",
+              "foio:ClosedObserved"
+            ],
+            "count": 60,
+            "share": 1.0
+          }
+        ]
       }
     ]
   }
