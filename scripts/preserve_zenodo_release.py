@@ -49,7 +49,24 @@ def main() -> int:
         upload = urllib.request.Request(f"{bucket}/foi-process-{args.release_tag}.tar.gz", data=archive.read_bytes(), method="PUT", headers={"Authorization": f"Bearer {args.token}", "Content-Type": "application/gzip"})
         with urllib.request.urlopen(upload) as response:
             uploaded = json.load(response)
-        evidence = {"release_tag": args.release_tag, "deposition_id": deposition_id, "sha256": digest, "uploaded": uploaded, "doi": deposition.get("doi"), "status": "uploaded_pending_publish"}
+        published = request_json(
+            f"{args.api}/deposit/depositions/{deposition_id}/actions/publish",
+            args.token,
+            method="POST",
+        )
+        doi = published.get("doi")
+        if not doi:
+            raise RuntimeError("Zenodo publish response did not contain a DOI")
+        evidence = {
+            "release_tag": args.release_tag,
+            "release_url": f"https://github.com/edithatogo/foi-process/releases/tag/{args.release_tag}",
+            "deposition_id": deposition_id,
+            "sha256": digest,
+            "uploaded": uploaded,
+            "doi": doi,
+            "doi_url": published.get("links", {}).get("doi") or f"https://doi.org/{doi}",
+            "status": "published",
+        }
     args.output.write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(evidence, indent=2, sort_keys=True))
     return 0

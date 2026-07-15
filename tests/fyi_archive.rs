@@ -45,3 +45,64 @@ fn archive_adapter_rejects_record_count_mismatch() {
         FyiArchiveAdapterError::RecordCountMismatch { .. }
     ));
 }
+
+#[test]
+fn archive_adapter_accepts_live_nullable_timestamps() {
+    let mut manifest: FyiArchiveManifest = serde_json::from_str(include_str!(
+        "../examples/input/fyi-archive-manifest.sample.json"
+    ))
+    .unwrap();
+    manifest.requests[0].first_seen = None;
+    manifest.requests[0].last_updated = None;
+    let deltas =
+        fyi_archive_manifest_to_deltas(manifest, Timestamp::parse("2026-06-29T11:47:00Z").unwrap())
+            .unwrap();
+    assert_eq!(deltas.len(), 2);
+    assert!(deltas[0]
+        .attributes
+        .get("event_time")
+        .and_then(serde_json::Value::as_str)
+        .is_some());
+}
+
+#[test]
+fn archive_adapter_derives_live_request_urls_when_manifest_omits_them() {
+    let mut manifest: FyiArchiveManifest = serde_json::from_str(include_str!(
+        "../examples/input/fyi-archive-manifest.sample.json"
+    ))
+    .unwrap();
+    manifest.requests[0].request_url.clear();
+    manifest.requests[0].json_api_url.clear();
+    let deltas =
+        fyi_archive_manifest_to_deltas(manifest, Timestamp::parse("2026-06-29T11:47:00Z").unwrap())
+            .unwrap();
+    assert_eq!(
+        deltas[0]
+            .evidence
+            .as_ref()
+            .and_then(|evidence| evidence.locator.uri.as_deref()),
+        Some("https://fyi.org.nz/request/first-request")
+    );
+    assert_eq!(
+        deltas[0]
+            .attributes
+            .get("json_api_url")
+            .and_then(serde_json::Value::as_str),
+        Some("https://fyi.org.nz/request/first-request.json")
+    );
+}
+
+#[test]
+fn archive_adapter_accepts_fyi_cli_attachment_field_names() {
+    let attachment: FyiArchiveAttachment = serde_json::from_value(serde_json::json!({
+        "url": "https://fyi.org.nz/request/26953/response/103126/attach/3/example.pdf",
+        "name": "example.pdf",
+        "content_type": "application/pdf",
+        "size": 358253,
+        "path": "data/attachments/example"
+    }))
+    .unwrap();
+    assert_eq!(attachment.filename, "example.pdf");
+    assert_eq!(attachment.mime_type.as_deref(), Some("application/pdf"));
+    assert_eq!(attachment.size_bytes, Some(358253));
+}

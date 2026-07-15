@@ -15,6 +15,7 @@
     "wacz_datapackage": true,
     "wacz_archive_entry": true
   },
+  "related_attachment_evidence": "docs/evidence/live-fyi-cli-fyi-archive-foi-process-2026-07-15.json",
   "content_policy": "No captured request content or attachments are committed; this file records structural evidence and content hashes only.",
   "limitations": [
     "This is one real capture, not production backfill coverage.",

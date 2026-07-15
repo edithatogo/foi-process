@@ -24,6 +24,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
+      - name: Enforce synthetic-only publication gate
+        run: python scripts/validate_governance_gate.py
       - name: Build public-safe fixture dataset
         run: python scripts/build_hf_dataset.py --output /tmp/foi-process-event-logs
       - name: Verify manifest and JSON Lines

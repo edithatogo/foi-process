@@ -1,0 +1,45 @@
+{
+  "schema": "foi-process/evidence/live-fyi-cli-fyi-archive-adapter/v1",
+  "captured_at": "2026-07-15T13:46:17Z",
+  "source": "https://fyi.org.nz",
+  "request_id": 26953,
+  "flow": [
+    "fyi-cli capture",
+    "fyi-archive seed run",
+    "fyi-archive manifest build",
+    "foi-process fyi-archive-manifest-to-deltas"
+  ],
+  "fyi_cli_version": "1.2.1",
+  "artifacts": {
+    "manifest": {
+      "record_count": 1,
+      "sha256": "6b513d596eaab7c3e5b4e0ff74555a711d26aa1bd1d22b210871f4c5ed54302c"
+    },
+    "warc_sha256": "84ed9b6d41c48e95d61bae55ae90877f5804e8b8e632c3fefdcd599de5af63e",
+    "wacz_sha256": "4dafbe716f9b8efb473be555381c0b06b571655e041727d424514fa70f1f40ba",
+    "foi_process_deltas": {
+      "rows": 1,
+      "sha256": "a0a06a918feb1b2ab9a284258b2e0923dab53fe5d4048e657c218ccf8ccac5b4"
+    }
+  },
+  "adapter_checks": {
+    "nullable_upstream_timestamps": true,
+    "derived_request_url": "https://fyi.org.nz/request/26953-accessing-alternative-dispute-resolution-services-and-related-documents",
+    "derived_json_api_url": "https://fyi.org.nz/request/26953-accessing-alternative-dispute-resolution-services-and-related-documents.json",
+    "deterministic_delta_conversion": true,
+    "rust_fyi_archive_tests": "5 passed",
+    "attachment_count": 4,
+    "attachment_hashes": [
+      "00d9ea581831bd666f22e3a2eb0b6522f5a5822cc503fe022be21390b5028114",
+      "8415f7e88ed02ba09436baf61fb9074cb0d9c43047a47f9a5439866307daddc1",
+      "aeea83b0b1c077158a904ee134bf7bca3a0e7cf6932b6645d599ce23f3b759c0",
+      "c8ca174164a70aa7b3ad87aa1a1cce74e702bbc2dee888ec10a234fd54bd9689"
+    ]
+  },
+  "attachment_evidence": "docs/evidence/real-fyi-archive-attachment-2026-07-15.json",
+  "limitations": [
+    "This proves one bounded live evidence flow, not production backfill coverage.",
+    "The capture is public-source evidence and remains subject to the human governance gate before publication."
+  ],
+  "content_policy": "Raw request, WARC, WACZ, and attachment bytes remain outside the repository; only structural evidence and hashes are committed."
+}

@@ -1178,6 +1178,7 @@ dependencies = [
  "arrow-schema",
  "chrono",
  "clap",
+ "duckdb",
  "parquet",
  "process_mining",
  "proptest",

@@ -70,18 +70,23 @@ pub struct FyiArchiveRequest {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub attribution: Option<String>,
     #[serde(default)]
-    pub first_seen: String,
+    pub first_seen: Option<String>,
     #[serde(default)]
-    pub last_updated: String,
+    pub last_updated: Option<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct FyiArchiveAttachment {
     pub url: String,
+    #[serde(default, alias = "name")]
     pub filename: String,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(
+        default,
+        alias = "content_type",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub mime_type: Option<String>,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default, alias = "size", skip_serializing_if = "Option::is_none")]
     pub size_bytes: Option<u64>,
 }
 
@@ -181,17 +186,22 @@ fn fyi_archive_request_to_delta(
         "fyi-archive:authority",
         &(instance_id.to_string(), request.authority.clone()),
     )?;
-    let source_time_text = if request.last_updated.is_empty() {
-        meta.generated_at
-            .clone()
-            .unwrap_or_else(|| captured_at.to_string())
-    } else {
-        request.last_updated.clone()
-    };
+    let source_time_text = request
+        .last_updated
+        .as_deref()
+        .filter(|value| !value.is_empty())
+        .map(str::to_owned)
+        .or_else(|| meta.generated_at.clone())
+        .unwrap_or_else(|| captured_at.to_string());
     let source_time = Timestamp::parse(source_time_text.clone())
         .ok()
         .map(TemporalInstant::exact);
     let resolved_request_url = request_url(meta, &request);
+    let resolved_json_api_url = if request.json_api_url.is_empty() {
+        format!("{resolved_request_url}.json")
+    } else {
+        request.json_api_url.clone()
+    };
 
     let mut attributes = BTreeMap::new();
     attributes.insert(
@@ -228,7 +238,7 @@ fn fyi_archive_request_to_delta(
     );
     attributes.insert(
         "json_api_url".to_string(),
-        serde_json::Value::String(request.json_api_url.clone()),
+        serde_json::Value::String(resolved_json_api_url),
     );
     attributes.insert(
         "html_captured".to_string(),
@@ -288,9 +298,8 @@ fn request_url(meta: &FyiArchiveManifestMeta, request: &FyiArchiveRequest) -> St
         return request.request_url.clone();
     }
     format!(
-        "{}/request/{}/{}",
+        "{}/request/{}",
         meta.source.trim_end_matches('/'),
-        request.request_id,
         request.url_title
     )
 }

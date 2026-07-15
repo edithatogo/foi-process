@@ -20,7 +20,13 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def validate(root: Path, request_id: int) -> dict[str, object]:
+def validate(
+    root: Path,
+    request_id: int,
+    *,
+    attachment: Path | None = None,
+    attachment_url: str | None = None,
+) -> dict[str, object]:
     raw_root = root / "data" / "raw" / "requests"
     request_files = list(raw_root.glob(f"*/{request_id}/request.json"))
     if len(request_files) != 1:
@@ -59,7 +65,7 @@ def validate(root: Path, request_id: int) -> dict[str, object]:
 
     snapshot = json.loads((sibling / "snapshot_meta.json").read_text(encoding="utf-8"))
     resource_rows = snapshot.get("resources", [])
-    return {
+    report: dict[str, object] = {
         "capture_type": "bounded-real-public-fyi-request",
         "authority": "fyi.org.nz",
         "request_id": request_id,
@@ -77,16 +83,35 @@ def validate(root: Path, request_id: int) -> dict[str, object]:
         },
         "content_policy": "captured content remains outside the repository; only hashes and structural evidence are published",
     }
+    if attachment is not None:
+        if not attachment.is_file():
+            raise ValueError(f"attachment does not exist: {attachment}")
+        report["attachment"] = {
+            "url": attachment_url,
+            "path": str(attachment).replace("\\", "/"),
+            "size": attachment.stat().st_size,
+            "sha256": sha256(attachment),
+            "content_signature": attachment.read_bytes()[:5].decode("ascii", errors="replace"),
+        }
+        report["checks"] = {**report["checks"], "external_attachment_hash": True}
+    return report
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("capture_root", type=Path)
     parser.add_argument("--request-id", type=int, required=True)
+    parser.add_argument("--attachment", type=Path)
+    parser.add_argument("--attachment-url")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     try:
-        report = validate(args.capture_root, args.request_id)
+        report = validate(
+            args.capture_root,
+            args.request_id,
+            attachment=args.attachment,
+            attachment_url=args.attachment_url,
+        )
     except (OSError, ValueError, json.JSONDecodeError, zipfile.BadZipFile) as error:
         print(f"validation failed: {error}", file=sys.stderr)
         return 1
