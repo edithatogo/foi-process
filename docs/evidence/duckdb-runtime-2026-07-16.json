@@ -1,0 +1,19 @@
+{
+  "workflow": "duckdb-runtime.yml",
+  "run_id": 29423794364,
+  "run_url": "https://github.com/edithatogo/foi-process/actions/runs/29423794364",
+  "ref": "main",
+  "runner": "ubuntu-latest",
+  "toolchain": "1.88.0",
+  "environment": {
+    "DUCKDB_DOWNLOAD_LIB": "1"
+  },
+  "command": "cargo test --locked --all-targets --features ocel-duckdb",
+  "result": "passed",
+  "runtime_assertion": "DuckDB in-memory SELECT 42 returned 42",
+  "recorded_date": "2026-07-16",
+  "notes": [
+    "This is native Linux runtime evidence, not a metadata-only cargo check.",
+    "The evidence date is local Australia/Sydney date; the GitHub Actions run is authoritative for execution time."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "release_tag": "v0.1.0",
+  "release_url": "https://github.com/edithatogo/foi-process/releases/tag/v0.1.0",
+  "workflow": "zenodo-preservation.yml",
+  "status": "blocked_missing_credential",
+  "required_secret": "ZENODO_TOKEN",
+  "repository_secret_present": false,
+  "existing_public_record_found": false,
+  "doi": null,
+  "verified_at": "2026-07-16",
+  "notes": [
+    "The workflow is implemented to upload, publish, and require a returned DOI.",
+    "No Zenodo token was available in repository Actions secrets or the local environment.",
+    "A public Zenodo search for foi-process and edithatogo found no existing record to reuse.",
+    "No DOI is asserted until authenticated publication succeeds."
+  ]
+}
