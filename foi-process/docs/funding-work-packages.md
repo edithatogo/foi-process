@@ -20,4 +20,4 @@ Deliverables: Kairos synthetic OCEL generator, authority queue/backlog scenarios
 
 ## WP5 — Public interactive corpus explorer
 
-Deliverables: Propel FOI profile, Hugging Face Docker Space, accessible process maps, variants, timelines, evidence links, and privacy-safe search. Evidence: usability/accessibility testing, load benchmarks, deployment reproducibility.
+Deliverables: Propel FOI profile, Hugging Face Static Space, accessible process maps, variants, timelines, evidence links, and privacy-safe search. Evidence: usability/accessibility testing, load benchmarks, deployment reproducibility.

@@ -18,6 +18,14 @@
 - Upgraded the chart runtime to ECharts 6.1.0 to include the upstream XSS fix.
 - Added a CI-enforced client/data asset budget and ADR for the no-runtime Static Space boundary.
 
+### Scale and release evidence
+
+- Added isolated repeated Rust scale profiles with correction/retraction overhead, deterministic
+  hashes, peak resident memory, output size, and a committed 1k/10k/200k evidence report.
+- Accepted and tested the path-safe Hive-style Parquet partition contract in ADR 0006.
+- Added an SPDX 2.3 SBOM, mining provenance, release manifest, SHA-256 package builder/verifier, and
+  a build-only release-evidence workflow.
+
 ## v3 — 2026-07-09
 
 ### Architecture

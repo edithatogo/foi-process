@@ -49,3 +49,18 @@ artefacts:
     destination: huggingface_static_space
     status: repository_built
     gate: hf_authentication_and_public_space_verification
+  RustScaleBenchmark:
+    incubator: foi-process
+    destination: release_evidence
+    status: synthetic_full_scale_verified
+    gate: representative_live_archive_rerun
+  ParquetPartitionContract:
+    incubator: foi-process
+    destination: fyi-archive_and_foi-process
+    status: implemented
+    gate: production_partition_orchestrator
+  ReleaseEvidencePackage:
+    incubator: foi-process
+    destination: github_release
+    status: locally_verified
+    gate: hosted_artifact_attestation

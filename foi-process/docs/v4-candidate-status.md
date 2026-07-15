@@ -13,7 +13,8 @@ Added or strengthened:
 - a scale-smoke binary;
 - fixtures and integration tests.
 
-This candidate was assembled in an environment without a Rust compiler. It has static and
-contract validation only. Codex must compile it, reconcile it with the current repository,
-repair exact dependency/API differences, regenerate schemas/fixtures, and update all status
-claims before release.
+The candidate has since been compiled and tested with the GNU Rust toolchain and hosted Rust 1.88
+and stable matrices. Release-profile synthetic scale evidence now covers one million active events,
+and the repository includes verified Dataset, Static Space, Parquet partition, and release-evidence
+paths. Real archive integration, privacy/governance approval, authenticated Hub publication, and
+hosted artifact attestation remain external gates.

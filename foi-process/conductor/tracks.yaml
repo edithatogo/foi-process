@@ -29,11 +29,11 @@ tracks:
   owner: foi-process/foi-o/propel
 - id: T07
   slug: dashboard-propel-hf
-  status: artefact_contracts_implemented
+  status: repository_built_publication_pending
   owner: propel/foi-process
 - id: T08
   slug: scale-release-governance
-  status: governance_implemented_scale_pending
+  status: synthetic_scale_and_release_evidence_implemented
   owner: foi-process/fyi-archive
 - id: T09
   slug: simulation-research-adoption
