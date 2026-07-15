@@ -26,11 +26,18 @@ python scripts/build_hf_space_data.py `
 cd space
 npm ci
 npm run build
+cd ..
+python scripts/check_hf_space_budget.py `
+  --dist space/dist `
+  --dashboard-data space/public/data/dashboard-data.json
+cd space
 npm run preview
 ```
 
 `build_hf_space_data.py` verifies every SHA-256 entry in the bundle manifest before writing the
 dashboard projection. Missing tables, missing files, or checksum differences fail the build.
+The asset-budget check also prevents accidental unbounded growth of the client bundle or embedded
+demonstration data; the accepted limits are recorded in ADR 0005.
 
 ## Publication boundary
 

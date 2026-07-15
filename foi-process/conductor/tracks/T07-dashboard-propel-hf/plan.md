@@ -7,4 +7,4 @@
 - [x] Build and validate Static Space profile
 - [x] Update promotion/adoption ledger
 - [ ] Authenticate publication and verify Dataset Viewer plus public Static Space
-- [ ] Close with benchmark, fixtures, and decision record
+- [x] Close repository work with asset budget, fixture projection, and decision record

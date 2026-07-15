@@ -76,6 +76,7 @@ jobs:
         run: npm ci
       - working-directory: space
         run: npm run build
+      - run: python3 scripts/check_hf_space_budget.py --dist space/dist --dashboard-data space/public/data/dashboard-data.json
 
   dependency-policy:
     runs-on: ubuntu-latest
