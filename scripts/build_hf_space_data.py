@@ -63,6 +63,8 @@ def build(bundle: Path, output: Path) -> None:
     ocel_events = table(bundle, "ocel_events")
     ocel_objects = table(bundle, "ocel_objects")
     ocel_links = table(bundle, "ocel_event_object_links")
+    simulation_summaries = table(bundle, "simulation_summaries")
+    simulation_daily = table(bundle, "simulation_daily_metrics")
 
     events_by_case: dict[str, list[dict[str, Any]]] = {}
     for event in events:
@@ -117,6 +119,7 @@ def build(bundle: Path, output: Path) -> None:
             "activity_count": len(activity_counts),
             "variant_count": len(variants),
             "finding_count": len(findings),
+            "scenario_count": len(simulation_summaries),
         },
         "quality": {
             "manifest_file_count": len(manifest["files"]),
@@ -141,6 +144,7 @@ def build(bundle: Path, output: Path) -> None:
         "cases": cases,
         "findings": findings,
         "ocel": {"events": ocel_events, "objects": ocel_objects, "links": ocel_links},
+        "simulation": {"summaries": simulation_summaries, "daily_metrics": simulation_daily},
     }
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes((json.dumps(output_value, indent=2, ensure_ascii=False) + "\n").encode("utf-8"))
