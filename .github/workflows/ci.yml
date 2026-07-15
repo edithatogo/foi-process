@@ -59,6 +59,7 @@ jobs:
       - run: python scripts/validate_workpack.py
       - run: python scripts/test_reference_semantics.py
       - run: python scripts/test_synthetic_scenarios.py
+      - run: python scripts/test_verify_hf_publication.py
       - run: python scripts/test_scale_suite.py
       - run: python scripts/build_hf_dataset.py --output /tmp/foi-process-event-logs
       - run: python -m json.tool /tmp/foi-process-event-logs/manifest.json >/dev/null
