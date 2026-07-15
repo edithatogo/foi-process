@@ -21,10 +21,12 @@ def command_output(command: list[str]) -> str:
     return subprocess.run(command, cwd=ROOT, check=True, text=True, capture_output=True).stdout.strip()
 
 
-def software_commit() -> str:
+def software_commit(ignored_path: Path) -> str:
     commit = command_output(["git", "rev-parse", "HEAD"])
-    dirty = command_output(["git", "status", "--porcelain", "--untracked-files=no"])
-    return f"{commit}-dirty" if dirty else commit
+    status = command_output(["git", "status", "--porcelain", "--untracked-files=no", "--", "."])
+    ignored = ignored_path.resolve().relative_to(ROOT).as_posix()
+    dirty_paths = [line[3:].replace("\\", "/") for line in status.splitlines() if line]
+    return f"{commit}-dirty" if any(path != ignored for path in dirty_paths) else commit
 
 
 def binary_path(target_dir: Path) -> Path:
@@ -132,7 +134,7 @@ def main() -> None:
         "schema_version": "1.0.0",
         "created_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "warning": "Host-specific benchmark evidence; compare like-for-like runners and release builds.",
-        "software_commit": software_commit(),
+        "software_commit": software_commit(args.output),
         "rustc": command_output(["rustc", "--version"]),
         "host": {
             "platform": platform.platform(),
