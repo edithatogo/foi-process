@@ -92,6 +92,7 @@ jobs:
           python scripts/verify_hf_publication.py space \
             --repo-id "$SPACE_ID" \
             --source space \
+            --allow-credit-gated \
             --output /tmp/hf-space-publication-attestation.json
       - uses: actions/upload-artifact@v4
         if: ${{ inputs.publish }}
