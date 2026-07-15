@@ -21,12 +21,23 @@ def command_output(command: list[str]) -> str:
     return subprocess.run(command, cwd=ROOT, check=True, text=True, capture_output=True).stdout.strip()
 
 
+def repository_relative_path(path: Path) -> str | None:
+    try:
+        return path.resolve().relative_to(ROOT).as_posix()
+    except ValueError:
+        return None
+
+
 def software_commit(ignored_path: Path) -> str:
     commit = command_output(["git", "rev-parse", "HEAD"])
     status = command_output(["git", "status", "--porcelain", "--untracked-files=no", "--", "."])
-    ignored = ignored_path.resolve().relative_to(ROOT).as_posix()
+    ignored = repository_relative_path(ignored_path)
     dirty_paths = [line[3:].replace("\\", "/") for line in status.splitlines() if line]
-    unrelated = [path for path in dirty_paths if path != ignored and not path.endswith(f"/{ignored}")]
+    unrelated = [
+        path
+        for path in dirty_paths
+        if ignored is None or (path != ignored and not path.endswith(f"/{ignored}"))
+    ]
     return f"{commit}-dirty" if unrelated else commit
 
 
