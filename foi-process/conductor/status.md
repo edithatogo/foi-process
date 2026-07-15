@@ -12,6 +12,7 @@
 - OCR/document and NLP signal contracts
 - Portable schemas, fixtures, development oracle, human-review fixture, semantic and property tests
 - Repo promotion and issue packets
+- Reviewed Hugging Face event-log Dataset bundle and checksum-verified Static Space dashboard
 
 ## Mandatory pre-merge gates
 
@@ -19,3 +20,4 @@
 - Real `fyi-archive` sample adapter
 - Generated-schema reconciliation
 - privacy review and benchmark baseline
+- authenticated Hub publication and public Dataset Viewer/Space verification

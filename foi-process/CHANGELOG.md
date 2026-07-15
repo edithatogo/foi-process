@@ -11,6 +11,11 @@
   when explicitly dispatched with an `HF_TOKEN` secret.
 - Marked the initial deposit as synthetic reviewed fixture data; real FOI data remains gated by
   privacy, tikanga/data-governance, licensing, removal/appeal, and threat-model review.
+- Added a Static Hugging Face Space with process-map, variant, request-timeline, conformance, data
+  quality, and provenance views backed by a checksum-verified browser projection.
+- Added a fail-closed Space workflow that builds and archives the application on every dispatch but
+  publishes only with an explicit input and Hugging Face token.
+- Upgraded the chart runtime to ECharts 6.1.0 to include the upstream XSS fix.
 
 ## v3 — 2026-07-09
 

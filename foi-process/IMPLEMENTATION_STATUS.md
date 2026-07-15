@@ -22,6 +22,10 @@
   event logs, revision history, EvidenceDelta streams, process edges and variants, OCEL tables,
   conformance findings, schemas, dashboard artefacts, and checksums. The reviewed fixture bundle
   is locally verified; live upload awaits Hugging Face authentication.
+- Static Hugging Face Space dashboard with shared filtering, activity KPIs, directly-follows map,
+  variant Sankey, request timeline, conformance findings, OCEL/data-quality indicators, and
+  manifest provenance. Its build regenerates and checksum-verifies dashboard data from the Dataset
+  bundle; live Space upload awaits Hugging Face authentication.
 
 ## Validation completed in this work environment
 
@@ -46,7 +50,8 @@
 3. Map and validate a real, representative `fyi-archive-nz` sample, including WARC/WACZ and attachment records.
 4. Complete privacy, tikanga/data-governance, and threat-model review before publishing OCR text, embeddings, or semantic search.
 5. Complete production `fyi-cli`/`fyi-archive` adapter integration and validate live evidence flows.
-6. Deploy and verify the Propel/Hugging Face dashboard.
+6. Authenticate Hugging Face publication, deploy the Dataset and Static Space, and verify Dataset
+   Viewer configurations plus the public Space URL.
 7. Preserve the GitHub release in Zenodo and record DOI evidence without overstating publication state.
 
 ## Deliberately not claimed as complete
@@ -57,5 +62,6 @@
 - Full process discovery or conformance algorithms outside Rust4PM.
 - OCR engine selection or trained FOI signal models.
 - Certified statutory/legal conclusions.
-- Deployed Propel/Hugging Face dashboard.
+- Publicly deployed Propel/Hugging Face dashboard; the complete Static Space is repository-built
+  and CI-gated but not yet uploaded.
 - Live GitHub issues, branches, pull requests, or releases.
