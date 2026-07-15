@@ -69,7 +69,7 @@ def hf_download(repo_id: str, repo_type: str, output: Path) -> None:
             "hf",
             "download",
             repo_id,
-            "--type",
+            "--repo-type",
             repo_type,
             "--local-dir",
             str(output),
@@ -137,6 +137,9 @@ def wait_for_space(repo_id: str, timeout_seconds: int) -> dict[str, Any]:
         info = hf_json("spaces", "info", repo_id)
         runtime = info.get("runtime") or {}
         last_stage = runtime.get("stage", "unknown")
+        if last_stage in {"BUILD_ERROR", "CONFIG_ERROR", "RUNTIME_ERROR"}:
+            detail = runtime.get("errorMessage", "no runtime error message")
+            raise ValueError(f"Space entered terminal stage {last_stage}: {detail}")
         if last_stage == "RUNNING" and info.get("host"):
             try:
                 with urllib.request.urlopen(info["host"], timeout=30) as response:
