@@ -52,6 +52,18 @@
 
 ## Remaining gates
 
+### Evidence added 2026-07-15
+
+- A bounded read-only capture of public FYI request `28164` produced JSON, HTML,
+  WARC, WACZ, and a derived request store. Structural validation and redacted
+  hashes are recorded in `docs/evidence/real-fyi-archive-capture-2026-07-15.json`.
+- `scripts/validate_fyi_archive_capture.py` can revalidate an externally held
+  capture without importing its content into this repository.
+- `governance/publication_gate.json` keeps production publication blocked and
+  limits current hosted outputs to synthetic data.
+- Manual workflows provide executable paths for Zenodo preservation and native
+  DuckDB runtime evidence. Neither is complete until external evidence exists.
+
 1. Compare Rust-generated schemas with the portable compatibility schemas and record intentional differences.
 2. Run RFC 8785 parity vectors in Rust and at least one independent implementation.
 3. Map and validate a real, representative `fyi-archive-nz` sample, including WARC/WACZ and attachment records.

@@ -90,6 +90,11 @@ all-features gates; Bash syntax validation passes.
 
 ## Human and external gates
 
+The repository now includes redacted structural evidence from one bounded real
+FYI capture, a fail-closed governance gate, and manual Zenodo/DuckDB evidence
+workflows. These controls do not substitute for production archive coverage,
+human approval, a Zenodo DOI, or a successful native DuckDB test.
+
 Still requiring human or externally controlled review: real upstream archive schema comparison, production fyi-cli/fyi-archive integration, legal/statutory certification, requester and third-party privacy review, OCR and embedding amplification review, Māori data governance and tikanga review, licensing/attribution/removal/appeal procedures, threat modelling, dashboard deployment, review of cargo-deny allow-list warnings, and release/CI verification on the pinned 1.88 MSVC toolchain.
 
 ## Git state
