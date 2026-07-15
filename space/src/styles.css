@@ -117,6 +117,18 @@ footer { min-height: 38px; padding: 8px clamp(18px, 3vw, 42px); display: flex; g
 .scenario-switcher button:hover { background: #f3f6f4; color: #2f6f54; }
 .scenario-switcher button.active { background: #2f6f54; color: #fff; font-weight: 600; }
 .scenario-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+.scenario-mining-grid { display: grid; grid-template-columns: minmax(250px, .8fr) minmax(340px, 1.2fr) minmax(280px, .9fr); gap: 16px; margin-bottom: 16px; }
+.scenario-chart-legend { min-height: 35px; padding: 0 14px 12px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 7px 15px; color: #69736e; font-size: 10px; }
+.scenario-chart-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.scenario-chart-legend i { width: 9px; height: 9px; border-radius: 2px; }
+.scenario-variant-list { padding: 5px 16px 12px; }
+.scenario-variant-list article { padding: 13px 0; border-bottom: 1px solid #edf0ee; }
+.scenario-variant-list article:last-child { border-bottom: 0; }
+.scenario-variant-list header { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; }
+.scenario-variant-list header span { color: #65716b; white-space: nowrap; }
+.scenario-variant-list .variant-path { margin-top: 8px; font-size: 9px; line-height: 1.4; }
+.variant-share { height: 4px; margin-top: 10px; overflow: hidden; background: #e6ebe8; }
+.variant-share i { display: block; height: 100%; background: #2f6f54; }
 .scenario-catalogue { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding: 16px; }
 .scenario-catalogue article { min-width: 0; padding: 14px; border: 1px solid #dfe5e1; border-radius: 5px; background: #fafbfa; }
 .scenario-catalogue article.active { border-color: #2f6f54; box-shadow: inset 0 3px #2f6f54; background: #f3f8f5; }
@@ -131,7 +143,7 @@ footer { min-height: 38px; padding: 8px clamp(18px, 3vw, 42px); display: flex; g
 
 @media (max-width: 900px) {
   .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .overview-grid, .process-layout, .variants-layout, .quality-layout, .scenario-grid { grid-template-columns: 1fr; }
+  .overview-grid, .process-layout, .variants-layout, .quality-layout, .scenario-grid, .scenario-mining-grid { grid-template-columns: 1fr; }
   .scenario-catalogue { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .quality-layout > .panel:last-child { grid-column: auto; }
   .process-layout > .panel:first-child { min-height: 510px; }

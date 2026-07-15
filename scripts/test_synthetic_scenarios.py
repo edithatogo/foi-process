@@ -20,6 +20,7 @@ def main() -> None:
 
     events = first["simulation_event_log"]
     revisions = first["simulation_event_revisions"]
+    assert all(event["recorded_at"] >= event["timestamp"] for event in revisions)
     assert len({event["event_id"] for event in revisions}) == len(revisions)
     assert len({event["logical_event_id"] for event in events}) == len(events)
     latest = {}
@@ -28,6 +29,12 @@ def main() -> None:
         if key not in latest or event["revision"] > latest[key]["revision"]:
             latest[key] = event
     assert {event["event_id"] for event in events} == {event["event_id"] for event in latest.values()}
+    active_by_case = {}
+    for event in events:
+        active_by_case.setdefault(event["case_id"], []).append(event)
+    for case_events in active_by_case.values():
+        timestamps = [event["timestamp"] for event in case_events]
+        assert timestamps == sorted(timestamps)
     for event in revisions:
         if event["revision"] > 1:
             assert event["correction_of"]
