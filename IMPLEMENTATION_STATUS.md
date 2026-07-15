@@ -28,6 +28,11 @@
   bundle; live Space upload awaits Hugging Face authentication.
 - Enforced Static Space asset budget and ADR 0005, bounding the compiled JavaScript, CSS, and
   checked demonstration projection while recording the no-runtime deployment decision.
+- Isolated three-repetition Rust scale suite covering 1k, 10k, and 200k synthetic cases, including
+  corrections, retractions, deterministic output hashes, throughput, output size, and peak memory.
+- ADR 0006 plus a tested, path-safe site/jurisdiction/event-year Parquet partition helper.
+- Reproducible release-evidence builder and verifier covering Cargo.lock, SPDX 2.3 SBOM, Dataset
+  manifest, scale report, mining-run provenance, release manifest, and sorted SHA-256 checksums.
 
 ## Validation completed in this work environment
 
@@ -55,6 +60,8 @@
 6. Authenticate Hugging Face publication, deploy the Dataset and Static Space, and verify Dataset
    Viewer configurations plus the public Space URL.
 7. Preserve the GitHub release in Zenodo and record DOI evidence without overstating publication state.
+8. Rerun the 200k/full profile against a representative privacy-approved live archive sample and
+   attest the release-evidence artifact in protected hosted CI.
 
 ## Deliberately not claimed as complete
 

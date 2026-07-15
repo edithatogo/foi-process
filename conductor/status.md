@@ -1,4 +1,4 @@
-# Status — 2026-07-09
+# Status — 2026-07-15
 
 ## Implemented in workpack
 
@@ -13,11 +13,13 @@
 - Portable schemas, fixtures, development oracle, human-review fixture, semantic and property tests
 - Repo promotion and issue packets
 - Reviewed Hugging Face event-log Dataset bundle and checksum-verified Static Space dashboard
+- Repeated 1k/10k/200k Rust benchmark, tested Parquet partition contract, and checksummed SPDX/mining release evidence
 
 ## Mandatory pre-merge gates
 
 - `cargo fmt`, `clippy`, `test`, `doc`, Rust4PM feature compilation, and `Cargo.lock` generation on Rust 1.88+
 - Real `fyi-archive` sample adapter
 - Generated-schema reconciliation
-- privacy review and benchmark baseline
+- privacy review and representative live-archive benchmark
 - authenticated Hub publication and public Dataset Viewer/Space verification
+- hosted release-evidence publication and artifact attestation

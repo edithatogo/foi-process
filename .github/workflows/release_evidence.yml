@@ -1,0 +1,45 @@
+name: release-evidence
+
+on:
+  workflow_dispatch:
+    inputs:
+      profiles:
+        description: Comma-separated benchmark case counts
+        required: true
+        default: 1000,10000,200000
+
+permissions:
+  contents: read
+
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: "1.88.0"
+      - uses: Swatinem/rust-cache@v2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Run isolated Rust scale profiles
+        run: |
+          python scripts/run_rust_scale_suite.py \
+            --profiles '${{ inputs.profiles }}' \
+            --target-dir /tmp/foi-process-benchmark-target \
+            --output /tmp/rust-scale-benchmark.json
+      - name: Build release evidence
+        run: |
+          python scripts/validate_scale_report.py /tmp/rust-scale-benchmark.json
+          python scripts/build_release_evidence.py \
+            --benchmark /tmp/rust-scale-benchmark.json \
+            --software-commit "$GITHUB_SHA" \
+            --output /tmp/foi-process-release-evidence
+      - name: Verify release evidence
+        run: python scripts/verify_release_evidence.py /tmp/foi-process-release-evidence
+      - uses: actions/upload-artifact@v4
+        with:
+          name: foi-process-release-evidence
+          path: /tmp/foi-process-release-evidence
+          if-no-files-found: error

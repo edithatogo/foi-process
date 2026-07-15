@@ -13,6 +13,7 @@ use std::{
 
 use arrow_array::{ArrayRef, BooleanArray, Float32Array, RecordBatch, StringArray, UInt64Array};
 use arrow_schema::{DataType, Field, Schema};
+use chrono::Datelike;
 use parquet::{
     arrow::ArrowWriter,
     basic::{Compression, ZstdLevel},
@@ -23,7 +24,7 @@ use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use thiserror::Error;
 
-use crate::{NormalizedBundle, Sha256Digest};
+use crate::{NormalizedBundle, ProcessEvent, Sha256Digest};
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -75,6 +76,34 @@ pub enum ParquetExportError {
     Digest(#[from] crate::IdentifierError),
     #[error("JSON error: {0}")]
     Json(#[from] serde_json::Error),
+}
+
+/// Hive-style production partition path for an event table row.
+///
+/// Callers group/filter a bounded `NormalizedBundle` by this key before invoking the atomic
+/// writer. Percent encoding prevents path separators and reserved bytes from escaping a partition.
+pub fn event_partition_directory(event: &ProcessEvent) -> PathBuf {
+    PathBuf::from(format!("site={}", partition_component(event.site.as_str())))
+        .join(format!(
+            "jurisdiction={}",
+            partition_component(event.jurisdiction.as_str())
+        ))
+        .join(format!(
+            "event_year={}",
+            event.mining_time().as_datetime().year()
+        ))
+}
+
+fn partition_component(value: &str) -> String {
+    let mut encoded = String::with_capacity(value.len());
+    for byte in value.bytes() {
+        if byte.is_ascii_alphanumeric() || matches!(byte, b'-' | b'_' | b'.' | b'~') {
+            encoded.push(char::from(byte));
+        } else {
+            encoded.push_str(&format!("%{byte:02X}"));
+        }
+    }
+    encoded
 }
 
 pub fn write_normalized_bundle_parquet(
