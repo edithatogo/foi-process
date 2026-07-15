@@ -41,6 +41,8 @@ jobs:
         run: |
           npm ci
           npm run build
+      - name: Enforce Space asset budget
+        run: python scripts/check_hf_space_budget.py --dist space/dist --dashboard-data space/public/data/dashboard-data.json
       - uses: actions/upload-artifact@v4
         with:
           name: foi-process-explorer-space

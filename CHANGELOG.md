@@ -16,6 +16,7 @@
 - Added a fail-closed Space workflow that builds and archives the application on every dispatch but
   publishes only with an explicit input and Hugging Face token.
 - Upgraded the chart runtime to ECharts 6.1.0 to include the upstream XSS fix.
+- Added a CI-enforced client/data asset budget and ADR for the no-runtime Static Space boundary.
 
 ## v3 — 2026-07-09
 

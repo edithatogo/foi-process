@@ -26,6 +26,8 @@
   variant Sankey, request timeline, conformance findings, OCEL/data-quality indicators, and
   manifest provenance. Its build regenerates and checksum-verifies dashboard data from the Dataset
   bundle; live Space upload awaits Hugging Face authentication.
+- Enforced Static Space asset budget and ADR 0005, bounding the compiled JavaScript, CSS, and
+  checked demonstration projection while recording the no-runtime deployment decision.
 
 ## Validation completed in this work environment
 
