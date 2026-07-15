@@ -47,9 +47,11 @@ are deposited at the Space root; the source remains auditable in GitHub and the 
 Node during publication. Hub publication occurs only when the
 workflow is explicitly dispatched with `publish: true` and an `HF_TOKEN` secret is available.
 After upload, the workflow compares every published root asset with the validated local build,
-waits for the public Static Space to report `RUNNING`, requests the public host, and records the
-remote revision and source checksums in a
-`hf-space-publication-attestation` workflow artifact.
+waits for the public Static Space to report `RUNNING` when the account permits it, requests the
+public host, and records the remote revision and source checksums in a
+`hf-space-publication-attestation` workflow artifact. If HF rejects activation with its known
+credit gate, the workflow records `deposited_unverified` and the exact runtime error instead of
+misrepresenting repository upload as a live dashboard.
 
 The Space uses the pre-built Static SDK path. This dashboard does not need GPU inference, so
 ZeroGPU is not part of the deployment: HF documents ZeroGPU as a Gradio-only GPU option whose

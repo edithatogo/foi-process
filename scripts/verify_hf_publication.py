@@ -138,7 +138,9 @@ def wait_for_space(repo_id: str, timeout_seconds: int) -> dict[str, Any]:
         runtime = info.get("runtime") or {}
         last_stage = runtime.get("stage", "unknown")
         if last_stage in {"BUILD_ERROR", "CONFIG_ERROR", "RUNTIME_ERROR"}:
-            detail = runtime.get("errorMessage", "no runtime error message")
+            detail = runtime.get("errorMessage") or (runtime.get("raw") or {}).get(
+                "errorMessage", "no runtime error message"
+            )
             raise ValueError(f"Space entered terminal stage {last_stage}: {detail}")
         if last_stage == "RUNNING" and info.get("host"):
             try:
@@ -152,7 +154,13 @@ def wait_for_space(repo_id: str, timeout_seconds: int) -> dict[str, Any]:
     raise ValueError(f"Space did not become healthy within {timeout_seconds}s; stage={last_stage}")
 
 
-def verify_space(repo_id: str, expected_source: Path, output: Path, timeout_seconds: int) -> None:
+def verify_space(
+    repo_id: str,
+    expected_source: Path,
+    output: Path,
+    timeout_seconds: int,
+    allow_credit_gated: bool,
+) -> None:
     with tempfile.TemporaryDirectory(prefix="foi-process-hf-space-") as temp:
         published = Path(temp)
         hf_download(repo_id, "space", published)
@@ -163,7 +171,26 @@ def verify_space(repo_id: str, expected_source: Path, output: Path, timeout_seco
         for expected in sorted(path for path in dist.rglob("*") if path.is_file()):
             relative = expected.relative_to(dist).as_posix()
             checksums[relative] = require_same_file(expected, published / relative, relative)
-        info = wait_for_space(repo_id, timeout_seconds)
+        try:
+            info = wait_for_space(repo_id, timeout_seconds)
+        except ValueError as error:
+            if not allow_credit_gated or "credit" not in str(error).lower():
+                raise
+            info = hf_json("spaces", "info", repo_id)
+            runtime = info.get("runtime") or {}
+            write_attestation(
+                output,
+                {
+                    "surface": "huggingface_static_space_prebuilt",
+                    "repo_id": repo_id,
+                    "remote_revision": info["sha"],
+                    "verification_status": "deposited_unverified",
+                    "runtime_stage": runtime.get("stage", "unknown"),
+                    "runtime_error": runtime.get("raw", {}).get("errorMessage", str(error)),
+                    "verified_source_sha256": checksums,
+                },
+            )
+            return
         if info.get("private") is not False:
             raise ValueError("published Space is not public")
         if info.get("sdk") != "static":
@@ -198,6 +225,11 @@ def main() -> None:
     space.add_argument("--source", type=Path, required=True)
     space.add_argument("--output", type=Path, required=True)
     space.add_argument("--timeout-seconds", type=int, default=600)
+    space.add_argument(
+        "--allow-credit-gated",
+        action="store_true",
+        help="record deposited_unverified when HF refuses runtime activation for credits",
+    )
 
     args = parser.parse_args()
     if args.surface == "local":
@@ -205,7 +237,13 @@ def main() -> None:
     elif args.surface == "dataset":
         verify_dataset(args.repo_id, args.bundle.resolve(), args.output.resolve())
     else:
-        verify_space(args.repo_id, args.source.resolve(), args.output.resolve(), args.timeout_seconds)
+        verify_space(
+            args.repo_id,
+            args.source.resolve(),
+            args.output.resolve(),
+            args.timeout_seconds,
+            args.allow_credit_gated,
+        )
 
 
 if __name__ == "__main__":
