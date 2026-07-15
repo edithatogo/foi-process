@@ -27,9 +27,7 @@ jobs:
       - name: Build public-safe fixture dataset
         run: python scripts/build_hf_dataset.py --output /tmp/foi-process-event-logs
       - name: Verify manifest and JSON Lines
-        run: |
-          python -m json.tool /tmp/foi-process-event-logs/manifest.json >/dev/null
-          find /tmp/foi-process-event-logs -name '*.jsonl' -print0 | xargs -0 -n1 sh -c 'while IFS= read -r line; do printf "%s" "$line" | python -m json.tool >/dev/null; done < "$0"'
+        run: python scripts/verify_hf_publication.py local --bundle /tmp/foi-process-event-logs
       - uses: actions/upload-artifact@v4
         with:
           name: foi-process-event-logs
