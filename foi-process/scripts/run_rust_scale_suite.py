@@ -26,7 +26,8 @@ def software_commit(ignored_path: Path) -> str:
     status = command_output(["git", "status", "--porcelain", "--untracked-files=no", "--", "."])
     ignored = ignored_path.resolve().relative_to(ROOT).as_posix()
     dirty_paths = [line[3:].replace("\\", "/") for line in status.splitlines() if line]
-    return f"{commit}-dirty" if any(path != ignored for path in dirty_paths) else commit
+    unrelated = [path for path in dirty_paths if path != ignored and not path.endswith(f"/{ignored}")]
+    return f"{commit}-dirty" if unrelated else commit
 
 
 def binary_path(target_dir: Path) -> Path:
