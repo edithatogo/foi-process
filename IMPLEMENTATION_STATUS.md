@@ -52,6 +52,35 @@
 
 ## Remaining gates
 
+### Evidence added 2026-07-15
+
+- A bounded read-only capture of public FYI request `28164` produced JSON, HTML,
+  WARC, WACZ, and a derived request store. Structural validation and redacted
+  hashes are recorded in `docs/evidence/real-fyi-archive-capture-2026-07-15.json`.
+- `scripts/validate_fyi_archive_capture.py` can revalidate an externally held
+  capture without importing its content into this repository.
+- A second bounded capture of request `26953` now includes four PDF attachments
+  discovered from rendered HTML, with content-addressed hashes in the derived
+  store, WARC, and WACZ.
+- The same request passed through `fyi-cli capture`, `fyi-archive seed run`,
+  `fyi-archive manifest build`, and the Rust `foi-process` manifest adapter.
+  Hashes and the four passing adapter checks are recorded in
+  `docs/evidence/live-fyi-cli-fyi-archive-foi-process-2026-07-15.json`; the
+  earlier omitted-attachment observation remains in the historical evidence
+  file for auditability.
+- `governance/publication_gate.json` keeps production publication blocked and
+  limits current hosted outputs to synthetic data.
+- Manual workflows provide executable paths for Zenodo preservation and native
+  DuckDB runtime evidence. Neither is complete until external evidence exists.
+- The Rust adapter now accepts nullable live manifest timestamps and derives
+  omitted FYI request/API URLs correctly; focused tests and one live conversion
+  pass. The DuckDB workflow now runs an actual `SELECT 42` connection test and
+  uses the matching `libduckdb-sys` download mechanism.
+- Hugging Face and GitHub Pages workflows now execute the same fail-closed
+  governance gate before building or publishing hosted outputs. The Zenodo
+  workflow now publishes the deposition and fails unless the response contains
+  a DOI.
+
 1. Compare Rust-generated schemas with the portable compatibility schemas and record intentional differences.
 2. Run RFC 8785 parity vectors in Rust and at least one independent implementation.
 3. Map and validate a real, representative `fyi-archive-nz` sample, including WARC/WACZ and attachment records.

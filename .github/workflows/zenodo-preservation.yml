@@ -1,0 +1,32 @@
+name: preserve release in Zenodo
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: GitHub release tag to preserve
+        required: true
+        default: v0.1.0
+
+permissions:
+  contents: read
+
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preserve release archive and record DOI evidence
+        env:
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          test -n "$ZENODO_TOKEN" || { echo "ZENODO_TOKEN is required" >&2; exit 1; }
+          python3 scripts/preserve_zenodo_release.py \
+            --token "$ZENODO_TOKEN" \
+            --release-tag "$RELEASE_TAG" \
+            --output zenodo-evidence.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zenodo-preservation-evidence
+          path: zenodo-evidence.json

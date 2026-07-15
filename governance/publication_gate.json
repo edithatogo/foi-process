@@ -1,0 +1,32 @@
+{
+  "schema": "foi-process/governance/publication-gate/v1",
+  "scope": "synthetic-dashboard-and-event-log-publication",
+  "status": "synthetic-only",
+  "production_data_publication": "blocked",
+  "gates": {
+    "requester_privacy_and_third_party_data": "pending_human_review",
+    "ocr_and_embedding_amplification": "pending_human_review",
+    "tikanga_and_data_governance": "pending_human_review",
+    "licensing_and_attribution": "pending_human_review",
+    "removal_and_appeal": "pending_human_review",
+    "threat_model": "pending_human_review",
+    "real_archive_sample": "validated_end_to_end_bounded_2026-07-15_request_and_attachments",
+    "human_owner_approval": "pending"
+  },
+  "allowed_outputs": [
+    "examples/generated",
+    "Hugging Face synthetic event-log dataset",
+    "GitHub Pages synthetic dashboard"
+  ],
+  "prohibited_outputs": [
+    "raw request content",
+    "attachments",
+    "OCR text",
+    "embeddings",
+    "production archive records"
+  ],
+  "evidence": [
+    "docs/evidence/real-fyi-archive-capture-2026-07-15.json",
+    "docs/privacy-publication.md"
+  ]
+}

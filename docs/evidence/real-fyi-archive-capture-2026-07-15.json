@@ -1,0 +1,25 @@
+{
+  "schema": "foi-process/evidence/real-fyi-archive-capture/v1",
+  "captured_at": "2026-07-15T13:34:03Z",
+  "source": "https://fyi.org.nz",
+  "request_id": 28164,
+  "request_url": "https://fyi.org.nz/request/28164-please-confirm-what-sub-categories-include-in-my-previous-requests",
+  "capture_scope": "one public request, bounded to 50 MiB and 3 minutes",
+  "resource_kinds": ["html", "json"],
+  "resource_count": 2,
+  "warc_sha256": "01e0de08382efbc1e7ede5cbac7f794d33cfd9f86f41dbefb2ce75272d6439d0",
+  "wacz_sha256": "e1f78eac38a7148f0dbf9957d66708baa76c06c0609b80f29d3ebdae42ed7f4b",
+  "validation": {
+    "derived_store": true,
+    "warc_record_signature": true,
+    "wacz_datapackage": true,
+    "wacz_archive_entry": true
+  },
+  "related_attachment_evidence": "docs/evidence/live-fyi-cli-fyi-archive-foi-process-2026-07-15.json",
+  "content_policy": "No captured request content or attachments are committed; this file records structural evidence and content hashes only.",
+  "limitations": [
+    "This is one real capture, not production backfill coverage.",
+    "Attachment coverage was not present in this request and therefore remains unvalidated for a real attachment sample.",
+    "Live fyi-cli/fyi-archive continuation and promotion remain pending."
+  ]
+}

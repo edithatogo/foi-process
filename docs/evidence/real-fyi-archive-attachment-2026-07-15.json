@@ -1,0 +1,28 @@
+{
+  "schema": "foi-process/evidence/real-fyi-archive-attachment/v1",
+  "captured_at": "2026-07-15T13:43:36Z",
+  "source": "https://fyi.org.nz",
+  "request_id": 26953,
+  "request_url": "https://fyi.org.nz/request/26953-accessing-alternative-dispute-resolution-services-and-related-documents",
+  "capture": {
+    "resource_kinds": ["html", "json"],
+    "resource_count": 2,
+    "warc_sha256": "44b24ec86c880ccfdd75dd589863987abf7dc351c58dc1552beee5870553d081",
+    "wacz_sha256": "b41014b03f558be652675ad9d4534a372c604584c93ca645d745dae03c2cb1fe"
+  },
+  "attachment": {
+    "url": "https://fyi.org.nz/request/26953/response/103126/attach/3/GOV%20032589%20Letter%20to%20requestor.pdf",
+    "size": 358253,
+    "sha256": "8415f7e88ed02ba09436baf61fb9074cb0d9c43047a47f9a5439866307daddc1",
+    "content_signature": "%PDF-"
+  },
+  "validation": {
+    "derived_store": true,
+    "warc_record_signature": true,
+    "wacz_datapackage": true,
+    "wacz_archive_entry": true,
+    "external_attachment_hash": true
+  },
+  "content_policy": "The attachment remains outside the repository; this file records its public URL, size, signature, and hash only.",
+  "limitation": "The current fyi-cli request JSON did not expose this attachment in its normalized artifact list, so attachment retrieval remains a production adapter integration gap rather than a claimed end-to-end fyi-archive pass."
+}
