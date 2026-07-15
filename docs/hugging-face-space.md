@@ -42,12 +42,18 @@ demonstration data; the accepted limits are recorded in ADR 0005.
 ## Publication boundary
 
 The `publish-hf-space` workflow always regenerates the Dataset and dashboard data, compiles the
-Static Space, and uploads the build as a GitHub artifact. Hub publication occurs only when the
+Static Space, and uploads the build as a GitHub artifact. The compiled `dist/` is overlaid at the
+Space repository root while the auditable source is retained alongside it, so Hugging Face can
+serve the application without running Node on the Hub. Hub publication occurs only when the
 workflow is explicitly dispatched with `publish: true` and an `HF_TOKEN` secret is available.
 After upload, the workflow compares the published dashboard source and generated data with the
 validated local build, waits for the public Static Space to report `RUNNING`, requests the public
 host, and records the remote revision and source checksums in a
 `hf-space-publication-attestation` workflow artifact.
+
+Runtime activation remains subject to Hugging Face account policy. If the Hub reports a terminal
+stage such as `CONFIG_ERROR` because credits are required, verification fails immediately and the
+Space remains deposited-but-unverified until that account-level gate is resolved.
 
 A Static Space is intentional. The dashboard is client-side and does not require a persistent
 Python or Docker runtime, which reduces infrastructure and avoids treating compute-tier access as a

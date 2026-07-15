@@ -42,8 +42,8 @@ jobs:
           REPO_ID: ${{ inputs.repo_id }}
         run: |
           test -n "${HF_TOKEN:-}" || { echo 'HF_TOKEN secret is required'; exit 1; }
-          hf repos create "$REPO_ID" --type dataset --exist-ok
-          hf upload "$REPO_ID" /tmp/foi-process-event-logs . --type dataset \
+          hf repo create "$REPO_ID" --repo-type dataset --exist-ok
+          hf upload "$REPO_ID" /tmp/foi-process-event-logs . --repo-type dataset \
             --commit-message "Publish reviewed foi-process fixture event logs"
       - name: Verify published dataset revision
         if: ${{ inputs.publish }}
