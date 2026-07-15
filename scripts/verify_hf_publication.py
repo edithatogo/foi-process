@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify published Hugging Face dataset and Docker Space revisions."""
+"""Verify published Hugging Face dataset and pre-built Static Space revisions."""
 
 from __future__ import annotations
 
@@ -157,25 +157,21 @@ def verify_space(repo_id: str, expected_source: Path, output: Path, timeout_seco
         published = Path(temp)
         hf_download(repo_id, "space", published)
         checksums = {
-            relative: require_same_file(expected_source / relative, published / relative, relative)
-            for relative in (
-                "README.md",
-                "Dockerfile",
-                "package.json",
-                "package-lock.json",
-                "src/App.tsx",
-                "public/data/dashboard-data.json",
-            )
+            "README.md": require_same_file(expected_source / "README.md", published / "README.md", "README.md")
         }
+        dist = expected_source / "dist"
+        for expected in sorted(path for path in dist.rglob("*") if path.is_file()):
+            relative = expected.relative_to(dist).as_posix()
+            checksums[relative] = require_same_file(expected, published / relative, relative)
         info = wait_for_space(repo_id, timeout_seconds)
         if info.get("private") is not False:
             raise ValueError("published Space is not public")
-        if info.get("sdk") != "docker":
-            raise ValueError(f"published Space SDK is {info.get('sdk')!r}, expected 'docker'")
+        if info.get("sdk") != "static":
+            raise ValueError(f"published Space SDK is {info.get('sdk')!r}, expected 'static'")
         write_attestation(
             output,
             {
-                "surface": "huggingface_docker_space_cpu_basic",
+                "surface": "huggingface_static_space_prebuilt",
                 "repo_id": repo_id,
                 "remote_revision": info["sha"],
                 "runtime_stage": info["runtime"]["stage"],
