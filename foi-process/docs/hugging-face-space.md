@@ -55,6 +55,11 @@ Runtime activation remains subject to Hugging Face account policy. If the Hub re
 stage such as `CONFIG_ERROR` because credits are required, verification fails immediately and the
 Space remains deposited-but-unverified until that account-level gate is resolved.
 
+The same verified `space/dist` artifact can be deployed to GitHub Pages with
+`deploy-pages.yml` as a free operational fallback. This does not replace the Hugging Face Space
+record or its runtime attestation; it provides a public dashboard URL while the Hub account gate
+remains unresolved.
+
 A Static Space is intentional. The dashboard is client-side and does not require a persistent
 Python or Docker runtime, which reduces infrastructure and avoids treating compute-tier access as a
 functional dependency. Production data remains subject to the Dataset privacy and governance gate.
