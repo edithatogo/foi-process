@@ -52,7 +52,15 @@ def main() -> int:
         deposition = request_json(f"{args.api}/deposit/depositions", args.token, method="POST", payload=json.dumps(metadata).encode())
         deposition_id = str(deposition["id"])
         bucket = deposition["links"]["bucket"]
-        upload = urllib.request.Request(f"{bucket}/foi-process-{args.release_tag}.tar.gz", data=archive.read_bytes(), method="PUT", headers={"Authorization": f"Bearer {args.token}", "Content-Type": "application/gzip"})
+        upload = urllib.request.Request(
+            f"{bucket}/foi-process-{args.release_tag}.tar.gz",
+            data=archive.read_bytes(),
+            method="PUT",
+            headers={
+                "Authorization": f"Bearer {args.token}",
+                "Content-Type": "application/octet-stream",
+            },
+        )
         with urllib.request.urlopen(upload) as response:
             uploaded = json.load(response)
         published = request_json(
