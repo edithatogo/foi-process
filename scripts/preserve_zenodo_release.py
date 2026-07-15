@@ -13,7 +13,13 @@ from pathlib import Path
 
 
 def request_json(url: str, token: str, *, method: str = "GET", payload: bytes | None = None) -> dict:
-    request = urllib.request.Request(url, data=payload, method=method, headers={"Authorization": f"Bearer {token}"})
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/json",
+    }
+    if payload is not None:
+        headers["Content-Type"] = "application/json"
+    request = urllib.request.Request(url, data=payload, method=method, headers=headers)
     with urllib.request.urlopen(request) as response:
         return json.load(response)
 
