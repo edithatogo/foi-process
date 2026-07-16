@@ -10,3 +10,7 @@ The v3 contracts therefore distinguish:
 - human-review status and reason codes.
 
 The public projection omits events marked `withhold` or `needs_review`, strips evidence from metadata-only events, filters event attributes through an allowlist, and only exposes evidence links that are independently assessed as public. Full-text search and embeddings should operate in access-controlled indexes with a separately generated public index.
+
+The public reporting policy is documented in `docs/traceability-policy.md`: public views default to
+system-level reporting, groups below six cases are suppressed or combined, and confidential-source
+dashboards use keyed pseudonymous case identifiers whose mapping is never published.
