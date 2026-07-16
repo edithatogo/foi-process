@@ -1,6 +1,7 @@
 {
+  "synthetic_fixture": true,
   "schema_version": "1.0.0-draft.1",
-  "run_id": "urn:foi-process:mining-run:sha256:594785efc42ba83da17caaf3566a36d70985b1a01bab1d2b0d729c48ee37db84",
+  "run_id": "urn:foi-process:mining-run:sha256:8d7d182d578e3cb6f697b3168750dbed3552baf4429e612af0dd22aca81a1c2e",
   "created_at": "2026-07-09T00:05:00Z",
   "source_dataset": "urn:huggingface:dataset:edithatogo/fyi-archive-nz",
   "source_revision": "fixture",

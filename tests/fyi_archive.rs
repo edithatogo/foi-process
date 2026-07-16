@@ -116,12 +116,12 @@ fn archive_snapshot_revision_is_explicit_and_attachment_bytes_are_verified() {
     let mut manifest: FyiArchiveManifest = serde_json::from_str(include_str!(
         "../examples/input/fyi-archive-manifest.sample.json"
     )).unwrap();
-    manifest.meta.snapshot_revision = Some(7);
+    manifest.meta.snapshot_revision = Some(1);
     let deltas = fyi_archive_manifest_to_deltas(
         manifest,
         Timestamp::parse("2026-06-29T11:47:00Z").unwrap(),
     ).unwrap();
-    assert_eq!(deltas[0].revision, 7);
+    assert_eq!(deltas[0].revision, 1);
 
     let bytes = b"attachment";
     let attachment: FyiArchiveAttachment = serde_json::from_value(serde_json::json!({
@@ -134,4 +134,41 @@ fn archive_snapshot_revision_is_explicit_and_attachment_bytes_are_verified() {
         verify_attachment_bytes(&attachment, b"tampered!!"),
         Err(FyiArchiveAdapterError::AttachmentDigestMismatch { .. })
     ));
+}
+
+#[test]
+fn archive_snapshot_sequence_requires_a_predecessor_for_non_initial_revisions() {
+    let mut manifest: FyiArchiveManifest = serde_json::from_str(include_str!(
+        "../examples/input/fyi-archive-manifest.sample.json"
+    )).unwrap();
+    manifest.meta.snapshot_revision = Some(3);
+    assert!(matches!(
+        fyi_archive_manifest_to_deltas(manifest, Timestamp::parse("2026-06-29T11:47:00Z").unwrap()),
+        Err(FyiArchiveAdapterError::InitialSnapshotRevision(3))
+    ));
+
+    let mut manifest: FyiArchiveManifest = serde_json::from_str(include_str!(
+        "../examples/input/fyi-archive-manifest.sample.json"
+    )).unwrap();
+    manifest.meta.snapshot_revision = Some(3);
+    manifest.meta.previous_snapshot_revision = Some(2);
+    assert!(fyi_archive_manifest_to_deltas(
+        manifest,
+        Timestamp::parse("2026-06-29T11:47:00Z").unwrap()
+    ).is_ok());
+}
+
+#[test]
+fn archive_source_sequence_is_preserved_over_request_id_sorting() {
+    let mut manifest: FyiArchiveManifest = serde_json::from_str(include_str!(
+        "../examples/input/fyi-archive-manifest.sample.json"
+    )).unwrap();
+    manifest.requests[0].source_sequence = Some(20);
+    manifest.requests[1].source_sequence = Some(10);
+    let deltas = fyi_archive_manifest_to_deltas(
+        manifest,
+        Timestamp::parse("2026-06-29T11:47:00Z").unwrap(),
+    ).unwrap();
+    assert_eq!(deltas[0].position.sequence, 10);
+    assert_eq!(deltas[1].position.sequence, 20);
 }

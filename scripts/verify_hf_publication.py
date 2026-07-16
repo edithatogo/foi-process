@@ -102,6 +102,9 @@ def verify_dataset(repo_id: str, expected_bundle: Path, output: Path) -> None:
         missing = sorted(required - siblings)
         if missing:
             raise ValueError(f"dataset repository listing is incomplete: {missing}")
+        unexpected = sorted(siblings - required - {".gitattributes"})
+        if unexpected:
+            raise ValueError(f"dataset repository contains unlisted files: {unexpected}")
         write_attestation(
             output,
             {

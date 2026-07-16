@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0-draft.1",
-  "trace_id": "urn:foi-process:conformance-trace:sha256:ac5ac0bc369184915b78d59aa3b58c175501e44a5c3308a0726b40152fb7c2d6",
+  "trace_id": "urn:foi-process:conformance-trace:sha256:3c607e43c6b4580d5b856d659a4673714e4ab3677891708072f6d50e3cf8dec4",
   "case_id": "urn:fyi-nz:request:demo-1",
   "profile_id": "urn:rulespec-nz:oia:deadline-profile:fixture",
   "engine_id": "urn:axiom-rules-engine:runtime",
@@ -13,7 +13,7 @@
       "kind": "input",
       "label": "Read observed request-sent timestamp",
       "input_ids": [
-        "urn:foi-process:event:sha256:c839e8ca669caf4d0e5a040212842d90c4201edb2b35c0eae5df690dfe791155"
+        "urn:foi-process:event:sha256:488318155be303cd1835042fc3a76276014006f5d77eae0509c6121eff97f019"
       ],
       "output_ids": [],
       "evidence": [
@@ -29,7 +29,7 @@
       "kind": "calculation",
       "label": "Apply fixture working-day profile",
       "input_ids": [
-        "urn:foi-process:event:sha256:c839e8ca669caf4d0e5a040212842d90c4201edb2b35c0eae5df690dfe791155"
+        "urn:foi-process:event:sha256:488318155be303cd1835042fc3a76276014006f5d77eae0509c6121eff97f019"
       ],
       "output_ids": [],
       "evidence": [],
@@ -42,7 +42,7 @@
       "kind": "evidence_check",
       "label": "Check observed extension evidence",
       "input_ids": [
-        "urn:foi-process:event:sha256:c64cef1478af1ff8fcade29f53fe02cd8787f4dabff63777736f3a84dd620ffb"
+        "urn:foi-process:event:sha256:133b6c39a818dbba4237ed8f9c92753eb6594643eaf0f1465d9a8b91fea95816"
       ],
       "output_ids": [],
       "evidence": [

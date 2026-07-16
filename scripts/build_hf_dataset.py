@@ -46,20 +46,26 @@ def require_fixture_review(privacy: dict[str, Any], subject: str) -> None:
         raise ValueError(f"{subject}: fixture review reason code is missing")
 
 
-def validate_public_tree(value: Any, subject: str, path: str = "$") -> None:
+def validate_public_tree(value: Any, subject: str, path: str = "$", metadata_only: bool = False) -> None:
     """Validate every nested privacy assessment before an artefact is deposited."""
     if isinstance(value, dict):
+        forbidden = {"text", "inline_text", "raw_text", "embedding", "embeddings"}
+        if metadata_only:
+            leaked = sorted(key for key in forbidden if key in value)
+            if leaked:
+                raise ValueError(f"{subject}{path}: metadata-only object contains {leaked}")
+        child_metadata_only = metadata_only
         if "privacy" in value:
             if not isinstance(value["privacy"], dict):
                 raise ValueError(f"{subject}{path}.privacy: expected an object")
             require_fixture_review(value["privacy"], f"{subject}{path}")
-            if value["privacy"].get("disposition") == "publish_metadata_only":
-                forbidden = {"text", "inline_text", "raw_text", "embedding", "embeddings"}
+            child_metadata_only = metadata_only or value["privacy"].get("disposition") == "publish_metadata_only"
+            if child_metadata_only:
                 leaked = sorted(key for key in forbidden if key in value)
                 if leaked:
                     raise ValueError(f"{subject}{path}: metadata-only object contains {leaked}")
         for key, child in value.items():
-            validate_public_tree(child, subject, f"{path}.{key}")
+            validate_public_tree(child, subject, f"{path}.{key}", child_metadata_only)
     elif isinstance(value, list):
         for index, child in enumerate(value):
             validate_public_tree(child, subject, f"{path}[{index}]")
@@ -77,7 +83,7 @@ def sha256(path: Path) -> str:
 
 def dataset_card() -> str:
     return """---
-license: apache-2.0
+license: other
 language:
 - en
 pretty_name: FOI Process Event Logs
@@ -214,6 +220,8 @@ def build(output: Path) -> None:
         "conformance-trace": conformance,
         "mining-run-manifest": mining_run,
     }.items():
+        if name != "conformance-trace" and artefact.get("synthetic_fixture") is not True:
+            raise ValueError(f"{name}: synthetic fixture provenance marker is missing")
         validate_public_tree(artefact, name)
 
     event_log = []
@@ -226,7 +234,7 @@ def build(output: Path) -> None:
                 "case_id": event["case_id"],
                 "activity": event["activity"],
                 "timestamp": timestamp,
-                "source_sequence": event.get("position", {}).get("sequence", 0),
+                "source_sequence": event.get("source_sequence", event.get("position", {}).get("sequence", 0)),
                 "site": event["site"],
                 "jurisdiction": event["jurisdiction"],
                 "assertion_status": event["assertion_status"],

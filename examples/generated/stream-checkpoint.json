@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0-draft.1",
-  "checkpoint_id": "urn:foi-process:checkpoint:sha256:1d81492e6657003a86391ab9a4f9d907752bb1266d336cd011bd59f69c7c51c6",
+  "checkpoint_id": "urn:foi-process:checkpoint:sha256:87e22761a529068cf1327761441bbd43a260fd8f03f24f6faf1e566e7ed8db97",
   "consumer": "urn:foi-process:consumer:fixture",
   "created_at": "2026-07-09T00:05:00Z",
   "partitions": [
@@ -10,6 +10,6 @@
       "last_sequence": 5
     }
   ],
-  "state_hash": "1d81492e6657003a86391ab9a4f9d907752bb1266d336cd011bd59f69c7c51c6",
+  "state_hash": "87e22761a529068cf1327761441bbd43a260fd8f03f24f6faf1e566e7ed8db97",
   "attributes": {}
 }

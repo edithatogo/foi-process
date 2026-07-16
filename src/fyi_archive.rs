@@ -32,6 +32,8 @@ pub struct FyiArchiveManifestMeta {
     /// Monotonic archive snapshot revision. Legacy manifests default to the first snapshot.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub snapshot_revision: Option<u64>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub previous_snapshot_revision: Option<u64>,
     pub record_count: u64,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub schema: Option<String>,
@@ -76,6 +78,8 @@ pub struct FyiArchiveRequest {
     pub first_seen: Option<String>,
     #[serde(default)]
     pub last_updated: Option<String>,
+    #[serde(default, alias = "sequence", skip_serializing_if = "Option::is_none")]
+    pub source_sequence: Option<u64>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -109,6 +113,10 @@ pub enum FyiArchiveAdapterError {
     InvalidDigest { request_id: u64, digest: String },
     #[error("snapshot revision must be positive")]
     InvalidSnapshotRevision,
+    #[error("snapshot revision {current} does not follow previous revision {previous}")]
+    SnapshotRevisionGap { previous: u64, current: u64 },
+    #[error("initial snapshot revision must be 1, got {0}")]
+    InitialSnapshotRevision(u64),
     #[error("invalid attachment digest for request {request_id}: {digest}")]
     InvalidAttachmentDigest { request_id: u64, digest: String },
     #[error("attachment digest is required for byte verification")]
@@ -134,12 +142,25 @@ pub fn fyi_archive_manifest_to_deltas(
             actual: manifest.requests.len(),
         });
     }
-    if manifest.meta.snapshot_revision == Some(0) {
+    let snapshot_revision = manifest.meta.snapshot_revision.unwrap_or(1);
+    if snapshot_revision == 0 {
         return Err(FyiArchiveAdapterError::InvalidSnapshotRevision);
+    }
+    match manifest.meta.previous_snapshot_revision {
+        Some(previous) if snapshot_revision != previous.saturating_add(1) => {
+            return Err(FyiArchiveAdapterError::SnapshotRevisionGap {
+                previous,
+                current: snapshot_revision,
+            });
+        }
+        None if snapshot_revision != 1 => {
+            return Err(FyiArchiveAdapterError::InitialSnapshotRevision(snapshot_revision));
+        }
+        _ => {}
     }
 
     let mut requests = manifest.requests;
-    requests.sort_by_key(|request| request.request_id);
+    requests.sort_by_key(|request| (request.source_sequence.unwrap_or(u64::MAX), request.request_id));
     let mut seen = BTreeSet::new();
     let mut deltas = Vec::with_capacity(requests.len());
     for (offset, request) in requests.into_iter().enumerate() {
@@ -151,12 +172,13 @@ pub fn fyi_archive_manifest_to_deltas(
                 request.request_id,
             ));
         }
+        let source_sequence = request.source_sequence.unwrap_or(offset as u64 + 1);
         deltas.push(fyi_archive_request_to_delta(
             &manifest.meta,
             request,
             captured_at.clone(),
-            offset as u64 + 1,
-            manifest.meta.snapshot_revision.unwrap_or(1),
+            source_sequence,
+            snapshot_revision,
         )?);
     }
     Ok(deltas)
@@ -340,7 +362,9 @@ fn fyi_archive_request_to_delta(
         media_type: "application/vnd.fyi-archive.manifest-record+json".to_string(),
         source_kind: TermId::parse("foip:ArchiveManifestRecord")?,
         source_time,
-        warc_record_id: request.warc_record_ids.into_iter().next(),
+        warc_record_id: request.warc_record_ids.first().cloned(),
+        warc_record_ids: request.warc_record_ids.clone(),
+        byte_length: None,
         attributes,
     };
     Ok(archive_record_to_delta(record)?)

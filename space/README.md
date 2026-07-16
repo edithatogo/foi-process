@@ -4,7 +4,7 @@ colorFrom: green
 colorTo: gray
 sdk: static
 pinned: false
-license: apache-2.0
+license: other
 ---
 
 # FOI Process Explorer

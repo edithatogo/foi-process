@@ -4,7 +4,7 @@
     "classification": "synthetic-fixture",
     "source_release": "v0.1.0",
     "generated_at": "2026-07-09T00:05:00Z",
-    "manifest_sha256": "773f6d4839a17f080b40a3f1faf52b6eaa11fb06b5133a83fee09c19a8fbd8af"
+    "manifest_sha256": "40ce238e1a1c95103f5e1c74fb5ee2cfa86ce1b0df78318860a8fdd5bf75e7e6"
   },
   "metrics": {
     "case_count": 1,
@@ -45,12 +45,12 @@
   ],
   "events": [
     {
-      "event_id": "urn:foi-process:event:sha256:c839e8ca669caf4d0e5a040212842d90c4201edb2b35c0eae5df690dfe791155",
-      "logical_event_id": "urn:foi-process:event-logical:sha256:d0403ca0233c913f7b7feead8adb73b7460aab4a3426ec988e2c135b1e29fb00",
+      "event_id": "urn:foi-process:event:sha256:488318155be303cd1835042fc3a76276014006f5d77eae0509c6121eff97f019",
+      "logical_event_id": "urn:foi-process:event-logical:sha256:ffd897c79930eb5a88dc00c48294e4a72ba7497b2e9353da555d1d672a26fcc7",
       "case_id": "urn:fyi-nz:request:demo-1",
       "activity": "foio:RequestSent",
       "timestamp": "2025-01-06T09:00:00+13:00",
-      "source_sequence": 0,
+      "source_sequence": 1,
       "site": "urn:alaveteli:site:fyi.org.nz",
       "jurisdiction": "jurisdiction:NZ",
       "assertion_status": "observed",
@@ -58,12 +58,12 @@
       "evidence_count": 1
     },
     {
-      "event_id": "urn:foi-process:event:sha256:63133db96b2cfc43af6121bdae5c109f243eeb8dd4c2675ffeeb81502be356e4",
-      "logical_event_id": "urn:foi-process:event-logical:sha256:463374c43d69f59db741832292be233e9d217f1e7b51d5c86f1da02c67b9b736",
+      "event_id": "urn:foi-process:event:sha256:a69853571fb4dc70389c98082684cfdef20bc844e617ab5109f7556931cb0824",
+      "logical_event_id": "urn:foi-process:event-logical:sha256:c9fe270cf05f66c4fcbd0b02f9387dff3879cbac23e7272b90b7aad1ac084d17",
       "case_id": "urn:fyi-nz:request:demo-1",
       "activity": "foio:AuthorityResponseReceived",
       "timestamp": "2025-01-07T11:00:00+13:00",
-      "source_sequence": 0,
+      "source_sequence": 2,
       "site": "urn:alaveteli:site:fyi.org.nz",
       "jurisdiction": "jurisdiction:NZ",
       "assertion_status": "observed",
@@ -71,12 +71,12 @@
       "evidence_count": 1
     },
     {
-      "event_id": "urn:foi-process:event:sha256:c64cef1478af1ff8fcade29f53fe02cd8787f4dabff63777736f3a84dd620ffb",
-      "logical_event_id": "urn:foi-process:event-logical:sha256:af3bdad4de31368f7ff488cb74381f4753a4d7146b51b24355fcf27b41d22f78",
+      "event_id": "urn:foi-process:event:sha256:133b6c39a818dbba4237ed8f9c92753eb6594643eaf0f1465d9a8b91fea95816",
+      "logical_event_id": "urn:foi-process:event-logical:sha256:5c4e4ab2696153f207922c737f3cba63feac3c67a79be32f308930c1d23977a0",
       "case_id": "urn:fyi-nz:request:demo-1",
       "activity": "foio:ExtensionNotified",
       "timestamp": "2025-01-20T10:15:00+13:00",
-      "source_sequence": 0,
+      "source_sequence": 4,
       "site": "urn:alaveteli:site:fyi.org.nz",
       "jurisdiction": "jurisdiction:NZ",
       "assertion_status": "observed",
@@ -84,12 +84,12 @@
       "evidence_count": 1
     },
     {
-      "event_id": "urn:foi-process:event:sha256:7c54702656367adb4a244c447ad61e943feaf71e8b6a64e03d4a0eb36a700cb1",
-      "logical_event_id": "urn:foi-process:event-logical:sha256:b167f61da0363ba7de1faa5255caf0da5507b4da757d56ebd1a7407ddc99c2e2",
+      "event_id": "urn:foi-process:event:sha256:e66d4ac737f648d564f71e2357a2fa1b5dbc0e1f9d20331ef197e7907f353e07",
+      "logical_event_id": "urn:foi-process:event-logical:sha256:3442aa10af59ff9e9643a983d68578437f5308c5dca3c374525e0f78ac5aa4a7",
       "case_id": "urn:fyi-nz:request:demo-1",
       "activity": "foio:ClosedObserved",
       "timestamp": "2025-02-14T16:00:00+13:00",
-      "source_sequence": 0,
+      "source_sequence": 5,
       "site": "urn:alaveteli:site:fyi.org.nz",
       "jurisdiction": "jurisdiction:NZ",
       "assertion_status": "observed",
@@ -139,10 +139,10 @@
       "ended_at": "2025-02-14T16:00:00+13:00",
       "duration_seconds": 3394800.0,
       "event_ids": [
-        "urn:foi-process:event:sha256:c839e8ca669caf4d0e5a040212842d90c4201edb2b35c0eae5df690dfe791155",
-        "urn:foi-process:event:sha256:63133db96b2cfc43af6121bdae5c109f243eeb8dd4c2675ffeeb81502be356e4",
-        "urn:foi-process:event:sha256:c64cef1478af1ff8fcade29f53fe02cd8787f4dabff63777736f3a84dd620ffb",
-        "urn:foi-process:event:sha256:7c54702656367adb4a244c447ad61e943feaf71e8b6a64e03d4a0eb36a700cb1"
+        "urn:foi-process:event:sha256:488318155be303cd1835042fc3a76276014006f5d77eae0509c6121eff97f019",
+        "urn:foi-process:event:sha256:a69853571fb4dc70389c98082684cfdef20bc844e617ab5109f7556931cb0824",
+        "urn:foi-process:event:sha256:133b6c39a818dbba4237ed8f9c92753eb6594643eaf0f1465d9a8b91fea95816",
+        "urn:foi-process:event:sha256:e66d4ac737f648d564f71e2357a2fa1b5dbc0e1f9d20331ef197e7907f353e07"
       ],
       "activities": [
         "foio:RequestSent",
@@ -154,7 +154,7 @@
   ],
   "findings": [
     {
-      "trace_id": "urn:foi-process:conformance-trace:sha256:ac5ac0bc369184915b78d59aa3b58c175501e44a5c3308a0726b40152fb7c2d6",
+      "trace_id": "urn:foi-process:conformance-trace:sha256:3c607e43c6b4580d5b856d659a4673714e4ab3677891708072f6d50e3cf8dec4",
       "case_id": "urn:fyi-nz:request:demo-1",
       "profile_id": "urn:rulespec-nz:oia:deadline-profile:fixture",
       "rule_id": "oia-nz:IndicativeDeadlineCalculated",
@@ -177,7 +177,7 @@
   "ocel": {
     "events": [
       {
-        "id": "urn:foi-process:event:sha256:c839e8ca669caf4d0e5a040212842d90c4201edb2b35c0eae5df690dfe791155",
+        "id": "urn:foi-process:event:sha256:488318155be303cd1835042fc3a76276014006f5d77eae0509c6121eff97f019",
         "event_type": "foio:RequestSent",
         "time": "2025-01-06T09:00:00+13:00",
         "attributes": {
@@ -186,7 +186,7 @@
         }
       },
       {
-        "id": "urn:foi-process:event:sha256:63133db96b2cfc43af6121bdae5c109f243eeb8dd4c2675ffeeb81502be356e4",
+        "id": "urn:foi-process:event:sha256:a69853571fb4dc70389c98082684cfdef20bc844e617ab5109f7556931cb0824",
         "event_type": "foio:AuthorityResponseReceived",
         "time": "2025-01-07T11:00:00+13:00",
         "attributes": {
@@ -195,7 +195,7 @@
         }
       },
       {
-        "id": "urn:foi-process:event:sha256:c64cef1478af1ff8fcade29f53fe02cd8787f4dabff63777736f3a84dd620ffb",
+        "id": "urn:foi-process:event:sha256:133b6c39a818dbba4237ed8f9c92753eb6594643eaf0f1465d9a8b91fea95816",
         "event_type": "foio:ExtensionNotified",
         "time": "2025-01-20T10:15:00+13:00",
         "attributes": {
@@ -204,7 +204,7 @@
         }
       },
       {
-        "id": "urn:foi-process:event:sha256:7c54702656367adb4a244c447ad61e943feaf71e8b6a64e03d4a0eb36a700cb1",
+        "id": "urn:foi-process:event:sha256:e66d4ac737f648d564f71e2357a2fa1b5dbc0e1f9d20331ef197e7907f353e07",
         "event_type": "foio:ClosedObserved",
         "time": "2025-02-14T16:00:00+13:00",
         "attributes": {
@@ -222,22 +222,22 @@
     ],
     "links": [
       {
-        "event_id": "urn:foi-process:event:sha256:c839e8ca669caf4d0e5a040212842d90c4201edb2b35c0eae5df690dfe791155",
+        "event_id": "urn:foi-process:event:sha256:488318155be303cd1835042fc3a76276014006f5d77eae0509c6121eff97f019",
         "object_id": "urn:fyi-nz:request:demo-1",
         "qualifier": "foip:case"
       },
       {
-        "event_id": "urn:foi-process:event:sha256:63133db96b2cfc43af6121bdae5c109f243eeb8dd4c2675ffeeb81502be356e4",
+        "event_id": "urn:foi-process:event:sha256:a69853571fb4dc70389c98082684cfdef20bc844e617ab5109f7556931cb0824",
         "object_id": "urn:fyi-nz:request:demo-1",
         "qualifier": "foip:case"
       },
       {
-        "event_id": "urn:foi-process:event:sha256:c64cef1478af1ff8fcade29f53fe02cd8787f4dabff63777736f3a84dd620ffb",
+        "event_id": "urn:foi-process:event:sha256:133b6c39a818dbba4237ed8f9c92753eb6594643eaf0f1465d9a8b91fea95816",
         "object_id": "urn:fyi-nz:request:demo-1",
         "qualifier": "foip:case"
       },
       {
-        "event_id": "urn:foi-process:event:sha256:7c54702656367adb4a244c447ad61e943feaf71e8b6a64e03d4a0eb36a700cb1",
+        "event_id": "urn:foi-process:event:sha256:e66d4ac737f648d564f71e2357a2fa1b5dbc0e1f9d20331ef197e7907f353e07",
         "object_id": "urn:fyi-nz:request:demo-1",
         "qualifier": "foip:case"
       }

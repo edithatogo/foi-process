@@ -10,6 +10,7 @@ def main() -> None:
                 "disposition": "publish",
                 "human_reviewed": True,
                 "reason_codes": ["privacy:fixture_reviewed"],
+                "synthetic_fixture": True,
             }
         }
     }
@@ -23,6 +24,7 @@ def main() -> None:
                         "disposition": "publish_metadata_only",
                         "human_reviewed": True,
                         "reason_codes": ["privacy:fixture_reviewed"],
+                        "synthetic_fixture": True,
                     },
                     "inline_text": "must not publish",
                 }
