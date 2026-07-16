@@ -15,6 +15,17 @@ A production adapter should use bounded channels or a local append-only journal 
 
 ## Derived-store attachment verification
 
+The upstream experimental emitter is guarded explicitly in `fyi-cli`:
+
+```bash
+fyi emit-evidence-delta --experimental \
+  --derived-dir data/raw/requests \
+  --output evidence-deltas.ndjson \
+  --captured-at 2026-07-16T00:00:00Z
+```
+
+It emits only changed current records plus deletion tombstones when a previous manifest is supplied. The output is an internal EvidenceDelta stream and defaults every evidence record to `needs_review`; it is not a public-output authorization.
+
 For a captured `fyi-cli` request directory, the Rust adapter can verify attachment bytes from the derived store before producing deltas. The manifest must carry each attachment's relative `path`, SHA-256 digest, and (when captured) byte size. The retriever canonicalizes the configured root and rejects path traversal; it never fetches the public URL and never writes the retrieved bytes to the output.
 
 ```bash
