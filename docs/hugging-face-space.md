@@ -58,10 +58,10 @@ ZeroGPU is not part of the deployment: HF documents ZeroGPU as a Gradio-only GPU
 hosting requires PRO for personal accounts. Keeping build execution in GitHub Actions avoids the
 credit-gated Hub static-build path observed for this account.
 
-The same verified `space/dist` artifact can be deployed to GitHub Pages with
-`deploy-pages.yml` as a free operational fallback. This does not replace the Hugging Face Space
-record or its runtime attestation; it provides a public dashboard URL while the Hub account gate
-remains unresolved.
+The same verified `space/dist` artifact is deployed to GitHub Pages with `deploy-pages.yml`. This
+is the primary live dashboard and requires no paid Hugging Face service. The Hugging Face Space
+record and asset deposit remain useful for discoverability and reproducible sharing, but are not a
+runtime dependency.
 
 A pre-built Static Space is used here because Docker and Gradio CPU hosting are also PRO-gated for
 this account. Production data remains subject to the Dataset privacy and governance gate.

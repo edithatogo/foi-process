@@ -80,6 +80,16 @@ The operational Static Space dashboard in `space/` adds process, variant, case-t
 conformance, and provenance views over that verified bundle. Its reproducible build and
 fail-closed publication boundary are documented in `docs/hugging-face-space.md`.
 
+## No-cost hosted surfaces
+
+- **Live dashboard:** [GitHub Pages](https://edithatogo.github.io/foi-process/), built and deployed
+  from the public repository with no paid Hugging Face dependency.
+- **Event-log deposit:** [Hugging Face Dataset](https://huggingface.co/datasets/edithatogo/foi-process-event-logs),
+  containing the public-safe event logs, OCEL projections, process variants, schemas, and manifests.
+- **Hugging Face Space:** pre-built static assets are mirrored when requested, but its runtime is
+  optional and remains unverified if Hugging Face requires account credits. No PRO plan, credits,
+  Docker, Gradio, GPU, or ZeroGPU is required by this project.
+
 Scale and release governance are executable rather than advisory: the repeated Rust benchmark,
 tested Parquet partition contract, SPDX SBOM, mining provenance, checksummed release package, and
 verification commands are documented in `docs/scale-benchmark.md` and `docs/release-evidence.md`.
