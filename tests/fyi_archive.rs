@@ -107,7 +107,10 @@ fn archive_adapter_accepts_fyi_cli_attachment_field_names() {
     assert_eq!(attachment.filename, "example.pdf");
     assert_eq!(attachment.mime_type.as_deref(), Some("application/pdf"));
     assert_eq!(attachment.size_bytes, Some(358253));
-    assert_eq!(attachment.content_sha256.as_deref(), Some("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
+    assert_eq!(
+        attachment.content_sha256.as_deref(),
+        Some("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    );
     assert_eq!(attachment.warc_record_ids, vec!["warc-a", "warc-b"]);
 }
 
@@ -115,12 +118,12 @@ fn archive_adapter_accepts_fyi_cli_attachment_field_names() {
 fn archive_snapshot_revision_is_explicit_and_attachment_bytes_are_verified() {
     let mut manifest: FyiArchiveManifest = serde_json::from_str(include_str!(
         "../examples/input/fyi-archive-manifest.sample.json"
-    )).unwrap();
+    ))
+    .unwrap();
     manifest.meta.snapshot_revision = Some(1);
-    let deltas = fyi_archive_manifest_to_deltas(
-        manifest,
-        Timestamp::parse("2026-06-29T11:47:00Z").unwrap(),
-    ).unwrap();
+    let deltas =
+        fyi_archive_manifest_to_deltas(manifest, Timestamp::parse("2026-06-29T11:47:00Z").unwrap())
+            .unwrap();
     assert_eq!(deltas[0].revision, 1);
 
     let bytes = b"attachment";
@@ -128,7 +131,8 @@ fn archive_snapshot_revision_is_explicit_and_attachment_bytes_are_verified() {
         "url": "https://example.test/a",
         "sha256": Sha256Digest::of(bytes).to_string(),
         "size": bytes.len()
-    })).unwrap();
+    }))
+    .unwrap();
     verify_attachment_bytes(&attachment, bytes).unwrap();
     assert!(matches!(
         verify_attachment_bytes(&attachment, b"tampered!!"),
@@ -140,7 +144,8 @@ fn archive_snapshot_revision_is_explicit_and_attachment_bytes_are_verified() {
 fn archive_snapshot_sequence_requires_a_predecessor_for_non_initial_revisions() {
     let mut manifest: FyiArchiveManifest = serde_json::from_str(include_str!(
         "../examples/input/fyi-archive-manifest.sample.json"
-    )).unwrap();
+    ))
+    .unwrap();
     manifest.meta.snapshot_revision = Some(3);
     assert!(matches!(
         fyi_archive_manifest_to_deltas(manifest, Timestamp::parse("2026-06-29T11:47:00Z").unwrap()),
@@ -149,26 +154,28 @@ fn archive_snapshot_sequence_requires_a_predecessor_for_non_initial_revisions() 
 
     let mut manifest: FyiArchiveManifest = serde_json::from_str(include_str!(
         "../examples/input/fyi-archive-manifest.sample.json"
-    )).unwrap();
+    ))
+    .unwrap();
     manifest.meta.snapshot_revision = Some(3);
     manifest.meta.previous_snapshot_revision = Some(2);
     assert!(fyi_archive_manifest_to_deltas(
         manifest,
         Timestamp::parse("2026-06-29T11:47:00Z").unwrap()
-    ).is_ok());
+    )
+    .is_ok());
 }
 
 #[test]
 fn archive_source_sequence_is_preserved_over_request_id_sorting() {
     let mut manifest: FyiArchiveManifest = serde_json::from_str(include_str!(
         "../examples/input/fyi-archive-manifest.sample.json"
-    )).unwrap();
+    ))
+    .unwrap();
     manifest.requests[0].source_sequence = Some(20);
     manifest.requests[1].source_sequence = Some(10);
-    let deltas = fyi_archive_manifest_to_deltas(
-        manifest,
-        Timestamp::parse("2026-06-29T11:47:00Z").unwrap(),
-    ).unwrap();
+    let deltas =
+        fyi_archive_manifest_to_deltas(manifest, Timestamp::parse("2026-06-29T11:47:00Z").unwrap())
+            .unwrap();
     assert_eq!(deltas[0].position.sequence, 10);
     assert_eq!(deltas[1].position.sequence, 20);
 }

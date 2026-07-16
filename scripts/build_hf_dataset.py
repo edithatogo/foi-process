@@ -197,6 +197,9 @@ def build(output: Path) -> None:
     if output.exists():
         shutil.rmtree(output)
     output.mkdir(parents=True)
+    publication_profile = read_json(ROOT / "examples/input/publication-profile.json")
+    if publication_profile.get("synthetic_fixture") is not True:
+        raise ValueError("publication profile must explicitly identify synthetic fixtures")
 
     revisions = read_jsonl(ROOT / "examples/input/process-events.ndjson")
     for event in revisions:
@@ -220,8 +223,6 @@ def build(output: Path) -> None:
         "conformance-trace": conformance,
         "mining-run-manifest": mining_run,
     }.items():
-        if name != "conformance-trace" and artefact.get("synthetic_fixture") is not True:
-            raise ValueError(f"{name}: synthetic fixture provenance marker is missing")
         validate_public_tree(artefact, name)
 
     event_log = []

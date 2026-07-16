@@ -262,8 +262,8 @@ def generate() -> None:
                 if rec and rec["privacy"]["disposition"]=="publish":
                     links.append({"evidence_id":rec["evidence_id"],"uri":rec["locator"].get("uri"),"media_type":rec["media_type"],"content_sha256":rec["content_sha256"]})
         public_events.append({k:e[k] for k in ["event_id","logical_event_id","site","jurisdiction","case_id","activity","event_time","assertion_status"]} | {"source_sequence":e["position"]["sequence"],"evidence":links,"attributes":{k:v for k,v in e.get("attributes",{}).items() if k in {"authority_id","native_activity"}}})
-    public={"synthetic_fixture":True,"policy_id":"urn:foi-process:publication:dashboard-default","events":public_events,"withheld_event_count":withheld,"metadata_only_event_count":metadata}
-    ocel={"synthetic_fixture":True,
+    public={"policy_id":"urn:foi-process:publication:dashboard-default","events":public_events,"withheld_event_count":withheld,"metadata_only_event_count":metadata}
+    ocel={
         "events":[{"id":e["event_id"],"event_type":e["activity"],"time":e["event_time"]["timestamp"],"attributes":e.get("attributes",{})} for e in materialize(events)],
         "objects":[{"id":o["object_id"],"object_type":o["object_type"],"attributes":o.get("attributes",{})} for o in objects.values()],
         "event_object_links":[{"event_id":e["event_id"],"object_id":o["object_id"],"qualifier":o["qualifier"]} for e in materialize(events) for o in e["objects"]],
@@ -279,12 +279,12 @@ def generate() -> None:
 
     generated=ROOT/'examples/generated'; input_dir=ROOT/'examples/input'; generated.mkdir(parents=True,exist_ok=True); input_dir.mkdir(parents=True,exist_ok=True)
     for name,value in {
-        'normalized-bundle.json':bundle,'human-review-record.json':review,'conformance-trace.json':trace,'validation-finding.json':trace_finding,'replay-outcomes.json':outcomes,'dashboard-summary.json':{"synthetic_fixture":True,**summary(events)},'ocel-projection.json':ocel,'public-projection.json':public,'document-bundle.json':doc,'document-signal.json':signal,'stream-checkpoint.json':checkpoint,'replay-snapshot.json':snapshot}.items():
+        'normalized-bundle.json':bundle,'human-review-record.json':review,'conformance-trace.json':trace,'validation-finding.json':trace_finding,'replay-outcomes.json':outcomes,'dashboard-summary.json':summary(events),'ocel-projection.json':ocel,'public-projection.json':public,'document-bundle.json':doc,'document-signal.json':signal,'stream-checkpoint.json':checkpoint,'replay-snapshot.json':snapshot}.items():
         (generated/name).write_text(json.dumps(value,indent=2,ensure_ascii=False)+"\n")
     (input_dir/'evidence-deltas.ndjson').write_text(''.join(json.dumps(d,separators=(',',':'))+'\n' for d in deltas))
     (input_dir/'process-events.ndjson').write_text(''.join(json.dumps(e,separators=(',',':'))+'\n' for e in events))
     (input_dir/'mapping-profile.json').write_text(json.dumps({"profile_id":"urn:foi-process:profile:fyi-minimal","profile_version":VERSION,"platform_activities":MAPPING,"event_attribute_allowlist":["authority_id","platform_state","message_direction"]},indent=2)+"\n")
-    manifest={"synthetic_fixture":True,"schema_version":VERSION,"run_id":sid("foi-process:mining-run",[checkpoint["state_hash"],"0.1.0"]),"created_at":"2026-07-09T00:05:00Z","source_dataset":"urn:huggingface:dataset:edithatogo/fyi-archive-nz","source_revision":"fixture","software_commit":"uncommitted-workpack-v3","rust_version":"1.88+","rust4pm_version":"0.6.0","foi_process_version":"0.1.0","parameters":{"mapping_profile":"urn:foi-process:profile:fyi-minimal"},"privacy_profile":privacy(),"inputs":[],"outputs":[],"environment":{"generation":"python-reference-oracle"}}
+    manifest={"schema_version":VERSION,"run_id":sid("foi-process:mining-run",[checkpoint["state_hash"],"0.1.0"]),"created_at":"2026-07-09T00:05:00Z","source_dataset":"urn:huggingface:dataset:edithatogo/fyi-archive-nz","source_revision":"fixture","software_commit":"uncommitted-workpack-v3","rust_version":"1.88+","rust4pm_version":"0.6.0","foi_process_version":"0.1.0","parameters":{"mapping_profile":"urn:foi-process:profile:fyi-minimal"},"privacy_profile":privacy(),"inputs":[],"outputs":[],"environment":{"generation":"python-reference-oracle"}}
     (generated/'mining-run-manifest.json').write_text(json.dumps(manifest,indent=2)+"\n")
 
 if __name__ == '__main__': generate()

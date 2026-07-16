@@ -95,7 +95,12 @@ pub struct FyiArchiveAttachment {
     pub mime_type: Option<String>,
     #[serde(default, alias = "size", skip_serializing_if = "Option::is_none")]
     pub size_bytes: Option<u64>,
-    #[serde(default, alias = "sha256", alias = "digest", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        default,
+        alias = "sha256",
+        alias = "digest",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub content_sha256: Option<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub warc_record_ids: Vec<String>,
@@ -154,13 +159,20 @@ pub fn fyi_archive_manifest_to_deltas(
             });
         }
         None if snapshot_revision != 1 => {
-            return Err(FyiArchiveAdapterError::InitialSnapshotRevision(snapshot_revision));
+            return Err(FyiArchiveAdapterError::InitialSnapshotRevision(
+                snapshot_revision,
+            ));
         }
         _ => {}
     }
 
     let mut requests = manifest.requests;
-    requests.sort_by_key(|request| (request.source_sequence.unwrap_or(u64::MAX), request.request_id));
+    requests.sort_by_key(|request| {
+        (
+            request.source_sequence.unwrap_or(u64::MAX),
+            request.request_id,
+        )
+    });
     let mut seen = BTreeSet::new();
     let mut deltas = Vec::with_capacity(requests.len());
     for (offset, request) in requests.into_iter().enumerate() {
@@ -309,7 +321,8 @@ fn fyi_archive_request_to_delta(
                 .content_sha256
                 .as_deref()
                 .map(|value| {
-                    Sha256Digest::parse(value.to_ascii_lowercase()).map(|_| value.to_ascii_lowercase())
+                    Sha256Digest::parse(value.to_ascii_lowercase())
+                        .map(|_| value.to_ascii_lowercase())
                 })
                 .transpose()
                 .map_err(|_| FyiArchiveAdapterError::InvalidAttachmentDigest {
@@ -326,7 +339,10 @@ fn fyi_archive_request_to_delta(
             }))
         })
         .collect::<Result<Vec<_>, FyiArchiveAdapterError>>()?;
-    attributes.insert("attachments".to_string(), serde_json::Value::Array(attachments));
+    attributes.insert(
+        "attachments".to_string(),
+        serde_json::Value::Array(attachments),
+    );
     attributes.insert(
         "event_time".to_string(),
         serde_json::Value::String(source_time_text),

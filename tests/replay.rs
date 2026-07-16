@@ -57,7 +57,11 @@ fn activity_change_keeps_logical_event_identity_across_revisions() {
     assert_ne!(first_event.event_id, changed_event.event_id);
 
     let mut replay = ReplayEngine::default();
-    replay.apply(first, Timestamp::parse("2026-07-09T00:05:00Z").unwrap(), &normalizer);
+    replay.apply(
+        first,
+        Timestamp::parse("2026-07-09T00:05:00Z").unwrap(),
+        &normalizer,
+    );
     let (outcome, bundle) = replay.apply(
         changed,
         Timestamp::parse("2026-07-09T00:05:00Z").unwrap(),
@@ -65,7 +69,10 @@ fn activity_change_keeps_logical_event_identity_across_revisions() {
     );
     assert_eq!(outcome.status, ApplyStatus::Accepted);
     assert_eq!(materialize_events(&bundle.events).len(), 1);
-    assert_eq!(materialize_events(&bundle.events)[0].activity.as_str(), "foio:AuthorityResponseReceived");
+    assert_eq!(
+        materialize_events(&bundle.events)[0].activity.as_str(),
+        "foio:AuthorityResponseReceived"
+    );
 }
 
 #[test]
