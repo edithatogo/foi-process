@@ -1,0 +1,14 @@
+{
+  "schema": "foi-process/evidence/fyi-archive-retriever-bridge/v1",
+  "status": "filesystem_bridge_validated",
+  "implementation": "src/fyi_archive.rs:FyiArchiveFilesystemRetriever",
+  "checks": [
+    "SHA-256 digest verification",
+    "byte-length verification",
+    "WARC identifier propagation",
+    "derived-store path traversal rejection",
+    "tampered-byte rejection before delta emission"
+  ],
+  "test": "tests/fyi_archive.rs",
+  "limitation": "A live fyi-cli production caller and approved derived-store configuration remain pending."
+}
