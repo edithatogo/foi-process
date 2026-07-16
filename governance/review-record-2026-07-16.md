@@ -129,13 +129,13 @@ remain pending the technical controls and the owner's signed release record.
 
 | Gate | Reviewer and role | Decision | Evidence or conditions | Date |
 | --- | --- | --- | --- | --- |
-| Requester and third-party privacy |  |  | Confirm redaction, minimisation, and exclusion of raw request/attachment content |  |
-| OCR and embedding amplification |  |  | Decide whether derived text or vectors are permitted and under what controls |  |
-| Tikanga and Māori data governance |  |  | Confirm consultation, custodianship, access conditions, and appropriate use |  |
-| Licensing and attribution |  |  | Confirm source terms, archive terms, attribution, and downstream licence |  |
-| Removal and appeal |  |  | Confirm a reachable process, response owner, and takedown evidence trail |  |
-| Threat model and abuse cases |  |  | Review re-identification, targeting, scraping, poisoning, and misuse scenarios |  |
-| Human owner approval |  |  | Name the accountable owner for production publication and incident response |  |
+| Requester and third-party privacy | Ohm, independent privacy panel | Pass for synthetic-only; production blocked | Recursive public-output validation; no raw request/attachment output; see `docs/privacy-publication.md` and `scripts/test_public_privacy.py` | 2026-07-16 |
+| OCR and embedding amplification | Erdos, independent data-governance panel | Pass for synthetic-only; production blocked | Raw OCR, embeddings and unrestricted NLP remain prohibited; owner direction in decision 5 | 2026-07-16 |
+| Tikanga and Māori data governance | Owner-led assessment; no separate reviewer at this stage | Pass for synthetic-only; escalation required for culturally sensitive real data | Owner decision 6; current fixtures are synthetic and not Māori source data | 2026-07-16 |
+| Licensing and attribution | Erdos, independent data-governance panel | Pass for synthetic-only; production blocked | Dataset card, source-specific rights rule, and unresolved-marker validation | 2026-07-16 |
+| Removal and appeal | Wegener, independent operations panel | Pass for synthetic-only; production blocked | `docs/removal-appeal.md` and `.github/ISSUE_TEMPLATE/data-removal.yml`; no production contact implied | 2026-07-16 |
+| Threat model and abuse cases | Kepler, independent security panel | Pass for synthetic-only after controls; production blocked | HF target allowlists, pinned publication dependencies, recursive privacy gate; production threat-model sign-off pending | 2026-07-16 |
+| Human owner approval | Accountable owner narrative record | Approved in principle only; no production release | Decisions 1-9 are owner direction; gate remains `synthetic-only` until a signed production release record exists | 2026-07-16 |
 
 ## Release rule
 
