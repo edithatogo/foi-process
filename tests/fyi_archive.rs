@@ -235,3 +235,26 @@ fn retriever_boundary_rejects_tampered_attachment_bytes_before_delta_emission() 
         FyiArchiveAdapterError::AttachmentDigestMismatch { .. }
     ));
 }
+
+#[test]
+fn filesystem_retriever_reads_only_inside_the_derived_store() {
+    let root = tempfile::tempdir().unwrap();
+    let path = root.path().join("attachment.pdf");
+    std::fs::write(&path, b"attachment").unwrap();
+    let attachment: FyiArchiveAttachment = serde_json::from_value(serde_json::json!({
+        "url": "https://example.test/attachment.pdf",
+        "path": "attachment.pdf",
+        "size": 10,
+        "sha256": Sha256Digest::of(b"attachment").to_string()
+    }))
+    .unwrap();
+    let retriever = FyiArchiveFilesystemRetriever::new(root.path());
+    let retrieved = retriever.retrieve(&attachment).unwrap();
+    assert_eq!(retrieved.bytes, b"attachment");
+    assert!(retriever
+        .retrieve(&FyiArchiveAttachment {
+            path: Some("../escape".to_string()),
+            ..attachment
+        })
+        .is_err());
+}

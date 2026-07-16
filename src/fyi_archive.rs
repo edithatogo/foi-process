@@ -5,6 +5,7 @@
 //! proposed later from message/document evidence and remain subject to FOI-O review boundaries.
 
 use std::collections::{BTreeMap, BTreeSet};
+use std::path::PathBuf;
 
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
@@ -107,6 +108,8 @@ pub struct FyiArchiveAttachment {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub path: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub warc_record_id: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub license: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub attribution: Option<String>,
@@ -125,6 +128,51 @@ pub struct RetrievedBytes {
 /// Retrieval is injected so this crate never fetches public URLs or stores raw bytes itself.
 pub trait FyiArchiveByteRetriever {
     fn retrieve(&self, attachment: &FyiArchiveAttachment) -> Result<RetrievedBytes, String>;
+}
+
+/// Read attachment bytes from an fyi-cli derived store without allowing path escape.
+#[derive(Debug, Clone)]
+pub struct FyiArchiveFilesystemRetriever {
+    root: PathBuf,
+}
+
+impl FyiArchiveFilesystemRetriever {
+    pub fn new(root: impl Into<PathBuf>) -> Self {
+        Self { root: root.into() }
+    }
+}
+
+impl FyiArchiveByteRetriever for FyiArchiveFilesystemRetriever {
+    fn retrieve(&self, attachment: &FyiArchiveAttachment) -> Result<RetrievedBytes, String> {
+        let relative = attachment
+            .path
+            .as_deref()
+            .ok_or_else(|| format!("attachment path is missing for {}", attachment.url))?;
+        let root = self
+            .root
+            .canonicalize()
+            .map_err(|error| format!("cannot canonicalize retriever root: {error}"))?;
+        let candidate = root.join(relative);
+        let path = candidate
+            .canonicalize()
+            .map_err(|error| format!("cannot canonicalize attachment path {relative}: {error}"))?;
+        if !path.starts_with(&root) {
+            return Err(format!(
+                "attachment path escapes retriever root: {relative}"
+            ));
+        }
+        let bytes = std::fs::read(&path)
+            .map_err(|error| format!("cannot read attachment {relative}: {error}"))?;
+        Ok(RetrievedBytes {
+            bytes,
+            blob_path: Some(path.to_string_lossy().into_owned()),
+            wacz_path: None,
+            warc_record_id: attachment
+                .warc_record_id
+                .clone()
+                .or_else(|| attachment.warc_record_ids.first().cloned()),
+        })
+    }
 }
 
 #[derive(Debug, Error)]
@@ -378,6 +426,7 @@ fn fyi_archive_request_to_delta(
                 "size_bytes": attachment.size_bytes,
                 "content_sha256": digest,
                 "warc_record_ids": attachment.warc_record_ids,
+                "warc_record_id": attachment.warc_record_id,
                 "license": attachment.license,
                 "attribution": attachment.attribution,
                 "rights_uri": attachment.rights_uri,
