@@ -4,7 +4,7 @@
     "classification": "synthetic-fixture",
     "source_release": "v0.1.0",
     "generated_at": "2026-07-09T00:05:00Z",
-    "manifest_sha256": "40ce238e1a1c95103f5e1c74fb5ee2cfa86ce1b0df78318860a8fdd5bf75e7e6"
+    "manifest_sha256": "fbadabd9c95feb0fd27d7edcf540f67343d188421412e65d152c4af8e1fc81c8"
   },
   "metrics": {
     "case_count": 1,
@@ -15,7 +15,7 @@
     "scenario_count": 4
   },
   "quality": {
-    "manifest_file_count": 38,
+    "manifest_file_count": 39,
     "checksums_verified": true,
     "timestamp_coverage": 1.0,
     "evidence_coverage": 0.75,
