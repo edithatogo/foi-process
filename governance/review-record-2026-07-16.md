@@ -76,7 +76,8 @@ Keep raw OCR, embeddings, and unrestricted NLP outputs out of public dashboard
 assets by default. Permit controlled retention in `fyi-archive` only where the
 source licence, purpose, access control, retention, and removal path are recorded.
 Publish derived system-level measures only after checking that they cannot be
-used to reconstruct source text or identify a person.
+used to reconstruct source text or identify a person. **Owner direction:** proceed
+with this recommendation. Formal approval remains pending named review evidence.
 
 ### 6. Tikanga, Māori data governance, and data sovereignty
 
