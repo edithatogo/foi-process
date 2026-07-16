@@ -99,10 +99,39 @@ fn archive_adapter_accepts_fyi_cli_attachment_field_names() {
         "name": "example.pdf",
         "content_type": "application/pdf",
         "size": 358253,
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "warc_record_ids": ["warc-a", "warc-b"],
         "path": "data/attachments/example"
     }))
     .unwrap();
     assert_eq!(attachment.filename, "example.pdf");
     assert_eq!(attachment.mime_type.as_deref(), Some("application/pdf"));
     assert_eq!(attachment.size_bytes, Some(358253));
+    assert_eq!(attachment.content_sha256.as_deref(), Some("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
+    assert_eq!(attachment.warc_record_ids, vec!["warc-a", "warc-b"]);
+}
+
+#[test]
+fn archive_snapshot_revision_is_explicit_and_attachment_bytes_are_verified() {
+    let mut manifest: FyiArchiveManifest = serde_json::from_str(include_str!(
+        "../examples/input/fyi-archive-manifest.sample.json"
+    )).unwrap();
+    manifest.meta.snapshot_revision = Some(7);
+    let deltas = fyi_archive_manifest_to_deltas(
+        manifest,
+        Timestamp::parse("2026-06-29T11:47:00Z").unwrap(),
+    ).unwrap();
+    assert_eq!(deltas[0].revision, 7);
+
+    let bytes = b"attachment";
+    let attachment: FyiArchiveAttachment = serde_json::from_value(serde_json::json!({
+        "url": "https://example.test/a",
+        "sha256": Sha256Digest::of(bytes).to_string(),
+        "size": bytes.len()
+    })).unwrap();
+    verify_attachment_bytes(&attachment, bytes).unwrap();
+    assert!(matches!(
+        verify_attachment_bytes(&attachment, b"tampered!!"),
+        Err(FyiArchiveAdapterError::AttachmentDigestMismatch { .. })
+    ));
 }

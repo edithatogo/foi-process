@@ -24,6 +24,7 @@ type EventRow = {
   case_id: string;
   activity: string;
   timestamp: string;
+  source_sequence: number;
   authority_id: string | null;
   jurisdiction: string;
   evidence_count: number;
@@ -313,7 +314,7 @@ function VariantsView({ variants }: { variants: VariantRow[] }) {
 
 function CasesView({ cases, events, selectedCase, onSelect }: { cases: CaseRow[]; events: EventRow[]; selectedCase: string; onSelect: (value: string) => void }) {
   const current = cases.find((item) => item.case_id === selectedCase) ?? cases[0];
-  const timeline = events.filter((event) => event.case_id === current?.case_id).sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+  const timeline = events.filter((event) => event.case_id === current?.case_id).sort((a, b) => a.timestamp.localeCompare(b.timestamp) || a.source_sequence - b.source_sequence || a.event_id.localeCompare(b.event_id));
   return (
     <div className="cases-layout">
       <Panel title="Case queue" subtitle="Select a request to inspect its trace">

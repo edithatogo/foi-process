@@ -220,7 +220,6 @@ impl DeterministicNormalizer {
                 delta.site.clone(),
                 case_id.clone(),
                 delta.logical_record_id.clone(),
-                activity.clone(),
             ),
         )
         .expect("serialising the deterministic event identity cannot fail");

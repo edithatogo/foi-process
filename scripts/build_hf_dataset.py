@@ -46,6 +46,27 @@ def require_fixture_review(privacy: dict[str, Any], subject: str) -> None:
         raise ValueError(f"{subject}: fixture review reason code is missing")
 
 
+def validate_public_tree(value: Any, subject: str, path: str = "$") -> None:
+    """Validate every nested privacy assessment before an artefact is deposited."""
+    if isinstance(value, dict):
+        if "privacy" in value:
+            if not isinstance(value["privacy"], dict):
+                raise ValueError(f"{subject}{path}.privacy: expected an object")
+            require_fixture_review(value["privacy"], f"{subject}{path}")
+            if value["privacy"].get("disposition") == "publish_metadata_only":
+                forbidden = {"text", "inline_text", "raw_text", "embedding", "embeddings"}
+                leaked = sorted(key for key in forbidden if key in value)
+                if leaked:
+                    raise ValueError(f"{subject}{path}: metadata-only object contains {leaked}")
+        for key, child in value.items():
+            validate_public_tree(child, subject, f"{path}.{key}")
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            validate_public_tree(child, subject, f"{path}[{index}]")
+    elif isinstance(value, str) and value.strip().lower() == "to-be-recorded":
+        raise ValueError(f"{subject}{path}: unresolved licensing value")
+
+
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -186,6 +207,14 @@ def build(output: Path) -> None:
     ocel = read_json(ROOT / "examples/generated/ocel-projection.json")
     conformance = read_json(ROOT / "examples/generated/conformance-trace.json")
     mining_run = read_json(ROOT / "examples/generated/mining-run-manifest.json")
+    for name, artefact in {
+        "public-projection": public,
+        "dashboard-summary": dashboard,
+        "ocel-projection": ocel,
+        "conformance-trace": conformance,
+        "mining-run-manifest": mining_run,
+    }.items():
+        validate_public_tree(artefact, name)
 
     event_log = []
     for event in public["events"]:
@@ -197,6 +226,7 @@ def build(output: Path) -> None:
                 "case_id": event["case_id"],
                 "activity": event["activity"],
                 "timestamp": timestamp,
+                "source_sequence": event.get("position", {}).get("sequence", 0),
                 "site": event["site"],
                 "jurisdiction": event["jurisdiction"],
                 "assertion_status": event["assertion_status"],

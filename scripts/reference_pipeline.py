@@ -142,7 +142,7 @@ class Replay:
 def normalize(d: dict[str, Any], previous_event: str | None) -> tuple[dict[str, Any], dict[str, Any]]:
     activity = MAPPING.get(d["attributes"].get("platform_activity"), "foip:UnmappedPlatformEvent")
     assertion = "observed" if activity != "foip:UnmappedPlatformEvent" else "candidate"
-    logical_event = sid("foi-process:event-logical", [d["site"], d["request_hint"], d["logical_record_id"], activity])
+    logical_event = sid("foi-process:event-logical", [d["site"], d["request_hint"], d["logical_record_id"]])
     event_id = sid("foi-process:event", [logical_event, d["revision"], d["operation"]])
     op = "retract" if d["operation"] == "delete" else "upsert"
     evref = []

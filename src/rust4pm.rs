@@ -20,6 +20,12 @@ pub enum AppendBundleError<E> {
 /// before objects/events, and objects before events, avoiding the implementation-defined
 /// misordering cases documented by Rust4PM. Because the upstream trait has no generic update or
 /// retraction operation, this function is intentionally snapshot-oriented and finalizes the sink.
+///
+/// The reduced semantics are deliberate: the current `AppendableOCEL` contract accepts type
+/// declarations, identifiers, timestamps, and relationships, but not generic FOI attributes,
+/// object-property values, or revision operations. Those remain authoritative in the normalized
+/// and public JSON contracts; the empty Rust4PM attribute vectors are an explicit compatibility
+/// boundary, covered by the adapter regression test.
 pub fn append_materialized_snapshot<T>(
     bundle: &NormalizedBundle,
     target: &mut T,

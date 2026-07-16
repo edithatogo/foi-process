@@ -4,7 +4,7 @@
     "classification": "synthetic-fixture",
     "source_release": "v0.1.0",
     "generated_at": "2026-07-09T00:05:00Z",
-    "manifest_sha256": "5150fcaf43627bf7d4020e65f59c845eb6f5256b7d6ddd7329930f30144db4b6"
+    "manifest_sha256": "773f6d4839a17f080b40a3f1faf52b6eaa11fb06b5133a83fee09c19a8fbd8af"
   },
   "metrics": {
     "case_count": 1,
@@ -50,6 +50,7 @@
       "case_id": "urn:fyi-nz:request:demo-1",
       "activity": "foio:RequestSent",
       "timestamp": "2025-01-06T09:00:00+13:00",
+      "source_sequence": 0,
       "site": "urn:alaveteli:site:fyi.org.nz",
       "jurisdiction": "jurisdiction:NZ",
       "assertion_status": "observed",
@@ -62,6 +63,7 @@
       "case_id": "urn:fyi-nz:request:demo-1",
       "activity": "foio:AuthorityResponseReceived",
       "timestamp": "2025-01-07T11:00:00+13:00",
+      "source_sequence": 0,
       "site": "urn:alaveteli:site:fyi.org.nz",
       "jurisdiction": "jurisdiction:NZ",
       "assertion_status": "observed",
@@ -74,6 +76,7 @@
       "case_id": "urn:fyi-nz:request:demo-1",
       "activity": "foio:ExtensionNotified",
       "timestamp": "2025-01-20T10:15:00+13:00",
+      "source_sequence": 0,
       "site": "urn:alaveteli:site:fyi.org.nz",
       "jurisdiction": "jurisdiction:NZ",
       "assertion_status": "observed",
@@ -86,6 +89,7 @@
       "case_id": "urn:fyi-nz:request:demo-1",
       "activity": "foio:ClosedObserved",
       "timestamp": "2025-02-14T16:00:00+13:00",
+      "source_sequence": 0,
       "site": "urn:alaveteli:site:fyi.org.nz",
       "jurisdiction": "jurisdiction:NZ",
       "assertion_status": "observed",

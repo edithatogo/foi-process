@@ -36,6 +36,39 @@ fn corrected_event_supersedes_previous_revision() {
 }
 
 #[test]
+fn activity_change_keeps_logical_event_identity_across_revisions() {
+    let normalizer = DeterministicNormalizer::new(MappingProfile::fyi_minimal(), "test");
+    let processed = Timestamp::parse("2026-07-09T00:05:00Z").unwrap();
+    let fixture = deltas();
+    let first = fixture[2].clone();
+    let mut changed = fixture[3].clone();
+    changed.attributes.insert(
+        "platform_activity".to_string(),
+        serde_json::Value::String("authority_response".to_string()),
+    );
+    changed.delta_id = StableId::parse("urn:foi-process:test:activity-change").unwrap();
+
+    let first_event = DeterministicNormalizer::new(MappingProfile::fyi_minimal(), "test")
+        .normalize(&first, processed.clone())
+        .events
+        .remove(0);
+    let changed_event = normalizer.normalize(&changed, processed).events.remove(0);
+    assert_eq!(first_event.logical_event_id, changed_event.logical_event_id);
+    assert_ne!(first_event.event_id, changed_event.event_id);
+
+    let mut replay = ReplayEngine::default();
+    replay.apply(first, Timestamp::parse("2026-07-09T00:05:00Z").unwrap(), &normalizer);
+    let (outcome, bundle) = replay.apply(
+        changed,
+        Timestamp::parse("2026-07-09T00:05:00Z").unwrap(),
+        &normalizer,
+    );
+    assert_eq!(outcome.status, ApplyStatus::Accepted);
+    assert_eq!(materialize_events(&bundle.events).len(), 1);
+    assert_eq!(materialize_events(&bundle.events)[0].activity.as_str(), "foio:AuthorityResponseReceived");
+}
+
+#[test]
 fn stream_position_gaps_and_regressions_are_quarantinable() {
     let normalizer = DeterministicNormalizer::new(MappingProfile::fyi_minimal(), "test");
     let processed = Timestamp::parse("2026-07-09T00:05:00Z").unwrap();
