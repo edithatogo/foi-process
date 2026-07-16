@@ -81,32 +81,49 @@ with this recommendation. Formal approval remains pending named review evidence.
 
 ### 6. Tikanga, Māori data governance, and data sovereignty
 
-Require a named reviewer with relevant tikanga/data-governance authority and a
-written decision covering custodianship, permitted reuse, hosting jurisdiction,
-cross-border replication, retention, and withdrawal. Do not treat public source
-status or owner approval alone as a substitute for this review.
+There is currently no separate tikanga reviewer because this is a single-person
+project. The accountable owner will complete and sign an owner-led assessment
+covering custodianship, permitted reuse, hosting jurisdiction, cross-border
+replication, retention, and withdrawal. The current synthetic fixture is not
+treated as Māori or culturally sensitive source data. If real data contains
+Māori-specific, culturally sensitive, or sovereignty-sensitive material that the
+owner cannot responsibly assess, publication will pause until appropriate advice
+or engagement is obtained. **Owner direction:** no separate reviewer is required
+at the current stage; retain this escalation trigger.
 
 ### 7. Licensing and attribution
 
-Separate the licence for code, schemas, synthetic fixtures, source records, and
-derived artefacts. Require a per-source rights and attribution record, replace
-all `to-be-recorded` licence values, and publish only when downstream reuse terms
-are explicit.
+The code and schemas retain their declared open-source licences. Source FOI
+records, synthetic fixtures, embeddings, OCR, and derived process metrics are
+treated as separate artefacts with source-specific rights and attribution. A
+per-source rights and attribution record is required, all `to-be-recorded`
+licence values must be replaced, and downstream reuse terms must be explicit.
+Public accessibility is not treated as unrestricted redistribution authority.
+**Owner direction:** proceed with this recommendation. Formal licensing approval
+remains pending completion of the source records.
 
 ### 8. Removal, correction, and appeal
 
-Create one accountable owner, a public contact channel, response targets,
-emergency takedown steps, correction and re-publication rules, revision
-quarantine, rollback instructions, and a durable removal log covering GitHub,
-Hugging Face, Zenodo, and GitHub Pages.
+The accountable owner will maintain one public contact channel, acknowledge
+requests within five business days where practicable, handle urgent privacy or
+safety takedowns immediately, and temporarily withdraw disputed material while
+it is assessed. Corrections and re-publication will be recorded as new revisions
+with a durable removal log covering GitHub, Hugging Face, Zenodo, GitHub Pages,
+and known downstream copies. The process will state that downloaded copies,
+forks, caches, and mirrors cannot all be forcibly recalled. **Owner direction:**
+proceed with this recommendation. The owner remains responsible for the
+contact channel, takedown decisions, and incident record.
 
 ### 9. Threat model and release authority
 
-Close the high-severity controls identified by the panel: allowlist HF targets,
-narrow the HF token scope, pin token-bearing workflow dependencies, validate all
-public artifacts recursively, and test re-identification and filter-differencing
-risks. The accountable owner should then make the final release decision with a
-scope, expiry/review date, and incident-response owner.
+The high-severity controls identified by the panel should be closed before any
+production-capable publication workflow is enabled: allowlist HF targets, narrow
+the HF token scope, pin token-bearing workflow dependencies, validate all public
+artifacts recursively, and test re-identification and filter-differencing risks.
+The accountable owner will make the final release decision with a defined scope,
+review date, and incident-response owner. **Owner direction:** proceed with this
+recommendation; formal threat-model sign-off and final release authorization
+remain pending the technical controls and the owner's signed release record.
 
 ## Required decisions
 
