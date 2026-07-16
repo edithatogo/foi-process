@@ -13,6 +13,21 @@ fyi-cli watch --site fyi.org.nz \
 
 A production adapter should use bounded channels or a local append-only journal rather than relying only on a shell pipe. The protocol includes source/partition/sequence positions, revisions, content digests, correlation/causation IDs, and checkpoints. Duplicate delivery is safe; gaps and conflicting revisions are quarantined rather than guessed. `-` is an implemented stdin path for NDJSON. A fresh output directory is required for a fresh run; supplying `--state-in` switches the journals to append/resume mode.
 
+## Derived-store attachment verification
+
+For a captured `fyi-cli` request directory, the Rust adapter can verify attachment bytes from the derived store before producing deltas. The manifest must carry each attachment's relative `path`, SHA-256 digest, and (when captured) byte size. The retriever canonicalizes the configured root and rejects path traversal; it never fetches the public URL and never writes the retrieved bytes to the output.
+
+```bash
+cargo run --locked -- fyi-archive-derived-store-to-deltas \
+  --input data/raw/requests/manifest.json \
+  --derived-root data/raw/requests \
+  --output evidence-deltas.ndjson \
+  --report attachment-verification.json \
+  --captured-at 2026-07-16T00:00:00Z
+```
+
+The command fails closed on missing paths, digest mismatches, size mismatches, unreadable files, or a path outside `--derived-root`. The optional JSON report records verification status and counts only; it is not a substitute for retaining the upstream capture manifest and WARC/WACZ provenance.
+
 Live operation maintains:
 
 - latest materialised event revision;

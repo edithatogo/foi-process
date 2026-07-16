@@ -1,7 +1,10 @@
 {
   "schema": "foi-process/evidence/fyi-archive-retriever-bridge/v1",
-  "status": "filesystem_bridge_validated",
-  "implementation": "src/fyi_archive.rs:FyiArchiveFilesystemRetriever",
+  "status": "cli_derived_store_bridge_validated",
+  "implementation": [
+    "src/fyi_archive.rs:FyiArchiveFilesystemRetriever",
+    "src/main.rs:fyi-archive-derived-store-to-deltas"
+  ],
   "checks": [
     "SHA-256 digest verification",
     "byte-length verification",
@@ -9,6 +12,9 @@
     "derived-store path traversal rejection",
     "tampered-byte rejection before delta emission"
   ],
-  "test": "tests/fyi_archive.rs",
-  "limitation": "A live fyi-cli production caller and approved derived-store configuration remain pending."
+  "test": [
+    "tests/fyi_archive.rs",
+    "cargo check --all-targets --features rust4pm"
+  ],
+  "limitation": "A live fyi-cli production capture and approved derived-store configuration remain pending; the repository-side caller is executable and remains fail-closed."
 }
