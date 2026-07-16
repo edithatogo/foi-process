@@ -33,6 +33,19 @@ enum Command {
         #[arg(long)]
         captured_at: String,
     },
+    /// Verify fyi-cli derived-store attachment bytes and emit EvidenceDelta NDJSON.
+    FyiArchiveDerivedStoreToDeltas {
+        #[arg(long)]
+        input: PathBuf,
+        #[arg(long)]
+        derived_root: PathBuf,
+        #[arg(long)]
+        output: PathBuf,
+        #[arg(long)]
+        captured_at: String,
+        #[arg(long)]
+        report: Option<PathBuf>,
+    },
     /// Replay EvidenceDelta NDJSON through the deterministic normalizer.
     Replay {
         input: PathBuf,
@@ -109,6 +122,41 @@ fn main() -> Result<()> {
             let captured_at = Timestamp::parse(captured_at)?;
             let deltas = fyi_archive_manifest_to_deltas(manifest, captured_at)?;
             write_ndjson_file(output, &deltas)?;
+        }
+        Command::FyiArchiveDerivedStoreToDeltas {
+            input,
+            derived_root,
+            output,
+            captured_at,
+            report,
+        } => {
+            let manifest_input = input.display().to_string();
+            let derived_store_root = derived_root.display().to_string();
+            let manifest: FyiArchiveManifest = read_json(input)?;
+            let attachment_count = manifest
+                .requests
+                .iter()
+                .map(|request| request.attachments.len())
+                .sum::<usize>();
+            let captured_at = Timestamp::parse(captured_at)?;
+            let retriever = FyiArchiveFilesystemRetriever::new(derived_root);
+            let deltas =
+                fyi_archive_manifest_to_deltas_with_retriever(manifest, captured_at, &retriever)?;
+            write_ndjson_file(output, &deltas)?;
+            if let Some(report) = report {
+                write_json(
+                    report,
+                    &AttachmentVerificationReport {
+                        schema: "foi-process/fyi-archive-attachment-verification/v1",
+                        status: "verified",
+                        manifest_input,
+                        derived_store_root,
+                        attachment_count,
+                        delta_count: deltas.len(),
+                        raw_bytes_written: false,
+                    },
+                )?;
+            }
         }
         Command::Replay {
             input,
@@ -219,6 +267,17 @@ fn main() -> Result<()> {
         }
     }
     Ok(())
+}
+
+#[derive(Debug, Serialize)]
+struct AttachmentVerificationReport {
+    schema: &'static str,
+    status: &'static str,
+    manifest_input: String,
+    derived_store_root: String,
+    attachment_count: usize,
+    delta_count: usize,
+    raw_bytes_written: bool,
 }
 
 fn load_profile(path: Option<PathBuf>) -> Result<MappingProfile> {
