@@ -16,6 +16,11 @@ security exposure is treated as urgent: pause the affected publication, preserve
 digest evidence privately, assess scope, and publish a corrected or withdrawn revision only after
 review.
 
+The public operational contact details are the private GitHub Security Advisory channel and the
+data-removal issue form above. The accountable owner must designate an incident owner in the
+production release record before enabling real-data publication; this repository does not invent a
+personal email address.
+
 Record the request identifier, affected public URL or dataset path, received time, decision,
 operator, action taken, replacement revision/digest if applicable, and closure time. Do not place
 requester personal information or raw correspondence in the public log.

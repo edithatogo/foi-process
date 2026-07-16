@@ -101,6 +101,9 @@ fn archive_adapter_accepts_fyi_cli_attachment_field_names() {
         "size": 358253,
         "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "warc_record_ids": ["warc-a", "warc-b"],
+        "license": "source-specific-review-required",
+        "attribution": "Example source",
+        "rights_uri": "https://example.test/terms",
         "path": "data/attachments/example"
     }))
     .unwrap();
@@ -112,6 +115,11 @@ fn archive_adapter_accepts_fyi_cli_attachment_field_names() {
         Some("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     );
     assert_eq!(attachment.warc_record_ids, vec!["warc-a", "warc-b"]);
+    assert_eq!(
+        attachment.license.as_deref(),
+        Some("source-specific-review-required")
+    );
+    assert_eq!(attachment.attribution.as_deref(), Some("Example source"));
 }
 
 #[test]
@@ -178,4 +186,52 @@ fn archive_source_sequence_is_preserved_over_request_id_sorting() {
             .unwrap();
     assert_eq!(deltas[0].position.sequence, 10);
     assert_eq!(deltas[1].position.sequence, 20);
+}
+
+#[test]
+fn manifest_attachment_verification_is_available_at_the_adapter_boundary() {
+    let mut manifest: FyiArchiveManifest = serde_json::from_str(include_str!(
+        "../examples/input/fyi-archive-manifest.sample.json"
+    ))
+    .unwrap();
+    let bytes = b"attachment".to_vec();
+    manifest.requests[0].attachments[0].content_sha256 = Some(Sha256Digest::of(&bytes).to_string());
+    manifest.requests[0].attachments[0].size_bytes = Some(bytes.len() as u64);
+    let mut payloads = std::collections::BTreeMap::new();
+    payloads.insert(manifest.requests[0].attachments[0].url.clone(), bytes);
+    verify_manifest_attachment_bytes(&manifest, &payloads).unwrap();
+}
+
+struct FixtureRetriever;
+
+impl FyiArchiveByteRetriever for FixtureRetriever {
+    fn retrieve(&self, _attachment: &FyiArchiveAttachment) -> Result<RetrievedBytes, String> {
+        Ok(RetrievedBytes {
+            bytes: b"attachment".to_vec(),
+            blob_path: Some("blobs/attachment".to_string()),
+            wacz_path: Some("capture.wacz".to_string()),
+            warc_record_id: Some("warc-attachment".to_string()),
+        })
+    }
+}
+
+#[test]
+fn retriever_boundary_rejects_tampered_attachment_bytes_before_delta_emission() {
+    let mut manifest: FyiArchiveManifest = serde_json::from_str(include_str!(
+        "../examples/input/fyi-archive-manifest.sample.json"
+    ))
+    .unwrap();
+    manifest.requests[0].attachments[0].content_sha256 =
+        Some(Sha256Digest::of(b"different").to_string());
+    manifest.requests[0].attachments[0].size_bytes = Some(b"attachment".len() as u64);
+    let error = fyi_archive_manifest_to_deltas_with_retriever(
+        manifest,
+        Timestamp::parse("2026-06-29T11:47:00Z").unwrap(),
+        &FixtureRetriever,
+    )
+    .unwrap_err();
+    assert!(matches!(
+        error,
+        FyiArchiveAdapterError::AttachmentDigestMismatch { .. }
+    ));
 }

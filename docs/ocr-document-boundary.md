@@ -9,6 +9,8 @@
 3. assess page extraction quality;
 4. render and OCR only pages/regions that need it;
 5. preserve page geometry, reading order, tables, model/runtime/version/license, confidence, and warnings;
+6. keep extractor/model software licences separate from source-document rights, attribution,
+   reuse restrictions, and takedown status; see `docs/source-rights-and-licensing.md`;
 6. emit `DocumentBundle` and text blobs by stable ID.
 
 `nlp-policy-nz` consumes `DocumentBundle` and emits evidence-anchored `DocumentSignal` records. Signals are candidates or observations; they do not autonomously certify legal outcomes.
