@@ -189,7 +189,8 @@ fixtures.
 
 `manifest.json` records every deposited file, byte length, row count where applicable and SHA-256
 digest. FOI-O remains authoritative for legal semantics; conformance examples are not certified
-legal conclusions.
+legal conclusions. Repository code is Apache-2.0; source-derived artefact rights remain governed
+by `docs/source-rights-and-licensing.md` and are not inferred from the code licence.
 """
 
 
@@ -200,6 +201,16 @@ def build(output: Path) -> None:
     publication_profile = read_json(ROOT / "examples/input/publication-profile.json")
     if publication_profile.get("synthetic_fixture") is not True:
         raise ValueError("publication profile must explicitly identify synthetic fixtures")
+    source_rights = read_json(ROOT / "examples/input/source-rights.json")
+    required_rights = {
+        "source_id", "canonical_url", "source_owner", "rights_basis", "attribution",
+        "transformations", "redistribution_scope", "retention", "takedown", "review_status",
+        "review_date", "responsible_owner",
+    }
+    for record in source_rights.get("records", []):
+        missing = sorted(required_rights - record.keys())
+        if missing or any("to-be-recorded" in str(record.get(key, "")).lower() for key in required_rights):
+            raise ValueError(f"source rights record is incomplete: {missing}")
 
     revisions = read_jsonl(ROOT / "examples/input/process-events.ndjson")
     for event in revisions:
@@ -283,6 +294,7 @@ def build(output: Path) -> None:
         "ocel-projection.json": ocel,
         "conformance-trace.json": conformance,
         "mining-run-manifest.json": mining_run,
+        "source-rights.json": source_rights,
     }
     for name, value in artifacts.items():
         write_json(output / "artifacts" / name, value)

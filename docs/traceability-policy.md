@@ -34,6 +34,10 @@ mechanism. It must use a keyed pseudonymous case identifier, with the mapping
 key held outside public repositories and dashboard assets. The pseudonym is not
 an anonymisation claim and must not be published as a lookup key.
 
+The reference implementation is `pseudonymize_case_id` in `src/pseudonym.rs`. It uses versioned
+HMAC-SHA-256 domain separation; production keys must come from an external secret manager and
+must never be stored in GitHub, Hugging Face, logs, manifests, or dashboard assets.
+
 External views should default to aggregated metrics and process patterns. A
 case-level timeline requires an explicit disclosure review and an authorised
 access path.

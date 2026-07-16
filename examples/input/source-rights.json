@@ -1,0 +1,19 @@
+{
+  "schema": "foi-process/source-rights/v1",
+  "records": [
+    {
+      "source_id": "urn:fyi-archive:source:fyi.org.nz",
+      "canonical_url": "https://fyi.org.nz",
+      "source_owner": "FYI.org.nz / source publisher",
+      "rights_basis": "public-source-access; not an unrestricted redistribution grant",
+      "attribution": "Source: FYI.org.nz; see the canonical source record.",
+      "transformations": ["synthetic fixture generation", "aggregated process metrics"],
+      "redistribution_scope": "synthetic-derived-only",
+      "retention": "source URL and digest provenance only in this repository",
+      "takedown": "docs/removal-appeal.md",
+      "review_status": "production_review_required",
+      "review_date": "2026-07-16",
+      "responsible_owner": "accountable repository owner"
+    }
+  ]
+}

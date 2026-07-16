@@ -104,6 +104,27 @@ pub struct FyiArchiveAttachment {
     pub content_sha256: Option<String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub warc_record_ids: Vec<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub path: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub license: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub attribution: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub rights_uri: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct RetrievedBytes {
+    pub bytes: Vec<u8>,
+    pub blob_path: Option<String>,
+    pub wacz_path: Option<String>,
+    pub warc_record_id: Option<String>,
+}
+
+/// Retrieval is injected so this crate never fetches public URLs or stores raw bytes itself.
+pub trait FyiArchiveByteRetriever {
+    fn retrieve(&self, attachment: &FyiArchiveAttachment) -> Result<RetrievedBytes, String>;
 }
 
 #[derive(Debug, Error)]
@@ -130,6 +151,10 @@ pub enum FyiArchiveAdapterError {
     AttachmentLengthMismatch { expected: u64, actual: usize },
     #[error("attachment digest mismatch: expected {expected}, got {actual}")]
     AttachmentDigestMismatch { expected: String, actual: String },
+    #[error("attachment bytes are missing for {0}")]
+    AttachmentBytesMissing(String),
+    #[error("attachment retrieval failed: {0}")]
+    AttachmentRetrieval(String),
     #[error("manifest identifier conversion failed: {0}")]
     Identifier(#[from] crate::IdentifierError),
     #[error("manifest conversion failed: {0}")]
@@ -194,6 +219,23 @@ pub fn fyi_archive_manifest_to_deltas(
         )?);
     }
     Ok(deltas)
+}
+
+/// Convert a manifest only after an archive adapter has retrieved and verified every attachment.
+pub fn fyi_archive_manifest_to_deltas_with_retriever<R: FyiArchiveByteRetriever>(
+    manifest: FyiArchiveManifest,
+    captured_at: Timestamp,
+    retriever: &R,
+) -> Result<Vec<EvidenceDelta>, FyiArchiveAdapterError> {
+    for request in &manifest.requests {
+        for attachment in &request.attachments {
+            let retrieved = retriever
+                .retrieve(attachment)
+                .map_err(FyiArchiveAdapterError::AttachmentRetrieval)?;
+            verify_attachment_bytes(attachment, &retrieved.bytes)?;
+        }
+    }
+    fyi_archive_manifest_to_deltas(manifest, captured_at)
 }
 
 fn fyi_archive_request_to_delta(
@@ -336,6 +378,9 @@ fn fyi_archive_request_to_delta(
                 "size_bytes": attachment.size_bytes,
                 "content_sha256": digest,
                 "warc_record_ids": attachment.warc_record_ids,
+                "license": attachment.license,
+                "attribution": attachment.attribution,
+                "rights_uri": attachment.rights_uri,
             }))
         })
         .collect::<Result<Vec<_>, FyiArchiveAdapterError>>()?;
@@ -415,6 +460,26 @@ pub fn verify_attachment_bytes(
             expected: expected.to_string(),
             actual: actual.to_string(),
         });
+    }
+    Ok(())
+}
+
+/// Verify every manifest attachment against bytes retrieved by the capture adapter.
+///
+/// `payloads` is deliberately supplied by the caller: this crate does not fetch URLs or retain
+/// attachment contents. A production adapter must download bytes through its approved archive
+/// path, then call this function before emitting a publishable delta.
+pub fn verify_manifest_attachment_bytes(
+    manifest: &FyiArchiveManifest,
+    payloads: &BTreeMap<String, Vec<u8>>,
+) -> Result<(), FyiArchiveAdapterError> {
+    for request in &manifest.requests {
+        for attachment in &request.attachments {
+            let bytes = payloads.get(&attachment.url).ok_or_else(|| {
+                FyiArchiveAdapterError::AttachmentBytesMissing(attachment.url.clone())
+            })?;
+            verify_attachment_bytes(attachment, bytes)?;
+        }
     }
     Ok(())
 }
