@@ -71,7 +71,7 @@ def scenario_process_models(
         variants: Counter[tuple[str, ...]] = Counter()
 
         for case_events in cases.values():
-            ordered = sorted(case_events, key=lambda row: (row["timestamp"], row["event_id"]))
+            ordered = sorted(case_events, key=lambda row: (row["timestamp"], row.get("source_sequence", 0), row["event_id"]))
             activities = tuple(event["activity"] for event in ordered)
             variants[activities] += 1
             activity_counts.update(activities)
@@ -141,7 +141,7 @@ def build(bundle: Path, output: Path) -> None:
     cases = []
     edge_waits: dict[tuple[str, str], list[float]] = {}
     for case_id, case_events in sorted(events_by_case.items()):
-        ordered = sorted(case_events, key=lambda row: (row["timestamp"], row["event_id"]))
+        ordered = sorted(case_events, key=lambda row: (row["timestamp"], row.get("source_sequence", 0), row["event_id"]))
         start = parse_time(ordered[0]["timestamp"])
         end = parse_time(ordered[-1]["timestamp"])
         for previous, current in zip(ordered, ordered[1:]):

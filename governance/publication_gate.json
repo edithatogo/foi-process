@@ -10,7 +10,7 @@
     "licensing_and_attribution": "pending_human_review",
     "removal_and_appeal": "pending_human_review",
     "threat_model": "pending_human_review",
-    "real_archive_sample": "validated_end_to_end_bounded_2026-07-15_request_and_attachments",
+    "real_archive_sample": "capture_and_hash_evidence_only; adapter_attachment_ingestion_pending",
     "human_owner_approval": "pending"
   },
   "allowed_outputs": [

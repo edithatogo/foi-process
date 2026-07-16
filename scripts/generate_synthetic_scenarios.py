@@ -38,7 +38,7 @@ def arrival_day(index: int, config: dict[str, Any], rng: random.Random) -> int:
     return rng.randrange(24)
 
 def make_event(scenario_id: str, case_id: str, activity: str, timestamp: datetime, sequence: int, revision: int = 1, correction_of: str | None = None) -> dict[str, Any]:
-    logical_id = stable_id("logical-event", scenario_id, case_id, activity, sequence)
+    logical_id = stable_id("logical-event", scenario_id, case_id, sequence)
     return {
         "scenario_id": scenario_id, "event_id": stable_id("event", logical_id, revision),
         "logical_event_id": logical_id, "case_id": case_id, "activity": activity,

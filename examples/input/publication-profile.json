@@ -1,0 +1,6 @@
+{
+  "profile_id": "urn:foi-process:publication-profile:synthetic-fixture",
+  "synthetic_fixture": true,
+  "source_release": "repository-generated-reference-fixtures",
+  "prohibited_inputs": ["production archive records", "raw correspondence", "attachments", "OCR", "embeddings"]
+}

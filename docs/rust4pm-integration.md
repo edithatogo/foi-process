@@ -13,3 +13,9 @@ The remaining upstream candidates are narrower:
 7. Propel-compatible typed artefact handles where generic.
 
 Do not upstream FOI vocabulary, legal deadlines, privacy decisions, or Alaveteli mappings.
+
+The current adapter is intentionally reduced to the stable `AppendableOCEL` surface: it emits
+latest active events, object declarations, object/event identifiers, timestamps, and relationships.
+FOI attributes, object properties, evidence, privacy decisions, and revision/retraction semantics
+remain in the normalized/public contracts. They are not silently treated as Rust4PM attributes
+until the upstream attribute API is stable.

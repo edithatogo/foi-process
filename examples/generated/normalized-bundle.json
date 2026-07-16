@@ -148,8 +148,8 @@
   "events": [
     {
       "schema_version": "1.0.0-draft.1",
-      "event_id": "urn:foi-process:event:sha256:c839e8ca669caf4d0e5a040212842d90c4201edb2b35c0eae5df690dfe791155",
-      "logical_event_id": "urn:foi-process:event-logical:sha256:d0403ca0233c913f7b7feead8adb73b7460aab4a3426ec988e2c135b1e29fb00",
+      "event_id": "urn:foi-process:event:sha256:488318155be303cd1835042fc3a76276014006f5d77eae0509c6121eff97f019",
+      "logical_event_id": "urn:foi-process:event-logical:sha256:ffd897c79930eb5a88dc00c48294e4a72ba7497b2e9353da555d1d672a26fcc7",
       "revision": 1,
       "operation": "upsert",
       "site": "urn:alaveteli:site:fyi.org.nz",
@@ -208,8 +208,8 @@
     },
     {
       "schema_version": "1.0.0-draft.1",
-      "event_id": "urn:foi-process:event:sha256:63133db96b2cfc43af6121bdae5c109f243eeb8dd4c2675ffeeb81502be356e4",
-      "logical_event_id": "urn:foi-process:event-logical:sha256:463374c43d69f59db741832292be233e9d217f1e7b51d5c86f1da02c67b9b736",
+      "event_id": "urn:foi-process:event:sha256:a69853571fb4dc70389c98082684cfdef20bc844e617ab5109f7556931cb0824",
+      "logical_event_id": "urn:foi-process:event-logical:sha256:c9fe270cf05f66c4fcbd0b02f9387dff3879cbac23e7272b90b7aad1ac084d17",
       "revision": 1,
       "operation": "upsert",
       "site": "urn:alaveteli:site:fyi.org.nz",
@@ -268,8 +268,8 @@
     },
     {
       "schema_version": "1.0.0-draft.1",
-      "event_id": "urn:foi-process:event:sha256:1cc37d0a88c9393c2999f70472f044b3450b2217bca943910845aad757987dbd",
-      "logical_event_id": "urn:foi-process:event-logical:sha256:af3bdad4de31368f7ff488cb74381f4753a4d7146b51b24355fcf27b41d22f78",
+      "event_id": "urn:foi-process:event:sha256:970df7c77c41d8915e8b137972e3d410b017315cdf7028f8e56d7c2258982f66",
+      "logical_event_id": "urn:foi-process:event-logical:sha256:5c4e4ab2696153f207922c737f3cba63feac3c67a79be32f308930c1d23977a0",
       "revision": 1,
       "operation": "upsert",
       "site": "urn:alaveteli:site:fyi.org.nz",
@@ -328,8 +328,8 @@
     },
     {
       "schema_version": "1.0.0-draft.1",
-      "event_id": "urn:foi-process:event:sha256:c64cef1478af1ff8fcade29f53fe02cd8787f4dabff63777736f3a84dd620ffb",
-      "logical_event_id": "urn:foi-process:event-logical:sha256:af3bdad4de31368f7ff488cb74381f4753a4d7146b51b24355fcf27b41d22f78",
+      "event_id": "urn:foi-process:event:sha256:133b6c39a818dbba4237ed8f9c92753eb6594643eaf0f1465d9a8b91fea95816",
+      "logical_event_id": "urn:foi-process:event-logical:sha256:5c4e4ab2696153f207922c737f3cba63feac3c67a79be32f308930c1d23977a0",
       "revision": 2,
       "operation": "upsert",
       "site": "urn:alaveteli:site:fyi.org.nz",
@@ -385,12 +385,12 @@
         "native_activity": "extension",
         "authority_id": "nz:agency:demo"
       },
-      "supersedes_event_id": "urn:foi-process:event:sha256:1cc37d0a88c9393c2999f70472f044b3450b2217bca943910845aad757987dbd"
+      "supersedes_event_id": "urn:foi-process:event:sha256:970df7c77c41d8915e8b137972e3d410b017315cdf7028f8e56d7c2258982f66"
     },
     {
       "schema_version": "1.0.0-draft.1",
-      "event_id": "urn:foi-process:event:sha256:7c54702656367adb4a244c447ad61e943feaf71e8b6a64e03d4a0eb36a700cb1",
-      "logical_event_id": "urn:foi-process:event-logical:sha256:b167f61da0363ba7de1faa5255caf0da5507b4da757d56ebd1a7407ddc99c2e2",
+      "event_id": "urn:foi-process:event:sha256:e66d4ac737f648d564f71e2357a2fa1b5dbc0e1f9d20331ef197e7907f353e07",
+      "logical_event_id": "urn:foi-process:event-logical:sha256:3442aa10af59ff9e9643a983d68578437f5308c5dca3c374525e0f78ac5aa4a7",
       "revision": 1,
       "operation": "upsert",
       "site": "urn:alaveteli:site:fyi.org.nz",
@@ -483,7 +483,7 @@
   ],
   "checkpoint": {
     "schema_version": "1.0.0-draft.1",
-    "checkpoint_id": "urn:foi-process:checkpoint:sha256:1d81492e6657003a86391ab9a4f9d907752bb1266d336cd011bd59f69c7c51c6",
+    "checkpoint_id": "urn:foi-process:checkpoint:sha256:87e22761a529068cf1327761441bbd43a260fd8f03f24f6faf1e566e7ed8db97",
     "consumer": "urn:foi-process:consumer:fixture",
     "created_at": "2026-07-09T00:05:00Z",
     "partitions": [
@@ -493,7 +493,7 @@
         "last_sequence": 5
       }
     ],
-    "state_hash": "1d81492e6657003a86391ab9a4f9d907752bb1266d336cd011bd59f69c7c51c6",
+    "state_hash": "87e22761a529068cf1327761441bbd43a260fd8f03f24f6faf1e566e7ed8db97",
     "attributes": {}
   }
 }

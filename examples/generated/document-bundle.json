@@ -22,7 +22,7 @@
         "name": "ocr-adapter",
         "version": "unselected",
         "runtime": "onnx",
-        "license": "to-be-recorded"
+        "license": "repository-license"
       },
       "quality_score": 0.94,
       "segments": [

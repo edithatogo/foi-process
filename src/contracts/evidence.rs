@@ -49,6 +49,8 @@ pub struct EvidenceLocator {
     pub uri: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub warc_record_id: Option<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub warc_record_ids: Vec<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub wacz_path: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]

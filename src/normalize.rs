@@ -83,6 +83,10 @@ pub struct ArchiveManifestRecord {
     pub source_time: Option<TemporalInstant>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub warc_record_id: Option<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub warc_record_ids: Vec<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub byte_length: Option<u64>,
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     pub attributes: BTreeMap<String, serde_json::Value>,
 }
@@ -107,11 +111,12 @@ pub fn archive_record_to_delta(
         locator: EvidenceLocator {
             uri: Some(record.url),
             warc_record_id: record.warc_record_id,
+            warc_record_ids: record.warc_record_ids,
             wacz_path: None,
             blob_path: None,
         },
         content_sha256: record.content_sha256.clone(),
-        byte_length: None,
+        byte_length: record.byte_length,
         captured_at: record.captured_at.clone(),
         source_time: record.source_time,
         privacy: PrivacyAssessment::default(),
@@ -220,7 +225,6 @@ impl DeterministicNormalizer {
                 delta.site.clone(),
                 case_id.clone(),
                 delta.logical_record_id.clone(),
-                activity.clone(),
             ),
         )
         .expect("serialising the deterministic event identity cannot fail");
