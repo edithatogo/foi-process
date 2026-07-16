@@ -37,6 +37,15 @@ jobs:
       - name: Install Hugging Face CLI
         if: ${{ inputs.publish }}
         run: python -m pip install --upgrade huggingface_hub
+      - name: Enforce approved Hugging Face destination
+        if: ${{ inputs.publish }}
+        env:
+          REPO_ID: ${{ inputs.repo_id }}
+        run: |
+          test "$REPO_ID" = "edithatogo/foi-process-event-logs" || {
+            echo "Refusing unapproved Hugging Face dataset destination: $REPO_ID";
+            exit 1;
+          }
       - name: Publish dataset
         if: ${{ inputs.publish }}
         env:
