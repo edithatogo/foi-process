@@ -1,6 +1,6 @@
 # Implementation status
 
-**Reviewed:** 2026-07-15  
+**Reviewed:** 2026-07-17  
 **Release state:** `v0.1.0` is published on GitHub; Zenodo preservation remains a human-controlled gate
 
 ## Implemented
@@ -49,6 +49,11 @@
   contracts, dependency policy, Rust 1.88, stable Rust, and feature-matrix jobs all passed.
   The matrix compiles all features and executes all self-contained feature tests; DuckDB runtime
   linking remains excluded because the hosted runner does not provide `libduckdb`.
+- GitHub Actions runs [29495826776](https://github.com/edithatogo/foi-process/actions/runs/29495826776)
+  and [29495828086](https://github.com/edithatogo/foi-process/actions/runs/29495828086) passed for
+  commit `b0c7c9e`, including the full feature matrix, Dataset/Space bundle checks, dashboard
+  asset budget, and GitHub Pages deployment. The live Pages endpoint responded successfully;
+  authenticated Hugging Face upload remains credential-gated.
 
 ## Remaining gates
 
