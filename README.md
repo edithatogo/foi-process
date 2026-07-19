@@ -86,8 +86,10 @@ fail-closed publication boundary are documented in `docs/hugging-face-space.md`.
   from the public repository with no paid Hugging Face dependency.
 - **Event-log deposit:** [Hugging Face Dataset](https://huggingface.co/datasets/edithatogo/foi-process-event-logs),
   containing the public-safe event logs, OCEL projections, process variants, schemas, and manifests.
-- **Hugging Face Space:** [free Static Space](https://huggingface.co/spaces/edithatogo/foi-process-explorer-free)
-  containing the pre-built dashboard assets. GitHub Pages remains an independent fallback. No PRO
+- **Hugging Face Space:** [free Static Space](https://huggingface.co/spaces/edithatogo/foi-process-explorer)
+  containing the pre-built dashboard assets. A verified free mirror is also available at
+  [foi-process-explorer-free](https://huggingface.co/spaces/edithatogo/foi-process-explorer-free).
+  GitHub Pages remains an independent fallback. No PRO
   plan, credits, Docker, Gradio, GPU, or ZeroGPU is required by this project.
 
 Scale and release governance are executable rather than advisory: the repeated Rust benchmark,

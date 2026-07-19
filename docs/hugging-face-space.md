@@ -47,9 +47,9 @@ Actions and deploys the compiled `space/dist` artifact to GitHub Pages, which is
 dashboard URL and does not require a Hugging Face runtime, credits, secrets, or paid services.
 
 The Hugging Face Dataset remains an optional public deposit for event logs and reproducibility.
-The no-cost Hugging Face Space target is `edithatogo/foi-process-explorer-free`, created by
-duplicating the account's already-running free Static Space configuration and then replacing its
-pre-built root assets. The repository's manual publication workflow is allowlisted to that target
-and verifies its runtime after upload. GitHub Pages remains an independent no-cost fallback.
+The no-cost Hugging Face Space target is `edithatogo/foi-process-explorer`. It uses the same
+pre-built Static Space pattern as the account's verified free mirror,
+`edithatogo/foi-process-explorer-free`; both destinations are allowlisted and verified after upload.
+GitHub Pages remains an independent no-cost fallback.
 
 Production data remains subject to the Dataset privacy and governance gate.
