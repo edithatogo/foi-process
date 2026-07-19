@@ -30,7 +30,7 @@ jobs:
         run: python scripts/build_hf_dataset.py --output /tmp/foi-process-event-logs
       - name: Verify manifest and JSON Lines
         run: python scripts/verify_hf_publication.py local --bundle /tmp/foi-process-event-logs
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: foi-process-event-logs
           path: /tmp/foi-process-event-logs
@@ -77,7 +77,7 @@ jobs:
             --repo-id "$REPO_ID" \
             --bundle /tmp/foi-process-event-logs \
             --output /tmp/hf-dataset-publication-attestation.json
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: ${{ inputs.publish }}
         with:
           name: hf-dataset-publication-attestation
