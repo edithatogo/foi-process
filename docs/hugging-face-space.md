@@ -1,6 +1,6 @@
-# Hugging Face Space dashboard
+# Dashboard build and free hosting
 
-`space/` contains the Static Space profile for `edithatogo/foi-process-explorer`. It consumes a
+`space/` contains the reproducible static dashboard source. It consumes a
 browser projection generated from the reviewed event-log Dataset bundle; it does not mine raw
 correspondence or recalculate legal conclusions in the browser.
 
@@ -13,8 +13,9 @@ correspondence or recalculate legal conclusions in the browser.
 - conformance findings, field coverage, OCEL linkage, and publication provenance.
 
 Authority and case-search controls share one scope across the portfolio, process, timeline, and
-finding views. The checked-in demonstration projection lets the Space build without network access.
-The publication workflow regenerates it from the same bundle uploaded to the Dataset repository.
+finding views. The checked-in demonstration projection lets the dashboard build without network
+access. The GitHub Pages workflow regenerates it from the same bundle used for the Dataset
+repository.
 
 ## Reproduce locally
 
@@ -39,29 +40,15 @@ dashboard projection. Missing tables, missing files, or checksum differences fai
 The asset-budget check also prevents accidental unbounded growth of the client bundle or embedded
 demonstration data; the accepted limits are recorded in ADR 0005.
 
-## Publication boundary
+## No-cost publication boundary
 
-The `publish-hf-space` workflow always regenerates the Dataset and dashboard data, compiles the
-dashboard, and uploads the build as a GitHub artifact. Only the compiled `dist/` and the Space card
-are deposited at the Space root; the source remains auditable in GitHub and the Hub does not run
-Node during publication. Hub publication occurs only when the
-workflow is explicitly dispatched with `publish: true` and an `HF_TOKEN` secret is available.
-After upload, the workflow compares every published root asset with the validated local build,
-waits for the public Static Space to report `RUNNING` when the account permits it, requests the
-public host, and records the remote revision and source checksums in a
-`hf-space-publication-attestation` workflow artifact. If HF rejects activation with its known
-credit gate, the workflow records `deposited_unverified` and the exact runtime error instead of
-misrepresenting repository upload as a live dashboard.
+`deploy_pages.yml` is the only dashboard hosting workflow. It builds the dashboard in GitHub
+Actions and deploys the compiled `space/dist` artifact to GitHub Pages, which is the operational
+dashboard URL and does not require a Hugging Face runtime, credits, secrets, or paid services.
 
-The Space uses the pre-built Static SDK path. This dashboard does not need GPU inference, so
-ZeroGPU is not part of the deployment: HF documents ZeroGPU as a Gradio-only GPU option whose
-hosting requires PRO for personal accounts. Keeping build execution in GitHub Actions avoids the
-credit-gated Hub static-build path observed for this account.
+The Hugging Face Dataset remains an optional public deposit for event logs and reproducibility.
+The existing Hugging Face Space repository is retained only as a source/artifact record; this
+repository does not attempt to activate or verify a Hugging Face Space runtime. Hugging Face
+Static Space hosting is therefore not a dependency of the system.
 
-The same verified `space/dist` artifact is deployed to GitHub Pages with `deploy-pages.yml`. This
-is the primary live dashboard and requires no paid Hugging Face service. The Hugging Face Space
-record and asset deposit remain useful for discoverability and reproducible sharing, but are not a
-runtime dependency.
-
-A pre-built Static Space is used here because Docker and Gradio CPU hosting are also PRO-gated for
-this account. Production data remains subject to the Dataset privacy and governance gate.
+Production data remains subject to the Dataset privacy and governance gate.

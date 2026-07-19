@@ -22,10 +22,10 @@
   event logs, revision history, EvidenceDelta streams, process edges and variants, OCEL tables,
   conformance findings, schemas, dashboard artefacts, and checksums. The reviewed fixture bundle
   is locally verified; live upload awaits Hugging Face authentication.
-- Static Hugging Face Space dashboard with shared filtering, activity KPIs, directly-follows map,
-  variant Sankey, request timeline, conformance findings, OCEL/data-quality indicators, and
-  manifest provenance. Its build regenerates and checksum-verifies dashboard data from the Dataset
-  bundle; live Space upload awaits Hugging Face authentication.
+- Static dashboard source with shared filtering, activity KPIs, directly-follows map, variant
+  Sankey, request timeline, conformance findings, OCEL/data-quality indicators, and manifest
+  provenance. Its build regenerates and checksum-verifies dashboard data from the Dataset bundle;
+  GitHub Pages is the free operational host.
 - Enforced Static Space asset budget and ADR 0005, bounding the compiled JavaScript, CSS, and
   checked demonstration projection while recording the no-runtime deployment decision.
 - Isolated three-repetition Rust scale suite covering 1k, 10k, and 200k synthetic cases, including
@@ -91,8 +91,10 @@
 3. Map and validate a real, representative `fyi-archive-nz` sample, including WARC/WACZ and attachment records.
 4. Complete privacy, tikanga/data-governance, and threat-model review before publishing OCR text, embeddings, or semantic search.
 5. Complete production `fyi-cli`/`fyi-archive` adapter integration and validate live evidence flows.
-6. Authenticate Hugging Face publication, deploy the Dataset and Static Space, and verify Dataset
-   Viewer configurations plus the public Space URL.
+6. Maintain the public Hugging Face Dataset deposit and verify its Dataset Viewer configuration;
+   dashboard hosting is provided by the free GitHub Pages deployment. Hugging Face Space runtime
+   activation is explicitly out of scope because this account's new Static Space path is
+   credit-gated.
 7. Preserve the GitHub release in Zenodo and record DOI evidence without overstating publication state.
 8. Rerun the 200k/full profile against a representative privacy-approved live archive sample and
    attest the release-evidence artifact in protected hosted CI.
@@ -105,6 +107,6 @@
 - Full process discovery or conformance algorithms outside Rust4PM.
 - OCR engine selection or trained FOI signal models.
 - Certified statutory/legal conclusions.
-- Publicly deployed Propel/Hugging Face dashboard; the complete Static Space is repository-built
-  and CI-gated but not yet uploaded.
+- Hugging Face-hosted dashboard runtime; the complete dashboard is repository-built and deployed
+  through free GitHub Pages instead.
 - Live GitHub issues, branches, pull requests, or releases.
