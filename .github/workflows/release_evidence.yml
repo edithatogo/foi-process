@@ -20,7 +20,7 @@ jobs:
         with:
           toolchain: "1.88.0"
       - uses: Swatinem/rust-cache@v2
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
       - name: Run isolated Rust scale profiles
@@ -38,7 +38,7 @@ jobs:
             --output /tmp/foi-process-release-evidence
       - name: Verify release evidence
         run: python scripts/verify_release_evidence.py /tmp/foi-process-release-evidence
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: foi-process-release-evidence
           path: /tmp/foi-process-release-evidence
