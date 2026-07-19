@@ -1,6 +1,6 @@
 # Implementation status
 
-**Reviewed:** 2026-07-17  
+**Reviewed:** 2026-07-19
 **Release state:** `v0.1.0` is published on GitHub; Zenodo preservation remains a human-controlled gate
 
 ## Implemented
@@ -86,25 +86,24 @@
   workflow now publishes the deposition and fails unless the response contains
   a DOI.
 
-1. Compare Rust-generated schemas with the portable compatibility schemas and record intentional differences.
-2. Run RFC 8785 parity vectors in Rust and at least one independent implementation.
-3. Map and validate a real, representative `fyi-archive-nz` sample, including WARC/WACZ and attachment records.
-4. Complete privacy, tikanga/data-governance, and threat-model review before publishing OCR text, embeddings, or semantic search.
-5. Complete production `fyi-cli`/`fyi-archive` adapter integration and validate live evidence flows.
-6. Maintain the public Hugging Face Dataset deposit and verify its Dataset Viewer configuration;
+1. Complete privacy, tikanga/data-governance, licensing, removal/appeal, and threat-model review before publishing production data, OCR text, embeddings, or semantic search.
+2. Complete production `fyi-cli`/`fyi-archive` continuation and backfill integration beyond the bounded one-request flow.
+3. Complete statutory-source review before promoting the indicative OIA trace as a conformance result.
+4. Rerun the full profile against a representative privacy-approved live archive sample and attest the release-evidence artifact in protected hosted CI.
+5. Maintain the public Hugging Face Dataset deposit and verify its Dataset Viewer configuration;
    dashboard hosting is provided by the free Hugging Face Static Space with GitHub Pages as an
    independent fallback.
-7. Preserve the GitHub release in Zenodo and record DOI evidence without overstating publication state.
-8. Rerun the 200k/full profile against a representative privacy-approved live archive sample and
-   attest the release-evidence artifact in protected hosted CI.
+6. Preserve the GitHub release in Zenodo and record DOI evidence without overstating publication state.
 
 ## Deliberately not claimed as complete
 
 - Production `fyi-cli` emitter or `fyi-archive` adapter.
-- Durable transactional database state beyond atomic file snapshots and deterministic replay.
+- Durable transactional database state beyond atomic file snapshots and deterministic replay; the
+  v0.1 decision and future multi-writer gate are recorded in `docs/gate-decisions-2026-07-19.md`.
 - DuckDB runtime validation; all-features compilation is covered by CI, while hosted execution lacks `libduckdb`.
 - Full process discovery or conformance algorithms outside Rust4PM.
-- OCR engine selection or trained FOI signal models.
+- OCR engine selection or trained FOI signal models; full OCR/NLP fixtures are deferred until
+  production OCR, embeddings, semantic search, or extracted signals are in scope.
 - Certified statutory/legal conclusions.
 - Paid or credit-gated Hugging Face runtime; the dashboard uses the duplicated free Static Space
   path and GitHub Pages instead.

@@ -20,6 +20,17 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def safe_path(root: Path, value: str) -> Path:
+    path = Path(value)
+    if not path.is_absolute():
+        path = root / path
+    resolved = path.resolve()
+    root_resolved = root.resolve()
+    if resolved != root_resolved and root_resolved not in resolved.parents:
+        raise ValueError(f"attachment path escapes capture root: {value}")
+    return resolved
+
+
 def validate(
     root: Path,
     request_id: int,
@@ -62,9 +73,31 @@ def validate(
         archive_entries = [name for name in names if name.startswith("archive/")]
         if not archive_entries:
             raise ValueError("WACZ contains no archive WARC entry")
+        wacz_bytes = b"".join(archive.read(name) for name in archive_entries)
 
     snapshot = json.loads((sibling / "snapshot_meta.json").read_text(encoding="utf-8"))
     resource_rows = snapshot.get("resources", [])
+    attachments = json.loads((sibling / "attachments.json").read_text(encoding="utf-8"))
+    attachment_rows: list[dict[str, object]] = []
+    for row in attachments:
+        path = safe_path(root, str(row.get("path", "")))
+        if not path.is_file():
+            raise ValueError(f"missing attachment bytes: {path}")
+        actual_size = path.stat().st_size
+        actual_sha256 = sha256(path)
+        if row.get("size") is not None and int(row["size"]) != actual_size:
+            raise ValueError(f"attachment size mismatch: {path}")
+        if row.get("sha256") and str(row["sha256"]).lower() != actual_sha256:
+            raise ValueError(f"attachment digest mismatch: {path}")
+        record_id = str(row.get("warc_record_id", ""))
+        if record_id and record_id.encode() not in warc_bytes and record_id.encode() not in wacz_bytes:
+            raise ValueError(f"attachment WARC record is not present in WARC/WACZ: {record_id}")
+        attachment_rows.append({
+            "url": row.get("url"),
+            "size": actual_size,
+            "sha256": actual_sha256,
+            "warc_record_id": row.get("warc_record_id"),
+        })
     report: dict[str, object] = {
         "capture_type": "bounded-real-public-fyi-request",
         "authority": "fyi.org.nz",
@@ -80,9 +113,14 @@ def validate(
             "warc_record_signature": True,
             "wacz_datapackage": True,
             "wacz_archive_entry": True,
+            "attachment_bytes": bool(attachment_rows),
+            "attachment_digests": bool(attachment_rows),
+            "attachment_warc_linkage": bool(attachment_rows),
         },
         "content_policy": "captured content remains outside the repository; only hashes and structural evidence are published",
     }
+    if attachment_rows:
+        report["attachments"] = attachment_rows
     if attachment is not None:
         if not attachment.is_file():
             raise ValueError(f"attachment does not exist: {attachment}")

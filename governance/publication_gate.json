@@ -10,7 +10,7 @@
     "licensing_and_attribution": "pending_human_review",
     "removal_and_appeal": "pending_human_review",
     "threat_model": "pending_human_review",
-    "real_archive_sample": "capture_and_hash_evidence_only; cli_derived_store_bridge_validated; live_production_capture_pending",
+    "real_archive_sample": "bounded_live_capture_and_attachment_validation_complete; production_backfill_and_continuation_pending",
     "human_owner_approval": "pending"
   },
   "allowed_outputs": [
@@ -27,6 +27,8 @@
   ],
   "evidence": [
     "docs/evidence/real-fyi-archive-capture-2026-07-15.json",
+    "docs/evidence/live-fyi-cli-fyi-archive-foi-process-2026-07-15.json",
+    "docs/evidence/live-archive-benchmark-2026-07-19.json",
     "docs/privacy-publication.md"
   ]
 }

@@ -1,0 +1,24 @@
+{
+  "schema": "foi-process/evidence/live-archive-benchmark/v1",
+  "captured_at": "2026-07-19T00:00:00Z",
+  "source": "https://fyi.org.nz",
+  "request_id": 26953,
+  "input_manifest_sha256": "6b513d596eaab7c3e5b4e0ff74555a711d26aa1bd1d22b210871f4c5ed54302c",
+  "adapter": {
+    "fyi_cli_version": "1.2.1",
+    "fyi_archive_version": "0.11.1",
+    "attachment_count": 4,
+    "delta_count": 1,
+    "elapsed_ms": 424,
+    "raw_bytes_written": false
+  },
+  "checks": {
+    "warc_sha256": "84ed9b6d41c48e95d61bae55ae90877f5804e8b8e632c3fefdcd599de5af63e6",
+    "wacz_sha256": "4dafbe716f9b8efb473be555381c0b06b571655e041727d424514fa70f1f40ba",
+    "attachment_byte_and_digest_verification": true,
+    "attachment_warc_record_linkage": true,
+    "deterministic_delta_conversion": true
+  },
+  "interpretation": "Bounded adapter benchmark on one real public request with four attachments; not a production backfill throughput claim.",
+  "content_policy": "Raw request, WARC, WACZ, and attachment bytes remain outside the repository; only structural evidence and hashes are recorded."
+}

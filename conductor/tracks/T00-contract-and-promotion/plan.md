@@ -7,5 +7,5 @@
 - [ ] Close with benchmark, fixtures, and decision record
 
 - [x] Replace ad-hoc canonical JSON with RFC 8785 JCS.
-- [ ] Run independent cross-language canonicalisation vectors after Rust compilation.
+- [x] Add independent Python RFC 8785 vectors and run them against the Rust content-id command in CI.
 - [x] Add `ConformanceTrace` and `HumanReviewRecord` portable fixtures.
