@@ -29,4 +29,6 @@ All generated records are synthetic and visibly marked. The scenarios do not cer
 
 ## External state
 
-Repository implementation does not imply publication. Uploading the verified dataset and Space still requires the HF_TOKEN repository secret and successful publish workflows.
+Repository implementation does not imply publication. Uploading the verified dataset requires the
+HF_TOKEN repository secret; dashboard hosting uses the free GitHub Pages workflow and does not
+require Hugging Face Space activation, credits, or a paid service.

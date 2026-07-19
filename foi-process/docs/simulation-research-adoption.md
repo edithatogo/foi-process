@@ -22,7 +22,7 @@ Executable invariants verify deterministic regeneration, unique identifiers, lat
 | Kairos simulation workflows | Deterministic JSONL cases, events and daily operating metrics | Consumer fixture proving import and scenario selection | Reference-ready, not promoted |
 | rulesandprocesses research | Scenario definitions, hypotheses and reproducible summary measures | Independent review of construct validity and limitations | Evidence packet ready |
 | Sourceright review workflow | Manifested artefacts, invariant tests and comparative dashboard | Recorded review outcome against a named release | Review-ready |
-| Propel / Hugging Face dashboard | Compact comparative projection and responsive charts | Published Space build from a verified dataset commit | Repository implemented; publication credential pending |
+| Propel / public dashboard | Compact comparative projection and responsive charts | Free GitHub Pages deployment from a verified dataset commit | Operational; Hugging Face Space runtime is not required |
 | FOI operational pilot | Synthetic workload and acceptance measures | Privacy assessment, tikanga/data-governance review and approved de-identified pilot data | Not started |
 
 No ownership is transferred by this track. Kairos, rulesandprocesses and Sourceright remain reference patterns or candidate consumers, not runtime dependencies.

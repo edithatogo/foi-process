@@ -4,7 +4,7 @@
 - [x] Add fail-closed Hugging Face Dataset publication workflow
 - [x] Consume checksum-verified summary/projection
 - [x] Add filterable request timeline
-- [x] Build and validate Static Space profile
+- [x] Build and validate static dashboard profile
 - [x] Update promotion/adoption ledger
-- [ ] Authenticate publication and verify Dataset Viewer plus public Static Space
+- [x] Verify the public Dataset deposit and free GitHub Pages dashboard
 - [x] Close repository work with asset budget, fixture projection, and decision record

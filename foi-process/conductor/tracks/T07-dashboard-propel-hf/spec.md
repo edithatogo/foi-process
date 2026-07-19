@@ -15,5 +15,6 @@ Do not duplicate capabilities owned by another repository or promote an untested
 - Build and validate a public-safe Hugging Face Dataset bundle containing event logs, revision
   logs, EvidenceDelta streams, OCEL tables, process edges, variants, findings, schemas, and hashes
 - Publish the dataset only after the privacy gate passes
-- Build a Static Space profile that consumes the checksum-verified, versioned dataset projection
-- Publish and verify the Space only after Hub authentication is available
+- Build a static dashboard profile that consumes the checksum-verified, versioned dataset projection
+- Deploy the dashboard through the free GitHub Pages workflow; do not require Hugging Face Space
+  runtime activation or credits

@@ -76,9 +76,10 @@ The Hugging Face dashboard publication bundle, including reviewed event logs, re
 EvidenceDelta streams, OCEL tables, process edges and variants, is documented in
 `docs/hugging-face-dataset-publication.md`.
 
-The operational Static Space dashboard in `space/` adds process, variant, case-timeline,
-conformance, and provenance views over that verified bundle. Its reproducible build and
-fail-closed publication boundary are documented in `docs/hugging-face-space.md`.
+The operational free-hosted dashboard in `space/` adds process, variant, case-timeline,
+conformance, and provenance views over that verified bundle. GitHub Pages is the only hosted
+dashboard target; the reproducible build and no-cost publication boundary are documented in
+`docs/hugging-face-space.md`.
 
 Scale and release governance are executable rather than advisory: the repeated Rust benchmark,
 tested Parquet partition contract, SPDX SBOM, mining provenance, checksummed release package, and

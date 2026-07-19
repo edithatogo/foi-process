@@ -12,7 +12,7 @@
 - OCR/document and NLP signal contracts
 - Portable schemas, fixtures, development oracle, human-review fixture, semantic and property tests
 - Repo promotion and issue packets
-- Reviewed Hugging Face event-log Dataset bundle and checksum-verified Static Space dashboard
+- Reviewed Hugging Face event-log Dataset bundle and checksum-verified free GitHub Pages dashboard
 - Repeated 1k/10k/200k Rust benchmark, tested Parquet partition contract, and checksummed SPDX/mining release evidence
 
 ## Mandatory pre-merge gates
