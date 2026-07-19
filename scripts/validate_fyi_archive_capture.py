@@ -56,10 +56,14 @@ def validate(
     if not warcs or not waczs:
         raise ValueError("capture did not produce both WARC and WACZ artifacts")
 
-    with gzip.open(warcs[-1], "rb") as stream:
-        warc_bytes = stream.read()
-    if b"WARC/1.0" not in warc_bytes:
-        raise ValueError("WARC gzip payload does not contain a WARC record")
+    warc_payloads = []
+    for warc in warcs:
+        with gzip.open(warc, "rb") as stream:
+            payload = stream.read()
+        if b"WARC/1.0" not in payload:
+            raise ValueError(f"WARC gzip payload does not contain a WARC record: {warc}")
+        warc_payloads.append(payload)
+    warc_bytes = b"".join(warc_payloads)
 
     with zipfile.ZipFile(waczs[-1]) as archive:
         names = set(archive.namelist())

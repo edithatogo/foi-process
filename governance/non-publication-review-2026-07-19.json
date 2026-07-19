@@ -1,0 +1,41 @@
+{
+  "schema": "foi-process/governance/non-publication-review/v1",
+  "reviewed_at": "2026-07-19",
+  "scope": "technical controls and non-publication readiness",
+  "publication": "blocked",
+  "owner_direction": "approved_non_publication_work_only",
+  "gates": {
+    "requester_privacy_and_third_party_data": {
+      "status": "technical_controls_reviewed; publication_blocked",
+      "evidence": ["docs/privacy-publication.md", "scripts/test_public_privacy.py", "recursive public projection tests"]
+    },
+    "ocr_and_embedding_amplification": {
+      "status": "deferred_by_scope; raw_ocr_embeddings_and_unrestricted_nlp_prohibited",
+      "evidence": ["docs/ocr-document-boundary.md", "docs/gate-decisions-2026-07-19.md"]
+    },
+    "tikanga_and_data_governance": {
+      "status": "owner_led_non_publication_assessment_complete; escalation_required_for_culturally_sensitive_data",
+      "evidence": ["governance/review-record-2026-07-16.md"]
+    },
+    "licensing_and_attribution": {
+      "status": "code_and_schema_apache_2_0_confirmed; source_rights_not_granted",
+      "evidence": ["docs/source-rights-and-licensing.md", "examples/input/source-rights.json"]
+    },
+    "removal_and_appeal": {
+      "status": "workflow_operational_for_synthetic_outputs; production_publication_blocked",
+      "evidence": ["docs/removal-appeal.md", ".github/ISSUE_TEMPLATE/data-removal.yml"]
+    },
+    "threat_model": {
+      "status": "technical_controls_reviewed; production_publication_blocked",
+      "evidence": ["governance/threat-model-2026-07-19.md", ".github/workflows/ci.yml"]
+    },
+    "statutory_source_review": {
+      "status": "indicative_mapping_complete; legal_conformance_not_certified",
+      "evidence": ["governance/statutory-source-review-2026-07-19.md"]
+    },
+    "human_owner_approval": {
+      "status": "owner_authorized_non_publication_work; publication_not_authorized",
+      "evidence": ["governance/review-record-2026-07-16.md"]
+    }
+  }
+}

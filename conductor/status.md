@@ -19,8 +19,7 @@
 ## Remaining promotion gates
 
 - `cargo fmt`, `clippy`, `test`, `doc`, Rust4PM feature compilation, and `Cargo.lock` generation on Rust 1.88+
-- Scale production backfill/live continuation beyond the verified one-request flow
-- Privacy, licensing, removal, threat-model, and data-governance review for production data
-- Statutory-source review for OIA conformance
-- Representative privacy-approved live-archive benchmark and hosted release-evidence attestation
+- Production publication remains blocked by explicit gate; non-publication technical review is complete
+- Scale beyond the four-request live continuation evidence only if operational monitoring requires it
+- Hosted release-evidence attestation for any real-data publication remains intentionally out of scope
 - Authenticated Dataset Viewer verification and Zenodo preservation where still outstanding

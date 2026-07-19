@@ -21,9 +21,9 @@ The 200,000-case baseline materialises 1,000,000 active events. Its canonical su
 50,000 corrections and 1,000 retractions and retains a deterministic digest across repetitions.
 
 This is a synthetic full-scale shape, not a claim about the timing distribution or attachment/OCR
-weight of the live FYI archive. The hosted workflow must rerun the same profiles on Linux, and the
-full profile must be repeated against a representative privacy-approved archive sample when T03
-provides one.
+weight of the live FYI archive. A separate production-shaped sample benchmark now covers four real
+requests and fourteen attachments in `docs/evidence/scaled-live-archive-benchmark-2026-07-19.json`.
+It is integration evidence, not a full-corpus throughput claim, and does not authorize publication.
 
 Run locally:
 

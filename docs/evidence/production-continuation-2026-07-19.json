@@ -2,24 +2,24 @@
   "schema": "foi-process/fyi-archive-production-continuation/v1",
   "status": "verified",
   "capture": {
-    "request_ids": [26953],
+    "request_ids": [26953, 26954, 26955, 26956],
     "backfill_attachment_count": 4,
-    "continuation_attachment_count": 4,
+    "continuation_attachment_count": 14,
     "backfill_delta_count": 1,
-    "continuation_delta_count": 1
+    "continuation_delta_count": 4
   },
   "replay": {
     "backfill_outcomes": {"accepted": 1},
-    "continuation_outcomes": {"accepted": 1},
+    "continuation_outcomes": {"accepted": 4},
     "continuation_quarantine_count": 0,
     "continuation_revision": 2,
-    "continuation_last_sequence": 2,
-    "continuation_snapshot_id": "urn:foi-process:replay-snapshot:sha256:8ff7e7c65b68047379cad2bada7de9a76bf09f1bdf533e4fe92b0eb54e0aae5b",
-    "continuation_state_hash": "8b9adbaafcaa90f9564661cb1ab2ffa6db70ce5753854988901763716ff208a0"
+    "continuation_last_sequence": 5,
+    "continuation_snapshot_id": "urn:foi-process:replay-snapshot:sha256:056da6f72f48ee1f08f0d0c27d61deadf8e5d8c979a166419bb2cbe4efbaeee1",
+    "continuation_state_hash": "3218b1e9934e2de28aa4f32fd129b02bc101180647f1089d3e196a84099eded7"
   },
   "delta_sha256": {
     "backfill": "2a8be69d4752ae189c47019f91cf7145f675cd6243887dd9bcad4271459943c8",
-    "continuation": "a9ef5e6364fa00660d6a959fecf6d7320dc0d43e62c0955067c9837583581cd8"
+    "continuation": "9b83c91db5f4aaaad6e4e2f5a2d87ee985f6324131a719293b2e630fcda7e408"
   },
-  "boundary": "Production-shaped integration evidence for one real public request; it does not authorize publication of raw source-derived content."
+  "boundary": "Production-shaped integration evidence for four real public requests; it does not authorize publication of raw source-derived content."
 }

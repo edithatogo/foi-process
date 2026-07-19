@@ -1,0 +1,24 @@
+{
+  "schema": "foi-process/evidence/scaled-live-archive-benchmark/v1",
+  "source": "https://fyi.org.nz",
+  "fyi_cli_version": "1.2.1",
+  "fyi_archive_version": "0.11.1",
+  "request_ids": [26953, 26954, 26955, 26956],
+  "backfill": {
+    "delta_count": 1,
+    "attachment_count": 4,
+    "accepted_count": 1
+  },
+  "continuation": {
+    "delta_count": 4,
+    "attachment_count": 14,
+    "accepted_count": 4,
+    "quarantine_count": 0,
+    "revision": 2,
+    "last_sequence": 5
+  },
+  "elapsed_ms": 581.2651,
+  "raw_bytes_written": false,
+  "content_policy": "Raw request, WARC, WACZ, and attachment bytes remain outside the repository; only structural evidence and hashes are recorded.",
+  "interpretation": "Representative real archive integration benchmark for four public requests and fourteen attachments; not a full-corpus throughput claim and not publication approval."
+}

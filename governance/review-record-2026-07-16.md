@@ -1,6 +1,11 @@
 # Production Governance Review Record
 
-Status: `pending_human_approval`
+Status: `historical_synthetic_review_superseded_for_non_publication_controls`
+
+The current non-publication review is recorded in
+`governance/non-publication-review-2026-07-19.json` and
+`governance/panel-review-2026-07-19.md`. This historical packet is retained for
+auditability; its publication-blocked decisions remain in force.
 
 This record is the review packet for deciding whether any production FOI archive
 records, attachments, OCR output, or embeddings may be published. It does not

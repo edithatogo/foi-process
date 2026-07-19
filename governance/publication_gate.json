@@ -4,14 +4,15 @@
   "status": "synthetic-only",
   "production_data_publication": "blocked",
   "gates": {
-    "requester_privacy_and_third_party_data": "pending_human_review",
-    "ocr_and_embedding_amplification": "pending_human_review",
-    "tikanga_and_data_governance": "pending_human_review",
-    "licensing_and_attribution": "pending_human_review",
-    "removal_and_appeal": "pending_human_review",
-    "threat_model": "pending_human_review",
-    "real_archive_sample": "production_shaped_backfill_and_live_continuation_verified_for_one_real_request; scale_backfill_pending",
-    "human_owner_approval": "pending"
+    "requester_privacy_and_third_party_data": "technical_controls_reviewed; publication_blocked",
+    "ocr_and_embedding_amplification": "deferred_by_scope; publication_blocked",
+    "tikanga_and_data_governance": "owner_led_non_publication_assessment_complete; escalation_required_for_culturally_sensitive_data",
+    "licensing_and_attribution": "code_and_schema_apache_2_0_confirmed; source_rights_not_granted",
+    "removal_and_appeal": "workflow_operational; publication_blocked",
+    "threat_model": "technical_controls_reviewed; publication_blocked",
+    "statutory_source_review": "indicative_mapping_complete; legal_conformance_not_certified",
+    "real_archive_sample": "scaled_backfill_and_live_continuation_verified_for_four_real_requests; publication_blocked",
+    "human_owner_approval": "owner_authorized_non_publication_work; publication_not_authorized"
   },
   "allowed_outputs": [
     "examples/generated",
@@ -29,6 +30,11 @@
     "docs/evidence/real-fyi-archive-capture-2026-07-15.json",
     "docs/evidence/live-fyi-cli-fyi-archive-foi-process-2026-07-15.json",
     "docs/evidence/live-archive-benchmark-2026-07-19.json",
+    "docs/evidence/scaled-live-archive-benchmark-2026-07-19.json",
+    "docs/evidence/production-continuation-2026-07-19.json",
+    "docs/evidence/real-archive-sample-2026-07-19.json",
+    "governance/non-publication-review-2026-07-19.json",
+    "governance/statutory-source-review-2026-07-19.md",
     "docs/privacy-publication.md"
   ]
 }

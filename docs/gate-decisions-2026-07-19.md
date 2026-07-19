@@ -34,12 +34,13 @@ and scanned-PDF fixtures become required before production OCR text, embeddings,
 semantic search, or extracted FOI signals are published. Until then, the existing
 document/signal contracts and fail-closed privacy gate remain the boundary.
 
-## Still external or human-controlled
+## Still external or publication-controlled
 
-Production publication remains blocked pending privacy, licensing, removal,
-threat-model, data-governance, and owner review. Statutory-source review remains
-required before the indicative OIA trace can be promoted or described as legal
-conformance. The production-shaped runner was exercised on one real public
-request on 2026-07-19: four attachment digests verified in both phases, the
-backfill accepted, the update accepted at revision 2 and source sequence 2, and
-no quarantine rows. Larger-scale backfill remains an operational run.
+Production publication remains blocked by decision. The non-publication technical
+review and indicative statutory-source mapping are complete in
+`governance/non-publication-review-2026-07-19.json` and
+`governance/statutory-source-review-2026-07-19.md`. The scaled runner was
+exercised on four real public requests on 2026-07-19: fourteen attachment
+digests verified, four continuation deltas accepted at revision 2 and source
+sequences 2-5, and no quarantine rows. Source rights, personal-data exposure,
+and legal conformance remain deliberately outside any publication permission.

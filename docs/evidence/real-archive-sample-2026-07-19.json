@@ -1,0 +1,30 @@
+{
+  "schema": "foi-process/evidence/real-archive-sample/v1",
+  "status": "verified",
+  "request_ids": [26953, 26954, 26955, 26956],
+  "attachment_counts": {
+    "26953": 4,
+    "26954": 4,
+    "26955": 4,
+    "26956": 2
+  },
+  "checks": {
+    "derived_store": true,
+    "attachment_bytes": true,
+    "attachment_digests": true,
+    "attachment_warc_linkage": true,
+    "wacz_datapackage": true,
+    "wacz_archive_entry": true,
+    "warc_record_signature": true
+  },
+  "warc_sha256": {
+    "20260715T141239Z-26953.warc.gz": "30c5fdff85e10a2afb9d2f60df91667d47438182a7d4d26a808557bf1c798649",
+    "20260715T141253Z-26953.warc.gz": "84ed9b6d41c48e95d61bae55ae90877f5804e8b8e632c3fefdcd599de5af63e6",
+    "20260719T112220Z-26953.warc.gz": "375966164a9f9c070b4575cdc822bbc4e33cdf55495fc935319c6b761169bf32",
+    "20260719T130034Z-26954.warc.gz": "c7021d35676cf89290b210c9974da984b1373661a60e69ff4c34385bab4ab976",
+    "20260719T130037Z-26955.warc.gz": "5e4ff9b5e02e095051f23f72bc5b7dc9e2953eac8216c49a945a2d8a38357330",
+    "20260719T130040Z-26956.warc.gz": "f7d3f3702c89f8f76940b1ca245b44d1352facbc1e8bca13d090819b44f26e2e"
+  },
+  "wacz_sha256": "7fbeb74ff9e81de898e8fd32db66011da5e40cdaaa046f9a5118eb1675ad615d",
+  "content_policy": "Raw request, WARC, WACZ, and attachment bytes remain outside the repository; only structural evidence and hashes are recorded."
+}

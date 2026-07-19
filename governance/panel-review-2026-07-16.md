@@ -1,4 +1,7 @@
-# Independent panel rerun
+# Historical independent panel rerun
+
+Superseded for current non-publication status by
+`governance/panel-review-2026-07-19.md`; retained as an audit record.
 
 The panel was rerun against integrity-hardening commit `ace8320` on 2026-07-16. It was an
 independent agent review, not a substitute for a named human statutory, tikanga, privacy, or

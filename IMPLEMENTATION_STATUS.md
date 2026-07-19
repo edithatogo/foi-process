@@ -76,7 +76,7 @@
 - `governance/publication_gate.json` keeps production publication blocked and
   limits current hosted outputs to synthetic data.
 - Manual workflows provide executable paths for Zenodo preservation and native
-  DuckDB runtime evidence. Neither is complete until external evidence exists.
+  DuckDB runtime evidence. These remain optional publication/deployment checks.
 - The Rust adapter now accepts nullable live manifest timestamps and derives
   omitted FYI request/API URLs correctly; focused tests and one live conversion
   pass. The DuckDB workflow now runs an actual `SELECT 42` connection test and
@@ -86,18 +86,15 @@
   workflow now publishes the deposition and fails unless the response contains
   a DOI.
 
-1. Complete privacy, tikanga/data-governance, licensing, removal/appeal, and threat-model review before publishing production data, OCR text, embeddings, or semantic search.
-2. Execute scaled production `fyi-cli`/`fyi-archive` backfill and maintain live continuation beyond the verified one-request flow (`docs/evidence/production-continuation-2026-07-19.json`).
-3. Complete statutory-source review before promoting the indicative OIA trace as a conformance result.
-4. Rerun the full profile against a representative privacy-approved live archive sample and attest the release-evidence artifact in protected hosted CI.
-5. Maintain the public Hugging Face Dataset deposit and verify its Dataset Viewer configuration;
-   dashboard hosting is provided by the free Hugging Face Static Space with GitHub Pages as an
-   independent fallback.
-6. Preserve the GitHub release in Zenodo and record DOI evidence without overstating publication state.
+1. Keep production publication blocked; the non-publication privacy, rights, removal, threat-model, governance, and statutory review records are complete.
+2. Scaled real `fyi-cli`/`fyi-archive` backfill and live continuation are verified for four requests and fourteen attachments; see `docs/evidence/production-continuation-2026-07-19.json`.
+3. Maintain the indicative OIA mapping without promoting it to legal conformance; see `governance/statutory-source-review-2026-07-19.md`.
+4. Hosted release-evidence attestation for real-data publication is intentionally not run.
+5. Publication-only: maintain the public Hugging Face Dataset deposit and verify its Dataset Viewer configuration.
+6. Publication-only: preserve the GitHub release in Zenodo and record DOI evidence without overstating publication state.
 
 ## Deliberately not claimed as complete
 
-- Production `fyi-cli` emitter or `fyi-archive` adapter.
 - Durable transactional database state beyond atomic file snapshots and deterministic replay; the
   v0.1 decision and future multi-writer gate are recorded in `docs/gate-decisions-2026-07-19.md`.
 - DuckDB runtime validation; all-features compilation is covered by CI, while hosted execution lacks `libduckdb`.
@@ -107,4 +104,4 @@
 - Certified statutory/legal conclusions.
 - Paid or credit-gated Hugging Face runtime; the dashboard uses the duplicated free Static Space
   path and GitHub Pages instead.
-- Live GitHub issues, branches, pull requests, or releases.
+- Full-corpus archive backfill beyond the four-request operational evidence; this is optional scale work, not a publication authorization.
