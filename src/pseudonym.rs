@@ -2,7 +2,7 @@
 //!
 //! The secret is supplied by an external secret manager and is never part of a public export.
 
-use hmac::{Hmac, Mac};
+use hmac::{Hmac, KeyInit, Mac};
 use sha2::Sha256;
 
 use crate::StableId;
