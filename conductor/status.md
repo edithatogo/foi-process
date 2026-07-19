@@ -19,7 +19,7 @@
 ## Remaining promotion gates
 
 - `cargo fmt`, `clippy`, `test`, `doc`, Rust4PM feature compilation, and `Cargo.lock` generation on Rust 1.88+
-- Production backfill/live continuation beyond the bounded one-request adapter flow
+- Scale production backfill/live continuation beyond the verified one-request flow
 - Privacy, licensing, removal, threat-model, and data-governance review for production data
 - Statutory-source review for OIA conformance
 - Representative privacy-approved live-archive benchmark and hosted release-evidence attestation

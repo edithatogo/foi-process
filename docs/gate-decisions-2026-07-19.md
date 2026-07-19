@@ -39,5 +39,7 @@ document/signal contracts and fail-closed privacy gate remain the boundary.
 Production publication remains blocked pending privacy, licensing, removal,
 threat-model, data-governance, and owner review. Statutory-source review remains
 required before the indicative OIA trace can be promoted or described as legal
-conformance. The bounded live capture and benchmark do not establish production
-backfill coverage.
+conformance. The production-shaped runner was exercised on one real public
+request on 2026-07-19: four attachment digests verified in both phases, the
+backfill accepted, the update accepted at revision 2 and source sequence 2, and
+no quarantine rows. Larger-scale backfill remains an operational run.

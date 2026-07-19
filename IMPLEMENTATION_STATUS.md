@@ -87,7 +87,7 @@
   a DOI.
 
 1. Complete privacy, tikanga/data-governance, licensing, removal/appeal, and threat-model review before publishing production data, OCR text, embeddings, or semantic search.
-2. Complete production `fyi-cli`/`fyi-archive` continuation and backfill integration beyond the bounded one-request flow.
+2. Execute scaled production `fyi-cli`/`fyi-archive` backfill and maintain live continuation beyond the verified one-request flow (`docs/evidence/production-continuation-2026-07-19.json`).
 3. Complete statutory-source review before promoting the indicative OIA trace as a conformance result.
 4. Rerun the full profile against a representative privacy-approved live archive sample and attest the release-evidence artifact in protected hosted CI.
 5. Maintain the public Hugging Face Dataset deposit and verify its Dataset Viewer configuration;

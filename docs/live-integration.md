@@ -59,3 +59,14 @@ Heavy discovery runs from snapshots. Live updates focus on monitoring and confor
 For each run, accepted outputs, findings, reviews, and quarantine records are flushed and synced first. The replay snapshot is then atomically replaced and its state hash verified on the next restore. `checkpoint.json` is written last and acts as the commit marker. This is intentionally at-least-once: a crash after journal sync but before the checkpoint may repeat deterministic IDs, which downstream materialisers must deduplicate.
 
 The streaming journals include `events`, `evidence`, `objects`, `object-links`, `object-changes`, `document-signals`, `findings`, `human-reviews`, `outcomes`, and `quarantine`.
+
+## Production-shaped backfill and continuation
+
+Run `fyi-archive sync run` to advance the archive high-water state, then use
+`scripts/run_fyi_archive_continuation.py` with the initial manifest, the latest
+manifest, and `latest_changes.json`. The runner assigns snapshot revisions and
+source sequences, verifies every attachment through the derived-store bridge,
+and resumes replay from the backfill snapshot. Its output directory must be
+fresh because replay journals are append-only. Keep raw request stores and
+attachment bytes outside this repository; the runner's evidence JSON contains
+hashes, counts, snapshot identifiers, and outcome totals only.
