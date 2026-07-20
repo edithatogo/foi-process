@@ -12,3 +12,4 @@
 | T07 | Propel/Hugging Face interface | authenticated Dataset/Static Space publication |
 | T08 | Scale/release/governance | live-archive rerun + hosted artifact attestation |
 | T09 | Kairos/research/adoption | synthetic OCEL and adoption evidence |
+| T10 | Full-corpus process mining and Static Space | upstream contracts + full/incremental parity |
