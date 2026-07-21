@@ -13,7 +13,7 @@ tracks:
   owner: foi-process/rust4pm
 - id: T03
   slug: archive-live-adapters
-  status: fixture_implemented
+  status: acceptance_verified
   owner: fyi-archive/fyi-cli/foi-process
 - id: T04
   slug: document-ocr-signals
