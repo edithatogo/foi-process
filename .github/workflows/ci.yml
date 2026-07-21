@@ -68,6 +68,7 @@ jobs:
       - run: python scripts/validate_jurisdiction_cases.py
       - run: python scripts/validate_alaveteli_evidence.py
       - run: python scripts/validate_jurisdiction_review_matrix.py
+      - run: python scripts/validate_jurisdiction_review_queue.py
       - run: python scripts/alaveteli_metadata_adapter.py examples/input/alaveteli-request-envelope.sample.json > /tmp/alaveteli-request-event.json
       - run: python -m json.tool /tmp/alaveteli-request-event.json >/dev/null
       - run: PYTHONPATH=scripts python scripts/test_alaveteli_metadata_adapter.py
