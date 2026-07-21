@@ -1,0 +1,14 @@
+{
+  "deployment_url": "https://example.invalid/alaveteli",
+  "deployment_revision": "unknown",
+  "jurisdiction": "unknown",
+  "api_surface": {
+    "json": "unknown",
+    "atom": "unknown"
+  },
+  "authority_snapshot_sha256": "unknown",
+  "capture_window": "unknown",
+  "redaction_and_retention": "unknown",
+  "promotion_boundary": "engineering_only",
+  "evidence_status": "blocked_until_instance_capture"
+}
