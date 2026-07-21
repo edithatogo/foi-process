@@ -1,0 +1,9 @@
+# Plan
+
+- [ ] Foundation NZ case/process baseline.
+- [ ] Australian pilot, contrast and remaining-jurisdiction models.
+- [ ] UK and European English models.
+- [ ] Official Alaveteli deployment models after platform/source audit.
+- [ ] Germany, Spain and Ireland models.
+- [ ] Canada federal, US federal and South Africa models.
+- [ ] At every increment pair Mermaid and BPMN, validate replay/isolation/annotation evidence, and stop at promotion/publication gates.

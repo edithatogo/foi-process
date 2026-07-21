@@ -39,3 +39,10 @@ tracks:
   slug: simulation-research-adoption
   status: repository_implemented_publication_pending
   owner: kairos/rulesandprocesses/sourceright
+- id: T11
+  slug: jurisdiction-case-process-modelling
+  status: planned
+  owner: foi-process/foi-o/nlp-policy-nz
+  track: jurisdiction_case_process_modelling_20260721
+  github_issue: https://github.com/edithatogo/foi-process/issues/39
+  programme_issue: https://github.com/edithatogo/foi-o/issues/81
