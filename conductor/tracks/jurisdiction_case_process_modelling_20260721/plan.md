@@ -1,7 +1,7 @@
 # Plan
 
 - [x] Foundation NZ case/process baseline (provenance-bound observed model; legal promotion remains gated).
-- [ ] Australian pilot, contrast and remaining-jurisdiction models.
+- [x] Australian Commonwealth foundation (pinned source boundary; empirical and legal promotion remain gated).
 - [ ] UK and European English models.
 - [ ] Official Alaveteli deployment models after platform/source audit.
 - [ ] Germany, Spain and Ireland models.
