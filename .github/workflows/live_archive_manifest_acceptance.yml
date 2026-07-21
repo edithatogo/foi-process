@@ -38,10 +38,10 @@ jobs:
           deltas=target/live-archive-acceptance/evidence-deltas.ndjson
           repeat=target/live-archive-acceptance/evidence-deltas-repeat.ndjson
           captured_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-          cargo run --locked --release -- \
+          cargo run --locked --release --bin foi-process -- \
             fyi-archive-manifest-to-deltas "$manifest" "$deltas" \
             --captured-at "$captured_at"
-          cargo run --locked --release -- \
+          cargo run --locked --release --bin foi-process -- \
             fyi-archive-manifest-to-deltas "$manifest" "$repeat" \
             --captured-at "$captured_at"
           python - <<'PY'
