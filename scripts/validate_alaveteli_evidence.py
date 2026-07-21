@@ -23,6 +23,7 @@ def main() -> None:
         ROOT / "examples" / "input" / "alaveteli-deployment-evidence.sample.json",
         ROOT / "examples" / "input" / "alaveteli-deployment-evidence.asktheeu.json",
         ROOT / "examples" / "input" / "alaveteli-request-evidence.asktheeu.json",
+        ROOT / "examples" / "input" / "alaveteli-request-evidence.asktheeu-1338.json",
     ]
     for path in paths:
         evidence = json.loads(path.read_text(encoding="utf-8"))

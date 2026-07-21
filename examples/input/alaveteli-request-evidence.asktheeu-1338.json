@@ -1,0 +1,14 @@
+{
+  "deployment_url": "https://www.asktheeu.org/",
+  "request_url": "https://www.asktheeu.org/request/commissioners_expenses_2012_and_2.json",
+  "request_id": 1338,
+  "request_slug": "commissioners_expenses_2012_and_2",
+  "response_status": 200,
+  "response_sha256": "f8fc4e1f3cb24f03e7fa80f58da82e5977ca2fa237c330c970be6af4905d54f5",
+  "observed_state": "attention_requested",
+  "created_at": "2014-05-07T01:51:03Z",
+  "updated_at": "2020-09-24T05:53:27Z",
+  "raw_content_retained": false,
+  "promotion_boundary": "engineering_only",
+  "evidence_status": "metadata_only_live_endpoint"
+}
