@@ -1,0 +1,19 @@
+{
+  "deployment_url": "https://www.asktheeu.org/",
+  "deployment_revision": "unknown",
+  "jurisdiction": "EU-institutions",
+  "api_surface": {
+    "homepage_status": 200,
+    "homepage_sha256": "ddbb75c7b11b321166395144ae60118b5c57298579ee28cde61f1a820f494ca3",
+    "authority_listing_url": "https://www.asktheeu.org/body/list/all",
+    "authority_listing_status": 200,
+    "authority_listing_sha256": "ade0080667a42b896a201e1d74fc4f4f3696ce0346ce4273db793ff20438986e",
+    "json_and_atom": "advertised by homepage; endpoint semantics require follow-up capture"
+  },
+  "authority_snapshot_sha256": "ade0080667a42b896a201e1d74fc4f4f3696ce0346ce4273db793ff20438986e",
+  "capture_window": "2026-07-21T15:12:00Z/2026-07-21T15:12:30Z",
+  "redaction_and_retention": "unknown",
+  "promotion_boundary": "engineering_only",
+  "evidence_status": "instance_reached_metadata_only",
+  "raw_content_retained": false
+}

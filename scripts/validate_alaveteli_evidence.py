@@ -19,18 +19,24 @@ REQUIRED = {
 
 
 def main() -> None:
-    path = ROOT / "examples" / "input" / "alaveteli-deployment-evidence.sample.json"
-    evidence = json.loads(path.read_text(encoding="utf-8"))
-    missing = REQUIRED - evidence.keys()
-    if missing:
-        raise SystemExit(f"missing deployment evidence fields: {sorted(missing)}")
-    if evidence["promotion_boundary"] != "engineering_only":
-        raise SystemExit("sample evidence must remain engineering_only")
-    if evidence.get("evidence_status") != "blocked_until_instance_capture":
-        raise SystemExit("sample evidence must remain fail-closed until a real instance is captured")
-    if not isinstance(evidence["api_surface"], dict):
-        raise SystemExit("api_surface must be structured")
-    print("validated fail-closed Alaveteli deployment evidence contract")
+    paths = [
+        ROOT / "examples" / "input" / "alaveteli-deployment-evidence.sample.json",
+        ROOT / "examples" / "input" / "alaveteli-deployment-evidence.asktheeu.json",
+    ]
+    for path in paths:
+        evidence = json.loads(path.read_text(encoding="utf-8"))
+        missing = REQUIRED - evidence.keys()
+        if missing:
+            raise SystemExit(f"{path.name}: missing fields: {sorted(missing)}")
+        if evidence["promotion_boundary"] != "engineering_only":
+            raise SystemExit(f"{path.name}: evidence escaped engineering_only")
+        if not isinstance(evidence["api_surface"], dict):
+            raise SystemExit(f"{path.name}: api_surface must be structured")
+        if path.name.endswith("sample.json") and evidence.get("evidence_status") != "blocked_until_instance_capture":
+            raise SystemExit("sample evidence must remain fail-closed until a real instance is captured")
+        if evidence.get("raw_content_retained") is True:
+            raise SystemExit(f"{path.name}: raw public content must not be retained by this evidence fixture")
+        print(f"validated Alaveteli deployment evidence: {path.name}")
 
 
 if __name__ == "__main__":
