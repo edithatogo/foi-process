@@ -1,0 +1,10 @@
+{
+  "id": 473,
+  "url_title": "dg_trade_contacts_with_industry",
+  "created_at": "2013-04-19T11:03:38.752+02:00",
+  "updated_at": "2015-03-13T14:24:14.038+01:00",
+  "described_state": "partially_successful",
+  "source_response_sha256": "f3ace8b34ed3aef4993d43c641462a229acebe4bdd1bf9302e4ac0e0f076af66",
+  "deployment_url": "https://www.asktheeu.org/",
+  "jurisdiction": "jurisdiction:EU-INSTITUTIONS"
+}
