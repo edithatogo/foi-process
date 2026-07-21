@@ -5,5 +5,5 @@
 - [x] UK foundation (pinned source boundary; empirical and legal promotion remain gated).
 - [ ] Official Alaveteli deployment models after platform/source audit.
 - [x] Ireland foundation (pinned source boundary; empirical and legal promotion remain gated).
-- [ ] Canada federal, US federal and South Africa models.
+- [x] Canada federal and US federal foundations (pinned source boundaries; empirical and legal promotion remain gated).
 - [ ] At every increment pair Mermaid and BPMN, validate replay/isolation/annotation evidence, and stop at promotion/publication gates.
