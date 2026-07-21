@@ -1,0 +1,86 @@
+name: Live fyi-archive manifest acceptance
+
+on:
+  workflow_dispatch:
+    inputs:
+      manifest_url:
+        description: Pinned public fyi-archive manifest URL
+        required: true
+        default: https://huggingface.co/datasets/edithatogo/fyi-archive-nz/resolve/main/manifests/latest_manifest.json
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  adapter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.88.0
+      - name: Download pinned manifest
+        env:
+          MANIFEST_URL: ${{ inputs.manifest_url }}
+        run: |
+          set -euo pipefail
+          mkdir -p target/live-archive-acceptance
+          curl --fail --location --retry 3 --retry-all-errors --silent --show-error \
+            "$MANIFEST_URL" \
+            --output target/live-archive-acceptance/manifest.json
+      - name: Convert and verify manifest coverage
+        run: |
+          set -euo pipefail
+          manifest=target/live-archive-acceptance/manifest.json
+          deltas=target/live-archive-acceptance/evidence-deltas.ndjson
+          repeat=target/live-archive-acceptance/evidence-deltas-repeat.ndjson
+          captured_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          cargo run --locked --release -- \
+            fyi-archive-manifest-to-deltas "$manifest" "$deltas" \
+            --captured-at "$captured_at"
+          cargo run --locked --release -- \
+            fyi-archive-manifest-to-deltas "$manifest" "$repeat" \
+            --captured-at "$captured_at"
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path("target/live-archive-acceptance")
+          manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+          rows = [
+              json.loads(line)
+              for line in (root / "evidence-deltas.ndjson").read_text(encoding="utf-8").splitlines()
+              if line.strip()
+          ]
+          declared = int(manifest["meta"]["record_count"])
+          if declared != len(manifest.get("requests", [])):
+              raise SystemExit("manifest record_count does not match request rows")
+          if declared != len(rows):
+              raise SystemExit("adapter output count does not match manifest record_count")
+          first = hashlib.sha256((root / "evidence-deltas.ndjson").read_bytes()).hexdigest()
+          second = hashlib.sha256((root / "evidence-deltas-repeat.ndjson").read_bytes()).hexdigest()
+          if first != second:
+              raise SystemExit("adapter output hash was not stable")
+          evidence = {
+              "manifest_sha256": hashlib.sha256((root / "manifest.json").read_bytes()).hexdigest(),
+              "event_delta_sha256": first,
+              "record_count": declared,
+              "adapter": "foi-process fyi-archive-manifest-to-deltas",
+              "raw_content_retained": False,
+          }
+          (root / "acceptance-evidence.json").write_text(
+              json.dumps(evidence, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+          )
+          (root / "manifest.json").unlink()
+          (root / "evidence-deltas.ndjson").unlink()
+          (root / "evidence-deltas-repeat.ndjson").unlink()
+          PY
+      - name: Upload redacted acceptance evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: live-archive-manifest-acceptance
+          path: target/live-archive-acceptance/acceptance-evidence.json
