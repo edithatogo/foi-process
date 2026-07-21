@@ -3,7 +3,7 @@
 - [x] Foundation NZ case/process baseline (provenance-bound observed model; legal promotion remains gated).
 - [x] Australian Commonwealth foundation (pinned source boundary; empirical and legal promotion remain gated).
 - [x] UK foundation (pinned source boundary; empirical and legal promotion remain gated).
-- [ ] Official Alaveteli deployment models after platform/source audit.
+- [x] Alaveteli platform/source audit; deployment-specific evidence remains gated.
 - [x] Ireland foundation (pinned source boundary; empirical and legal promotion remain gated).
 - [x] Canada federal and US federal foundations (pinned source boundaries; empirical and legal promotion remain gated).
 - [x] Germany, Spain and South Africa foundations (pinned source boundaries; empirical and legal promotion remain gated).
