@@ -1,0 +1,15 @@
+{
+  "deployment_url": "https://www.asktheeu.org/",
+  "request_url": "https://www.asktheeu.org/request/dg_trade_contacts_with_industry.json",
+  "request_id": 473,
+  "request_slug": "dg_trade_contacts_with_industry",
+  "response_status": 200,
+  "response_sha256": "f3ace8b34ed3aef4993d43c641462a229acebe4bdd1bf9302e4ac0e0f076af66",
+  "observed_state": "partially_successful",
+  "created_at": "2013-04-19T11:03:38.752+02:00",
+  "updated_at": "2015-03-13T14:24:14.038+01:00",
+  "event_count": 0,
+  "raw_content_retained": false,
+  "promotion_boundary": "engineering_only",
+  "evidence_status": "metadata_only_live_endpoint"
+}
