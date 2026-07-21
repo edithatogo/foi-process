@@ -1,6 +1,6 @@
 # Plan
 
-- [ ] Foundation NZ case/process baseline.
+- [x] Foundation NZ case/process baseline (provenance-bound observed model; legal promotion remains gated).
 - [ ] Australian pilot, contrast and remaining-jurisdiction models.
 - [ ] UK and European English models.
 - [ ] Official Alaveteli deployment models after platform/source audit.
