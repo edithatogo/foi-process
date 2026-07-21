@@ -1,0 +1,13 @@
+{
+  "track_id": "jurisdiction_case_process_modelling_20260721",
+  "promotion_boundary": "engineering_only",
+  "rows": [
+    {"gate":"source_provenance","status":"complete","evidence":["official source URLs in jurisdiction profiles"]},
+    {"gate":"mermaid_bpmn_pairing","status":"complete","evidence":["scripts/validate_jurisdiction_profiles.py","CI"]},
+    {"gate":"alaveteli_live_endpoint","status":"complete","evidence":["examples/input/alaveteli-deployment-evidence.asktheeu.json","examples/input/alaveteli-request-evidence.asktheeu.json"]},
+    {"gate":"representative_real_case_set","status":"pending","evidence":[]},
+    {"gate":"independent_annotation_adjudication","status":"pending","evidence":[]},
+    {"gate":"replay_isolation_and_coverage","status":"pending","evidence":[]},
+    {"gate":"legal_promotion","status":"blocked","evidence":[]}
+  ]
+}
