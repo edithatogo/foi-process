@@ -17,6 +17,7 @@ def stable_id(namespace: str, value: Any) -> str:
 def adapt(envelope: dict[str, Any]) -> dict[str, Any]:
     case_id = stable_id("case", [envelope["deployment_url"], envelope["id"]])
     event_id = stable_id("event", [case_id, "request_observed", envelope["updated_at"]])
+    evidence_id = stable_id("evidence", envelope["source_response_sha256"])
     return {
         "schema_version": "1.0.0-draft.1",
         "event_id": event_id,
@@ -29,9 +30,13 @@ def adapt(envelope: dict[str, Any]) -> dict[str, Any]:
         "activity": "foio:RequestObserved",
         "event_time": {"timestamp": envelope["created_at"], "precision": "second"},
         "observed_at": envelope["updated_at"],
+        "captured_at": envelope["updated_at"],
+        "processed_at": envelope["updated_at"],
         "assertion_status": "candidate",
         "position": {"source": "urn:alaveteli:asktheeu.org:json", "partition": "requests", "sequence": envelope["id"]},
-        "provenance": {"producer": "urn:foi-process:alaveteli-metadata-adapter", "input_sha256": envelope["source_response_sha256"]},
+        "objects": [{"object_id": case_id, "object_type": "foio:Request", "qualifier": "foip:case"}],
+        "evidence": [{"evidence_id": evidence_id, "role": "prov:primarySource"}],
+        "provenance": {"producer": "urn:foi-process:alaveteli-metadata-adapter", "producer_version": "0.1.0", "parameters": {"input_sha256": envelope["source_response_sha256"]}},
         "privacy": {"sensitivity": "public", "access_tier": "public", "disposition": "needs_review", "human_reviewed": False},
         "attributes": {"native_state": envelope["described_state"], "source_url": envelope["deployment_url"]},
     }
