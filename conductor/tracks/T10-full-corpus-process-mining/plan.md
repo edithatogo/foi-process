@@ -1,5 +1,8 @@
 # Plan: Full-corpus ingestion, mining, and static dashboard
 
+Status: acceptance verified; publication and jurisdiction modelling remain
+separate gates.
+
 ## Phase 1: Cross-repository contract acceptance
 
 - [ ] Task: Pin the `fyi-cli` and `fyi-archive` contract versions and golden fixtures.

@@ -39,6 +39,10 @@ tracks:
   slug: simulation-research-adoption
   status: repository_implemented_publication_pending
   owner: kairos/rulesandprocesses/sourceright
+- id: T10
+  slug: full-corpus-process-mining
+  status: acceptance_verified
+  owner: foi-process/fyi-archive/fyi-cli
 - id: T11
   slug: jurisdiction-case-process-modelling
   status: planned
