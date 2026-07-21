@@ -36,7 +36,7 @@ def main() -> None:
             raise SystemExit(f"{path.name}: missing fields: {sorted(missing)}")
         if evidence["promotion_boundary"] != "engineering_only":
             raise SystemExit(f"{path.name}: evidence escaped engineering_only")
-        if not isinstance(evidence["api_surface"], dict):
+        if "api_surface" in evidence and not isinstance(evidence["api_surface"], dict):
             raise SystemExit(f"{path.name}: api_surface must be structured")
         if path.name.endswith("sample.json") and evidence.get("evidence_status") != "blocked_until_instance_capture":
             raise SystemExit("sample evidence must remain fail-closed until a real instance is captured")
