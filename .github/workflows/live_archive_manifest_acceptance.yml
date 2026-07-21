@@ -45,6 +45,31 @@ jobs:
             fyi-archive-manifest-to-deltas "$manifest" "$repeat" \
             --captured-at "$captured_at"
           python - <<'PY'
+          from pathlib import Path
+
+          rows = Path("target/live-archive-acceptance/evidence-deltas.ndjson").read_text(encoding="utf-8").splitlines()
+          midpoint = len(rows) // 2
+          root = Path("target/live-archive-acceptance")
+          (root / "deltas-first.ndjson").write_text("\n".join(rows[:midpoint]) + "\n", encoding="utf-8")
+          (root / "deltas-second.ndjson").write_text("\n".join(rows[midpoint:]) + "\n", encoding="utf-8")
+          if midpoint < 1 or midpoint >= len(rows):
+              raise SystemExit("delta stream is too small for continuation split")
+          PY
+          processed_at="2026-07-21T00:00:00Z"
+          cargo run --locked --release --bin foi-process -- \
+            replay-stream "$deltas" target/live-archive-acceptance/full \
+            --processed-at "$processed_at" \
+            --state-out target/live-archive-acceptance/full-snapshot.json
+          cargo run --locked --release --bin foi-process -- \
+            replay-stream target/live-archive-acceptance/deltas-first.ndjson target/live-archive-acceptance/incremental-first \
+            --processed-at "$processed_at" \
+            --state-out target/live-archive-acceptance/incremental-first-snapshot.json
+          cargo run --locked --release --bin foi-process -- \
+            replay-stream target/live-archive-acceptance/deltas-second.ndjson target/live-archive-acceptance/incremental-second \
+            --processed-at "$processed_at" \
+            --state-in target/live-archive-acceptance/incremental-first-snapshot.json \
+            --state-out target/live-archive-acceptance/incremental-final-snapshot.json
+          python - <<'PY'
           import hashlib
           import json
           from pathlib import Path
@@ -65,10 +90,22 @@ jobs:
           second = hashlib.sha256((root / "evidence-deltas-repeat.ndjson").read_bytes()).hexdigest()
           if first != second:
               raise SystemExit("adapter output hash was not stable")
+          def canonical_hash(path: Path) -> str:
+              value = json.loads(path.read_text(encoding="utf-8"))
+              canonical = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
+              return hashlib.sha256(canonical).hexdigest()
+
+          full_hash = canonical_hash(root / "full-snapshot.json")
+          incremental_hash = canonical_hash(root / "incremental-final-snapshot.json")
+          if full_hash != incremental_hash:
+              raise SystemExit("full replay and incremental continuation snapshots differ")
           evidence = {
               "manifest_sha256": hashlib.sha256((root / "manifest.json").read_bytes()).hexdigest(),
               "event_delta_sha256": first,
               "record_count": declared,
+              "full_replay_snapshot_sha256": full_hash,
+              "incremental_replay_snapshot_sha256": incremental_hash,
+              "replay_continuation_equal": True,
               "adapter": "foi-process fyi-archive-manifest-to-deltas",
               "raw_content_retained": False,
           }
@@ -78,6 +115,14 @@ jobs:
           (root / "manifest.json").unlink()
           (root / "evidence-deltas.ndjson").unlink()
           (root / "evidence-deltas-repeat.ndjson").unlink()
+          (root / "deltas-first.ndjson").unlink()
+          (root / "deltas-second.ndjson").unlink()
+          for path in (root / "full", root / "incremental-first", root / "incremental-second"):
+              import shutil
+              shutil.rmtree(path)
+          (root / "full-snapshot.json").unlink()
+          (root / "incremental-first-snapshot.json").unlink()
+          (root / "incremental-final-snapshot.json").unlink()
           PY
       - name: Upload redacted acceptance evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
