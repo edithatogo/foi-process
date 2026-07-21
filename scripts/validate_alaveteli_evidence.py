@@ -22,10 +22,16 @@ def main() -> None:
     paths = [
         ROOT / "examples" / "input" / "alaveteli-deployment-evidence.sample.json",
         ROOT / "examples" / "input" / "alaveteli-deployment-evidence.asktheeu.json",
+        ROOT / "examples" / "input" / "alaveteli-request-evidence.asktheeu.json",
     ]
     for path in paths:
         evidence = json.loads(path.read_text(encoding="utf-8"))
-        missing = REQUIRED - evidence.keys()
+        required = {
+            "deployment_url", "promotion_boundary", "raw_content_retained",
+        } if "request_url" in evidence else REQUIRED
+        if "request_url" in evidence:
+            required |= {"request_url", "request_id", "response_status", "response_sha256", "evidence_status"}
+        missing = required - evidence.keys()
         if missing:
             raise SystemExit(f"{path.name}: missing fields: {sorted(missing)}")
         if evidence["promotion_boundary"] != "engineering_only":
