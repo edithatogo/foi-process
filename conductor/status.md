@@ -18,6 +18,22 @@
 
 ## Remaining promotion gates
 
+### Cross-repository reconciliation — 2026-07-22
+
+- fyi-archive historical-source run
+  [29908248734](https://github.com/edithatogo/fyi-archive/actions/runs/29908248734)
+  produced 4,997 distinct Internet Archive candidates. All were classified as
+  `archive_only_candidate` against the 33,217-record public HF manifest; none
+  was treated as a live capture.
+- fyi-archive controller run
+  [29908342309](https://github.com/edithatogo/fyi-archive/actions/runs/29908342309)
+  found no pending batches because the persisted NZ horizon is complete through
+  request ID 250,000. Its retained state reports 3,074 merged batches and
+  33,244 captured records.
+- These figures are operational provenance only. They do not update the public
+  HF dataset or authorize publication of production-derived events, attachments,
+  OCR, embeddings, or unrestricted NLP outputs.
+
 - `cargo fmt`, `clippy`, `test`, `doc`, Rust4PM feature compilation, and `Cargo.lock` generation on Rust 1.88+
 - Production publication remains blocked by explicit gate; non-publication technical review is complete
 - Scale beyond the four-request live continuation evidence only if operational monitoring requires it
