@@ -14,10 +14,12 @@ acceptance, DOI resolution, and publication remain evidence-gated.
 - [x] Link the parent issue and native subissues to this Conductor track.
 - [x] Define the event-log release manifest, checksums, schema, provenance,
   rights, and source-order requirements in repository documentation.
-- [ ] Validate the release bundle against the current fyi-archive snapshot.
-- [ ] Complete Hugging Face dataset metadata and Croissant evidence for the
-  exact released files.
-- [ ] Prepare the Zenodo/DataCite metadata payload and immutable digest record.
+- [x] Validate the generated release bundle and derive registry metadata from
+  its manifest.
+- [x] Generate Hugging Face dataset metadata and Croissant evidence for the
+  exact bundle files.
+- [x] Prepare a draft Zenodo/DataCite metadata payload tied to the manifest
+  digest; external deposit and identifier resolution remain pending.
 - [ ] Record external submission, acceptance, and identifier evidence when
   available; leave the relevant issues open until then.
 
