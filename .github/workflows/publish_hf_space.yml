@@ -53,7 +53,8 @@ jobs:
             space/public/data/dashboard-data.json
       - name: Install Hugging Face CLI
         if: ${{ inputs.publish }}
-        run: python -m pip install --disable-pip-version-check --require-hashes -r requirements-hf-publish.txt
+        run: python -m pip install --disable-pip-version-check click==8.2.1
+          python -m pip install --disable-pip-version-check --require-hashes -r requirements-hf-publish.txt
       - name: Enforce approved Hugging Face destination
         if: ${{ inputs.publish }}
         env:
