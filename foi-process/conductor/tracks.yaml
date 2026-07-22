@@ -1,15 +1,15 @@
 tracks:
 - id: T00
   slug: contract-and-promotion
-  status: implementation_candidate
+  status: acceptance_verified
   owner: foi-process/foi-o/fyi-cli
 - id: T01
   slug: deterministic-replay
-  status: implementation_candidate
+  status: acceptance_verified
   owner: foi-process
 - id: T02
   slug: rust4pm-ocel-mining
-  status: adapter_implemented
+  status: acceptance_verified
   owner: foi-process/rust4pm
 - id: T03
   slug: archive-live-adapters
@@ -17,15 +17,15 @@ tracks:
   owner: fyi-archive/fyi-cli/foi-process
 - id: T04
   slug: document-ocr-signals
-  status: contracts_implemented
+  status: acceptance_verified
   owner: fe-reader/nlp-policy-nz
 - id: T05
   slug: conformance-rules
-  status: trace_fixture_implemented
+  status: statutory_review_complete_external_promotion_pending
   owner: foi-o/axiom-rules-engine/rulespec-nz
 - id: T06
   slug: privacy-publication
-  status: projection_implemented
+  status: acceptance_verified_publication_pending
   owner: foi-process/foi-o/propel
 - id: T07
   slug: dashboard-propel-hf
@@ -33,9 +33,13 @@ tracks:
   owner: propel/foi-process
 - id: T08
   slug: scale-release-governance
-  status: synthetic_scale_and_release_evidence_implemented
+  status: release_evidence_verified_full_corpus_optional
   owner: foi-process/fyi-archive
 - id: T09
   slug: simulation-research-adoption
   status: repository_implemented_publication_pending
   owner: kairos/rulesandprocesses/sourceright
+- id: T10
+  slug: event-log-registry-readiness
+  status: repository_contract_ready_external_registry_evidence_pending
+  owner: foi-process/fyi-archive
