@@ -51,7 +51,7 @@ jobs:
           npm run build
       - name: Enforce dashboard budget
         run: python scripts/check_hf_space_budget.py --dist space/dist --dashboard-data space/public/data/dashboard-data.json
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: space/dist
       - name: Deploy to GitHub Pages
