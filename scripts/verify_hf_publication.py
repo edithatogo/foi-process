@@ -15,6 +15,9 @@ from pathlib import Path
 from typing import Any
 
 
+REGISTRY_AUXILIARY_FILES = {"registry/croissant.json", "registry/datacite-draft.json"}
+
+
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -102,7 +105,10 @@ def verify_dataset(repo_id: str, expected_bundle: Path, output: Path) -> None:
         missing = sorted(required - siblings)
         if missing:
             raise ValueError(f"dataset repository listing is incomplete: {missing}")
-        unexpected = sorted(siblings - required - {".gitattributes"})
+        missing_registry = sorted(REGISTRY_AUXILIARY_FILES - siblings)
+        if missing_registry:
+            raise ValueError(f"dataset repository is missing registry metadata: {missing_registry}")
+        unexpected = sorted(siblings - required - REGISTRY_AUXILIARY_FILES - {".gitattributes"})
         if unexpected:
             raise ValueError(f"dataset repository contains unlisted files: {unexpected}")
         write_attestation(
