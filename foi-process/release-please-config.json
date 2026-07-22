@@ -1,0 +1,12 @@
+{
+  "release-type": "rust",
+  "include-v-in-tag": true,
+  "packages": {
+    ".": {
+      "package-name": "foi-process",
+      "release-type": "rust",
+      "changelog-path": "CHANGELOG.md",
+      "include-component-in-tag": false
+    }
+  }
+}
