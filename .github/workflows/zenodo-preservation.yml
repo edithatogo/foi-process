@@ -26,7 +26,7 @@ jobs:
             --token "$ZENODO_TOKEN" \
             --release-tag "$RELEASE_TAG" \
             --output zenodo-evidence.json
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v7.0.1
         with:
           name: zenodo-preservation-evidence
           path: zenodo-evidence.json
