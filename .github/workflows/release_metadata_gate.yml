@@ -1,0 +1,47 @@
+name: Release Metadata Gate
+
+on:
+  push:
+    tags:
+      - "v[0-9]*.[0-9]*.[0-9]*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to validate
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+      APPROVED_TAGGER_EMAIL: ${{ vars.RELEASE_TAGGER_EMAIL }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.tag || github.ref }}
+          persist-credentials: false
+      - name: Validate exact annotated tag and signature
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]
+          test "$(git cat-file -t "$RELEASE_TAG")" = tag
+          test "$(git rev-parse HEAD)" = "$(git rev-list -n 1 "$RELEASE_TAG")"
+          remote_tag_oid="$(git ls-remote --exit-code --tags origin "refs/tags/$RELEASE_TAG" | cut -f1)"
+          test "$remote_tag_oid" = "$(git rev-parse "$RELEASE_TAG")"
+          test -n "$APPROVED_TAGGER_EMAIL"
+          gh api "repos/${GITHUB_REPOSITORY}/git/tags/$remote_tag_oid" > /tmp/tag-verification.json
+          jq -e '.verification.verified == true' /tmp/tag-verification.json >/dev/null
+          test "$(jq -r '.tagger.email' /tmp/tag-verification.json)" = "$APPROVED_TAGGER_EMAIL"
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.13"
+      - name: Validate repository release metadata
+        run: python scripts/check_release_metadata.py "$RELEASE_TAG"
