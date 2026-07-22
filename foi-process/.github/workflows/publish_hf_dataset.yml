@@ -20,15 +20,20 @@ jobs:
   dataset:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.13"
       - name: Build public-safe fixture dataset
         run: python scripts/build_hf_dataset.py --output /tmp/foi-process-event-logs
+      - name: Build registry metadata
+        run: |
+          python scripts/build_registry_metadata.py \
+            --bundle /tmp/foi-process-event-logs \
+            --output /tmp/registry-metadata
       - name: Verify manifest and JSON Lines
         run: python scripts/verify_hf_publication.py local --bundle /tmp/foi-process-event-logs
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: foi-process-event-logs
           path: /tmp/foi-process-event-logs
@@ -45,6 +50,8 @@ jobs:
           hf repo create "$REPO_ID" --repo-type dataset --exist-ok
           hf upload "$REPO_ID" /tmp/foi-process-event-logs . --repo-type dataset \
             --commit-message "Publish reviewed foi-process fixture event logs"
+          hf upload "$REPO_ID" /tmp/registry-metadata registry --repo-type dataset \
+            --commit-message "Publish registry metadata for reviewed event logs"
       - name: Verify published dataset revision
         if: ${{ inputs.publish }}
         env:
@@ -55,7 +62,7 @@ jobs:
             --repo-id "$REPO_ID" \
             --bundle /tmp/foi-process-event-logs \
             --output /tmp/hf-dataset-publication-attestation.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: ${{ inputs.publish }}
         with:
           name: hf-dataset-publication-attestation
