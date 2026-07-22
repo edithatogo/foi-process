@@ -6,7 +6,7 @@ on:
       space_id:
         description: Hugging Face Space repository
         required: true
-        default: edithatogo/foi-process-explorer
+        default: edithatogo/foi-process-explorer-free
       publish:
         description: Upload the validated pre-built Static Space to Hugging Face
         required: true
@@ -61,7 +61,7 @@ jobs:
           SPACE_ID: ${{ inputs.space_id }}
         run: |
           case "$SPACE_ID" in
-            edithatogo/foi-process-explorer|edithatogo/foi-process-explorer-free) ;;
+            edithatogo/foi-process-explorer-free) ;;
             *)
             echo "Refusing unapproved Hugging Face Space destination: $SPACE_ID";
             exit 1;
