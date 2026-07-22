@@ -1,4 +1,4 @@
-# Status — 2026-07-15
+# Status — 2026-07-22
 
 ## Implemented in workpack
 
@@ -15,11 +15,29 @@
 - Reviewed Hugging Face event-log Dataset bundle and checksum-verified free GitHub Pages dashboard
 - Repeated 1k/10k/200k Rust benchmark, tested Parquet partition contract, and checksummed SPDX/mining release evidence
 
+## Acceptance state
+
+The repository implementation and the production-shaped integration path are
+accepted against the evidence recorded in `foi-process` issue #9 and the
+linked governance artefacts. The remaining unchecked items are intentionally
+outside the non-publication implementation gate:
+
+- Axiom/RuleSpec vocabulary promotion requires the owning external repositories.
+- Production publication and authenticated Hub/Dataset Viewer verification remain
+  explicitly deferred.
+- The fyi-archive controller has completed its configured NZ ID horizon through
+  250,000: 3,074 batches merged and 33,244 captured records in persisted
+  controller state. This is operational evidence, not permission to publish
+  production-derived projections.
+
 ## Mandatory pre-merge gates
 
 - `cargo fmt`, `clippy`, `test`, `doc`, Rust4PM feature compilation, and `Cargo.lock` generation on Rust 1.88+
-- Real `fyi-archive` sample adapter
+- Real `fyi-archive` sample adapter (completed; see issue #9 and T03 evidence)
 - Generated-schema reconciliation
 - privacy review and representative live-archive benchmark
 - authenticated Hub publication and public Dataset Viewer/Space verification
-- hosted release-evidence publication and artifact attestation
+  (publication-only, deferred)
+- hosted release-evidence publication and artifact attestation (completed for
+  the accepted synthetic/representative path; full-corpus public attestation
+  remains deferred)
