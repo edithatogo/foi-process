@@ -92,6 +92,6 @@ fail-closed publication boundary are documented in `docs/hugging-face-space.md`.
   GitHub Pages remains an independent fallback. No PRO
   plan, credits, Docker, Gradio, GPU, or ZeroGPU is required by this project.
 
-Scale and release governance are executable rather than advisory: the repeated Rust benchmark,
+Optional recurring full-corpus work is governed by `docs/optional-full-corpus-operations.md`; it is a zero-cost, public-safe operational path, not a publication prerequisite.`r`n`r`nScale and release governance are executable rather than advisory: the repeated Rust benchmark,
 tested Parquet partition contract, SPDX SBOM, mining provenance, checksummed release package, and
 verification commands are documented in `docs/scale-benchmark.md` and `docs/release-evidence.md`.
