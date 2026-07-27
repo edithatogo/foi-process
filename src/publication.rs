@@ -78,6 +78,11 @@ pub fn project_public(bundle: &NormalizedBundle, policy: &PublicationPolicy) -> 
         .iter()
         .map(|record| (record.evidence_id.clone(), record))
         .collect();
+    let objects: BTreeMap<_, _> = bundle
+        .objects
+        .iter()
+        .map(|record| (record.object_id.clone(), record))
+        .collect();
     let mut output = PublicProjection {
         policy_id: policy.policy_id.clone(),
         events: Vec::new(),
@@ -86,6 +91,14 @@ pub fn project_public(bundle: &NormalizedBundle, policy: &PublicationPolicy) -> 
     };
 
     for event in materialize_events(&bundle.events) {
+        let linked_object_withheld = event.objects.iter().any(|link| {
+            objects.get(&link.object_id).is_some_and(|object| {
+                matches!(
+                    object.privacy.disposition,
+                    PublicationDisposition::Withhold | PublicationDisposition::NeedsReview
+                )
+            })
+        });
         match event.privacy.disposition {
             PublicationDisposition::Withhold | PublicationDisposition::NeedsReview => {
                 output.withheld_event_count += 1;
@@ -100,6 +113,7 @@ pub fn project_public(bundle: &NormalizedBundle, policy: &PublicationPolicy) -> 
             PublicationDisposition::Publish => {
                 if event.privacy.sensitivity != SensitivityClass::Public
                     || event.privacy.access_tier != AccessTier::Public
+                    || linked_object_withheld
                 {
                     output.withheld_event_count += 1;
                     continue;

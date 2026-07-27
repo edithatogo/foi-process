@@ -12,6 +12,29 @@ fn generated_contract_fixtures_round_trip() {
 
     let document: DocumentBundle =
         serde_json::from_str(include_str!("../examples/generated/document-bundle.json")).unwrap();
+    let born_digital: DocumentBundle = serde_json::from_str(include_str!(
+        "../examples/generated/document-bundle-born-digital.json"
+    ))
+    .unwrap();
+    assert_eq!(
+        born_digital.pages[0].extraction_method,
+        ExtractionMethod::BornDigital
+    );
+    assert_eq!(
+        born_digital.attributes["ocr_required"],
+        serde_json::json!(false)
+    );
+    let signal: DocumentSignal =
+        serde_json::from_str(include_str!("../examples/generated/document-signal.json")).unwrap();
+    assert_eq!(signal.assertion_status, AssertionStatus::Candidate);
+    assert_eq!(signal.document_id, document.document_id);
+    assert!(!signal.evidence.is_empty());
+    assert!(signal.evidence.iter().all(|evidence| {
+        matches!(
+            evidence.selector,
+            Some(EvidenceSelector::BoundingBox { ref bbox }) if bbox.page == 1
+        )
+    }));
     assert_eq!(document.pages.len(), 1);
 
     let signal: DocumentSignal =
@@ -56,6 +79,21 @@ fn public_projection_does_not_publish_metadata_only_evidence() {
         .unwrap();
     assert!(closed.evidence.is_empty());
     assert_eq!(projection.metadata_only_event_count, 1);
+}
+
+#[test]
+fn public_projection_withholds_events_linked_to_removed_objects() {
+    let mut bundle: NormalizedBundle =
+        serde_json::from_str(include_str!("../examples/generated/normalized-bundle.json")).unwrap();
+    bundle.objects[0].privacy.disposition = PublicationDisposition::Withhold;
+    let projection = project_public(&bundle, &PublicationPolicy::dashboard_default());
+    assert_eq!(projection.events.len(), 1);
+    assert_eq!(projection.metadata_only_event_count, 1);
+    assert_eq!(projection.withheld_event_count, 3);
+    assert_eq!(
+        projection.events[0].activity.as_str(),
+        "foio:ClosedObserved"
+    );
 }
 
 #[test]
