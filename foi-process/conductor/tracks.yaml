@@ -29,7 +29,7 @@ tracks:
   owner: foi-process/foi-o/propel
 - id: T07
   slug: dashboard-propel-hf
-  status: repository_built_publication_pending
+  status: dataset_deposited_pages_deployed_external_attestation_pending
   owner: propel/foi-process
 - id: T08
   slug: scale-release-governance
@@ -41,5 +41,5 @@ tracks:
   owner: kairos/rulesandprocesses/sourceright
 - id: T10
   slug: event-log-registry-readiness
-  status: repository_contract_ready_external_registry_evidence_pending
+  status: repository_metadata_ready_external_registry_evidence_pending
   owner: foi-process/fyi-archive

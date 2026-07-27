@@ -6,8 +6,8 @@ Subissues: `#64` (Zenodo/DataCite), `#65` (Hugging Face metadata/Croissant)
 ## Objective
 
 Prepare authoritative, reproducible registry evidence for the versioned event
-log release. This track coordinates repository work only; external submission,
-acceptance, DOI resolution, and publication remain evidence-gated.
+log release. Repository metadata preparation is complete. External submission,
+acceptance, DOI resolution, and publication remain evidence-gated in #63-#65.
 
 ## Plan
 
@@ -20,8 +20,8 @@ acceptance, DOI resolution, and publication remain evidence-gated.
   exact bundle files.
 - [x] Prepare a draft Zenodo/DataCite metadata payload tied to the manifest
   digest; external deposit and identifier resolution remain pending.
-- [ ] Record external submission, acceptance, and identifier evidence when
-  available; leave the relevant issues open until then.
+- [ ] Record authoritative external submission, acceptance, and identifier
+  evidence when available; leave #63-#65 open until then.
 
 ## Evidence rules
 

@@ -9,6 +9,7 @@
 | T04 | Document/OCR/NLP signals | first real PDF bundle |
 | T05 | FOI-O/Axiom conformance | OIA deadline golden fixtures |
 | T06 | Privacy/publication | human-reviewed publication policy |
-| T07 | Propel/Hugging Face interface | authenticated Dataset/Static Space publication |
+| T07 | Propel/Hugging Face interface | revision-pinned Dataset Viewer and deployed dashboard attestation (#9) |
 | T08 | Scale/release/governance | live-archive rerun + hosted artifact attestation |
 | T09 | Kairos/research/adoption | synthetic OCEL and adoption evidence |
+| T10 | Event-log registry readiness | Zenodo/DataCite and Hugging Face/Croissant external evidence (#63-#65) |

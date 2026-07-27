@@ -42,18 +42,18 @@ artefacts:
   HuggingFaceEventLogDataset:
     incubator: foi-process
     destination: huggingface_dataset
-    status: repository_built
-    gate: hf_authentication_and_dataset_viewer_verification
+    status: deposited_external_viewer_verification_pending
+    gate: revision_pinned_dataset_viewer_attestation
   HuggingFaceProcessExplorer:
     incubator: foi-process
-    destination: huggingface_static_space
-    status: repository_built
-    gate: hf_authentication_and_public_space_verification
+    destination: github_pages_dashboard
+    status: deployed_external_dashboard_verification_pending
+    gate: revision_pinned_pages_attestation
   RustScaleBenchmark:
     incubator: foi-process
     destination: release_evidence
-    status: synthetic_full_scale_verified
-    gate: representative_live_archive_rerun
+    status: representative_live_archive_verified
+    gate: optional_recurring_full_corpus_operation
   ParquetPartitionContract:
     incubator: foi-process
     destination: fyi-archive_and_foi-process
@@ -62,5 +62,5 @@ artefacts:
   ReleaseEvidencePackage:
     incubator: foi-process
     destination: github_release
-    status: locally_verified
-    gate: hosted_artifact_attestation
+    status: hosted_artifact_attested
+    gate: optional_full_corpus_public_attestation
