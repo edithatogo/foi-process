@@ -109,3 +109,23 @@ impl TemporalInstant {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_timestamp_parse_error() {
+        let invalid_timestamps = vec![
+            "",
+            "invalid-timestamp",
+            "2023-10-25T12:00:00", // Missing offset
+            "2023-13-25T12:00:00Z", // Invalid month
+        ];
+
+        for timestamp in invalid_timestamps {
+            let result = Timestamp::parse(timestamp);
+            assert_eq!(result.unwrap_err(), TimestampError);
+        }
+    }
+}
