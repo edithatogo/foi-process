@@ -1,0 +1,84 @@
+name: publish bounded real release
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish the bounded real dataset and dashboard to the allowlisted free Hugging Face targets
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    if: ${{ inputs.publish == true }}
+    runs-on: ubuntu-latest
+    env:
+      DATASET_ID: edithatogo/foi-process-event-logs-bounded
+      SPACE_ID: edithatogo/foi-process-explorer-bounded-free
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.13"
+      - name: Verify bounded release scope and checksums
+        run: |
+          set -euo pipefail
+          test -n "${HF_TOKEN:-}"
+          test "$(jq -r .classification data/bounded-real-release-150-200/manifest.json)" = public-derived-bounded
+          test "$(jq -r .event_log_complete data/bounded-real-release-150-200/manifest.json)" = false
+          test "$(jq -r .publication data/bounded-real-release-150-200/manifest.json)" = not-submitted
+          (cd data/bounded-real-release-150-200 && sha256sum -c SHA256SUMS)
+      - name: Install pinned Hugging Face client
+        run: python -m pip install --disable-pip-version-check --require-hashes -r requirements-hf-publish.txt
+      - name: Upload bounded dataset
+        run: |
+          python - <<'PY'
+          import os
+          from huggingface_hub import HfApi
+          api = HfApi(token=os.environ["HF_TOKEN"])
+          api.create_repo(repo_id=os.environ["DATASET_ID"], repo_type="dataset", exist_ok=True)
+          api.upload_folder(repo_id=os.environ["DATASET_ID"], repo_type="dataset",
+                            folder_path="data/bounded-real-release-150-200", path_in_repo=".",
+                            delete_patterns=["*"], commit_message="Publish bounded real FOI process release")
+          PY
+      - name: Build bounded dashboard site
+        run: |
+          mkdir -p /tmp/bounded-space
+          cp data/bounded-real-release-150-200/dashboard.json /tmp/bounded-space/dashboard.json
+          cat > /tmp/bounded-space/index.html <<'EOF'
+          <!doctype html>
+          <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FOI Process bounded real release</title>
+          <style>body{font:16px system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#24312b}header{border-bottom:1px solid #dfe5e1;margin-bottom:1rem}code{overflow-wrap:anywhere}.metrics{display:flex;gap:1rem;flex-wrap:wrap}.metric{border:1px solid #dfe5e1;padding:1rem;min-width:130px}.metric strong{display:block;font-size:1.6rem}table{border-collapse:collapse;width:100%}th,td{text-align:left;border-bottom:1px solid #dfe5e1;padding:.5rem}</style></head>
+          <body><header><h1>FOI Process Explorer</h1><p>Bounded real release: verified batches 150, 175, and 200. This is not a full-corpus representation.</p></header><main id="app"><p>Loading verified release...</p></main>
+          <script>fetch('dashboard.json').then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(d=>{const m=d.metrics;document.querySelector('#app').innerHTML='<p><b>Scope:</b> '+d.meta.scope+'</p><p><b>Manifest SHA-256:</b> <code>'+d.meta.manifest_sha256+'</code></p><div class="metrics">'+[['Requests',m.case_count],['Events',m.active_event_count],['Attachments',m.attachment_count],['Batches',m.batch_count]].map(x=>'<div class="metric"><span>'+x[0]+'</span><strong>'+x[1]+'</strong></div>').join('')+'</div><h2>Activities</h2><table><thead><tr><th>Activity</th><th>Count</th></tr></thead><tbody>'+d.activities.map(x=>'<tr><td>'+x.activity+'</td><td>'+x.count+'</td></tr>').join('')+'</tbody></table>'}).catch(e=>document.querySelector('#app').innerHTML='<p role="alert">Dashboard data unavailable: '+e.message+'</p>');</script></body></html>
+          EOF
+          cat > /tmp/bounded-space/README.md <<'EOF'
+          ---
+          title: FOI Process Explorer bounded real release
+          sdk: static
+          ---
+
+          # Bounded real release
+
+          This dashboard covers only verified real batches 150, 175, and 200.
+          It is not a full-corpus representation. Source-derived rights remain
+          separate from the Apache-2.0 repository code licence.
+          EOF
+      - name: Upload bounded dashboard
+        run: |
+          python - <<'PY'
+          import os
+          from huggingface_hub import HfApi
+          api = HfApi(token=os.environ["HF_TOKEN"])
+          api.create_repo(repo_id=os.environ["SPACE_ID"], repo_type="space", space_sdk="static", exist_ok=True)
+          api.upload_folder(repo_id=os.environ["SPACE_ID"], repo_type="space",
+                            folder_path="/tmp/bounded-space", path_in_repo=".",
+                            delete_patterns=["*"], commit_message="Publish bounded real dashboard")
+          PY

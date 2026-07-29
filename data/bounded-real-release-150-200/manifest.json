@@ -1,0 +1,143 @@
+{
+  "attachment_count": 179,
+  "batch_count": 3,
+  "batches": [
+    {
+      "coverage": {
+        "attachment_count": 34,
+        "attachment_count_reconciles": true,
+        "case_count": 25,
+        "contract_version": "1.0.0",
+        "event_count": 98,
+        "excluded_event_count": 0,
+        "manifest_attachment_count": 34,
+        "manifest_dry_run_request_count": 0,
+        "manifest_request_count": 25,
+        "request_count_reconciles": true,
+        "require_live_manifest": true,
+        "retracted_event_count": 0,
+        "snapshot_revision": "nz-real-backfill-150",
+        "source_events": [
+          "dist/process-events/events.jsonl"
+        ],
+        "source_reconciliation": {
+          "candidate_count": 0,
+          "counts": {},
+          "schema": null
+        },
+        "takedown_ids": []
+      },
+      "evidence": {
+        "attachments_sha256": "ed3727012cf231b41a634eb80a5fd77c6a131ce32f8e28a8d21c14091e291ceb",
+        "batch_size": 25,
+        "dry_run": false,
+        "events_sha256": "a50134808652d4ee2c2168b3b9dc82e7a8f185ecd9a94d4bf4d5a09b4ea57346",
+        "generated_at": "2026-07-28T23:16:03.897255+00:00",
+        "manifest_sha256": "31da002e1ac1d2ff507a0f03811d1d3fe553db51984af64ca282853c73715b51",
+        "publication": "none",
+        "schema": "fyi-archive.nz-real-backfill-batch.v1",
+        "source_run_id": "30395825959",
+        "start_offset": 150
+      }
+    },
+    {
+      "coverage": {
+        "attachment_count": 71,
+        "attachment_count_reconciles": true,
+        "case_count": 25,
+        "contract_version": "1.0.0",
+        "event_count": 142,
+        "excluded_event_count": 0,
+        "manifest_attachment_count": 71,
+        "manifest_dry_run_request_count": 0,
+        "manifest_request_count": 25,
+        "request_count_reconciles": true,
+        "require_live_manifest": true,
+        "retracted_event_count": 0,
+        "snapshot_revision": "nz-real-backfill-175",
+        "source_events": [
+          "dist/process-events/events.jsonl"
+        ],
+        "source_reconciliation": {
+          "candidate_count": 0,
+          "counts": {},
+          "schema": null
+        },
+        "takedown_ids": []
+      },
+      "evidence": {
+        "attachments_sha256": "ab21ca356f78d31699a0cb4e99f3355bf77a53f5424bdc786c1e96842457b615",
+        "batch_size": 25,
+        "dry_run": false,
+        "events_sha256": "d77a07a145630310e0e0d33169151b43c3d3809cade5c6410cd62426e3d43fd5",
+        "generated_at": "2026-07-29T00:49:08.002163+00:00",
+        "manifest_sha256": "3684761f5d49ed7e00d9bae7fc2fb0676972ebd05d04e076e091377abdae25d3",
+        "publication": "none",
+        "schema": "fyi-archive.nz-real-backfill-batch.v1",
+        "source_run_id": "30395825959",
+        "start_offset": 175
+      }
+    },
+    {
+      "coverage": {
+        "attachment_count": 74,
+        "attachment_count_reconciles": true,
+        "case_count": 25,
+        "contract_version": "1.0.0",
+        "event_count": 185,
+        "excluded_event_count": 0,
+        "manifest_attachment_count": 74,
+        "manifest_dry_run_request_count": 0,
+        "manifest_request_count": 25,
+        "request_count_reconciles": true,
+        "require_live_manifest": true,
+        "retracted_event_count": 0,
+        "snapshot_revision": "nz-real-backfill-200",
+        "source_events": [
+          "dist/process-events/events.jsonl"
+        ],
+        "source_reconciliation": {
+          "candidate_count": 0,
+          "counts": {},
+          "schema": null
+        },
+        "takedown_ids": []
+      },
+      "evidence": {
+        "attachments_sha256": "72d0babcfb8bf12ddfb35f82bdf739554a2ca32f4446fc3176bad7577de81af0",
+        "batch_size": 25,
+        "dry_run": false,
+        "events_sha256": "748bfcafc2f52eb6ccbe1d32a3e248a7ed9eaefe246c263e16fc3b1fa8c5d7cc",
+        "generated_at": "2026-07-29T00:54:03.159169+00:00",
+        "manifest_sha256": "7c5f142e242ba667bd036e57638d7788753f2459880dbc614c4f0a282396d0e4",
+        "publication": "none",
+        "schema": "fyi-archive.nz-real-backfill-batch.v1",
+        "source_run_id": "30395825959",
+        "start_offset": 200
+      }
+    }
+  ],
+  "classification": "public-derived-bounded",
+  "code_license": "Apache-2.0",
+  "dataset_id": "edithatogo/foi-process-event-logs",
+  "event_count": 425,
+  "event_log_complete": false,
+  "files": [
+    {
+      "byte_length": 123096,
+      "path": "attachments.jsonl",
+      "sha256": "133dd4c0c10260592ff7e828211a9036f310d7c266db01964cf807f2710a1a4d"
+    },
+    {
+      "byte_length": 248106,
+      "path": "event_log.jsonl",
+      "sha256": "3fc5ab36f9f914cdadb54565a00233d8afd1382a5e197b8ee68217df67e1e6a4"
+    }
+  ],
+  "publication": "not-submitted",
+  "request_count": 75,
+  "schema": "foi-process.bounded-real-release.v1",
+  "scope": "verified real batches only; not full corpus",
+  "source_release": "nz-real-batches-150-200",
+  "source_rights": "retain source-declared rights; review before external deposit"
+}
