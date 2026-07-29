@@ -1,0 +1,484 @@
+{
+  "activities": [
+    {
+      "activity": "comment",
+      "count": 13
+    },
+    {
+      "activity": "destroy_incoming",
+      "count": 3
+    },
+    {
+      "activity": "edit",
+      "count": 1
+    },
+    {
+      "activity": "edit_comment",
+      "count": 1
+    },
+    {
+      "activity": "followup_sent",
+      "count": 36
+    },
+    {
+      "activity": "resent",
+      "count": 1
+    },
+    {
+      "activity": "response",
+      "count": 185
+    },
+    {
+      "activity": "sent",
+      "count": 75
+    },
+    {
+      "activity": "status_update",
+      "count": 110
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10138",
+      "event_count": 1
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10139",
+      "event_count": 3
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1014",
+      "event_count": 2
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10140",
+      "event_count": 2
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10141",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10142",
+      "event_count": 3
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10143",
+      "event_count": 4
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10144",
+      "event_count": 3
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10145",
+      "event_count": 3
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10146",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10147",
+      "event_count": 1
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10148",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10149",
+      "event_count": 8
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1015",
+      "event_count": 4
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10150",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10151",
+      "event_count": 6
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10152",
+      "event_count": 1
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10153",
+      "event_count": 6
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10154",
+      "event_count": 1
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10155",
+      "event_count": 7
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10156",
+      "event_count": 3
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10157",
+      "event_count": 9
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10158",
+      "event_count": 2
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10159",
+      "event_count": 3
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1016",
+      "event_count": 6
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10160",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10161",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10162",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10163",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10164",
+      "event_count": 6
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10165",
+      "event_count": 4
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10166",
+      "event_count": 6
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10167",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10168",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10169",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1017",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10170",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10171",
+      "event_count": 10
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10172",
+      "event_count": 7
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10173",
+      "event_count": 4
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10174",
+      "event_count": 8
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10175",
+      "event_count": 6
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10176",
+      "event_count": 3
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10177",
+      "event_count": 4
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10178",
+      "event_count": 8
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10179",
+      "event_count": 4
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1018",
+      "event_count": 10
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10180",
+      "event_count": 3
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10181",
+      "event_count": 9
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10182",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10183",
+      "event_count": 4
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10184",
+      "event_count": 8
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10185",
+      "event_count": 23
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10186",
+      "event_count": 6
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10187",
+      "event_count": 28
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10188",
+      "event_count": 6
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10189",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1019",
+      "event_count": 10
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10190",
+      "event_count": 7
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10191",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10192",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10193",
+      "event_count": 6
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10194",
+      "event_count": 13
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10195",
+      "event_count": 6
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10196",
+      "event_count": 1
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10197",
+      "event_count": 5
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10198",
+      "event_count": 4
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10199",
+      "event_count": 1
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1020",
+      "event_count": 7
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10200",
+      "event_count": 2
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10201",
+      "event_count": 3
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10202",
+      "event_count": 11
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10203",
+      "event_count": 4
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10204",
+      "event_count": 7
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10205",
+      "event_count": 8
+    }
+  ],
+  "edges": [
+    {
+      "count": 1,
+      "source": "comment",
+      "target": "edit_comment"
+    },
+    {
+      "count": 1,
+      "source": "comment",
+      "target": "followup_sent"
+    },
+    {
+      "count": 2,
+      "source": "comment",
+      "target": "response"
+    },
+    {
+      "count": 2,
+      "source": "comment",
+      "target": "status_update"
+    },
+    {
+      "count": 1,
+      "source": "destroy_incoming",
+      "target": "destroy_incoming"
+    },
+    {
+      "count": 1,
+      "source": "destroy_incoming",
+      "target": "edit"
+    },
+    {
+      "count": 1,
+      "source": "destroy_incoming",
+      "target": "response"
+    },
+    {
+      "count": 2,
+      "source": "followup_sent",
+      "target": "comment"
+    },
+    {
+      "count": 3,
+      "source": "followup_sent",
+      "target": "followup_sent"
+    },
+    {
+      "count": 25,
+      "source": "followup_sent",
+      "target": "response"
+    },
+    {
+      "count": 5,
+      "source": "followup_sent",
+      "target": "status_update"
+    },
+    {
+      "count": 1,
+      "source": "resent",
+      "target": "destroy_incoming"
+    },
+    {
+      "count": 5,
+      "source": "response",
+      "target": "comment"
+    },
+    {
+      "count": 20,
+      "source": "response",
+      "target": "followup_sent"
+    },
+    {
+      "count": 46,
+      "source": "response",
+      "target": "response"
+    },
+    {
+      "count": 102,
+      "source": "response",
+      "target": "status_update"
+    },
+    {
+      "count": 2,
+      "source": "sent",
+      "target": "comment"
+    },
+    {
+      "count": 1,
+      "source": "sent",
+      "target": "followup_sent"
+    },
+    {
+      "count": 66,
+      "source": "sent",
+      "target": "response"
+    },
+    {
+      "count": 4,
+      "source": "status_update",
+      "target": "comment"
+    },
+    {
+      "count": 1,
+      "source": "status_update",
+      "target": "destroy_incoming"
+    },
+    {
+      "count": 11,
+      "source": "status_update",
+      "target": "followup_sent"
+    },
+    {
+      "count": 1,
+      "source": "status_update",
+      "target": "resent"
+    },
+    {
+      "count": 45,
+      "source": "status_update",
+      "target": "response"
+    },
+    {
+      "count": 1,
+      "source": "status_update",
+      "target": "status_update"
+    }
+  ],
+  "meta": {
+    "classification": "public-derived-bounded",
+    "dataset_id": "edithatogo/foi-process-event-logs",
+    "event_log_sha256": "3fc5ab36f9f914cdadb54565a00233d8afd1382a5e197b8ee68217df67e1e6a4",
+    "manifest_sha256": "bfaa6b24178220f74ed2d5d33b79da26d21ffdfc520f86bead6ab022d2c4f440",
+    "scope": "verified real batches only; not full corpus",
+    "source_release": "nz-real-batches-150-200"
+  },
+  "metrics": {
+    "active_event_count": 425,
+    "activity_count": 9,
+    "attachment_count": 179,
+    "batch_count": 3,
+    "case_count": 75
+  }
+}
