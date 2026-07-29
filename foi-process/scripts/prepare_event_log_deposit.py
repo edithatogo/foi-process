@@ -27,7 +27,11 @@ def sha256(path: Path) -> str:
 def load_manifest(bundle: Path) -> dict[str, Any]:
     path = bundle / "manifest.json"
     manifest = json.loads(path.read_text(encoding="utf-8"))
-    if manifest.get("classification") not in {"synthetic-fixture", "public-derived"}:
+    if manifest.get("classification") not in {
+        "synthetic-fixture",
+        "public-derived",
+        "public-derived-bounded",
+    }:
         raise ValueError("manifest classification must be explicit")
     if not manifest.get("source_release"):
         raise ValueError("manifest source_release is required")
