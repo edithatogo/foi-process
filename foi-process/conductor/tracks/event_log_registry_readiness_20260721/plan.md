@@ -22,6 +22,8 @@ acceptance, DOI resolution, and publication remain evidence-gated in #63-#65.
   digest; external deposit and identifier resolution remain pending.
 - [ ] Record authoritative external submission, acceptance, and identifier
   evidence when available; leave #63-#65 open until then.
+- [x] Record the 2026-07-29 bounded-release scope decision; full-corpus
+  evidence is explicitly deferred rather than inferred from archive discovery.
 
 ## Evidence rules
 

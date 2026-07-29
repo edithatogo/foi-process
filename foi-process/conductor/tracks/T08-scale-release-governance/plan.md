@@ -5,9 +5,11 @@
 - [x] SBOM/checksum/mining manifest release-evidence builder and verifier
 - [x] Update promotion/adoption ledger
 - [x] Close repository work with benchmark, fixtures, and decision records
-- [ ] Rerun the full profile on a representative privacy-approved live archive sample
-- [ ] Publish and attest the release-evidence artifact in hosted CI
+- [x] Rerun the full profile on a representative privacy-approved live archive sample
+- [x] Publish and attest the release-evidence artifact in hosted CI
 
 - [x] Add license files, dependency policy, Dependabot, deterministic fixture regeneration, and SBOM manifest fields.
 - [x] Generate and commit `Cargo.lock` in the Rust export environment.
-- [ ] Pin or otherwise review GitHub Action dependencies before the first protected release.
+- [x] Pin or otherwise review GitHub Action dependencies before the first protected release.
+- [x] Record the decision to skip the unavailable live source for this release
+  cycle and retain full-corpus production gates as deferred.
