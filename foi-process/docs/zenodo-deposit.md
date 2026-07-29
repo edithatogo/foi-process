@@ -16,3 +16,23 @@ Local preparation and checksum verification do not constitute Zenodo
 submission, acceptance, DOI assignment, or publication. Those actions require
 explicit approval of the exact Zenodo target and action after review of the
 final package and metadata.
+
+## Commands (intentionally not executed here)
+
+Prepare the package locally:
+
+```powershell
+python scripts/prepare_event_log_deposit.py --bundle .\verified-bundle --output .\deposit-package
+```
+
+For an explicitly approved Zenodo draft, upload only the reviewed contents of
+`deposit-package` with a token supplied through the documented environment
+variable. A generic API sequence is:
+
+```powershell
+curl.exe -H "Authorization: Bearer $env:ZENODO_TOKEN" -H "Content-Type: application/json" -d "@deposit-package/zenodo-metadata.json" https://zenodo.org/api/deposit/depositions
+curl.exe -H "Authorization: Bearer $env:ZENODO_TOKEN" -F "file=@deposit-package/SHA256SUMS" https://zenodo.org/api/deposit/depositions/<deposit-id>/files
+```
+
+The DataCite payload is `datacite-metadata.json`; DOI registration is a
+separate external action and must not be inferred from package preparation.
