@@ -12,10 +12,13 @@ from validate_jurisdiction_profiles import (
     PROFILE_DIR,
     STRICT_PROFILE_REGISTRY,
     ProfileValidationError,
+    _validate_legacy_profile,
+    _validate_strict_profile,
     validate_profile,
 )
 
 PROFILE = PROFILE_DIR / "australian-state-profile-template.md"
+REGISTRATION = STRICT_PROFILE_REGISTRY[PROFILE.relative_to(PROFILE_DIR.parent.parent)]
 
 
 def _must_fail(
@@ -26,12 +29,7 @@ def _must_fail(
 ) -> None:
     with tempfile.TemporaryDirectory(prefix="foi-process-profile-test-") as directory:
         root = Path(directory)
-        profile = root / "profile.md"
         fixture = root / "fixtures.json"
-        profile.write_text(
-            profile_transform(PROFILE.read_text(encoding="utf-8")),
-            encoding="utf-8",
-        )
         fixture.write_text(
             json.dumps(
                 fixture_transform(json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))),
@@ -40,7 +38,12 @@ def _must_fail(
             encoding="utf-8",
         )
         try:
-            validate_profile(profile, fixture, contract_path=PROFILE)
+            _validate_strict_profile(
+                profile_transform(PROFILE.read_text(encoding="utf-8")),
+                fixture,
+                REGISTRATION,
+                PROFILE.relative_to(PROFILE_DIR.parent.parent),
+            )
         except ProfileValidationError:
             return
         raise AssertionError(f"{name}: invalid contract was accepted")
@@ -61,31 +64,49 @@ def _must_reject_unregistered_successor() -> None:
         raise AssertionError("unregistered successor path was accepted")
 
 
-def _must_reject_registered_successor_without_marker() -> None:
-    successor = Path("docs/jurisdictions/australian-state-successor.md")
-    registration = STRICT_PROFILE_REGISTRY[
-        PROFILE.relative_to(PROFILE_DIR.parent.parent)
-    ]
-    registry = {successor: registration}
+def _must_reject_registered_path_spoof() -> None:
     with tempfile.TemporaryDirectory(prefix="foi-process-profile-test-") as directory:
-        profile = Path(directory) / successor.name
-        profile.write_text(_marker_removed(PROFILE.read_text(encoding="utf-8")))
+        profile = Path(directory) / PROFILE.name
+        profile.write_bytes(PROFILE.read_bytes())
         try:
-            validate_profile(
-                profile,
-                FIXTURE_PATH,
-                contract_path=successor,
-                strict_registry=registry,
-            )
+            validate_profile(profile, FIXTURE_PATH)
         except ProfileValidationError:
             return
-        raise AssertionError("registered successor without strict marker was accepted")
+        raise AssertionError("registered profile path accepted bytes from another file")
+
+
+def _must_reject_unregistered_repository_copy() -> None:
+    with tempfile.TemporaryDirectory(
+        prefix="foi-process-profile-test-", dir=PROFILE_DIR.parent.parent
+    ) as directory:
+        profile = Path(directory) / PROFILE.name
+        profile.write_bytes(PROFILE.read_bytes())
+        try:
+            validate_profile(profile, FIXTURE_PATH)
+        except ProfileValidationError:
+            return
+        raise AssertionError("unregistered repository copy was accepted")
+
+
+def _must_reject_registered_successor_without_marker() -> None:
+    try:
+        _validate_strict_profile(
+            _marker_removed(PROFILE.read_text(encoding="utf-8")),
+            FIXTURE_PATH,
+            REGISTRATION,
+            PROFILE.relative_to(PROFILE_DIR.parent.parent),
+        )
+    except ProfileValidationError:
+        return
+    raise AssertionError("registered successor without strict marker was accepted")
 
 
 def _must_reject_legacy_hash_tampering() -> None:
     legacy_path = Path("docs/jurisdictions/nz-foundation.md")
     assert legacy_path in LEGACY_PROFILE_SHA256_ALLOWLIST
-    with tempfile.TemporaryDirectory(prefix="foi-process-profile-test-") as directory:
+    with tempfile.TemporaryDirectory(
+        prefix="foi-process-profile-test-", dir=PROFILE_DIR.parent.parent
+    ) as directory:
         profile = Path(directory) / legacy_path.name
         source = PROFILE_DIR.parent.parent / legacy_path
         profile.write_text(
@@ -93,7 +114,11 @@ def _must_reject_legacy_hash_tampering() -> None:
             encoding="utf-8",
         )
         try:
-            validate_profile(profile, contract_path=legacy_path)
+            _validate_legacy_profile(
+                profile,
+                legacy_path,
+                LEGACY_PROFILE_SHA256_ALLOWLIST[legacy_path],
+            )
         except ProfileValidationError:
             return
         raise AssertionError("tampered legacy whitelist entry was accepted")
@@ -180,6 +205,8 @@ def main() -> None:
     assert result == "17 strict nodes and 19 flows paired"
     _must_fail("strict marker removal", profile_transform=_marker_removed)
     _must_reject_unregistered_successor()
+    _must_reject_registered_path_spoof()
+    _must_reject_unregistered_repository_copy()
     _must_reject_registered_successor_without_marker()
     _must_reject_legacy_hash_tampering()
     _must_fail("missing source pin", profile_transform=_missing_source_pin)
@@ -191,7 +218,7 @@ def main() -> None:
     _must_fail("temporal fixture inside interval", fixture_transform=_temporal_inside)
     _must_fail("false cross-profile equivalence", fixture_transform=_claim_equivalence)
     _must_fail("malformed fixture pin", fixture_transform=_malformed_pin)
-    print("validated strict jurisdiction profile with 13 adversarial mutations")
+    print("validated strict jurisdiction profile with 15 adversarial mutations")
 
 
 if __name__ == "__main__":

@@ -13,7 +13,6 @@ import json
 import re
 import xml.etree.ElementTree as ET
 from collections import defaultdict, deque
-from collections.abc import Mapping
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any, TypedDict
@@ -95,18 +94,15 @@ class ProfileValidationError(ValueError):
     """A fail-closed profile contract violation."""
 
 
-def _contract_path(profile: Path, registered_path: Path | None) -> Path:
-    candidate = registered_path if registered_path is not None else profile
-    if candidate.is_absolute():
-        try:
-            return candidate.resolve().relative_to(ROOT.resolve())
-        except ValueError as error:
-            raise ProfileValidationError(
-                "profile path is outside the registered repository"
-            ) from error
-    if ".." in candidate.parts or candidate == Path("."):
-        raise ProfileValidationError("profile contract path must be exact and relative")
-    return candidate
+def _contract_path(profile: Path) -> Path:
+    """Return the physical repository path used as the profile identity."""
+
+    try:
+        return profile.resolve(strict=True).relative_to(ROOT.resolve(strict=True))
+    except ValueError as error:
+        raise ProfileValidationError(
+            "profile path is outside the registered repository"
+        ) from error
 
 
 def _sha256(path: Path) -> str:
@@ -131,6 +127,22 @@ def _legacy_labels(profile: Path) -> tuple[set[str], set[str]]:
     if not mermaid_labels or not bpmn_labels:
         raise ProfileValidationError("both representations need activity labels")
     return mermaid_labels, bpmn_labels
+
+
+def _validate_legacy_profile(
+    profile: Path, registered_path: Path, expected_sha256: str
+) -> str:
+    if _sha256(profile) != expected_sha256:
+        raise ProfileValidationError(
+            f"legacy profile hash differs for {registered_path.as_posix()}"
+        )
+    mermaid, bpmn = _legacy_labels(profile)
+    missing = mermaid - bpmn
+    if missing:
+        raise ProfileValidationError(
+            f"BPMN is missing Mermaid labels: {sorted(missing)}"
+        )
+    return f"{len(mermaid)} legacy Mermaid labels paired"
 
 
 def _strict_contract(text: str) -> dict[str, Any] | None:
@@ -517,36 +529,12 @@ def _validate_fixtures(contract: dict[str, Any], fixture_path: Path) -> None:
         )
 
 
-def validate_profile(
-    profile: Path,
-    fixture_path: Path | None = None,
-    *,
-    contract_path: Path | None = None,
-    strict_registry: Mapping[Path, StrictProfileRegistration] = STRICT_PROFILE_REGISTRY,
-    legacy_allowlist: Mapping[Path, str] = LEGACY_PROFILE_SHA256_ALLOWLIST,
+def _validate_strict_profile(
+    text: str,
+    fixture_path: Path | None,
+    registration: StrictProfileRegistration,
+    registered_path: Path,
 ) -> str:
-    registered_path = _contract_path(profile, contract_path)
-    text = profile.read_text(encoding="utf-8")
-    registration = strict_registry.get(registered_path)
-    if registration is None:
-        expected_sha256 = legacy_allowlist.get(registered_path)
-        if expected_sha256 is None:
-            raise ProfileValidationError(
-                f"unregistered jurisdiction profile path: {registered_path.as_posix()}"
-            )
-        actual_sha256 = _sha256(profile)
-        if actual_sha256 != expected_sha256:
-            raise ProfileValidationError(
-                f"legacy profile hash differs for {registered_path.as_posix()}"
-            )
-        mermaid, bpmn = _legacy_labels(profile)
-        missing = mermaid - bpmn
-        if missing:
-            raise ProfileValidationError(
-                f"BPMN is missing Mermaid labels: {sorted(missing)}"
-            )
-        return f"{len(mermaid)} legacy Mermaid labels paired"
-
     contract = _strict_contract(text)
     if contract is None:
         raise ProfileValidationError(
@@ -576,6 +564,21 @@ def validate_profile(
     )
     _validate_fixtures(contract, selected_fixture)
     return f"{len(mermaid_nodes)} strict nodes and {len(mermaid_edges)} flows paired"
+
+
+def validate_profile(profile: Path, fixture_path: Path | None = None) -> str:
+    registered_path = _contract_path(profile)
+    text = profile.read_text(encoding="utf-8")
+    registration = STRICT_PROFILE_REGISTRY.get(registered_path)
+    if registration is None:
+        expected_sha256 = LEGACY_PROFILE_SHA256_ALLOWLIST.get(registered_path)
+        if expected_sha256 is None:
+            raise ProfileValidationError(
+                f"unregistered jurisdiction profile path: {registered_path.as_posix()}"
+            )
+        return _validate_legacy_profile(profile, registered_path, expected_sha256)
+
+    return _validate_strict_profile(text, fixture_path, registration, registered_path)
 
 
 def main() -> None:
