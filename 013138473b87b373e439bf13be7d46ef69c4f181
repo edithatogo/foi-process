@@ -6,13 +6,13 @@ Scope:
 - RED-first adversarial tests for strict marker removal, successor registration/rename, and whitelist hash tampering.
 
 Validation:
-- PYTHONPATH=scripts python3 scripts/test_jurisdiction_profile_semantics.py: passed (13 adversarial mutations).
-- PATH=/tmp/foi-process-96-validation-venv/bin:/Users/doughnut/.local/bin:/Users/doughnut/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/opt/X11/bin:/Library/TeX/texbin:/Applications/VMware Fusion.app/Contents/Public:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/quarto/bin:/Users/doughnut/.codex/tmp/arg0/codex-arg0uAKfD9:/Users/doughnut/.grok/bin:/Users/doughnut/.codeium/windsurf/bin:/Users/doughnut/.local/bin:/Users/doughnut/.opencode/bin:/Users/doughnut/.antigravity/antigravity/bin:/Users/doughnut/.lmstudio/bin:/Users/doughnut/bin:/Users/doughnut/.dotnet/tools:/Users/doughnut/.local/pac-cli:/Users/doughnut/scripts:/Users/doughnut/.orbstack/bin:/Applications/ChatGPT.app/Contents/Resources:/Users/doughnut/.local/bin:/Users/doughnut/.orbstack/bin bash scripts/ci-local.sh: passed.
-- Ruff lint/format and git diff integrity: passed.
+- Focused semantic suite passed with 13 adversarial mutations.
+- Full scripts/ci-local.sh passed using an isolated Python validation environment.
+- Ruff lint/format and diff integrity passed.
 
 Environment:
 - Repository Co-Researcher bootstrap executable was unavailable.
-- Isolated temporary Python environment supplied jsonschema, PyYAML, and Ruff; no repository dependency or lockfile changed.
+- Temporary validation dependencies did not change repository manifests or lockfiles.
 
 Restrictions observed:
 - No push, pull request, merge, retrieval, publication, or legal conclusion.
