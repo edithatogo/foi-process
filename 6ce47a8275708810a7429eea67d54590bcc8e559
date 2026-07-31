@@ -1,0 +1,7 @@
+Issue: edithatogo/foi-process#96
+Base: fd3e8f8bc5f6a603c0146770941273640aa4c0c8
+Branch: codex/australian-process-template
+Scope: synthetic jurisdiction-neutral Australian state-profile template; no authentic retrieval or legal conclusions.
+Validation: PATH=<temporary-venv>/bin:$PATH bash scripts/ci-local.sh passed; 27 default Rust tests; 29 self-contained rust4pm/parquet/dataframes tests; all-feature check/clippy/docs; schema and workpack validation; 17 Mermaid/BPMN nodes and 19 flows paired; 9 adversarial mutations rejected; ruff lint and format passed.
+Environment note: the documented Co-Researcher bootstrap executable was unavailable; jsonschema and ruff were installed only in an isolated temporary virtual environment. DuckDB runtime remains governed by its separate workflow and was not invoked.
+External actions: none. No push, pull request, merge, publication, source retrieval, or legal conclusion.
