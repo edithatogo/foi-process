@@ -8,7 +8,9 @@ from pathlib import Path
 
 from validate_jurisdiction_profiles import (
     FIXTURE_PATH,
+    LEGACY_PROFILE_SHA256_ALLOWLIST,
     PROFILE_DIR,
+    STRICT_PROFILE_REGISTRY,
     ProfileValidationError,
     validate_profile,
 )
@@ -38,10 +40,63 @@ def _must_fail(
             encoding="utf-8",
         )
         try:
-            validate_profile(profile, fixture)
+            validate_profile(profile, fixture, contract_path=PROFILE)
         except ProfileValidationError:
             return
         raise AssertionError(f"{name}: invalid contract was accepted")
+
+
+def _marker_removed(text: str) -> str:
+    return text.replace("```foi-process-profile-v2", "```json", 1)
+
+
+def _must_reject_unregistered_successor() -> None:
+    with tempfile.TemporaryDirectory(prefix="foi-process-profile-test-") as directory:
+        profile = Path(directory) / "australian-state-successor.md"
+        profile.write_bytes(PROFILE.read_bytes())
+        try:
+            validate_profile(profile, FIXTURE_PATH)
+        except ProfileValidationError:
+            return
+        raise AssertionError("unregistered successor path was accepted")
+
+
+def _must_reject_registered_successor_without_marker() -> None:
+    successor = Path("docs/jurisdictions/australian-state-successor.md")
+    registration = STRICT_PROFILE_REGISTRY[
+        PROFILE.relative_to(PROFILE_DIR.parent.parent)
+    ]
+    registry = {successor: registration}
+    with tempfile.TemporaryDirectory(prefix="foi-process-profile-test-") as directory:
+        profile = Path(directory) / successor.name
+        profile.write_text(_marker_removed(PROFILE.read_text(encoding="utf-8")))
+        try:
+            validate_profile(
+                profile,
+                FIXTURE_PATH,
+                contract_path=successor,
+                strict_registry=registry,
+            )
+        except ProfileValidationError:
+            return
+        raise AssertionError("registered successor without strict marker was accepted")
+
+
+def _must_reject_legacy_hash_tampering() -> None:
+    legacy_path = Path("docs/jurisdictions/nz-foundation.md")
+    assert legacy_path in LEGACY_PROFILE_SHA256_ALLOWLIST
+    with tempfile.TemporaryDirectory(prefix="foi-process-profile-test-") as directory:
+        profile = Path(directory) / legacy_path.name
+        source = PROFILE_DIR.parent.parent / legacy_path
+        profile.write_text(
+            source.read_text(encoding="utf-8") + "\nmutated\n",
+            encoding="utf-8",
+        )
+        try:
+            validate_profile(profile, contract_path=legacy_path)
+        except ProfileValidationError:
+            return
+        raise AssertionError("tampered legacy whitelist entry was accepted")
 
 
 def _missing_source_pin(text: str) -> str:
@@ -123,6 +178,10 @@ def _malformed_pin(bundle: dict) -> dict:
 def main() -> None:
     result = validate_profile(PROFILE, FIXTURE_PATH)
     assert result == "17 strict nodes and 19 flows paired"
+    _must_fail("strict marker removal", profile_transform=_marker_removed)
+    _must_reject_unregistered_successor()
+    _must_reject_registered_successor_without_marker()
+    _must_reject_legacy_hash_tampering()
     _must_fail("missing source pin", profile_transform=_missing_source_pin)
     _must_fail("BPMN label drift", profile_transform=_bpmn_label_drift)
     _must_fail("BPMN kind drift", profile_transform=_bpmn_kind_drift)
@@ -132,7 +191,7 @@ def main() -> None:
     _must_fail("temporal fixture inside interval", fixture_transform=_temporal_inside)
     _must_fail("false cross-profile equivalence", fixture_transform=_claim_equivalence)
     _must_fail("malformed fixture pin", fixture_transform=_malformed_pin)
-    print("validated strict jurisdiction profile with 9 adversarial mutations")
+    print("validated strict jurisdiction profile with 13 adversarial mutations")
 
 
 if __name__ == "__main__":

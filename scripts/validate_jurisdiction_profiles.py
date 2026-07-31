@@ -1,19 +1,22 @@
 """Validate paired Mermaid and BPMN jurisdiction-profile contracts.
 
-Historical foundation profiles retain their label-pairing contract. Profiles
-that include an ``foi-process-profile-v2`` JSON block opt into strict graph,
-semantic-kind, branch, pin, and fixture validation.
+Historical foundation profiles retain their label-pairing contract only while
+their exact registered path and SHA-256 remain allowlisted. Registered v2
+profiles use strict graph, semantic-kind, branch, pin, and fixture validation;
+document content cannot select a weaker validation mode.
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import xml.etree.ElementTree as ET
 from collections import defaultdict, deque
+from collections.abc import Mapping
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, TypedDict
 
 ROOT = Path(__file__).resolve().parents[1]
 PROFILE_DIR = ROOT / "docs" / "jurisdictions"
@@ -38,8 +41,76 @@ STRICT_MARKER = "foi-process-profile-v2"
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 
+class StrictProfileRegistration(TypedDict):
+    """Repository-owned identity for a strict profile contract."""
+
+    template_id: str
+    fixture_path: Path
+
+
+STRICT_PROFILE_REGISTRY: dict[Path, StrictProfileRegistration] = {
+    Path("docs/jurisdictions/australian-state-profile-template.md"): {
+        "template_id": "foi-process:template:au-state-synthetic:v1",
+        "fixture_path": Path(
+            "examples/input/australian-state-profile-template-fixtures.json"
+        ),
+    }
+}
+
+LEGACY_PROFILE_SHA256_ALLOWLIST: dict[Path, str] = {
+    Path(
+        "docs/jurisdictions/alaveteli-deployment-audit.md"
+    ): "4f3b56db366fd3bb66b96d0ba3f35bee54fe5291d1b2fb75b0e05ed4858c38dd",
+    Path(
+        "docs/jurisdictions/au-commonwealth-foundation.md"
+    ): "4b69e8016a8c3466c2f2bfe13801d96abc6fd451a43dbc386929983e2e329059",
+    Path(
+        "docs/jurisdictions/canada-federal-foundation.md"
+    ): "50086c862f5e00aa8ff0eec197825ba777fd8026aba306bdf355bb0482b00221",
+    Path(
+        "docs/jurisdictions/germany-foundation.md"
+    ): "62f865ad3d2775d5805a9fd0b0994793ee30674913b1d2689a46eaa09b39b648",
+    Path(
+        "docs/jurisdictions/ireland-foundation.md"
+    ): "29afced2371e64ccc6b5b440e00faa4394fe8f74bd3debef25ad8c69e8ff4244",
+    Path(
+        "docs/jurisdictions/nz-foundation.md"
+    ): "84b55424afc82ac7610215a6870fd02e92f835ea3f588ebc3c585537f747a9c0",
+    Path(
+        "docs/jurisdictions/south-africa-foundation.md"
+    ): "59f1249a40bd6f26f14d54dfa9f7f6e7b7341d6f4a58494385000d93bba04770",
+    Path(
+        "docs/jurisdictions/spain-foundation.md"
+    ): "70ff28f60841e1e79e708c99b4ad61d7de6c6439b8a08088007ddd3ce9d5980c",
+    Path(
+        "docs/jurisdictions/uk-foundation.md"
+    ): "e3882c5c7e7908ac325a6cf65292fd3f32650c6b0d1b73be88ee95ed7a3786c1",
+    Path(
+        "docs/jurisdictions/us-federal-foundation.md"
+    ): "d78c6d34bc9f3c4566ff6feb92aa78a3a6d2dcbd9cfb7371a9a5e8999dd1d34e",
+}
+
+
 class ProfileValidationError(ValueError):
     """A fail-closed profile contract violation."""
+
+
+def _contract_path(profile: Path, registered_path: Path | None) -> Path:
+    candidate = registered_path if registered_path is not None else profile
+    if candidate.is_absolute():
+        try:
+            return candidate.resolve().relative_to(ROOT.resolve())
+        except ValueError as error:
+            raise ProfileValidationError(
+                "profile path is outside the registered repository"
+            ) from error
+    if ".." in candidate.parts or candidate == Path("."):
+        raise ProfileValidationError("profile contract path must be exact and relative")
+    return candidate
+
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def _block(text: str, language: str) -> str:
@@ -446,10 +517,28 @@ def _validate_fixtures(contract: dict[str, Any], fixture_path: Path) -> None:
         )
 
 
-def validate_profile(profile: Path, fixture_path: Path = FIXTURE_PATH) -> str:
+def validate_profile(
+    profile: Path,
+    fixture_path: Path | None = None,
+    *,
+    contract_path: Path | None = None,
+    strict_registry: Mapping[Path, StrictProfileRegistration] = STRICT_PROFILE_REGISTRY,
+    legacy_allowlist: Mapping[Path, str] = LEGACY_PROFILE_SHA256_ALLOWLIST,
+) -> str:
+    registered_path = _contract_path(profile, contract_path)
     text = profile.read_text(encoding="utf-8")
-    contract = _strict_contract(text)
-    if contract is None:
+    registration = strict_registry.get(registered_path)
+    if registration is None:
+        expected_sha256 = legacy_allowlist.get(registered_path)
+        if expected_sha256 is None:
+            raise ProfileValidationError(
+                f"unregistered jurisdiction profile path: {registered_path.as_posix()}"
+            )
+        actual_sha256 = _sha256(profile)
+        if actual_sha256 != expected_sha256:
+            raise ProfileValidationError(
+                f"legacy profile hash differs for {registered_path.as_posix()}"
+            )
         mermaid, bpmn = _legacy_labels(profile)
         missing = mermaid - bpmn
         if missing:
@@ -458,8 +547,18 @@ def validate_profile(profile: Path, fixture_path: Path = FIXTURE_PATH) -> str:
             )
         return f"{len(mermaid)} legacy Mermaid labels paired"
 
+    contract = _strict_contract(text)
+    if contract is None:
+        raise ProfileValidationError(
+            f"registered strict profile is missing {STRICT_MARKER}: "
+            f"{registered_path.as_posix()}"
+        )
     if contract.get("schema_version") != "2.0.0":
         raise ProfileValidationError("strict contract requires schema_version 2.0.0")
+    if contract.get("template_id") != registration["template_id"]:
+        raise ProfileValidationError(
+            "strict contract template_id differs from registry"
+        )
     if contract.get("evidence_class") != "synthetic_engineering_only":
         raise ProfileValidationError(
             "strict template must remain synthetic engineering evidence"
@@ -470,7 +569,12 @@ def validate_profile(profile: Path, fixture_path: Path = FIXTURE_PATH) -> str:
     mermaid_nodes, mermaid_edges = _parse_mermaid(_block(text, "mermaid"))
     bpmn_nodes, bpmn_edges = _parse_bpmn(_block(text, "xml"))
     _validate_graph(contract, mermaid_nodes, mermaid_edges, bpmn_nodes, bpmn_edges)
-    _validate_fixtures(contract, fixture_path)
+    selected_fixture = (
+        fixture_path
+        if fixture_path is not None
+        else ROOT / registration["fixture_path"]
+    )
+    _validate_fixtures(contract, selected_fixture)
     return f"{len(mermaid_nodes)} strict nodes and {len(mermaid_edges)} flows paired"
 
 
