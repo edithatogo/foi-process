@@ -1,0 +1,24 @@
+P1 remediation for foi-process #96 registered-path spoofing.
+
+RED evidence:
+- An identical external copy of the registered Australian template was accepted when contract_path supplied the registered identity.
+- Focused adversarial suite exited 1 with: registered profile path accepted bytes from another file.
+
+Fix:
+- Profile identity is derived from profile.resolve(strict=True) relative to the resolved repository root.
+- Production validation no longer accepts caller-supplied contract paths, registries, or legacy allowlists.
+- External files and unregistered in-repository copies fail before strict or legacy validation.
+- Mutation tests use narrow semantic and legacy hash helpers without impersonating a production path.
+
+GREEN evidence:
+- Focused semantic suite passed with 15 adversarial mutations.
+- All 11 registered jurisdiction profiles validated.
+- Full scripts/ci-local.sh passed in isolated environment /tmp/foi-process-validation.gIh0r4.
+- Ruff check and format check passed; git diff --check passed.
+
+Environment:
+- Co-Researcher bootstrap executable was unavailable.
+- Temporary jsonschema, rfc8785, and Ruff dependencies did not modify repository manifests or lockfiles.
+
+Restrictions observed:
+- No push, pull request, merge, source retrieval, publication, or legal conclusion.
