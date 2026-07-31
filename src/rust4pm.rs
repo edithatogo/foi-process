@@ -44,9 +44,9 @@ where
     }
     for event in &bundle.events {
         for object in &event.objects {
-            object_index
-                .entry(object.object_id.clone())
-                .or_insert_with(|| object.object_type.clone());
+            if !object_index.contains_key(&object.object_id) {
+                object_index.insert(object.object_id.clone(), object.object_type.clone());
+            }
         }
     }
     let object_types: BTreeSet<_> = object_index.values().map(ToString::to_string).collect();
