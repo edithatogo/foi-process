@@ -1,4 +1,4 @@
-# Status — 2026-07-27
+# Status — 2026-08-01
 
 ## Implemented in workpack
 
@@ -29,8 +29,9 @@ external evidence gates, not unimplemented repository work:
 - Any new production-derived public release requires release-specific external
   host, rights, privacy, removal/takedown, and governance evidence; code
   completion and the Apache-2.0 code licence do not supply that authority.
-- Registry submission, acceptance, and identifier evidence remain open in
-  issues #63-#65. Repository metadata generation is complete.
+- Bounded event-log registry publication is complete: Zenodo record
+  `21660296`, DOI `10.5281/zenodo.21660296`, with DataCite metadata included.
+  Full-corpus registry expansion remains deferred in issues #63-#65.
 - Optional recurring full-corpus operations remain a `fyi-archive`/`fyi-cli`
   operational decision, not an acceptance or publication prerequisite.
 
@@ -43,6 +44,7 @@ external evidence gates, not unimplemented repository work:
   evidence.
 - Hosted release-evidence publication and artifact attestation are completed for
   the accepted synthetic/representative path.
-- Dataset Viewer/dashboard attestation and any production-derived publication
-  evidence remain external gates in issue #9; they are not pre-merge gates for
-  repository implementation.
+- The bounded Hugging Face Dataset and free Space are published with pinned
+  revisions and 75 cases, 425 events, and 179 attachments. Full-corpus HF
+  coverage and any new production-derived release remain external gates in
+  issue #9.

@@ -21,15 +21,15 @@ tracks:
   owner: fe-reader/nlp-policy-nz
 - id: T06
   slug: privacy-publication
-  status: acceptance_verified_publication_pending
+  status: bounded_release_verified_production_gate_pending
   owner: foi-process/foi-o/propel
 - id: T07
   slug: dashboard-propel-hf
-  status: dataset_deposited_pages_deployed_external_attestation_pending
+  status: bounded_hf_dataset_and_space_published_full_corpus_deferred
   owner: propel/foi-process
 - id: T08
   slug: scale-release-governance
-  status: release_evidence_verified_full_corpus_optional
+  status: bounded_release_verified_full_corpus_deferred
   owner: foi-process/fyi-archive
 - id: T09
   slug: simulation-research-adoption
@@ -37,5 +37,5 @@ tracks:
   owner: kairos/rulesandprocesses/sourceright
 - id: T10
   slug: event-log-registry-readiness
-  status: repository_metadata_ready_external_registry_evidence_pending
+  status: bounded_zenodo_datacite_published_full_corpus_deferred
   owner: foi-process/fyi-archive
