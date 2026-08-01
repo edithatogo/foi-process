@@ -19,10 +19,6 @@ tracks:
   slug: document-ocr-signals
   status: acceptance_verified
   owner: fe-reader/nlp-policy-nz
-- id: T05
-  slug: conformance-rules
-  status: statutory_review_complete_external_promotion_pending
-  owner: foi-o/axiom-rules-engine/rulespec-nz
 - id: T06
   slug: privacy-publication
   status: acceptance_verified_publication_pending
