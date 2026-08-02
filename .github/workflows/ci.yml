@@ -4,7 +4,18 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
+  repository-context:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Validate repository context and dependency policy
+        shell: pwsh
+        run: ./scripts/validate_repository_context.ps1
+
   rust:
     strategy:
       matrix:
