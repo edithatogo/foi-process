@@ -11,6 +11,6 @@
 
 ## Remaining external evidence
 
-- [ ] Retain a revision-pinned independent verification of the Dataset Viewer and deployed GitHub Pages dashboard (issue #9). Hugging Face Static Space runtime activation is not required for the no-cost dashboard route.
+- [x] Retain a revision-pinned independent verification of the bounded HF Dataset/Space and deployed GitHub Pages dashboard (issue #9). Dataset revision `53f37b6d71864bc4d356a052ddf951dfc12e84e0`; Space revision `02d8ba68e4c23aed9c2d97b813a0e7c0a9bc798d`; GitHub Pages HTTP 200 verified. Hugging Face Static Space runtime activation is not required for the no-cost dashboard route.
 - [x] Validate fixture and bounded real-batch contracts without claiming
   full-corpus coverage; full-corpus dashboard attestation remains deferred.
