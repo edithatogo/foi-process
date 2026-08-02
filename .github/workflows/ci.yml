@@ -65,6 +65,7 @@ jobs:
       - run: python scripts/validate_workpack.py
       - run: python scripts/validate_governance_gate.py
       - run: python scripts/validate_jurisdiction_profiles.py
+      - run: PYTHONPATH=scripts python scripts/test_jurisdiction_profile_semantics.py
       - run: python scripts/validate_jurisdiction_cases.py
       - run: python scripts/validate_alaveteli_evidence.py
       - run: python scripts/validate_jurisdiction_review_matrix.py

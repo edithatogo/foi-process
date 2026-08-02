@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "foi-process:template:au-state-synthetic:v1",
+  "fixtures": [
+    {
+      "fixture_id": "fixture:au-state-template:positive-001",
+      "scenario_kind": "positive",
+      "evidence_class": "synthetic_engineering_only",
+      "observed_at": "2026-06-15T00:00:00+10:00",
+      "expected_state": "candidate_ready",
+      "legal_conclusion": null,
+      "pins": {
+        "profile": {
+          "id": "synthetic-profile:au-state-template:0.1.0",
+          "sha256": "b81ad3c99fe0682227cb71be48e0d0da9fbfb7843b34674895277089271a86e0"
+        },
+        "source": {
+          "id": "synthetic-source:au-state-engineering-fixture:1",
+          "sha256": "8310f1934339dc2538f50d2f128356c19f82f0f14a2a8b8551ff1cd22747ea1d"
+        },
+        "effective_date": {
+          "id": "synthetic-effective-interval:2026-01-01/2026-12-31",
+          "from": "2026-01-01",
+          "to": "2026-12-31",
+          "sha256": "9b8802a1c97dde770b1701628b4a5a54c727e09747b7581f6f051650c0e16622"
+        },
+        "transformation": {
+          "id": "foi-process:state-template-transform:0.1.0",
+          "sha256": "6d0ba4438e0ce8561b20ff8d57cb0c452c5f4d0b9c816a8bfc0fb415bc8c2853"
+        },
+        "ontology": {
+          "id": "foi-o:synthetic-australian-process-ontology:0.1.0",
+          "sha256": "b7723127db5f3e7fbfc78511baa7282f590ea16a7594659a37b556280eb3f2b1"
+        }
+      }
+    },
+    {
+      "fixture_id": "fixture:au-state-template:negative-001",
+      "scenario_kind": "negative",
+      "evidence_class": "synthetic_engineering_only",
+      "observed_at": "2026-06-15T00:00:00+10:00",
+      "expected_state": "unsupported",
+      "legal_conclusion": null,
+      "pins": {
+        "profile": {
+          "id": "synthetic-profile:au-state-template:0.1.0",
+          "sha256": "b81ad3c99fe0682227cb71be48e0d0da9fbfb7843b34674895277089271a86e0"
+        },
+        "source": {
+          "id": "synthetic-source:au-state-engineering-fixture:1",
+          "sha256": "8310f1934339dc2538f50d2f128356c19f82f0f14a2a8b8551ff1cd22747ea1d"
+        },
+        "effective_date": {
+          "id": "synthetic-effective-interval:2026-01-01/2026-12-31",
+          "from": "2026-01-01",
+          "to": "2026-12-31",
+          "sha256": "9b8802a1c97dde770b1701628b4a5a54c727e09747b7581f6f051650c0e16622"
+        },
+        "transformation": {
+          "id": "foi-process:state-template-transform:0.1.0",
+          "sha256": "6d0ba4438e0ce8561b20ff8d57cb0c452c5f4d0b9c816a8bfc0fb415bc8c2853"
+        },
+        "ontology": {
+          "id": "foi-o:synthetic-australian-process-ontology:0.1.0",
+          "sha256": "b7723127db5f3e7fbfc78511baa7282f590ea16a7594659a37b556280eb3f2b1"
+        }
+      }
+    },
+    {
+      "fixture_id": "fixture:au-state-template:temporal-001",
+      "scenario_kind": "temporal",
+      "evidence_class": "synthetic_engineering_only",
+      "observed_at": "2027-01-01T00:00:00+11:00",
+      "expected_state": "unresolved",
+      "legal_conclusion": null,
+      "pins": {
+        "profile": {
+          "id": "synthetic-profile:au-state-template:0.1.0",
+          "sha256": "b81ad3c99fe0682227cb71be48e0d0da9fbfb7843b34674895277089271a86e0"
+        },
+        "source": {
+          "id": "synthetic-source:au-state-engineering-fixture:1",
+          "sha256": "8310f1934339dc2538f50d2f128356c19f82f0f14a2a8b8551ff1cd22747ea1d"
+        },
+        "effective_date": {
+          "id": "synthetic-effective-interval:2026-01-01/2026-12-31",
+          "from": "2026-01-01",
+          "to": "2026-12-31",
+          "sha256": "9b8802a1c97dde770b1701628b4a5a54c727e09747b7581f6f051650c0e16622"
+        },
+        "transformation": {
+          "id": "foi-process:state-template-transform:0.1.0",
+          "sha256": "6d0ba4438e0ce8561b20ff8d57cb0c452c5f4d0b9c816a8bfc0fb415bc8c2853"
+        },
+        "ontology": {
+          "id": "foi-o:synthetic-australian-process-ontology:0.1.0",
+          "sha256": "b7723127db5f3e7fbfc78511baa7282f590ea16a7594659a37b556280eb3f2b1"
+        }
+      }
+    },
+    {
+      "fixture_id": "fixture:au-state-template:non-equivalence-001",
+      "scenario_kind": "non_equivalence",
+      "evidence_class": "synthetic_engineering_only",
+      "observed_at": "2026-06-15T00:00:00+10:00",
+      "expected_state": "unsupported",
+      "legal_conclusion": null,
+      "equivalence_claim": false,
+      "comparison_profile": {
+        "id": "synthetic-profile:comparison-state:0.1.0",
+        "sha256": "9f97417518559624e874a15ab34aa63782cfc22626a661ad22251b646ccfbea3"
+      },
+      "pins": {
+        "profile": {
+          "id": "synthetic-profile:au-state-template:0.1.0",
+          "sha256": "b81ad3c99fe0682227cb71be48e0d0da9fbfb7843b34674895277089271a86e0"
+        },
+        "source": {
+          "id": "synthetic-source:au-state-engineering-fixture:1",
+          "sha256": "8310f1934339dc2538f50d2f128356c19f82f0f14a2a8b8551ff1cd22747ea1d"
+        },
+        "effective_date": {
+          "id": "synthetic-effective-interval:2026-01-01/2026-12-31",
+          "from": "2026-01-01",
+          "to": "2026-12-31",
+          "sha256": "9b8802a1c97dde770b1701628b4a5a54c727e09747b7581f6f051650c0e16622"
+        },
+        "transformation": {
+          "id": "foi-process:state-template-transform:0.1.0",
+          "sha256": "6d0ba4438e0ce8561b20ff8d57cb0c452c5f4d0b9c816a8bfc0fb415bc8c2853"
+        },
+        "ontology": {
+          "id": "foi-o:synthetic-australian-process-ontology:0.1.0",
+          "sha256": "b7723127db5f3e7fbfc78511baa7282f590ea16a7594659a37b556280eb3f2b1"
+        }
+      }
+    }
+  ]
+}

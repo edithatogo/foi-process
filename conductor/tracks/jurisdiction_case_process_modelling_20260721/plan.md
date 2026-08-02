@@ -7,4 +7,8 @@
 - [x] Ireland foundation (pinned source boundary; empirical and legal promotion remain gated).
 - [x] Canada federal and US federal foundations (pinned source boundaries; empirical and legal promotion remain gated).
 - [x] Germany, Spain and South Africa foundations (pinned source boundaries; empirical and legal promotion remain gated).
+- [x] Issue #96: add the synthetic Australian state-profile template, strict
+  Mermaid/BPMN semantic validator, and positive, negative, temporal, and
+  non-equivalence fixtures. Authentic sources and legal conclusions remain
+  excluded.
 - [ ] At every increment pair Mermaid and BPMN, validate replay/isolation/annotation evidence, and stop at promotion/publication gates.
