@@ -1,0 +1,27 @@
+{
+  "schema": "foi-process.manuscript-sourceright-review.v1",
+  "manuscript": "paper/foi-process.tex",
+  "status": "review_ready_with_gates",
+  "sources": [
+    {"key": "rfc8785", "status": "identified", "role": "canonical JSON identity"},
+    {"key": "ocel2", "status": "identified", "role": "portable event-log projection"},
+    {"key": "foi-cli", "status": "repository source", "role": "capture and live continuation boundary"},
+    {"key": "foi-archive", "status": "repository source", "role": "snapshot and publication boundary"},
+    {"key": "foi-o", "status": "repository source", "role": "legal vocabulary boundary"},
+    {"key": "rust4pm", "status": "repository source", "role": "generic process-mining boundary"}
+  ],
+  "checks": {
+    "source_specific_rights_preserved": true,
+    "raw_or_confidential_material_included": false,
+    "claims_of_external_acceptance": false,
+    "synthetic_benchmark_labelled": true,
+    "live_archive_claims_bounded": true,
+    "citation_keys_reconciled": true
+  },
+  "remaining": [
+    "verify source versions and URLs at submission time",
+    "human author approval",
+    "rendered PDF inspection",
+    "arXiv submission and identifier recording"
+  ]
+}

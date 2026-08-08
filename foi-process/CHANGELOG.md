@@ -25,6 +25,8 @@
 - Accepted and tested the path-safe Hive-style Parquet partition contract in ADR 0006.
 - Added an SPDX 2.3 SBOM, mining provenance, release manifest, SHA-256 package builder/verifier, and
   a build-only release-evidence workflow.
+- Added a tag-driven GitHub Release workflow that stages verified Rust binaries, checksums, release
+  evidence, and build provenance as a draft before an explicit no-cost publication action.
 
 ## v3 — 2026-07-09
 

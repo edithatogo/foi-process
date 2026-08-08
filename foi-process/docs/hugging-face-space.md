@@ -1,8 +1,8 @@
 # Dashboard build and free hosting
 
-`space/` contains the reproducible static dashboard source. It consumes a browser projection
-generated from the reviewed event-log Dataset bundle; it does not mine raw correspondence or
-recalculate legal conclusions in the browser.
+`space/` contains the reproducible static dashboard source. It consumes a
+browser projection generated from the reviewed event-log Dataset bundle; it does not mine raw
+correspondence or recalculate legal conclusions in the browser.
 
 ## Views
 
@@ -47,8 +47,9 @@ Actions and deploys the compiled `space/dist` artifact to GitHub Pages, which is
 dashboard URL and does not require a Hugging Face runtime, credits, secrets, or paid services.
 
 The Hugging Face Dataset remains an optional public deposit for event logs and reproducibility.
-The existing Hugging Face Space repository is retained only as a source/artifact record; this
-repository does not attempt to activate or verify a Hugging Face Space runtime. Hugging Face
-Static Space hosting is therefore not a dependency of the system.
+The sole no-cost Hugging Face Space target is `edithatogo/foi-process-explorer-free`, using the
+account's already-running free Static Space configuration. The former broken duplicate
+`edithatogo/foi-process-explorer` was removed. The repository's manual publication workflow is
+allowlisted only to the surviving target. GitHub Pages remains the canonical no-cost dashboard.
 
 Production data remains subject to the Dataset privacy and governance gate.

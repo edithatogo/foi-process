@@ -1,7 +1,7 @@
 # Plan
 
-- [ ] Compile AppendableOCEL adapter
-- [ ] Compare OCEL round-trip
-- [ ] Benchmark streaming/mining candidates
-- [ ] Update promotion/adoption ledger
-- [ ] Close with benchmark, fixtures, and decision record
+- [x] Compile AppendableOCEL adapter
+- [x] Compare OCEL round-trip
+- [x] Benchmark streaming/mining candidates
+- [x] Update promotion/adoption ledger
+- [x] Close with benchmark, fixtures, and decision record

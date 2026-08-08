@@ -1,0 +1,36 @@
+name: Manuscript preflight
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  manuscript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - name: Check manuscript source and rights record
+        run: |
+          test -s paper/foi-process.tex
+          test -s paper/references.bib
+          test -s paper/sourceright-review.json
+          test -s paper/authentext-review.md
+          ! rg -n "C:\\\\Users\\|/Users/|HF_TOKEN|BEGIN PRIVATE KEY" paper
+      - name: Install LaTeX build dependencies
+        run: sudo apt-get update && sudo apt-get install -y make texlive-latex-base texlive-latex-extra texlive-pictures
+      - name: Build manuscript PDF
+        working-directory: paper
+        run: make pdf
+      - name: Build source archive
+        working-directory: paper
+        run: make source-package
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: foi-process-arxiv-source
+          path: paper/build/
+          if-no-files-found: error

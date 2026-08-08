@@ -1,0 +1,164 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v[0-9]*.[0-9]*.[0-9]*"
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Existing release tag to validate and stage"
+        required: true
+        type: string
+      publish:
+        description: "Make the GitHub Release public after all checks pass"
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build and verify release
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      RELEASE_TAG: ${{ inputs.release_tag || github.ref_name }}
+    permissions:
+      attestations: write
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout exact release revision
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.release_tag || github.ref }}
+          persist-credentials: false
+
+      - name: Validate release tag and revision
+        shell: bash
+        env:
+          APPROVED_TAGGER_EMAIL: ${{ vars.RELEASE_TAGGER_EMAIL }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]
+          test "$(git cat-file -t "$RELEASE_TAG")" = tag
+          test "$(git rev-parse HEAD)" = "$(git rev-list -n 1 "$RELEASE_TAG")"
+          remote_tag_oid="$(git ls-remote --exit-code --tags origin "refs/tags/$RELEASE_TAG" | cut -f1)"
+          test "$remote_tag_oid" = "$(git rev-parse "$RELEASE_TAG")"
+          test "$(git describe --exact-match --tags HEAD)" = "$RELEASE_TAG"
+          test -n "$APPROVED_TAGGER_EMAIL"
+          gh api "repos/${GITHUB_REPOSITORY}/git/tags/$remote_tag_oid" > /tmp/tag-verification.json
+          jq -e '.verification.verified == true' /tmp/tag-verification.json >/dev/null
+          test "$(jq -r '.tagger.email' /tmp/tag-verification.json)" = "$APPROVED_TAGGER_EMAIL"
+
+      - name: Validate release metadata
+        env:
+          EXPECTED_RELEASE_TAG: ${{ inputs.release_tag || github.ref_name }}
+        run: python scripts/check_release_metadata.py "$EXPECTED_RELEASE_TAG"
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@2c7215f132e9ebf062739d9130488b56d53c060c # master
+        with:
+          toolchain: "1.88.0"
+          components: rustfmt, clippy
+
+      - uses: Swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
+
+      - name: Run release regression suite
+        run: |
+          cargo fmt --all -- --check
+          cargo clippy --locked --all-targets --features rust4pm -- -D warnings
+          cargo test --locked --all-targets --features rust4pm
+
+      - name: Build release binaries
+        run: |
+          cargo build --locked --release --bin foi-process --bin schema-gen --bin scale_bench
+          mkdir -p dist
+          cp target/release/foi-process dist/
+          cp target/release/schema-gen dist/
+          cp target/release/scale_bench dist/
+
+      - name: Set up Python for evidence tools
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.13"
+
+      - name: Build and verify release evidence
+        run: |
+          python scripts/build_release_evidence.py \
+            --benchmark benchmarks/rust-scale-windows-gnu.json \
+            --software-commit "$GITHUB_SHA" \
+            --output dist/release-evidence
+          python scripts/verify_release_evidence.py dist/release-evidence
+
+      - name: Generate release checksums
+        working-directory: dist
+        run: |
+          tar -czf foi-process-release-evidence.tar.gz release-evidence
+          sha256sum foi-process schema-gen scale_bench foi-process-release-evidence.tar.gz > SHA256SUMS
+
+      - name: Attest release artifacts
+        uses: actions/attest-build-provenance@0f67c3f4856b2e3261c31976d6725780e5e4c373 # v4.1.1
+        with:
+          subject-path: |
+            dist/foi-process
+            dist/schema-gen
+            dist/scale_bench
+            dist/foi-process-release-evidence.tar.gz
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: foi-process-release-${{ env.RELEASE_TAG }}
+          path: dist/
+          if-no-files-found: error
+
+  draft-release:
+    name: Prepare draft GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_TAG: ${{ inputs.release_tag || github.ref_name }}
+    permissions:
+      contents: write
+    steps:
+      - name: Download release artifacts
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: foi-process-release-${{ env.RELEASE_TAG }}
+          path: dist
+
+      - name: Create or refresh draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            test "$(gh release view "$RELEASE_TAG" --json isDraft --jq '.isDraft')" = true
+          else
+            gh release create "$RELEASE_TAG" --draft --generate-notes --verify-tag
+          fi
+          gh release upload "$RELEASE_TAG" dist/foi-process dist/schema-gen dist/scale_bench dist/SHA256SUMS dist/foi-process-release-evidence.tar.gz --clobber
+
+  publish:
+    name: Publish verified GitHub Release
+    needs: draft-release
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish == true }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      RELEASE_TAG: ${{ inputs.release_tag || github.ref_name }}
+    steps:
+      - name: Publish prepared draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release edit "$RELEASE_TAG" --draft=false --latest

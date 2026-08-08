@@ -76,10 +76,24 @@ The Hugging Face dashboard publication bundle, including reviewed event logs, re
 EvidenceDelta streams, OCEL tables, process edges and variants, is documented in
 `docs/hugging-face-dataset-publication.md`.
 
-The operational free-hosted dashboard in `space/` adds process, variant, case-timeline,
-conformance, and provenance views over that verified bundle. GitHub Pages is the only hosted
-dashboard target; the reproducible build and no-cost publication boundary are documented in
-`docs/hugging-face-space.md`.
+The arXiv-oriented software/resource manuscript, source-package workflow, provenance record, and
+declarations are in `paper/`. The manuscript describes the current implementation and synthetic
+scale evidence; it does not claim full live-archive coverage, statutory certification, submission,
+or acceptance.
+
+The operational Static Space dashboard in `space/` adds process, variant, case-timeline,
+conformance, and provenance views over that verified bundle. Its reproducible build and
+fail-closed publication boundary are documented in `docs/hugging-face-space.md`.
+
+## No-cost hosted surfaces
+
+- **Live dashboard:** [GitHub Pages](https://edithatogo.github.io/foi-process/), built and deployed
+  from the public repository with no paid Hugging Face dependency.
+- **Event-log deposit:** [Hugging Face Dataset](https://huggingface.co/datasets/edithatogo/foi-process-event-logs),
+  containing the public-safe event logs, OCEL projections, process variants, schemas, and manifests.
+- **Hugging Face Space:** [free Static Space](https://huggingface.co/spaces/edithatogo/foi-process-explorer-free)
+  containing the pre-built dashboard assets. GitHub Pages remains an independent fallback. No PRO
+  plan, credits, Docker, Gradio, GPU, or ZeroGPU is required by this project.
 
 Scale and release governance are executable rather than advisory: the repeated Rust benchmark,
 tested Parquet partition contract, SPDX SBOM, mining provenance, checksummed release package, and

@@ -13,3 +13,9 @@ Rules:
 - schema version, mapping profile, and algorithm version are included whenever they affect identity.
 
 The Rust implementation is canonical. The Python fixture generator intentionally uses only the JCS-compatible subset of JSON until a cross-language parity suite is promoted from `rulesandprocesses`.
+
+The repository includes an independent Python oracle at
+`scripts/verify_jcs_vectors.py`. It verifies the checked-in ASCII/integer/string/
+boolean/null/array/object vectors. This is a parity check for the portable fixture
+subset, not a claim that the small oracle replaces a full RFC 8785 implementation
+for arbitrary Unicode or number edge cases.

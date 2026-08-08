@@ -1,7 +1,7 @@
 # Plan
 
-- [ ] Born-digital extraction fixture
-- [ ] Scanned-PDF OCR fixture
-- [ ] Signal/evidence span evaluation
-- [ ] Update promotion/adoption ledger
-- [ ] Close with benchmark, fixtures, and decision record
+- [x] Born-digital extraction fixture
+- [x] Scanned-PDF OCR fixture
+- [x] Signal/evidence span evaluation
+- [x] Update promotion/adoption ledger
+- [x] Close with benchmark, fixtures, and decision record

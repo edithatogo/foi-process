@@ -1,6 +1,6 @@
 # Implementation status
 
-**Reviewed:** 2026-07-15  
+**Reviewed:** 2026-07-17
 **Release state:** `v0.1.0` is published on GitHub; Zenodo preservation remains a human-controlled gate
 
 ## Implemented
@@ -25,7 +25,7 @@
 - Static dashboard source with shared filtering, activity KPIs, directly-follows map, variant
   Sankey, request timeline, conformance findings, OCEL/data-quality indicators, and manifest
   provenance. Its build regenerates and checksum-verifies dashboard data from the Dataset bundle;
-  GitHub Pages is the free operational host.
+  the free Hugging Face Static Space and GitHub Pages are both operational hosts.
 - Enforced Static Space asset budget and ADR 0005, bounding the compiled JavaScript, CSS, and
   checked demonstration projection while recording the no-runtime deployment decision.
 - Isolated three-repetition Rust scale suite covering 1k, 10k, and 200k synthetic cases, including
@@ -49,8 +49,42 @@
   contracts, dependency policy, Rust 1.88, stable Rust, and feature-matrix jobs all passed.
   The matrix compiles all features and executes all self-contained feature tests; DuckDB runtime
   linking remains excluded because the hosted runner does not provide `libduckdb`.
+- GitHub Actions runs [29495826776](https://github.com/edithatogo/foi-process/actions/runs/29495826776)
+  and [29495828086](https://github.com/edithatogo/foi-process/actions/runs/29495828086) passed for
+  commit `b0c7c9e`, including the full feature matrix, Dataset/Space bundle checks, dashboard
+  asset budget, and GitHub Pages deployment. The live Pages endpoint responded successfully;
+  authenticated Hugging Face upload remains credential-gated.
 
 ## Remaining gates
+
+### Evidence added 2026-07-15
+
+- A bounded read-only capture of public FYI request `28164` produced JSON, HTML,
+  WARC, WACZ, and a derived request store. Structural validation and redacted
+  hashes are recorded in `docs/evidence/real-fyi-archive-capture-2026-07-15.json`.
+- `scripts/validate_fyi_archive_capture.py` can revalidate an externally held
+  capture without importing its content into this repository.
+- A second bounded capture of request `26953` now includes four PDF attachments
+  discovered from rendered HTML, with content-addressed hashes in the derived
+  store, WARC, and WACZ.
+- The same request passed through `fyi-cli capture`, `fyi-archive seed run`,
+  `fyi-archive manifest build`, and the Rust `foi-process` manifest adapter.
+  Hashes and the four passing adapter checks are recorded in
+  `docs/evidence/live-fyi-cli-fyi-archive-foi-process-2026-07-15.json`; the
+  earlier omitted-attachment observation remains in the historical evidence
+  file for auditability.
+- `governance/publication_gate.json` keeps production publication blocked and
+  limits current hosted outputs to synthetic data.
+- Manual workflows provide executable paths for Zenodo preservation and native
+  DuckDB runtime evidence. Neither is complete until external evidence exists.
+- The Rust adapter now accepts nullable live manifest timestamps and derives
+  omitted FYI request/API URLs correctly; focused tests and one live conversion
+  pass. The DuckDB workflow now runs an actual `SELECT 42` connection test and
+  uses the matching `libduckdb-sys` download mechanism.
+- Hugging Face and GitHub Pages workflows now execute the same fail-closed
+  governance gate before building or publishing hosted outputs. The Zenodo
+  workflow now publishes the deposition and fails unless the response contains
+  a DOI.
 
 1. Compare Rust-generated schemas with the portable compatibility schemas and record intentional differences.
 2. Run RFC 8785 parity vectors in Rust and at least one independent implementation.
@@ -58,9 +92,8 @@
 4. Complete privacy, tikanga/data-governance, and threat-model review before publishing OCR text, embeddings, or semantic search.
 5. Complete production `fyi-cli`/`fyi-archive` adapter integration and validate live evidence flows.
 6. Maintain the public Hugging Face Dataset deposit and verify its Dataset Viewer configuration;
-   dashboard hosting is already provided by the free GitHub Pages deployment. Hugging Face Space
-   runtime activation is explicitly out of scope because this account's new Static Space path is
-   credit-gated.
+   dashboard hosting is provided by the free Hugging Face Static Space with GitHub Pages as an
+   independent fallback.
 7. Preserve the GitHub release in Zenodo and record DOI evidence without overstating publication state.
 8. Rerun the 200k/full profile against a representative privacy-approved live archive sample and
    attest the release-evidence artifact in protected hosted CI.
@@ -73,6 +106,6 @@
 - Full process discovery or conformance algorithms outside Rust4PM.
 - OCR engine selection or trained FOI signal models.
 - Certified statutory/legal conclusions.
-- Hugging Face-hosted dashboard runtime; the complete dashboard is repository-built and deployed
-  through free GitHub Pages instead.
+- Paid or credit-gated Hugging Face runtime; the dashboard uses the duplicated free Static Space
+  path and GitHub Pages instead.
 - Live GitHub issues, branches, pull requests, or releases.

@@ -1,0 +1,14 @@
+title: "A Reproducible Event-Sourcing and Process-Mining Workpack for Freedom-of-Information Records"
+authors:
+  - "Dylan A. Mordaunt"
+abstract: >-
+  This software and resource paper presents foi-process, an open-source Rust workpack for
+  deterministic replay, revision-aware process mining, privacy-aware public projections, and
+  checksummed publication bundles for freedom-of-information records. Results are limited to
+  synthetic scale evidence and do not claim full live-archive coverage or statutory validation.
+categories:
+  - cs.SE
+  - cs.DB
+  - cs.CY
+comments: "Software/resource paper; source package and reproducibility artefacts are in the repository."
+license: "http://creativecommons.org/licenses/by/4.0/"
