@@ -85,13 +85,16 @@ pub fn project_ocel(bundle: &NormalizedBundle) -> OcelProjection {
     }
     for event in &materialized {
         for object in &event.objects {
-            object_rows
-                .entry(object.object_id.clone())
-                .or_insert_with(|| OcelObjectRow {
-                    id: object.object_id.clone(),
-                    object_type: object.object_type.clone(),
-                    attributes: BTreeMap::new(),
-                });
+            if !object_rows.contains_key(&object.object_id) {
+                object_rows.insert(
+                    object.object_id.clone(),
+                    OcelObjectRow {
+                        id: object.object_id.clone(),
+                        object_type: object.object_type.clone(),
+                        attributes: BTreeMap::new(),
+                    },
+                );
+            }
         }
     }
     let objects = object_rows.into_values().collect();
