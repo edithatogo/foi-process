@@ -1,5 +1,6 @@
 use chrono::{DateTime, FixedOffset};
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{criterion_group, criterion_main, Criterion};
+use std::hint::black_box;
 use foi_process::{rust4pm::append_materialized_snapshot, NormalizedBundle};
 use process_mining::{
     core::event_data::object_centric::{
