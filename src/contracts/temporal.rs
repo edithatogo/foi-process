@@ -119,7 +119,7 @@ mod tests {
         let invalid_timestamps = vec![
             "",
             "invalid-timestamp",
-            "2023-10-25T12:00:00", // Missing offset
+            "2023-10-25T12:00:00",  // Missing offset
             "2023-13-25T12:00:00Z", // Invalid month
         ];
 
