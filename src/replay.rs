@@ -1,6 +1,7 @@
 //! Idempotent replay with revision, gap, conflict, supersession, and retraction handling.
 
 use std::collections::{BTreeMap, BTreeSet};
+use std::sync::LazyLock;
 
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -61,6 +62,17 @@ pub struct ReplayEngine {
     records: BTreeMap<StableId, RecordState>,
     positions: BTreeMap<(StableId, String), u64>,
 }
+
+static RULE_REVISION_GAP: LazyLock<TermId> =
+    LazyLock::new(|| TermId::parse("foip:RevisionGap").unwrap());
+static RULE_INITIAL_REVISION_NOT_ONE: LazyLock<TermId> =
+    LazyLock::new(|| TermId::parse("foip:InitialRevisionNotOne").unwrap());
+static RULE_STREAM_POSITION_CONFLICT: LazyLock<TermId> =
+    LazyLock::new(|| TermId::parse("foip:StreamPositionConflict").unwrap());
+static RULE_STREAM_POSITION_REGRESSION: LazyLock<TermId> =
+    LazyLock::new(|| TermId::parse("foip:StreamPositionRegression").unwrap());
+static RULE_STREAM_POSITION_GAP: LazyLock<TermId> =
+    LazyLock::new(|| TermId::parse("foip:StreamPositionGap").unwrap());
 
 impl ReplayEngine {
     pub fn apply(
@@ -127,7 +139,7 @@ impl ReplayEngine {
             }
             if delta.revision > current.revision.saturating_add(1) {
                 findings.push(ValidationFinding {
-                    rule_id: TermId::parse("foip:RevisionGap").unwrap(),
+                    rule_id: RULE_REVISION_GAP.clone(),
                     layer: FindingLayer::DataQuality,
                     severity: Severity::ReviewNeeded,
                     message: format!(
@@ -152,7 +164,7 @@ impl ReplayEngine {
             }
         } else if delta.revision != 1 {
             findings.push(ValidationFinding {
-                rule_id: TermId::parse("foip:InitialRevisionNotOne").unwrap(),
+                rule_id: RULE_INITIAL_REVISION_NOT_ONE.clone(),
                 layer: FindingLayer::DataQuality,
                 severity: Severity::ReviewNeeded,
                 message: format!(
@@ -173,7 +185,7 @@ impl ReplayEngine {
         if let Some(previous_sequence) = self.positions.get(&position_key).copied() {
             if delta.position.sequence == previous_sequence {
                 findings.push(ValidationFinding {
-                    rule_id: TermId::parse("foip:StreamPositionConflict").unwrap(),
+                    rule_id: RULE_STREAM_POSITION_CONFLICT.clone(),
                     layer: FindingLayer::DataQuality,
                     severity: Severity::Error,
                     message: format!(
@@ -197,7 +209,7 @@ impl ReplayEngine {
             }
             if delta.position.sequence < previous_sequence {
                 findings.push(ValidationFinding {
-                    rule_id: TermId::parse("foip:StreamPositionRegression").unwrap(),
+                    rule_id: RULE_STREAM_POSITION_REGRESSION.clone(),
                     layer: FindingLayer::DataQuality,
                     severity: Severity::ReviewNeeded,
                     message: format!(
@@ -220,7 +232,7 @@ impl ReplayEngine {
                 );
             } else if delta.position.sequence > previous_sequence.saturating_add(1) {
                 findings.push(ValidationFinding {
-                    rule_id: TermId::parse("foip:StreamPositionGap").unwrap(),
+                    rule_id: RULE_STREAM_POSITION_GAP.clone(),
                     layer: FindingLayer::DataQuality,
                     severity: Severity::ReviewNeeded,
                     message: format!(
