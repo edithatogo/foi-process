@@ -1,0 +1,23 @@
+{
+  "profile_id": "urn:foi-process:jurisdiction:AU:template",
+  "jurisdiction": "AU",
+  "platform": "synthetic-alaveteli-profile",
+  "source_uri": "urn:foi-process:synthetic-profile-source",
+  "effective_from": "2026-08-10",
+  "effective_to": null,
+  "maturity": "synthetic_only",
+  "legal_status": "not_assessed",
+  "fixtures": [
+    {"id": "positive-basic", "kind": "positive", "states": ["submitted", "acknowledged", "responding", "closed"]},
+    {"id": "negative-unsupported", "kind": "negative", "states": ["submitted", "unsupported"]},
+    {"id": "temporal-reorder", "kind": "temporal", "states": ["submitted", "acknowledged", "responding"], "expected": "source_order_preserved"},
+    {"id": "non-equivalence", "kind": "non-equivalence", "states": ["submitted", "closed"], "expected": "does_not_imply_legal_compliance"}
+  ],
+  "promotion_gates": {
+    "source_pin": "pending",
+    "deterministic_replay": "synthetic_only",
+    "mapping_review": "pending",
+    "human_legal_review": "required",
+    "empirical_validation": "not_started"
+  }
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" id="jurisdiction_process_template" targetNamespace="urn:foi-process:jurisdiction-template">
+  <process id="jurisdiction_process_profile" name="Jurisdiction process profile" isExecutable="false">
+    <startEvent id="start" name="Request observed" />
+    <task id="submitted" name="Submitted (observed)" />
+    <task id="acknowledged" name="Acknowledged (observed)" />
+    <exclusiveGateway id="state_gateway" name="Observed state" />
+    <task id="clarification" name="Clarification (observed)" />
+    <task id="responding" name="Responding (observed)" />
+    <task id="unsupported" name="Unsupported or unresolved state" />
+    <endEvent id="closed" name="Closed (observed terminal state)" />
+    <sequenceFlow id="flow_1" sourceRef="start" targetRef="submitted" />
+    <sequenceFlow id="flow_2" sourceRef="submitted" targetRef="acknowledged" />
+    <sequenceFlow id="flow_3" sourceRef="acknowledged" targetRef="state_gateway" />
+    <sequenceFlow id="flow_4" sourceRef="state_gateway" targetRef="clarification" />
+    <sequenceFlow id="flow_5" sourceRef="state_gateway" targetRef="responding" />
+    <sequenceFlow id="flow_6" sourceRef="state_gateway" targetRef="unsupported" />
+    <sequenceFlow id="flow_7" sourceRef="clarification" targetRef="responding" />
+    <sequenceFlow id="flow_8" sourceRef="responding" targetRef="closed" />
+  </process>
+</definitions>
