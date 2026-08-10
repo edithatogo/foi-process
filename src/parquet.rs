@@ -236,9 +236,12 @@ fn write_event_object_links(
     ]));
     let parent = path.parent().unwrap_or_else(|| Path::new("."));
     std::fs::create_dir_all(parent)?;
-    let temporary = path.with_extension(format!("parquet.{}.tmp", std::process::id()));
+    let named_temp = tempfile::Builder::new()
+        .prefix("parquet.")
+        .suffix(".tmp")
+        .tempfile_in(parent)?;
     let result = (|| {
-        let file = File::create(&temporary)?;
+        let file = named_temp.as_file().try_clone()?;
         let properties = writer_properties(options)?;
         let mut writer = ArrowWriter::try_new(file, schema.clone(), Some(properties))?;
         let mut rows =
@@ -266,7 +269,7 @@ fn write_event_object_links(
         writer.inner_mut().flush()?;
         writer.inner_mut().sync_all()?;
         drop(writer);
-        std::fs::rename(&temporary, &path)?;
+        named_temp.persist(&path).map_err(std::io::Error::other)?;
         sync_directory(parent)?;
         let file_metadata = std::fs::metadata(&path)?;
         let digest = digest_file(&path)?;
@@ -283,9 +286,6 @@ fn write_event_object_links(
             sha256: digest,
         })
     })();
-    if result.is_err() {
-        let _ = std::fs::remove_file(&temporary);
-    }
     result
 }
 
@@ -517,9 +517,12 @@ where
 {
     let parent = path.parent().unwrap_or_else(|| Path::new("."));
     std::fs::create_dir_all(parent)?;
-    let temporary = path.with_extension(format!("parquet.{}.tmp", std::process::id()));
+    let named_temp = tempfile::Builder::new()
+        .prefix("parquet.")
+        .suffix(".tmp")
+        .tempfile_in(parent)?;
     let result = (|| {
-        let file = File::create(&temporary)?;
+        let file = named_temp.as_file().try_clone()?;
         let properties = writer_properties(options)?;
         let mut writer = ArrowWriter::try_new(file, schema, Some(properties))?;
         for start in (0..row_count).step_by(options.row_group_size) {
@@ -530,7 +533,7 @@ where
         writer.inner_mut().flush()?;
         writer.inner_mut().sync_all()?;
         drop(writer);
-        std::fs::rename(&temporary, &path)?;
+        named_temp.persist(&path).map_err(std::io::Error::other)?;
         sync_directory(parent)?;
         let file_metadata = std::fs::metadata(&path)?;
         let digest = digest_file(&path)?;
@@ -547,9 +550,6 @@ where
             sha256: digest,
         })
     })();
-    if result.is_err() {
-        let _ = std::fs::remove_file(&temporary);
-    }
     result
 }
 
@@ -602,15 +602,18 @@ fn digest_file(path: &Path) -> Result<Sha256Digest, ParquetExportError> {
 fn write_json_atomic(path: PathBuf, value: &impl Serialize) -> Result<(), ParquetExportError> {
     let parent = path.parent().unwrap_or_else(|| Path::new("."));
     std::fs::create_dir_all(parent)?;
-    let temporary = path.with_extension(format!("json.{}.tmp", std::process::id()));
+    let named_temp = tempfile::Builder::new()
+        .prefix("json.")
+        .suffix(".tmp")
+        .tempfile_in(parent)?;
     let bytes = serde_json::to_vec_pretty(value)?;
-    let mut file = File::create(&temporary)?;
+    let mut file = named_temp.as_file().try_clone()?;
     file.write_all(&bytes)?;
     file.write_all(b"\n")?;
     file.flush()?;
     file.sync_all()?;
     drop(file);
-    std::fs::rename(&temporary, &path)?;
+    named_temp.persist(&path).map_err(std::io::Error::other)?;
     sync_directory(parent)?;
     Ok(())
 }
