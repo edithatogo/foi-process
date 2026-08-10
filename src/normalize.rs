@@ -10,6 +10,27 @@ use serde::{Deserialize, Serialize};
 
 use crate::contracts::*;
 
+static TERM_FOIO_AUTHORITY: std::sync::LazyLock<TermId> =
+    std::sync::LazyLock::new(|| TermId::parse("foio:Authority").unwrap());
+static TERM_FOIO_REQUEST: std::sync::LazyLock<TermId> =
+    std::sync::LazyLock::new(|| TermId::parse("foio:Request").unwrap());
+static TERM_FOIP_MISSING_CASE_HINT: std::sync::LazyLock<TermId> =
+    std::sync::LazyLock::new(|| TermId::parse("foip:MissingCaseHint").unwrap());
+static TERM_FOIP_RETRACTION_WITHOUT_TOMBSTONE_EVIDENCE: std::sync::LazyLock<TermId> =
+    std::sync::LazyLock::new(|| TermId::parse("foip:RetractionWithoutTombstoneEvidence").unwrap());
+static TERM_FOIP_UNMAPPED_NATIVE_ACTIVITY: std::sync::LazyLock<TermId> =
+    std::sync::LazyLock::new(|| TermId::parse("foip:UnmappedNativeActivity").unwrap());
+static TERM_FOIP_UNMAPPED_PLATFORM_EVENT: std::sync::LazyLock<TermId> =
+    std::sync::LazyLock::new(|| TermId::parse("foip:UnmappedPlatformEvent").unwrap());
+static TERM_FOIP_ADDRESSED_TO: std::sync::LazyLock<TermId> =
+    std::sync::LazyLock::new(|| TermId::parse("foip:addressedTo").unwrap());
+static TERM_FOIP_AUTHORITY: std::sync::LazyLock<TermId> =
+    std::sync::LazyLock::new(|| TermId::parse("foip:authority").unwrap());
+static TERM_FOIP_CASE: std::sync::LazyLock<TermId> =
+    std::sync::LazyLock::new(|| TermId::parse("foip:case").unwrap());
+static TERM_PROV_PRIMARY_SOURCE: std::sync::LazyLock<TermId> =
+    std::sync::LazyLock::new(|| TermId::parse("prov:primarySource").unwrap());
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct MappingProfile {
@@ -183,7 +204,7 @@ impl DeterministicNormalizer {
 
         let Some(case_id) = delta.request_hint.clone() else {
             bundle.findings.push(ValidationFinding {
-                rule_id: TermId::parse("foip:MissingCaseHint").unwrap(),
+                rule_id: (*TERM_FOIP_MISSING_CASE_HINT).clone(),
                 layer: FindingLayer::Structural,
                 severity: Severity::ReviewNeeded,
                 message: "Evidence delta cannot be mapped to a process case without request_hint"
@@ -210,7 +231,7 @@ impl DeterministicNormalizer {
         let (activity, mut assertion_status, confidence) = match mapped_activity {
             Some(activity) => (activity, AssertionStatus::Observed, None),
             None => (
-                TermId::parse("foip:UnmappedPlatformEvent").unwrap(),
+                (*TERM_FOIP_UNMAPPED_PLATFORM_EVENT).clone(),
                 AssertionStatus::Candidate,
                 Confidence::new(0.0).ok(),
             ),
@@ -247,16 +268,16 @@ impl DeterministicNormalizer {
             .map(|record| EvidenceRef {
                 evidence_id: record.evidence_id.clone(),
                 selector: None,
-                role: Some(TermId::parse("prov:primarySource").unwrap()),
+                role: Some((*TERM_PROV_PRIMARY_SOURCE).clone()),
             })
             .into_iter()
             .collect();
 
-        let request_type = TermId::parse("foio:Request").unwrap();
+        let request_type = (*TERM_FOIO_REQUEST).clone();
         let request_object = EventObjectLink {
             object_id: case_id.clone(),
             object_type: request_type.clone(),
-            qualifier: TermId::parse("foip:case").unwrap(),
+            qualifier: (*TERM_FOIP_CASE).clone(),
         };
         let mut event_objects = vec![request_object];
         bundle.objects.push(ObjectRecord {
@@ -276,7 +297,7 @@ impl DeterministicNormalizer {
                     vec![EvidenceRef {
                         evidence_id: record.evidence_id.clone(),
                         selector: None,
-                        role: Some(TermId::parse("prov:primarySource").unwrap()),
+                        role: Some((*TERM_PROV_PRIMARY_SOURCE).clone()),
                     }]
                 })
                 .unwrap_or_default(),
@@ -288,7 +309,7 @@ impl DeterministicNormalizer {
             .and_then(serde_json::Value::as_str)
             .and_then(|value| StableId::parse(value).ok())
         {
-            let authority_type = TermId::parse("foio:Authority").unwrap();
+            let authority_type = (*TERM_FOIO_AUTHORITY).clone();
             let authority_name = delta
                 .attributes
                 .get("authority_name")
@@ -312,7 +333,7 @@ impl DeterministicNormalizer {
             bundle.object_links.push(ObjectObjectLink {
                 source_object_id: case_id.clone(),
                 target_object_id: authority_id.clone(),
-                qualifier: TermId::parse("foip:addressedTo").unwrap(),
+                qualifier: (*TERM_FOIP_ADDRESSED_TO).clone(),
                 valid_from: None,
                 valid_to: None,
                 evidence: Vec::new(),
@@ -320,7 +341,7 @@ impl DeterministicNormalizer {
             event_objects.push(EventObjectLink {
                 object_id: authority_id,
                 object_type: authority_type,
-                qualifier: TermId::parse("foip:authority").unwrap(),
+                qualifier: (*TERM_FOIP_AUTHORITY).clone(),
             });
         }
 
@@ -388,7 +409,7 @@ impl DeterministicNormalizer {
 
         if delta.operation == DeltaOperation::Delete && delta.evidence.is_none() {
             bundle.findings.push(ValidationFinding {
-                rule_id: TermId::parse("foip:RetractionWithoutTombstoneEvidence").unwrap(),
+                rule_id: (*TERM_FOIP_RETRACTION_WITHOUT_TOMBSTONE_EVIDENCE).clone(),
                 layer: FindingLayer::DataQuality,
                 severity: Severity::ReviewNeeded,
                 message: "Deletion was reported without a captured tombstone/source response"
@@ -402,7 +423,7 @@ impl DeterministicNormalizer {
 
         if !was_mapped {
             bundle.findings.push(ValidationFinding {
-                rule_id: TermId::parse("foip:UnmappedNativeActivity").unwrap(),
+                rule_id: (*TERM_FOIP_UNMAPPED_NATIVE_ACTIVITY).clone(),
                 layer: FindingLayer::Semantic,
                 severity: Severity::ReviewNeeded,
                 message: format!("No mapping exists for platform activity '{native_activity}'"),
