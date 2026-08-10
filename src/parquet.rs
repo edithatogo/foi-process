@@ -100,7 +100,11 @@ fn partition_component(value: &str) -> String {
         if byte.is_ascii_alphanumeric() || matches!(byte, b'-' | b'_' | b'.' | b'~') {
             encoded.push(char::from(byte));
         } else {
-            encoded.push_str(&format!("%{byte:02X}"));
+            let hex1 = b"0123456789ABCDEF"[(byte >> 4) as usize];
+            let hex2 = b"0123456789ABCDEF"[(byte & 0x0F) as usize];
+            encoded.push('%');
+            encoded.push(char::from(hex1));
+            encoded.push(char::from(hex2));
         }
     }
     encoded
