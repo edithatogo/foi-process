@@ -266,9 +266,7 @@ fn write_event_object_links(
         writer.inner_mut().flush()?;
         writer.inner_mut().sync_all()?;
         drop(writer);
-        temporary
-            .persist(&path)
-            .map_err(|e| e.error)?;
+        temporary.persist(&path).map_err(|e| e.error)?;
         sync_directory(parent)?;
         let file_metadata = std::fs::metadata(&path)?;
         let digest = digest_file(&path)?;
@@ -534,9 +532,7 @@ where
         writer.inner_mut().flush()?;
         writer.inner_mut().sync_all()?;
         drop(writer);
-        temporary
-            .persist(&path)
-            .map_err(|e| e.error)?;
+        temporary.persist(&path).map_err(|e| e.error)?;
         sync_directory(parent)?;
         let file_metadata = std::fs::metadata(&path)?;
         let digest = digest_file(&path)?;
@@ -618,9 +614,7 @@ fn write_json_atomic(path: PathBuf, value: &impl Serialize) -> Result<(), Parque
     file.flush()?;
     file.sync_all()?;
     drop(file);
-    temporary
-        .persist(&path)
-        .map_err(|e| e.error)?;
+    temporary.persist(&path).map_err(|e| e.error)?;
     sync_directory(parent)?;
     Ok(())
 }
