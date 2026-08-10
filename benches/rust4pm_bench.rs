@@ -1,6 +1,5 @@
 use chrono::{DateTime, FixedOffset};
 use criterion::{criterion_group, criterion_main, Criterion};
-use std::hint::black_box;
 use foi_process::{rust4pm::append_materialized_snapshot, NormalizedBundle};
 use process_mining::{
     core::event_data::object_centric::{
@@ -9,6 +8,7 @@ use process_mining::{
     AppendableOCEL,
 };
 use std::convert::Infallible;
+use std::hint::black_box;
 
 #[derive(Default)]
 struct BlackHoleSink;
