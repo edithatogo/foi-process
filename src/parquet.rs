@@ -587,11 +587,14 @@ fn digest_file(path: &Path) -> Result<Sha256Digest, ParquetExportError> {
         digest.update(&buffer[..read]);
     }
     let bytes = digest.finalize();
-    let mut encoded = String::with_capacity(64);
+    const HEX_CHARS: &[u8; 16] = b"0123456789abcdef";
+    let mut encoded = Vec::with_capacity(64);
     for byte in bytes {
-        use std::fmt::Write as _;
-        let _ = write!(&mut encoded, "{byte:02x}");
+        encoded.push(HEX_CHARS[(byte >> 4) as usize]);
+        encoded.push(HEX_CHARS[(byte & 0xf) as usize]);
     }
+    // SAFETY: We only push valid ASCII hex characters, so it is valid UTF-8.
+    let encoded = unsafe { String::from_utf8_unchecked(encoded) };
     Ok(Sha256Digest::parse(encoded)?)
 }
 
