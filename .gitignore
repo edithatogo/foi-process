@@ -27,6 +27,12 @@ quality-report.json
 !.env.example
 .env.local
 .git.broken-backup
+.codex/
+.entire/
+_on
+arxiv-latex-template/
+foi-process/fyi_system.db
+foi-process/outputs/
 /con
 .swarm/
 .tmp/
