@@ -1,4 +1,4 @@
-# Status — 2026-08-01
+# Status — 2026-08-11
 
 ## Implemented in workpack
 
@@ -17,15 +17,15 @@
 
 ## Acceptance state
 
-The repository implementation and the production-shaped integration path are
-accepted against the evidence recorded in `foi-process` issue #9 and the
-linked governance artefacts. Issue #36 is closed: its repository-owned
-full-manifest and replay acceptance is complete. The remaining items are live
-external evidence gates, not unimplemented repository work:
+The repository implementation and bounded production-shaped integration path
+are accepted against the evidence recorded in `foi-process` issue #9 and the
+linked governance artefacts. The bounded HF Dataset/Space, GitHub Pages
+dashboard, and Zenodo/DataCite record are externally evidenced. Remaining work
+is explicitly deferred or external, not unimplemented bounded-release work:
 
 - Axiom/RuleSpec vocabulary promotion requires the owning external repositories.
-- A revision-pinned external verification of the published Hugging Face Dataset
-  Viewer and deployed dashboard remains open in issue #9.
+- Full-corpus parity, offsets 250 onward, production takedown continuation, and
+  full-corpus HF coverage remain deferred in issue #9.
 - Any new production-derived public release requires release-specific external
   host, rights, privacy, removal/takedown, and governance evidence; code
   completion and the Apache-2.0 code licence do not supply that authority.
@@ -48,3 +48,9 @@ external evidence gates, not unimplemented repository work:
   revisions and 75 cases, 425 events, and 179 attachments. Full-corpus HF
   coverage and any new production-derived release remain external gates in
   issue #9.
+
+## Open issue tracks
+
+- #9: deferred full-corpus and production governance gates.
+- #39: optional jurisdiction-specific empirical/legal expansion.
+- #63: deferred full-corpus registry expansion.
