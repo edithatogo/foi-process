@@ -74,6 +74,8 @@ jobs:
           find examples/generated -type f -name '*.json' ! -name 'reference-benchmark.json' -print0 | sort -z | xargs -0 sha256sum > /tmp/fixtures.second
           diff -u /tmp/fixtures.first /tmp/fixtures.second
       - run: python scripts/validate_workpack.py
+      - run: python scripts/validate_jurisdiction_intake.py examples/input/jurisdiction-intake.synthetic.json
+      - run: python scripts/test_validate_jurisdiction_intake.py
       - run: python scripts/validate_governance_gate.py
       - run: python scripts/validate_jurisdiction_profiles.py
       - run: PYTHONPATH=scripts python scripts/test_jurisdiction_profile_semantics.py
