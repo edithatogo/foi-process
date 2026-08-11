@@ -68,6 +68,8 @@ jobs:
           find examples/generated -type f -name '*.json' ! -name 'reference-benchmark.json' -print0 | sort -z | xargs -0 sha256sum > /tmp/fixtures.second
           diff -u /tmp/fixtures.first /tmp/fixtures.second
       - run: python scripts/validate_workpack.py
+      - run: python scripts/validate_jurisdiction_intake.py examples/input/jurisdiction-intake.synthetic.json
+      - run: python scripts/test_validate_jurisdiction_intake.py
       - run: python scripts/test_reference_semantics.py
       - run: python scripts/test_synthetic_scenarios.py
       - run: python scripts/test_hf_space_projection.py
