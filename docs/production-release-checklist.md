@@ -10,8 +10,11 @@ each item.
   snapshot revision, WARC identifiers, attachment byte length, and SHA-256 digest.
 - Retrieve attachment bytes through the approved archive path and call
   `verify_manifest_attachment_bytes` before emitting deltas.
-- Store raw bytes, WARC/WACZ files, OCR, embeddings, and the confidential source-to-pseudonym map
-  outside this public repository and outside public Hugging Face assets.
+- Keep raw bytes, WARC/WACZ files, correspondence, attachments, OCR, and approved embeddings in
+  the canonical `fyi-archive` source layer. They may be published there only with a
+  revision-pinned rights, provenance, removal, and byte-integrity record. Do not duplicate those
+  bytes in this repository or in dashboard assets; foi-process carries case-level locators and
+  digests instead.
 - Use `pseudonymize_case_id` with a secret held by an external secret manager. Never log or export
   the key or the source identifier used to derive the pseudonym.
 

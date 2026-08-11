@@ -41,7 +41,7 @@ tracks:
   owner: kairos/rulesandprocesses/sourceright
 - id: T10
   slug: full-corpus-process-mining
-  status: acceptance_verified
+  status: blocked_on_source_reconciliation
   owner: foi-process/fyi-archive/fyi-cli
 - id: T11
   slug: jurisdiction-case-process-modelling

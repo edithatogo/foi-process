@@ -1,8 +1,10 @@
 # Hugging Face dataset publication
 
-The dashboard is backed by a separate Hugging Face Dataset repository,
-`edithatogo/foi-process-event-logs`. The repository is built from reviewed projections rather than
-from raw requester correspondence.
+The dashboard is backed by separate Hugging Face Dataset repositories. The synthetic benchmark
+surface is `edithatogo/foi-process-event-logs`; the accepted bounded NZ release is
+`edithatogo/foi-process-event-logs-bounded`. Both are projections rather than a duplicate raw
+archive. Case-level source material belongs in the canonical `edithatogo/fyi-archive-nz` source
+layer and is linked by verified locator and digest.
 
 ## Published surfaces
 
@@ -27,9 +29,10 @@ built manifest, rechecks every declared byte length, row count and SHA-256 diges
 remote revision in a `hf-dataset-publication-attestation` workflow artifact. Upload success alone is
 not treated as publication proof.
 
-## Production gate
+## NZ production gate
 
-The current dataset is classified `synthetic-fixture`. Production data must not be sent to the Hub
-until every record has passed the public projection and the privacy, tikanga/data-governance,
-licensing, removal/appeal, and threat-model reviews. The exporter fails closed when fixture records
-are not explicitly marked human-reviewed and public or metadata-only.
+The bounded NZ package is classified `public-derived-bounded`; it is not a full-corpus claim. The
+synthetic dataset remains `synthetic-fixture`. A complete NZ process projection must not be sent to
+the Hub until exact manifest/case/event/attachment/source-record parity, a pinned takedown revision,
+and release-specific privacy, rights, retention, removal/appeal, threat-model, and operational
+evidence all pass. The exporter and dashboard must fail closed when those checks are absent.
