@@ -1,7 +1,13 @@
 # Plan: Full-corpus ingestion, mining, and static dashboard
 
-Status: acceptance verified; publication and jurisdiction modelling remain
-separate gates.
+Status: active but blocked on NZ source reconciliation. The retained Internet Archive CDX snapshot
+is complete, but the current reconciled queue has 31,749 requests while the canonical captured
+manifest has 33,217. No full-corpus processing, benchmark, dashboard claim, or publication can
+advance until that discrepancy is resolved and parity evidence passes. Publication and jurisdiction
+modelling remain separate gates.
+
+See `docs/nz-corpus-completion-plan.md` for the current evidence, delivery order, and later DSPy
+evaluation boundary.
 
 ## Phase 1: Cross-repository contract acceptance
 

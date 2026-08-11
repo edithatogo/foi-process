@@ -7,11 +7,15 @@ This runbook governs an optional recurring rebuild of the public-safe FYI proces
 The operational path is:
 
 ```text
-fyi-cli/fyi-archive immutable manifest -> foi-process deterministic replay ->
-public-safe aggregate and event-log projection -> verification evidence
+fyi-cli/fyi-archive immutable manifest and canonical source material ->
+foi-process deterministic replay -> public-safe aggregate and event-log projection ->
+verification evidence
 ```
 
-Raw WARC/WACZ material, attachments, OCR text, embeddings, correspondence, and confidential source-to-pseudonym mappings remain outside this repository and outside public dashboard assets.
+Raw WARC/WACZ material, attachments, OCR text, embeddings, and correspondence live in the
+canonical `fyi-archive` source layer. They are linked from the process projection with stable
+case-level locators and digests, not copied into this repository or dashboard assets. Confidential
+source-to-pseudonym mappings remain outside every public surface.
 
 ## Preconditions and stop conditions
 
@@ -47,7 +51,7 @@ Record runner duration, peak disk use, input count, output size, and any failed 
 
 | Material | Location and retention rule |
 | --- | --- |
-| Raw WARC/WACZ, attachment bytes, OCR, embeddings, correspondence | Retain only in the approved source/archive environment under source-specific rights and retention controls; never commit or publish here. |
+| Raw WARC/WACZ, attachment bytes, OCR, embeddings, correspondence | Retain in the canonical source/archive environment under source-specific rights, provenance, integrity, and retention controls. Public availability is a source-layer decision; never duplicate bytes in this repository or dashboard. |
 | Source-to-pseudonym mapping and review records containing personal information | Access-controlled external secret/governance system; never export to logs, manifests, datasets, or dashboard assets. |
 | Input manifest revision, source sequence, digests, replay hashes, benchmark summary, coverage and exclusion counts | Retain as public-safe, revision-pinned acceptance evidence. |
 | Public-safe event logs, OCEL tables, aggregates, schemas, and dashboard projection | Retain only when the applicable publication gate approves the exact revision; replace or withdraw through the removal workflow. |
