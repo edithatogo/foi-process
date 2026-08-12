@@ -9,18 +9,30 @@ fn digest(value: &[u8]) -> Sha256Digest {
     Sha256Digest::of(value)
 }
 
+fn fixture_events() -> Vec<ProcessEvent> {
+    include_str!("../examples/input/process-events.ndjson")
+        .lines()
+        .take(3)
+        .map(|line| serde_json::from_str(line).unwrap())
+        .collect()
+}
+
+fn event_bytes(events: &[ProcessEvent]) -> Vec<u8> {
+    let mut bytes = Vec::new();
+    for event in events {
+        serde_json::to_writer(&mut bytes, event).unwrap();
+        bytes.push(b'\n');
+    }
+    bytes
+}
+
 fn write_fixture() -> (tempfile::TempDir, ArchivePackageManifest) {
     let root = tempfile::tempdir().unwrap();
     let cases = b"{\"case_id\":\"case-1\"}\n";
-    let events = concat!(
-        "{\"source_sequence\":10,\"event_id\":\"event-a\"}\n",
-        "{\"position\":{\"sequence\":10},\"event_id\":\"event-b\"}\n",
-        "{\"source_sequence\":12,\"event_id\":\"event-c\"}\n"
-    )
-    .as_bytes();
+    let events = event_bytes(&fixture_events());
     let attachments = b"{\"attachment_id\":\"attachment-1\"}\n";
     std::fs::write(root.path().join("cases.ndjson"), cases).unwrap();
-    std::fs::write(root.path().join("events.ndjson"), events).unwrap();
+    std::fs::write(root.path().join("events.ndjson"), &events).unwrap();
     std::fs::write(root.path().join("attachments.ndjson"), attachments).unwrap();
 
     let mut manifest = ArchivePackageManifest {
@@ -35,8 +47,8 @@ fn write_fixture() -> (tempfile::TempDir, ArchivePackageManifest) {
         },
         ordering: ArchivePackageOrdering {
             event_key: "source_sequence_then_event_id".to_string(),
-            first_source_sequence: Some(10),
-            last_source_sequence: Some(12),
+            first_source_sequence: Some(1),
+            last_source_sequence: Some(3),
         },
         counts: ArchivePackageCounts {
             file_count: 3,
@@ -50,7 +62,7 @@ fn write_fixture() -> (tempfile::TempDir, ArchivePackageManifest) {
                 2,
                 "events.ndjson",
                 ArchivePackageFileRole::Events,
-                events,
+                &events,
                 3,
             ),
             file(
@@ -219,16 +231,13 @@ fn intake_rejects_wrong_instance_archive_or_takedown_revision() {
 #[test]
 fn intake_rejects_out_of_order_events_and_url_payload_paths() {
     let (root, mut manifest) = write_fixture();
-    let unordered = concat!(
-        "{\"source_sequence\":12,\"event_id\":\"event-b\"}\n",
-        "{\"source_sequence\":10,\"event_id\":\"event-a\"}\n"
-    )
-    .as_bytes();
-    std::fs::write(root.path().join("events.ndjson"), unordered).unwrap();
-    manifest.files[1].sha256 = digest(unordered);
+    let mut events = fixture_events();
+    events.swap(0, 2);
+    let unordered = event_bytes(&events);
+    std::fs::write(root.path().join("events.ndjson"), &unordered).unwrap();
+    manifest.files[1].sha256 = digest(&unordered);
     manifest.files[1].byte_count = unordered.len() as u64;
-    manifest.files[1].row_count = Some(2);
-    manifest.counts.event_count = 2;
+    manifest.files[1].row_count = Some(3);
     manifest.package_id = archive_package_id(&manifest).unwrap();
     persist(&root, &manifest);
     assert!(matches!(
@@ -242,5 +251,23 @@ fn intake_rejects_out_of_order_events_and_url_payload_paths() {
     assert!(matches!(
         load_and_validate_archive_package(root.path(), &policy(&manifest)),
         Err(ArchivePackageError::InvalidPackagePath(_))
+    ));
+}
+
+#[test]
+fn intake_deserializes_and_validates_process_events() {
+    let (root, mut manifest) = write_fixture();
+    let mut events = fixture_events();
+    events[0].revision = 0;
+    let invalid = event_bytes(&events);
+    std::fs::write(root.path().join("events.ndjson"), &invalid).unwrap();
+    manifest.files[1].sha256 = digest(&invalid);
+    manifest.files[1].byte_count = invalid.len() as u64;
+    manifest.package_id = archive_package_id(&manifest).unwrap();
+    persist(&root, &manifest);
+
+    assert!(matches!(
+        load_validated_archive_package(root.path(), &policy(&manifest)),
+        Err(ArchivePackageError::InvalidProcessEvent { row: 1, .. })
     ));
 }
