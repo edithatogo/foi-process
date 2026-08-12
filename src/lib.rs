@@ -7,6 +7,7 @@
 //! Propel. This crate joins those outputs through deterministic contracts and replay.
 
 pub mod aggregate;
+pub mod archive_package;
 pub mod contracts;
 pub mod fyi_archive;
 pub mod normalize;
@@ -23,6 +24,7 @@ pub mod parquet;
 pub mod rust4pm;
 
 pub use aggregate::*;
+pub use archive_package::*;
 pub use contracts::*;
 pub use fyi_archive::*;
 pub use normalize::*;
