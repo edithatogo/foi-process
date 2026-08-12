@@ -50,3 +50,10 @@ tracks:
   track: jurisdiction_case_process_modelling_20260721
   github_issue: https://github.com/edithatogo/foi-process/issues/39
   programme_issue: https://github.com/edithatogo/foi-o/issues/81
+- id: T12
+  slug: instance-pipeline-consolidation
+  status: pending
+  owner: foi-process/fyi-archive/fyi-cli
+  track: instance_pipeline_consolidation_20260812
+  github_issue: https://github.com/edithatogo/foi-process/issues/114
+  upstream_issue: https://github.com/edithatogo/fyi-archive/issues/370
