@@ -9,7 +9,7 @@ use std::{
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
-use crate::{canonical_json_bytes, validate_event, ProcessEvent, Severity, Sha256Digest};
+use crate::{canonical_json_bytes, Sha256Digest};
 
 pub const ARCHIVE_PACKAGE_SCHEMA_VERSION: &str = "1.0.0";
 pub const ARCHIVE_PACKAGE_MANIFEST: &str = "archive-package.json";
@@ -76,8 +76,7 @@ pub struct ArchivePackageFile {
     pub row_count: Option<u64>,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ArchivePackageIntakePolicy {
     pub expected_instance_id: String,
     pub expected_archive_revision: u64,
@@ -88,8 +87,7 @@ pub struct ArchivePackageIntakePolicy {
     pub source_site_hosts: BTreeSet<String>,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 pub struct ArchivePackageReceipt {
     pub package_id: Sha256Digest,
     pub manifest_sha256: Sha256Digest,
@@ -99,12 +97,6 @@ pub struct ArchivePackageReceipt {
     pub repository: String,
     pub repository_revision: String,
     pub counts: ArchivePackageCounts,
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize)]
-pub struct ValidatedArchivePackage {
-    pub receipt: ArchivePackageReceipt,
-    pub events: Vec<ProcessEvent>,
 }
 
 #[derive(Debug, Error)]
@@ -200,13 +192,6 @@ pub enum ArchivePackageError {
         #[source]
         source: serde_json::Error,
     },
-    #[error("process event {event_id} in {path} at row {row} failed validation")]
-    InvalidProcessEvent {
-        path: String,
-        row: u64,
-        event_id: String,
-        findings: Vec<crate::ValidationFinding>,
-    },
     #[error("event row {row} in {path} is missing source_sequence or event_id")]
     EventOrderKeyMissing { path: String, row: u64 },
     #[error("event rows are not strictly ordered by source_sequence then event_id")]
@@ -248,13 +233,6 @@ pub fn load_and_validate_archive_package(
     root: &Path,
     policy: &ArchivePackageIntakePolicy,
 ) -> Result<ArchivePackageReceipt, ArchivePackageError> {
-    Ok(load_validated_archive_package(root, policy)?.receipt)
-}
-
-pub fn load_validated_archive_package(
-    root: &Path,
-    policy: &ArchivePackageIntakePolicy,
-) -> Result<ValidatedArchivePackage, ArchivePackageError> {
     let bytes =
         fs::read(root.join(ARCHIVE_PACKAGE_MANIFEST)).map_err(ArchivePackageError::ReadManifest)?;
     let manifest = serde_json::from_slice(&bytes).map_err(ArchivePackageError::ParseManifest)?;
@@ -266,21 +244,18 @@ fn validate_archive_package(
     manifest: &ArchivePackageManifest,
     policy: &ArchivePackageIntakePolicy,
     manifest_sha256: Sha256Digest,
-) -> Result<ValidatedArchivePackage, ArchivePackageError> {
+) -> Result<ArchivePackageReceipt, ArchivePackageError> {
     validate_identity(manifest, policy)?;
-    let events = validate_files(root, manifest)?;
-    Ok(ValidatedArchivePackage {
-        receipt: ArchivePackageReceipt {
-            package_id: manifest.package_id.clone(),
-            manifest_sha256,
-            instance_id: manifest.instance_id.clone(),
-            archive_revision: manifest.archive_revision,
-            takedown_revision: manifest.takedown_revision.clone(),
-            repository: manifest.source.repository.clone(),
-            repository_revision: manifest.source.revision.clone(),
-            counts: manifest.counts.clone(),
-        },
-        events,
+    validate_files(root, manifest)?;
+    Ok(ArchivePackageReceipt {
+        package_id: manifest.package_id.clone(),
+        manifest_sha256,
+        instance_id: manifest.instance_id.clone(),
+        archive_revision: manifest.archive_revision,
+        takedown_revision: manifest.takedown_revision.clone(),
+        repository: manifest.source.repository.clone(),
+        repository_revision: manifest.source.revision.clone(),
+        counts: manifest.counts.clone(),
     })
 }
 
@@ -355,7 +330,7 @@ fn validate_identity(
 fn validate_files(
     root: &Path,
     manifest: &ArchivePackageManifest,
-) -> Result<Vec<ProcessEvent>, ArchivePackageError> {
+) -> Result<(), ArchivePackageError> {
     if manifest.counts.file_count != manifest.files.len() as u64 {
         return Err(ArchivePackageError::FileCountMismatch {
             declared: manifest.counts.file_count,
@@ -374,7 +349,6 @@ fn validate_files(
     let mut previous_event_key: Option<(u64, String)> = None;
     let mut first_sequence = None;
     let mut last_sequence = None;
-    let mut events = Vec::with_capacity(manifest.counts.event_count as usize);
 
     for (index, entry) in manifest.files.iter().enumerate() {
         if entry.order != index as u64 + 1 {
@@ -445,7 +419,6 @@ fn validate_files(
                 &mut previous_event_key,
                 &mut first_sequence,
                 &mut last_sequence,
-                &mut events,
             )?;
         }
     }
@@ -472,7 +445,7 @@ fn validate_files(
     {
         return Err(ArchivePackageError::EventSequenceBoundsMismatch);
     }
-    Ok(events)
+    Ok(())
 }
 
 fn validate_event_rows(
@@ -481,33 +454,38 @@ fn validate_event_rows(
     previous: &mut Option<(u64, String)>,
     first_sequence: &mut Option<u64>,
     last_sequence: &mut Option<u64>,
-    events: &mut Vec<ProcessEvent>,
 ) -> Result<(), ArchivePackageError> {
     for (index, line) in bytes.split(|byte| *byte == b'\n').enumerate() {
         if line.iter().all(u8::is_ascii_whitespace) {
             continue;
         }
-        let event: ProcessEvent = serde_json::from_slice(line).map_err(|source| {
+        let row: serde_json::Value = serde_json::from_slice(line).map_err(|source| {
             ArchivePackageError::InvalidEventRow {
                 path: path.to_string(),
                 row: index as u64 + 1,
                 source,
             }
         })?;
-        let findings = validate_event(&event);
-        if findings
-            .iter()
-            .any(|finding| finding.severity >= Severity::Error)
-        {
-            return Err(ArchivePackageError::InvalidProcessEvent {
-                path: path.to_string(),
-                row: index as u64 + 1,
-                event_id: event.event_id.to_string(),
-                findings,
+        let sequence = row
+            .get("source_sequence")
+            .and_then(serde_json::Value::as_u64)
+            .or_else(|| {
+                row.get("position")
+                    .and_then(|value| value.get("sequence"))
+                    .and_then(serde_json::Value::as_u64)
             });
-        }
-        let sequence = event.position.sequence;
-        let event_id = event.event_id.to_string();
+        let event_id = row.get("event_id").and_then(serde_json::Value::as_str);
+        let (sequence, event_id) = match (sequence, event_id) {
+            (Some(sequence), Some(event_id)) if !event_id.is_empty() => {
+                (sequence, event_id.to_string())
+            }
+            _ => {
+                return Err(ArchivePackageError::EventOrderKeyMissing {
+                    path: path.to_string(),
+                    row: index as u64 + 1,
+                })
+            }
+        };
         let key = (sequence, event_id);
         if previous.as_ref().is_some_and(|prior| key <= *prior) {
             return Err(ArchivePackageError::EventOrderViolation);
@@ -515,7 +493,6 @@ fn validate_event_rows(
         first_sequence.get_or_insert(sequence);
         *last_sequence = Some(sequence);
         *previous = Some(key);
-        events.push(event);
     }
     Ok(())
 }

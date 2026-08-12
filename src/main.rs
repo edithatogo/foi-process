@@ -46,15 +46,6 @@ enum Command {
         #[arg(long)]
         report: Option<PathBuf>,
     },
-    /// Validate and transactionally reconcile one immutable fyi-archive snapshot package.
-    ReconcileArchivePackage {
-        package_root: PathBuf,
-        output_root: PathBuf,
-        #[arg(long)]
-        policy: PathBuf,
-        #[arg(long, default_value_t = false)]
-        bootstrap: bool,
-    },
     /// Replay EvidenceDelta NDJSON through the deterministic normalizer.
     Replay {
         input: PathBuf,
@@ -166,17 +157,6 @@ fn main() -> Result<()> {
                     },
                 )?;
             }
-        }
-        Command::ReconcileArchivePackage {
-            package_root,
-            output_root,
-            policy,
-            bootstrap,
-        } => {
-            let policy: ArchivePackageIntakePolicy = read_json(policy)?;
-            let outcome =
-                reconcile_archive_package(&package_root, &policy, &output_root, bootstrap)?;
-            write_json_stdout(&outcome)?;
         }
         Command::Replay {
             input,
