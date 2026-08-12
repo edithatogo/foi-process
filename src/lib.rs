@@ -14,6 +14,7 @@ pub mod normalize;
 pub mod ocel;
 pub mod pseudonym;
 pub mod publication;
+pub mod reconcile;
 pub mod replay;
 pub mod validation;
 
@@ -31,6 +32,7 @@ pub use normalize::*;
 pub use ocel::*;
 pub use pseudonym::*;
 pub use publication::*;
+pub use reconcile::*;
 pub use replay::*;
 pub use validation::*;
 
