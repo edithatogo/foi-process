@@ -1,5 +1,9 @@
 # Project Tracks
 
+## [~] Track: security-quality-fuzzing
+
+[Specification and plan](./tracks/T13-security-quality-fuzzing/)
+
 ## [ ] Track: Instance archive-to-process pipeline consolidation
 
 [Specification and plan](./tracks/instance_pipeline_consolidation_20260812/)

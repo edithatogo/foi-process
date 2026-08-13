@@ -1,0 +1,33 @@
+[package]
+name = "foi-process-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "=0.4.13"
+serde_json = "=1.0.151"
+tempfile = "=3.27.0"
+
+[dependencies.foi-process]
+path = ".."
+
+[[bin]]
+name = "contract_json"
+path = "fuzz_targets/contract_json.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "archive_package_intake"
+path = "fuzz_targets/archive_package_intake.rs"
+test = false
+doc = false
+bench = false
+
+[workspace]
+members = ["."]
