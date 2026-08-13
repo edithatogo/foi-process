@@ -49,11 +49,11 @@ jobs:
         with:
           toolchain: nightly-2026-08-01
       - name: Install pinned cargo-fuzz
-        run: cargo install cargo-fuzz --version 0.13.2 --locked
+        run: cargo +nightly-2026-08-01 install cargo-fuzz --version 0.13.2 --locked
       - name: Run bounded smoke campaigns
         run: |
-          cargo fuzz run contract_json -- -runs=1000 -max_len=65536 -rss_limit_mb=1024 -timeout=5
-          cargo fuzz run archive_package_intake -- -runs=1000 -max_len=65536 -rss_limit_mb=1024 -timeout=5
+          cargo +nightly-2026-08-01 fuzz run contract_json -- -runs=1000 -max_len=65536 -rss_limit_mb=1024 -timeout=5
+          cargo +nightly-2026-08-01 fuzz run archive_package_intake -- -runs=1000 -max_len=65536 -rss_limit_mb=1024 -timeout=5
       - name: Retain failures
         if: failure() || cancelled()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -86,11 +86,11 @@ jobs:
           test "$REQUESTED" -ge 30 && test "$REQUESTED" -le 900
           echo "MAX_TOTAL_TIME=$REQUESTED" >> "$GITHUB_ENV"
       - name: Install pinned cargo-fuzz
-        run: cargo install cargo-fuzz --version 0.13.2 --locked
+        run: cargo +nightly-2026-08-01 install cargo-fuzz --version 0.13.2 --locked
       - name: Run bounded campaigns
         run: |
-          cargo fuzz run contract_json -- -max_total_time="$MAX_TOTAL_TIME" -max_len=65536 -rss_limit_mb=2048 -timeout=10
-          cargo fuzz run archive_package_intake -- -max_total_time="$MAX_TOTAL_TIME" -max_len=65536 -rss_limit_mb=2048 -timeout=10
+          cargo +nightly-2026-08-01 fuzz run contract_json -- -max_total_time="$MAX_TOTAL_TIME" -max_len=65536 -rss_limit_mb=2048 -timeout=10
+          cargo +nightly-2026-08-01 fuzz run archive_package_intake -- -max_total_time="$MAX_TOTAL_TIME" -max_len=65536 -rss_limit_mb=2048 -timeout=10
       - name: Retain failures
         if: failure() || cancelled()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

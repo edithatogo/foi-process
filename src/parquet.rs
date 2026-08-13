@@ -597,8 +597,7 @@ fn digest_file(path: &Path) -> Result<Sha256Digest, ParquetExportError> {
         encoded.push(HEX_CHARS[(byte >> 4) as usize]);
         encoded.push(HEX_CHARS[(byte & 0xf) as usize]);
     }
-    // SAFETY: We only push valid ASCII hex characters, so it is valid UTF-8.
-    let encoded = unsafe { String::from_utf8_unchecked(encoded) };
+    let encoded: String = encoded.into_iter().map(char::from).collect();
     Ok(Sha256Digest::parse(encoded)?)
 }
 
