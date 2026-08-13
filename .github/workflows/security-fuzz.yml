@@ -1,0 +1,103 @@
+name: security-fuzz
+
+on:
+  pull_request:
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+    inputs:
+      max_total_time:
+        description: Seconds per fuzz target (30-900)
+        required: false
+        default: "300"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-fuzz-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  property-tests:
+    name: Replay property tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772
+        with:
+          toolchain: "1.88.0"
+      - name: Run explicitly gated replay properties
+        env:
+          PROPTEST_CASES: "512"
+          PROPTEST_MAX_SHRINK_ITERS: "4096"
+        run: cargo test --locked --test replay properties::duplicate_delivery_emits_at_most_once -- --exact
+
+  fuzz-smoke:
+    name: Bounded libFuzzer smoke
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772
+        with:
+          toolchain: nightly-2026-08-01
+      - name: Install pinned cargo-fuzz
+        run: cargo +nightly-2026-08-01 install cargo-fuzz --version 0.13.2 --locked
+      - name: Run bounded smoke campaigns
+        run: |
+          cargo +nightly-2026-08-01 fuzz run contract_json -- -runs=1000 -max_len=65536 -rss_limit_mb=1024 -timeout=5
+          cargo +nightly-2026-08-01 fuzz run archive_package_intake -- -runs=1000 -max_len=65536 -rss_limit_mb=1024 -timeout=5
+      - name: Retain failures
+        if: failure() || cancelled()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: fuzz-smoke-failures-${{ github.run_id }}
+          path: |
+            fuzz/artifacts
+            fuzz/corpus
+          if-no-files-found: ignore
+          retention-days: 14
+
+  fuzz-campaign:
+    name: Bounded scheduled libFuzzer campaign
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772
+        with:
+          toolchain: nightly-2026-08-01
+      - name: Validate campaign duration
+        shell: bash
+        env:
+          REQUESTED: ${{ inputs.max_total_time || '300' }}
+        run: |
+          case "$REQUESTED" in (*[!0-9]*|'') exit 1;; esac
+          test "$REQUESTED" -ge 30 && test "$REQUESTED" -le 900
+          echo "MAX_TOTAL_TIME=$REQUESTED" >> "$GITHUB_ENV"
+      - name: Install pinned cargo-fuzz
+        run: cargo +nightly-2026-08-01 install cargo-fuzz --version 0.13.2 --locked
+      - name: Run bounded campaigns
+        run: |
+          cargo +nightly-2026-08-01 fuzz run contract_json -- -max_total_time="$MAX_TOTAL_TIME" -max_len=65536 -rss_limit_mb=2048 -timeout=10
+          cargo +nightly-2026-08-01 fuzz run archive_package_intake -- -max_total_time="$MAX_TOTAL_TIME" -max_len=65536 -rss_limit_mb=2048 -timeout=10
+      - name: Retain failures
+        if: failure() || cancelled()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: fuzz-campaign-failures-${{ github.run_id }}
+          path: |
+            fuzz/artifacts
+            fuzz/corpus
+          if-no-files-found: ignore
+          retention-days: 30

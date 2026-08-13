@@ -154,13 +154,11 @@ impl Sha256Digest {
     pub fn of(bytes: &[u8]) -> Self {
         let digest = Sha256::digest(bytes);
         const HEX_CHARS: &[u8; 16] = b"0123456789abcdef";
-        let mut output = Vec::with_capacity(64);
+        let mut output = String::with_capacity(64);
         for byte in digest {
-            output.push(HEX_CHARS[(byte >> 4) as usize]);
-            output.push(HEX_CHARS[(byte & 0xf) as usize]);
+            output.push(HEX_CHARS[(byte >> 4) as usize] as char);
+            output.push(HEX_CHARS[(byte & 0xf) as usize] as char);
         }
-        // SAFETY: We only push valid ASCII hex characters, so it is valid UTF-8.
-        let output = unsafe { String::from_utf8_unchecked(output) };
         Self(output)
     }
 

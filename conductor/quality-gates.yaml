@@ -47,3 +47,10 @@ gates:
   - cargo_deny_passes
   - sbom_emitted
   - github_actions_reviewed
+  fuzzing:
+  - replay_proptest_explicit_ci_gate
+  - contract_json_libfuzzer
+  - archive_package_intake_libfuzzer
+  - bounded_pr_smoke
+  - bounded_scheduled_campaign
+  - fuzz_failure_artifact_retention

@@ -1,0 +1,7 @@
+/target/
+/artifacts/
+/corpus/contract_json/*
+!/corpus/contract_json/empty-object.json
+/corpus/archive_package_intake/*
+!/corpus/archive_package_intake/process-event.ndjson
+!/corpus/archive_package_intake/manifest.json

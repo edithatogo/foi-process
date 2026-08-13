@@ -57,3 +57,8 @@ tracks:
   track: instance_pipeline_consolidation_20260812
   github_issue: https://github.com/edithatogo/foi-process/issues/114
   upstream_issue: https://github.com/edithatogo/fyi-archive/issues/370
+- id: T13
+  slug: security-quality-fuzzing
+  status: in_progress
+  owner: foi-process
+  track: T13-security-quality-fuzzing

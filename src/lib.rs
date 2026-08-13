@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 //! Rust-first integration spine for archival and live FOI process intelligence.
 //!
 //! This crate intentionally keeps one publishable library surface. Generic process-mining
