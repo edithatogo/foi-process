@@ -319,3 +319,21 @@ fn cli_reconciles_exactly_one_package_from_a_policy_file() {
     assert_eq!(outcome["status"], "applied");
     assert_eq!(outcome["state"]["archive_revision"], 1);
 }
+
+#[test]
+fn checked_in_scheduled_fixture_reconciles_deterministically() {
+    let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+    let package = root.join("examples/archive-package/nz-fyi-fixture");
+    let policy: ArchivePackageIntakePolicy = serde_json::from_slice(
+        &std::fs::read(root.join("examples/archive-package/nz-fyi-fixture-policy.json")).unwrap(),
+    )
+    .unwrap();
+    let output = tempfile::tempdir().unwrap();
+
+    let first = reconcile_archive_package(&package, &policy, output.path(), true).unwrap();
+    let second = reconcile_archive_package(&package, &policy, output.path(), false).unwrap();
+    assert_eq!(first.status, ReconciliationStatus::Applied);
+    assert_eq!(second.status, ReconciliationStatus::NoOp);
+    assert_eq!(first.state, second.state);
+    assert_eq!(first.receipt, second.receipt);
+}

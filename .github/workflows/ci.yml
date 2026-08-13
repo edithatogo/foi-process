@@ -90,6 +90,9 @@ jobs:
       - run: python scripts/test_synthetic_scenarios.py
       - run: python scripts/test_hf_space_projection.py
       - run: python scripts/test_verify_hf_publication.py
+      - run: PYTHONPATH=scripts python scripts/test_download_allowlisted.py
+      - run: PYTHONPATH=scripts python scripts/test_safe_extract_archive_package.py
+      - run: python scripts/test_scheduled_reconciliation_workflow.py
       - run: python scripts/test_scale_suite.py
       - run: python scripts/build_hf_dataset.py --output /tmp/foi-process-event-logs
       - run: python -m json.tool /tmp/foi-process-event-logs/manifest.json >/dev/null

@@ -1,0 +1,13 @@
+{
+  "expected_instance_id": "nz-fyi-fixture",
+  "expected_archive_revision": 1,
+  "expected_takedown_revision": "470885f59d55c2d13fc46586c1c09e2650ef8be2c67c7d55e477c328e212fb9f",
+  "expected_repository": "https://github.com/edithatogo/foi-process",
+  "expected_repository_revision": "015502e0ce4a0a3534b7da153a56bea62b9f8df7",
+  "allowed_archive_hosts": [
+    "github.com"
+  ],
+  "source_site_hosts": [
+    "fyi.org.nz"
+  ]
+}
