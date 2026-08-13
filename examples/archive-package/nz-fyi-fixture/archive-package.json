@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "package_id": "54f8347d96df15643e52d286b8cded9c9af97c81f220864dde6c39780995a805",
+  "instance_id": "nz-fyi-fixture",
+  "archive_revision": 1,
+  "takedown_revision": "470885f59d55c2d13fc46586c1c09e2650ef8be2c67c7d55e477c328e212fb9f",
+  "source": {
+    "repository": "https://github.com/edithatogo/foi-process",
+    "revision": "015502e0ce4a0a3534b7da153a56bea62b9f8df7"
+  },
+  "ordering": {
+    "event_key": "source_sequence_then_event_id",
+    "first_source_sequence": 1,
+    "last_source_sequence": 1
+  },
+  "counts": {
+    "file_count": 3,
+    "case_count": 1,
+    "event_count": 1,
+    "attachment_count": 1
+  },
+  "files": [
+    {
+      "order": 1,
+      "path": "cases.ndjson",
+      "role": "cases",
+      "media_type": "application/x-ndjson",
+      "sha256": "fcd9f44e48d905def0d4f8b051e7da6dbf4e19a9ad037a99e33bae4ea86b1465",
+      "byte_count": 40,
+      "row_count": 1
+    },
+    {
+      "order": 2,
+      "path": "events.ndjson",
+      "role": "events",
+      "media_type": "application/x-ndjson",
+      "sha256": "5fbde9240cbe6d17e0a86b26f131fdb6d97a5ffb7ab0b33bc2f66ea500a8bd17",
+      "byte_count": 1513,
+      "row_count": 1
+    },
+    {
+      "order": 3,
+      "path": "attachments.ndjson",
+      "role": "attachments",
+      "media_type": "application/x-ndjson",
+      "sha256": "e963cec74ac60413d7e3e126b3df216ddc3be3a1c798d573733cc5feee2d997a",
+      "byte_count": 57,
+      "row_count": 1
+    }
+  ]
+}

@@ -16,6 +16,13 @@
 
 ## Phase 3: Incremental processing
 
+- [x] Add scheduled/manual single-instance snapshot reconciliation with
+  per-instance concurrency, a bounded Actions continuation cache, dry-run
+  fixture validation, bounded evidence retention, and no publication
+  credentials ([#118](https://github.com/edithatogo/foi-process/issues/118)).
+- [ ] Replace bounded cache continuation with reconciliation against the
+  durable per-instance package index produced by
+  [fyi-archive #377](https://github.com/edithatogo/fyi-archive/issues/377).
 - [ ] Consume ordered deltas from the last accepted package revision.
 - [ ] Consume periodic compacted snapshots for bounded recovery.
 - [ ] Prove incremental continuation equals full replay for NZ fixtures and a
