@@ -59,6 +59,6 @@ tracks:
   upstream_issue: https://github.com/edithatogo/fyi-archive/issues/370
 - id: T13
   slug: security-quality-fuzzing
-  status: in_progress
+  status: completed
   owner: foi-process
   track: T13-security-quality-fuzzing

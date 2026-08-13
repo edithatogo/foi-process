@@ -1,6 +1,6 @@
 # Project Tracks
 
-## [~] Track: security-quality-fuzzing
+## [x] Track: security-quality-fuzzing
 
 [Specification and plan](./tracks/T13-security-quality-fuzzing/)
 
