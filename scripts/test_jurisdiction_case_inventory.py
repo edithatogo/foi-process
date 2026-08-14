@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Regression checks for the bounded NZ T11 case inventory."""
 
-from build_jurisdiction_case_inventory import build
+import json
+
+from build_jurisdiction_case_inventory import DEFAULT_PACKAGE, build
 
 
 def main() -> None:
@@ -23,7 +25,29 @@ def main() -> None:
     assert len({case["case_id"] for case in inventory["cases"]}) == 75
     assert all(case["annotation_status"] == "pending_independent_adjudication" for case in inventory["cases"])
     assert all(case["promotion_boundary"] == "engineering_only" for case in inventory["cases"])
-    assert all("request_text" not in case and "attachment_uri" not in case for case in inventory["cases"])
+    source_rows = [
+        json.loads(line)
+        for line in (DEFAULT_PACKAGE / "event_log.jsonl").read_text(encoding="utf-8").splitlines()
+        if line
+    ]
+    expected_order = list(dict.fromkeys(row["logical_request_id"] for row in source_rows))
+    assert [case["case_id"] for case in inventory["cases"]] == expected_order
+    forbidden = {
+        "request_text",
+        "correspondence_text",
+        "attachment_uri",
+        "attachment_filename",
+        "attachment_bytes",
+        "requester_name",
+        "requester_email",
+        "third_party_identity",
+        "ocr_text",
+        "embeddings",
+    }
+    assert all(not (forbidden & case.keys()) for case in inventory["cases"])
+    assert inventory["governance"]["status"] == "approved_for_repository_engineering_evidence"
+    assert inventory["governance"]["external_publication_performed"] is False
+    assert inventory["governance"]["independent_case_adjudication_complete"] is False
     print("jurisdiction case inventory checks passed")
 
 

@@ -17,6 +17,13 @@
       "30395825959"
     ]
   },
+  "governance": {
+    "profile": "governance/nz-bounded-case-inventory-review-2026-08-14.json",
+    "profile_sha256": "e3dd034b4ff174997b06932bf8a01323c4687b82764ca074d6f154fcd6f6c277",
+    "status": "approved_for_repository_engineering_evidence",
+    "external_publication_performed": false,
+    "independent_case_adjudication_complete": false
+  },
   "coverage": {
     "case_count": 75,
     "event_count": 425,
@@ -48,7 +55,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 1014,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 1014
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -74,7 +84,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 1015,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 1015
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -102,137 +115,15 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 1016,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 1016
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
         "image/jpeg": 2,
         "text/plain": 1
-      }
-    },
-    {
-      "case_id": "urn:fyi:nz-fyi:request:1017",
-      "source_locator": "https://fyi.org.nz/request/1017.json",
-      "event_count": 5,
-      "attachment_count": 0,
-      "first_event_at": "2013-07-23T05:35:03Z",
-      "last_event_at": "2013-08-03T02:21:01Z",
-      "activity_path": [
-        "sent",
-        "response",
-        "comment",
-        "response",
-        "comment"
-      ],
-      "observed_state_labels": [
-        "waiting_response",
-        "partially_successful"
-      ],
-      "source_batches": [
-        "fyi-cli-real-backfill-175"
-      ],
-      "request_sequence": 1017,
-      "annotation_status": "pending_independent_adjudication",
-      "promotion_boundary": "engineering_only",
-      "attachment_content_types": {}
-    },
-    {
-      "case_id": "urn:fyi:nz-fyi:request:1018",
-      "source_locator": "https://fyi.org.nz/request/1018.json",
-      "event_count": 10,
-      "attachment_count": 5,
-      "first_event_at": "2013-07-23T06:10:52Z",
-      "last_event_at": "2013-10-07T17:56:38Z",
-      "activity_path": [
-        "sent",
-        "response",
-        "response",
-        "followup_sent",
-        "response",
-        "response",
-        "followup_sent",
-        "response",
-        "response",
-        "status_update"
-      ],
-      "observed_state_labels": [
-        "waiting_response",
-        "waiting_clarification"
-      ],
-      "source_batches": [
-        "fyi-cli-real-backfill-175"
-      ],
-      "request_sequence": 1018,
-      "annotation_status": "pending_independent_adjudication",
-      "promotion_boundary": "engineering_only",
-      "attachment_content_types": {
-        "application/pdf": 2,
-        "image/jpeg": 3
-      }
-    },
-    {
-      "case_id": "urn:fyi:nz-fyi:request:1019",
-      "source_locator": "https://fyi.org.nz/request/1019.json",
-      "event_count": 10,
-      "attachment_count": 5,
-      "first_event_at": "2013-07-23T06:15:17Z",
-      "last_event_at": "2013-09-27T09:15:56Z",
-      "activity_path": [
-        "sent",
-        "response",
-        "response",
-        "followup_sent",
-        "response",
-        "response",
-        "followup_sent",
-        "response",
-        "response",
-        "status_update"
-      ],
-      "observed_state_labels": [
-        "waiting_response",
-        "successful"
-      ],
-      "source_batches": [
-        "fyi-cli-real-backfill-200"
-      ],
-      "request_sequence": 1019,
-      "annotation_status": "pending_independent_adjudication",
-      "promotion_boundary": "engineering_only",
-      "attachment_content_types": {
-        "application/pdf": 3,
-        "image/jpeg": 2
-      }
-    },
-    {
-      "case_id": "urn:fyi:nz-fyi:request:1020",
-      "source_locator": "https://fyi.org.nz/request/1020.json",
-      "event_count": 7,
-      "attachment_count": 4,
-      "first_event_at": "2013-07-23T08:27:13Z",
-      "last_event_at": "2013-09-26T03:46:16Z",
-      "activity_path": [
-        "sent",
-        "response",
-        "response",
-        "followup_sent",
-        "response",
-        "response",
-        "status_update"
-      ],
-      "observed_state_labels": [
-        "waiting_response",
-        "successful"
-      ],
-      "source_batches": [
-        "fyi-cli-real-backfill-200"
-      ],
-      "request_sequence": 1020,
-      "annotation_status": "pending_independent_adjudication",
-      "promotion_boundary": "engineering_only",
-      "attachment_content_types": {
-        "application/pdf": 2,
-        "image/jpeg": 2
       }
     },
     {
@@ -251,7 +142,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10138,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10138
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -274,7 +168,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10139,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10139
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -296,7 +193,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10140,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10140
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -322,7 +222,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10141,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10141
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -347,7 +250,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10142,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10142
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -371,7 +277,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10143,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10143
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -396,7 +305,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10144,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10144
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -422,7 +334,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10145,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10145
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -451,7 +366,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10146,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10146
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -475,7 +393,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10147,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10147
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -500,7 +421,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10148,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10148
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -532,7 +456,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10149,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10149
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -560,7 +487,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10150,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10150
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -589,7 +519,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10151,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10151
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -612,7 +545,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10152,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10152
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -639,7 +575,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10153,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10153
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -662,7 +601,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10154,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10154
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -691,7 +633,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10155,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10155
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -718,7 +663,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10156,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10156
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -751,7 +699,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10157,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10157
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -776,7 +727,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10158,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10158
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -800,11 +754,80 @@
       "source_batches": [
         "fyi-cli-real-backfill-150"
       ],
-      "request_sequence": 10159,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10159
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1017",
+      "source_locator": "https://fyi.org.nz/request/1017.json",
+      "event_count": 5,
+      "attachment_count": 0,
+      "first_event_at": "2013-07-23T05:35:03Z",
+      "last_event_at": "2013-08-03T02:21:01Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "comment",
+        "response",
+        "comment"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "partially_successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 1017
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1018",
+      "source_locator": "https://fyi.org.nz/request/1018.json",
+      "event_count": 10,
+      "attachment_count": 5,
+      "first_event_at": "2013-07-23T06:10:52Z",
+      "last_event_at": "2013-10-07T17:56:38Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "followup_sent",
+        "response",
+        "response",
+        "followup_sent",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "waiting_clarification"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 1018
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 2,
+        "image/jpeg": 3
       }
     },
     {
@@ -828,7 +851,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10160,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10160
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -856,7 +882,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10161,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10161
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -884,7 +913,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10162,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10162
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -912,7 +944,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10163,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10163
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -942,7 +977,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10164,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10164
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -970,7 +1008,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10165,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10165
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -999,7 +1040,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10166,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10166
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1027,7 +1071,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10167,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10167
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1056,7 +1103,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10168,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10168
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1084,7 +1134,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10169,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10169
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1112,7 +1165,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10170,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10170
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1147,7 +1203,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10171,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10171
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1178,7 +1237,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10172,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10172
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -1203,7 +1265,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10173,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10173
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1235,7 +1300,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10174,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10174
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1265,7 +1333,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10175,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10175
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1293,7 +1364,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10176,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10176
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1320,7 +1394,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10177,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10177
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1351,7 +1428,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10178,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10178
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1378,7 +1458,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10179,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10179
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1405,7 +1488,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10180,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10180
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -1435,7 +1521,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10181,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10181
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -1461,12 +1550,86 @@
       "source_batches": [
         "fyi-cli-real-backfill-175"
       ],
-      "request_sequence": 10182,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10182
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
         "application/pdf": 1,
         "image/png": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1019",
+      "source_locator": "https://fyi.org.nz/request/1019.json",
+      "event_count": 10,
+      "attachment_count": 5,
+      "first_event_at": "2013-07-23T06:15:17Z",
+      "last_event_at": "2013-09-27T09:15:56Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "followup_sent",
+        "response",
+        "response",
+        "followup_sent",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 1019
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 3,
+        "image/jpeg": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1020",
+      "source_locator": "https://fyi.org.nz/request/1020.json",
+      "event_count": 7,
+      "attachment_count": 4,
+      "first_event_at": "2013-07-23T08:27:13Z",
+      "last_event_at": "2013-09-26T03:46:16Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "followup_sent",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 1020
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 2,
+        "image/jpeg": 2
       }
     },
     {
@@ -1489,7 +1652,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10183,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10183
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1522,7 +1688,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10184,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10184
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1571,7 +1740,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10185,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10185
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1600,7 +1772,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10186,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10186
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1652,7 +1827,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10187,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10187
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1683,7 +1861,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10188,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10188
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1711,7 +1892,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10189,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10189
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1741,7 +1925,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10190,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10190
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1770,7 +1957,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10191,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10191
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1798,7 +1988,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10192,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10192
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1827,7 +2020,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10193,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10193
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1865,7 +2061,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10194,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10194
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1895,7 +2094,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10195,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10195
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1918,7 +2120,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10196,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10196
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -1944,7 +2149,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10197,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10197
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1970,7 +2178,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10198,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10198
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -1993,7 +2204,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10199,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10199
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -2015,7 +2229,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10200,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10200
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -2039,7 +2256,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10201,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10201
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -2073,7 +2293,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10202,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10202
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -2099,7 +2322,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10203,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10203
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {
@@ -2130,7 +2356,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10204,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10204
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}
@@ -2159,7 +2388,10 @@
       "source_batches": [
         "fyi-cli-real-backfill-200"
       ],
-      "request_sequence": 10205,
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10205
+      },
       "annotation_status": "pending_independent_adjudication",
       "promotion_boundary": "engineering_only",
       "attachment_content_types": {}

@@ -20,6 +20,7 @@ DEFAULT_OUTPUT = (
     / "jurisdiction_case_process_modelling_20260721"
     / "nz-bounded-case-inventory.json"
 )
+GOVERNANCE_PROFILE = ROOT / "governance" / "nz-bounded-case-inventory-review-2026-08-14.json"
 
 
 def rows(path: Path) -> list[dict[str, Any]]:
@@ -28,6 +29,11 @@ def rows(path: Path) -> list[dict[str, Any]]:
 
 def build(package: Path = DEFAULT_PACKAGE) -> dict[str, Any]:
     manifest = validate(package)
+    governance = json.loads(GOVERNANCE_PROFILE.read_text(encoding="utf-8"))
+    if governance["status"] != "approved_for_repository_engineering_evidence":
+        raise ValueError("case inventory governance profile is not approved for repository evidence")
+    if governance["boundaries"]["external_publication_performed"] is not False:
+        raise ValueError("case inventory governance profile exceeds the repository-only boundary")
     cases: dict[str, dict[str, Any]] = {}
     for event in rows(package / "event_log.jsonl"):
         case_id = event["logical_request_id"]
@@ -43,7 +49,10 @@ def build(package: Path = DEFAULT_PACKAGE) -> dict[str, Any]:
                 "activity_path": [],
                 "observed_state_labels": [],
                 "source_batches": [],
-                "request_sequence": event["source_order"]["request_sequence"],
+                "source_order": {
+                    "source": event["source_order"]["source"],
+                    "request_sequence": event["source_order"]["request_sequence"],
+                },
                 "annotation_status": "pending_independent_adjudication",
                 "promotion_boundary": "engineering_only",
             },
@@ -67,9 +76,14 @@ def build(package: Path = DEFAULT_PACKAGE) -> dict[str, Any]:
         cases[case_id]["attachment_count"] += 1
         attachment_types[case_id][attachment["content_type"]] += 1
 
-    ordered_cases = sorted(cases.values(), key=lambda case: (case["request_sequence"], case["case_id"]))
+    ordered_cases = list(cases.values())
     for case in ordered_cases:
         case["attachment_content_types"] = dict(sorted(attachment_types[case["case_id"]].items()))
+    allowed_fields = set(governance["disclosure"]["allowed_fields"])
+    for case in ordered_cases:
+        unexpected = set(case) - allowed_fields
+        if unexpected:
+            raise ValueError(f"case inventory contains fields outside the disclosure profile: {sorted(unexpected)}")
 
     return {
         "schema": "foi-process/jurisdiction-case-inventory/v1",
@@ -87,6 +101,13 @@ def build(package: Path = DEFAULT_PACKAGE) -> dict[str, Any]:
             "event_log_sha256": sha256(package / "event_log.jsonl"),
             "attachments_sha256": sha256(package / "attachments.jsonl"),
             "source_run_ids": sorted({batch["evidence"]["source_run_id"] for batch in manifest["batches"]}),
+        },
+        "governance": {
+            "profile": "governance/nz-bounded-case-inventory-review-2026-08-14.json",
+            "profile_sha256": sha256(GOVERNANCE_PROFILE),
+            "status": governance["status"],
+            "external_publication_performed": governance["boundaries"]["external_publication_performed"],
+            "independent_case_adjudication_complete": governance["boundaries"]["independent_case_adjudication_complete"],
         },
         "coverage": {
             "case_count": len(ordered_cases),

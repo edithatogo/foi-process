@@ -1,0 +1,76 @@
+{
+  "schema": "foi-process/case-inventory-governance/v1",
+  "reviewed_at": "2026-08-14T00:00:00Z",
+  "responsible_owner": "repository_owner",
+  "status": "approved_for_repository_engineering_evidence",
+  "scope": "nz-real-batches-150-200 case inventory only",
+  "classification": "public-derived-bounded",
+  "source": {
+    "owner": "source publishers and correspondents retain their applicable rights",
+    "canonical_url": "https://fyi.org.nz/",
+    "reuse_basis": "already-public source records and the approved bounded release",
+    "attribution": "Source: FYI.org.nz via the fyi-cli and fyi-archive evidence chain",
+    "rights_notice": "Source rights are retained and are not replaced by the repository Apache-2.0 code licence",
+    "permitted_transformations": [
+      "metadata-only case inventory",
+      "aggregate process-path analysis",
+      "provenance-preserving validation"
+    ]
+  },
+  "disclosure": {
+    "assessment": "no_new_source_content",
+    "rationale": "Every disclosed value is already present in the public bounded release or its public source locator; the inventory adds deterministic grouping only",
+    "allowed_fields": [
+      "case_id",
+      "source_locator",
+      "source_order",
+      "event_count",
+      "attachment_count",
+      "first_event_at",
+      "last_event_at",
+      "activity_path",
+      "observed_state_labels",
+      "attachment_content_types",
+      "source_batches",
+      "annotation_status",
+      "promotion_boundary"
+    ],
+    "forbidden_fields": [
+      "request_text",
+      "correspondence_text",
+      "attachment_uri",
+      "attachment_filename",
+      "attachment_bytes",
+      "requester_name",
+      "requester_email",
+      "third_party_identity",
+      "ocr_text",
+      "embeddings"
+    ],
+    "direct_locator_basis": "public source traceability for an already-public request"
+  },
+  "retention": {
+    "policy": "retain with the bounded release while its provenance and review evidence remain valid",
+    "review_trigger": "source takedown, correction, rights change, privacy incident, or replacement release",
+    "raw_content_duplicated": false
+  },
+  "removal": {
+    "workflow": "docs/removal-appeal.md",
+    "propagation": "remove or revise the case inventory entry when the source-layer takedown inventory changes",
+    "contact": "the public repository security/removal channels documented in docs/removal-appeal.md"
+  },
+  "evidence": [
+    "https://github.com/edithatogo/foi-process/issues/9#issuecomment-5111938270",
+    "https://github.com/edithatogo/foi-process/issues/9#issuecomment-5150571159",
+    "data/bounded-real-release-150-200/manifest.json",
+    "docs/source-rights-and-licensing.md",
+    "docs/production-release-checklist.md"
+  ],
+  "boundaries": {
+    "repository_evidence_only": true,
+    "external_publication_performed": false,
+    "full_corpus_claimed": false,
+    "legal_or_performance_conclusions_permitted": false,
+    "independent_case_adjudication_complete": false
+  }
+}
