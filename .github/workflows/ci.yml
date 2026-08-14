@@ -84,6 +84,7 @@ jobs:
           python scripts/check_release_metadata.py "v$version"
           PYTHONPATH=scripts python scripts/test_release_metadata.py
           python scripts/test_release_workflow.py
+          PYTHONPATH=scripts python scripts/test_release_evidence_command.py
       - run: python scripts/validate_jurisdiction_profiles.py
       - run: PYTHONPATH=scripts python scripts/test_jurisdiction_profile_semantics.py
       - run: python scripts/validate_jurisdiction_cases.py

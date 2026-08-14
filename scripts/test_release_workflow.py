@@ -21,6 +21,7 @@ def main() -> None:
         "pull-requests: write",
         "skip-github-release",
         "gh release create \"$release_tag\" --draft",
+        "expected_subject=\"chore(main): release $version\"",
         ".object.sha)\" = \"$GITHUB_SHA\"",
         "scripts/check_release_metadata.py",
         "scripts/build_release_evidence.py",
@@ -36,6 +37,8 @@ def main() -> None:
         raise AssertionError("release workflow safety contract missing: " + ", ".join(missing))
     if "workflow_dispatch:" in text or "pull_request:" in text:
         raise AssertionError("release publication controller must run only after a main push")
+    if "--slurp" in text:
+        raise AssertionError("release lookup must remain compatible with the runner gh version")
 
     uses = ANY_USE.findall(text)
     pinned = FULL_SHA_USE.findall(text)

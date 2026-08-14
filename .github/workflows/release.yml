@@ -53,15 +53,14 @@ jobs:
           echo "tag_name=$release_tag" >> "$GITHUB_OUTPUT"
 
           release_id="$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
-            --paginate --slurp \
-            --jq "[.[][] | select(.tag_name == \"$release_tag\")][0].id // empty")"
+            --jq "[.[] | select(.tag_name == \"$release_tag\")][0].id // empty")"
           if test -n "$release_id"; then
             if test "$(gh api "repos/$GITHUB_REPOSITORY/releases/$release_id" --jq .draft)" = false; then
               echo "pending=false" >> "$GITHUB_OUTPUT"
               exit 0
             fi
           else
-            expected_subject="chore(main): release foi-process $version"
+            expected_subject="chore(main): release $version"
             test "$(git show -s --format=%s "$GITHUB_SHA")" = "$expected_subject"
             tag_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$release_tag" --jq .object.sha 2>/dev/null || true)"
             if test -z "$tag_sha"; then
@@ -73,8 +72,7 @@ jobs:
             gh release create "$release_tag" --draft --verify-tag \
               --title "foi-process $release_tag" --generate-notes
             release_id="$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
-              --paginate --slurp \
-              --jq "[.[][] | select(.tag_name == \"$release_tag\")][0].id // empty")"
+              --jq "[.[] | select(.tag_name == \"$release_tag\")][0].id // empty")"
           fi
 
           test -n "$release_id"
