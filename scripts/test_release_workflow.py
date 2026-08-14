@@ -20,7 +20,7 @@ def main() -> None:
         "contents: read",
         "pull-requests: write",
         "skip-github-release",
-        "gh release create \"$release_tag\" --draft",
+        "gh release create \"$release_tag\" --draft --target \"$GITHUB_SHA\"",
         "python scripts/check_release_commit_subject.py",
         ".object.sha)\" = \"$GITHUB_SHA\"",
         "scripts/check_release_metadata.py",
