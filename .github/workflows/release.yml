@@ -63,13 +63,10 @@ jobs:
             python scripts/check_release_commit_subject.py \
               "$(git show -s --format=%s "$GITHUB_SHA")" "$version"
             tag_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$release_tag" --jq .object.sha 2>/dev/null || true)"
-            if test -z "$tag_sha"; then
-              gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" \
-                -f ref="refs/tags/$release_tag" -f sha="$GITHUB_SHA" >/dev/null
-            else
+            if test -n "$tag_sha"; then
               test "$tag_sha" = "$GITHUB_SHA"
             fi
-            gh release create "$release_tag" --draft --verify-tag \
+            gh release create "$release_tag" --draft --target "$GITHUB_SHA" \
               --title "foi-process $release_tag" --generate-notes
             release_id="$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
               --jq "[.[] | select(.tag_name == \"$release_tag\")][0].id // empty")"
