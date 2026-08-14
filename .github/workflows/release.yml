@@ -63,9 +63,10 @@ jobs:
             echo "::notice::Validating release commit subject for $release_tag"
             python scripts/check_release_commit_subject.py \
               "$(git show -s --format=%s "$GITHUB_SHA")" "$version"
-            tag_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$release_tag" --jq .object.sha 2>/dev/null || true)"
-            if test -n "$tag_sha"; then
+            if tag_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$release_tag" --jq .object.sha 2>/dev/null)"; then
               test "$tag_sha" = "$GITHUB_SHA"
+            else
+              tag_sha=""
             fi
             echo "::notice::Creating exact-commit draft for $release_tag"
             release_id="$(gh api --method POST "repos/$GITHUB_REPOSITORY/releases" \
