@@ -91,6 +91,8 @@ jobs:
       - run: python scripts/validate_jurisdiction_profiles.py
       - run: PYTHONPATH=scripts python scripts/test_jurisdiction_profile_semantics.py
       - run: python scripts/validate_jurisdiction_cases.py
+      - run: PYTHONPATH=scripts python scripts/test_jurisdiction_case_inventory.py
+      - run: PYTHONPATH=scripts python scripts/build_jurisdiction_case_inventory.py --check
       - run: python scripts/validate_alaveteli_evidence.py
       - run: python scripts/validate_jurisdiction_review_matrix.py
       - run: python scripts/validate_jurisdiction_review_queue.py

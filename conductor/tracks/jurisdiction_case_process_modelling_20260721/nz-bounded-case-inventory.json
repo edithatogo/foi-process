@@ -1,0 +1,2400 @@
+{
+  "schema": "foi-process/jurisdiction-case-inventory/v1",
+  "jurisdiction": "jurisdiction:NZ",
+  "sampling_frame": {
+    "method": "census_of_verified_bounded_release",
+    "source_release": "nz-real-batches-150-200",
+    "bounded_case_count": 75,
+    "included_case_count": 75,
+    "full_corpus": false,
+    "representativeness_claim": "bounded_release_only"
+  },
+  "provenance": {
+    "package_manifest_sha256": "b8149a731ab43008c96f5df359cddafd57ff9a7e9b8b8e7767831d823825912e",
+    "event_log_sha256": "79c97ee568aafe982a8eac0e6e16ca01d4058dc63a7efddc3fb0480e13a1ceb3",
+    "attachments_sha256": "41168ae2f48669d14df4c0f43f7b9e21ef30a4e0d27be2050a08631141aee3d0",
+    "source_run_ids": [
+      "30395825959"
+    ]
+  },
+  "governance": {
+    "profile": "governance/nz-bounded-case-inventory-review-2026-08-14.json",
+    "profile_sha256": "e3dd034b4ff174997b06932bf8a01323c4687b82764ca074d6f154fcd6f6c277",
+    "status": "approved_for_repository_engineering_evidence",
+    "external_publication_performed": false,
+    "independent_case_adjudication_complete": false
+  },
+  "coverage": {
+    "case_count": 75,
+    "event_count": 425,
+    "attachment_count": 179,
+    "source_order_preserved": true
+  },
+  "interpretation": {
+    "activity_paths": "observed source metadata only",
+    "state_labels": "unadjudicated native source labels; not legal or performance findings",
+    "privacy": "metadata-only inventory; no correspondence or attachment bytes",
+    "promotion_boundary": "engineering_only"
+  },
+  "cases": [
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1014",
+      "source_locator": "https://fyi.org.nz/request/1014.json",
+      "event_count": 2,
+      "attachment_count": 1,
+      "first_event_at": "2013-07-22T01:09:57Z",
+      "last_event_at": "2013-08-14T06:00:05Z",
+      "activity_path": [
+        "sent",
+        "response"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "rejected"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 1014
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1015",
+      "source_locator": "https://fyi.org.nz/request/1015.json",
+      "event_count": 4,
+      "attachment_count": 0,
+      "first_event_at": "2013-07-23T00:04:07Z",
+      "last_event_at": "2013-09-17T02:47:02Z",
+      "activity_path": [
+        "sent",
+        "comment",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 1015
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1016",
+      "source_locator": "https://fyi.org.nz/request/1016.json",
+      "event_count": 6,
+      "attachment_count": 3,
+      "first_event_at": "2013-07-23T00:08:12Z",
+      "last_event_at": "2013-10-02T03:54:21Z",
+      "activity_path": [
+        "sent",
+        "comment",
+        "status_update",
+        "resent",
+        "destroy_incoming",
+        "response"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "error_message",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 1016
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "image/jpeg": 2,
+        "text/plain": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10138",
+      "source_locator": "https://fyi.org.nz/request/10138.json",
+      "event_count": 1,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-16T03:50:22Z",
+      "last_event_at": "2019-04-16T03:50:22Z",
+      "activity_path": [
+        "sent"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10138
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10139",
+      "source_locator": "https://fyi.org.nz/request/10139.json",
+      "event_count": 3,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-16T03:50:41Z",
+      "last_event_at": "2019-04-17T00:31:12Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10139
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10140",
+      "source_locator": "https://fyi.org.nz/request/10140.json",
+      "event_count": 2,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-16T03:51:02Z",
+      "last_event_at": "2020-07-01T20:42:59Z",
+      "activity_path": [
+        "sent",
+        "response"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10140
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10141",
+      "source_locator": "https://fyi.org.nz/request/10141.json",
+      "event_count": 5,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-16T03:52:02Z",
+      "last_event_at": "2019-10-15T02:51:38Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10141
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10142",
+      "source_locator": "https://fyi.org.nz/request/10142.json",
+      "event_count": 3,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-16T03:52:23Z",
+      "last_event_at": "2019-04-17T00:31:28Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10142
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10143",
+      "source_locator": "https://fyi.org.nz/request/10143.json",
+      "event_count": 4,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-16T03:52:40Z",
+      "last_event_at": "2019-05-13T21:58:25Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10143
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10144",
+      "source_locator": "https://fyi.org.nz/request/10144.json",
+      "event_count": 3,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-16T03:53:00Z",
+      "last_event_at": "2019-05-16T05:48:22Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10144
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10145",
+      "source_locator": "https://fyi.org.nz/request/10145.json",
+      "event_count": 3,
+      "attachment_count": 2,
+      "first_event_at": "2019-04-16T03:53:38Z",
+      "last_event_at": "2019-07-24T03:32:29Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10145
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "text/plain": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10146",
+      "source_locator": "https://fyi.org.nz/request/10146.json",
+      "event_count": 5,
+      "attachment_count": 3,
+      "first_event_at": "2019-04-16T03:57:08Z",
+      "last_event_at": "2019-10-11T01:14:06Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "partially_successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10146
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "image/png": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10147",
+      "source_locator": "https://fyi.org.nz/request/10147.json",
+      "event_count": 1,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-16T03:57:24Z",
+      "last_event_at": "2019-04-16T03:57:24Z",
+      "activity_path": [
+        "sent"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10147
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10148",
+      "source_locator": "https://fyi.org.nz/request/10148.json",
+      "event_count": 5,
+      "attachment_count": 4,
+      "first_event_at": "2019-04-16T03:57:43Z",
+      "last_event_at": "2019-05-15T22:48:22Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "status_update",
+        "response"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10148
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 2,
+        "image/png": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10149",
+      "source_locator": "https://fyi.org.nz/request/10149.json",
+      "event_count": 8,
+      "attachment_count": 3,
+      "first_event_at": "2019-04-16T03:57:58Z",
+      "last_event_at": "2024-04-03T05:28:34Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "not_held"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10149
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 3
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10150",
+      "source_locator": "https://fyi.org.nz/request/10150.json",
+      "event_count": 5,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-16T03:58:14Z",
+      "last_event_at": "2020-03-04T21:59:46Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10150
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10151",
+      "source_locator": "https://fyi.org.nz/request/10151.json",
+      "event_count": 6,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-16T03:58:28Z",
+      "last_event_at": "2019-10-11T01:03:06Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "partially_successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10151
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10152",
+      "source_locator": "https://fyi.org.nz/request/10152.json",
+      "event_count": 1,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-16T03:58:45Z",
+      "last_event_at": "2019-04-16T03:58:45Z",
+      "activity_path": [
+        "sent"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10152
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10153",
+      "source_locator": "https://fyi.org.nz/request/10153.json",
+      "event_count": 6,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-16T03:59:04Z",
+      "last_event_at": "2020-02-06T22:47:05Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "followup_sent",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10153
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10154",
+      "source_locator": "https://fyi.org.nz/request/10154.json",
+      "event_count": 1,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-16T03:59:18Z",
+      "last_event_at": "2019-04-16T03:59:18Z",
+      "activity_path": [
+        "sent"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10154
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10155",
+      "source_locator": "https://fyi.org.nz/request/10155.json",
+      "event_count": 7,
+      "attachment_count": 4,
+      "first_event_at": "2019-04-16T07:45:46Z",
+      "last_event_at": "2019-05-20T04:28:12Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "rejected",
+        "partially_successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10155
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "image/jpeg": 3
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10156",
+      "source_locator": "https://fyi.org.nz/request/10156.json",
+      "event_count": 3,
+      "attachment_count": 2,
+      "first_event_at": "2019-04-16T08:38:37Z",
+      "last_event_at": "2019-05-21T00:42:00Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10156
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": 1,
+        "image/png": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10157",
+      "source_locator": "https://fyi.org.nz/request/10157.json",
+      "event_count": 9,
+      "attachment_count": 5,
+      "first_event_at": "2019-04-16T09:11:05Z",
+      "last_event_at": "2019-06-05T04:25:40Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "status_update",
+        "response",
+        "followup_sent",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10157
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 3,
+        "image/png": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10158",
+      "source_locator": "https://fyi.org.nz/request/10158.json",
+      "event_count": 2,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-17T01:43:04Z",
+      "last_event_at": "2020-07-01T20:41:52Z",
+      "activity_path": [
+        "sent",
+        "response"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10158
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10159",
+      "source_locator": "https://fyi.org.nz/request/10159.json",
+      "event_count": 3,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-17T01:43:53Z",
+      "last_event_at": "2019-04-24T02:28:36Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "partially_successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-150"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-150",
+        "request_sequence": 10159
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1017",
+      "source_locator": "https://fyi.org.nz/request/1017.json",
+      "event_count": 5,
+      "attachment_count": 0,
+      "first_event_at": "2013-07-23T05:35:03Z",
+      "last_event_at": "2013-08-03T02:21:01Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "comment",
+        "response",
+        "comment"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "partially_successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 1017
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1018",
+      "source_locator": "https://fyi.org.nz/request/1018.json",
+      "event_count": 10,
+      "attachment_count": 5,
+      "first_event_at": "2013-07-23T06:10:52Z",
+      "last_event_at": "2013-10-07T17:56:38Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "followup_sent",
+        "response",
+        "response",
+        "followup_sent",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "waiting_clarification"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 1018
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 2,
+        "image/jpeg": 3
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10160",
+      "source_locator": "https://fyi.org.nz/request/10160.json",
+      "event_count": 5,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-17T01:44:16Z",
+      "last_event_at": "2019-09-16T07:09:48Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10160
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10161",
+      "source_locator": "https://fyi.org.nz/request/10161.json",
+      "event_count": 5,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-17T01:44:47Z",
+      "last_event_at": "2019-11-25T21:36:37Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "partially_successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10161
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10162",
+      "source_locator": "https://fyi.org.nz/request/10162.json",
+      "event_count": 5,
+      "attachment_count": 2,
+      "first_event_at": "2019-04-17T01:45:08Z",
+      "last_event_at": "2019-05-19T22:48:22Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "followup_sent",
+        "response"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "waiting_clarification"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10162
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "image/png": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10163",
+      "source_locator": "https://fyi.org.nz/request/10163.json",
+      "event_count": 5,
+      "attachment_count": 5,
+      "first_event_at": "2019-04-17T01:45:32Z",
+      "last_event_at": "2021-03-03T22:31:03Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "comment"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10163
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "image/png": 4
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10164",
+      "source_locator": "https://fyi.org.nz/request/10164.json",
+      "event_count": 6,
+      "attachment_count": 5,
+      "first_event_at": "2019-04-17T01:50:41Z",
+      "last_event_at": "2021-11-22T03:50:37Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10164
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 2,
+        "image/png": 3
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10165",
+      "source_locator": "https://fyi.org.nz/request/10165.json",
+      "event_count": 4,
+      "attachment_count": 2,
+      "first_event_at": "2019-04-17T23:36:50Z",
+      "last_event_at": "2019-07-06T15:08:33Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10165
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "image/gif": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10166",
+      "source_locator": "https://fyi.org.nz/request/10166.json",
+      "event_count": 6,
+      "attachment_count": 2,
+      "first_event_at": "2019-04-18T03:37:14Z",
+      "last_event_at": "2019-05-14T20:45:51Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "response",
+        "response",
+        "comment"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10166
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10167",
+      "source_locator": "https://fyi.org.nz/request/10167.json",
+      "event_count": 5,
+      "attachment_count": 3,
+      "first_event_at": "2019-04-18T05:33:26Z",
+      "last_event_at": "2019-05-08T04:25:45Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "partially_successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10167
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "image/jpeg": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10168",
+      "source_locator": "https://fyi.org.nz/request/10168.json",
+      "event_count": 5,
+      "attachment_count": 3,
+      "first_event_at": "2019-04-18T21:37:38Z",
+      "last_event_at": "2019-08-19T08:58:54Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10168
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 3
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10169",
+      "source_locator": "https://fyi.org.nz/request/10169.json",
+      "event_count": 5,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-18T21:58:46Z",
+      "last_event_at": "2019-05-21T09:23:17Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10169
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10170",
+      "source_locator": "https://fyi.org.nz/request/10170.json",
+      "event_count": 5,
+      "attachment_count": 4,
+      "first_event_at": "2019-04-19T05:52:24Z",
+      "last_event_at": "2019-05-21T04:19:43Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "partially_successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10170
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 2,
+        "image/jpeg": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10171",
+      "source_locator": "https://fyi.org.nz/request/10171.json",
+      "event_count": 10,
+      "attachment_count": 4,
+      "first_event_at": "2019-04-19T06:21:57Z",
+      "last_event_at": "2019-07-04T08:44:02Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update",
+        "followup_sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "waiting_clarification",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10171
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "image/jpeg": 3
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10172",
+      "source_locator": "https://fyi.org.nz/request/10172.json",
+      "event_count": 7,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-20T12:30:31Z",
+      "last_event_at": "2019-05-01T02:27:51Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10172
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10173",
+      "source_locator": "https://fyi.org.nz/request/10173.json",
+      "event_count": 4,
+      "attachment_count": 2,
+      "first_event_at": "2019-04-21T00:08:50Z",
+      "last_event_at": "2019-07-30T04:00:14Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10173
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "image/png": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10174",
+      "source_locator": "https://fyi.org.nz/request/10174.json",
+      "event_count": 8,
+      "attachment_count": 5,
+      "first_event_at": "2019-04-21T08:22:10Z",
+      "last_event_at": "2019-05-29T00:23:54Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "status_update",
+        "response",
+        "followup_sent",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10174
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 2,
+        "image/jpeg": 3
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10175",
+      "source_locator": "https://fyi.org.nz/request/10175.json",
+      "event_count": 6,
+      "attachment_count": 15,
+      "first_event_at": "2019-04-22T02:05:44Z",
+      "last_event_at": "2021-09-07T03:13:00Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10175
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/vnd.ms-word": 9,
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": 1,
+        "image/png": 5
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10176",
+      "source_locator": "https://fyi.org.nz/request/10176.json",
+      "event_count": 3,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-22T04:11:35Z",
+      "last_event_at": "2020-02-18T03:33:43Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10176
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10177",
+      "source_locator": "https://fyi.org.nz/request/10177.json",
+      "event_count": 4,
+      "attachment_count": 2,
+      "first_event_at": "2019-04-22T04:28:12Z",
+      "last_event_at": "2020-02-07T10:09:14Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "comment"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10177
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "image/jpeg": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10178",
+      "source_locator": "https://fyi.org.nz/request/10178.json",
+      "event_count": 8,
+      "attachment_count": 3,
+      "first_event_at": "2019-04-22T04:35:04Z",
+      "last_event_at": "2019-06-12T16:59:57Z",
+      "activity_path": [
+        "sent",
+        "followup_sent",
+        "response",
+        "response",
+        "status_update",
+        "followup_sent",
+        "followup_sent",
+        "followup_sent"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10178
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "image/gif": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10179",
+      "source_locator": "https://fyi.org.nz/request/10179.json",
+      "event_count": 4,
+      "attachment_count": 2,
+      "first_event_at": "2019-04-22T04:35:48Z",
+      "last_event_at": "2023-12-16T10:25:34Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "comment",
+        "edit_comment"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10179
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "image/jpeg": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10180",
+      "source_locator": "https://fyi.org.nz/request/10180.json",
+      "event_count": 3,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-22T05:31:31Z",
+      "last_event_at": "2019-11-26T23:49:50Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10180
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10181",
+      "source_locator": "https://fyi.org.nz/request/10181.json",
+      "event_count": 9,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-22T06:26:31Z",
+      "last_event_at": "2019-06-11T23:28:40Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "followup_sent",
+        "response",
+        "status_update",
+        "followup_sent",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10181
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10182",
+      "source_locator": "https://fyi.org.nz/request/10182.json",
+      "event_count": 5,
+      "attachment_count": 3,
+      "first_event_at": "2019-04-22T06:36:11Z",
+      "last_event_at": "2019-05-05T07:12:13Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-175"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-175",
+        "request_sequence": 10182
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "image/png": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1019",
+      "source_locator": "https://fyi.org.nz/request/1019.json",
+      "event_count": 10,
+      "attachment_count": 5,
+      "first_event_at": "2013-07-23T06:15:17Z",
+      "last_event_at": "2013-09-27T09:15:56Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "followup_sent",
+        "response",
+        "response",
+        "followup_sent",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 1019
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 3,
+        "image/jpeg": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:1020",
+      "source_locator": "https://fyi.org.nz/request/1020.json",
+      "event_count": 7,
+      "attachment_count": 4,
+      "first_event_at": "2013-07-23T08:27:13Z",
+      "last_event_at": "2013-09-26T03:46:16Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "followup_sent",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 1020
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 2,
+        "image/jpeg": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10183",
+      "source_locator": "https://fyi.org.nz/request/10183.json",
+      "event_count": 4,
+      "attachment_count": 4,
+      "first_event_at": "2019-04-23T00:00:03Z",
+      "last_event_at": "2019-05-15T20:46:01Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10183
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": 1,
+        "image/gif": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10184",
+      "source_locator": "https://fyi.org.nz/request/10184.json",
+      "event_count": 8,
+      "attachment_count": 14,
+      "first_event_at": "2019-04-23T03:24:37Z",
+      "last_event_at": "2019-06-03T22:21:27Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "followup_sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10184
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 2,
+        "image/jpeg": 4,
+        "image/png": 8
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10185",
+      "source_locator": "https://fyi.org.nz/request/10185.json",
+      "event_count": 23,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-23T06:58:16Z",
+      "last_event_at": "2019-05-16T03:12:45Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "followup_sent",
+        "comment",
+        "followup_sent",
+        "status_update",
+        "response",
+        "followup_sent",
+        "response",
+        "followup_sent",
+        "response",
+        "followup_sent",
+        "response",
+        "followup_sent",
+        "response",
+        "response",
+        "followup_sent",
+        "response",
+        "response",
+        "followup_sent",
+        "response",
+        "status_update",
+        "comment"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful",
+        "partially_successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10185
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "image/png": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10186",
+      "source_locator": "https://fyi.org.nz/request/10186.json",
+      "event_count": 6,
+      "attachment_count": 3,
+      "first_event_at": "2019-04-23T08:12:10Z",
+      "last_event_at": "2019-06-01T03:33:53Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update",
+        "comment"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "rejected"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10186
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1,
+        "image/jpeg": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10187",
+      "source_locator": "https://fyi.org.nz/request/10187.json",
+      "event_count": 28,
+      "attachment_count": 9,
+      "first_event_at": "2019-04-23T09:08:04Z",
+      "last_event_at": "2019-10-31T08:18:24Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update",
+        "response",
+        "status_update",
+        "response",
+        "status_update",
+        "response",
+        "status_update",
+        "followup_sent",
+        "response",
+        "status_update",
+        "response",
+        "followup_sent",
+        "response",
+        "followup_sent",
+        "response",
+        "followup_sent",
+        "status_update",
+        "followup_sent",
+        "followup_sent",
+        "response",
+        "status_update",
+        "destroy_incoming",
+        "destroy_incoming",
+        "edit"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10187
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 3,
+        "image/jpeg": 3,
+        "image/png": 3
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10188",
+      "source_locator": "https://fyi.org.nz/request/10188.json",
+      "event_count": 6,
+      "attachment_count": 2,
+      "first_event_at": "2019-04-23T09:14:43Z",
+      "last_event_at": "2019-07-02T05:05:44Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "status_update",
+        "followup_sent",
+        "response"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10188
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10189",
+      "source_locator": "https://fyi.org.nz/request/10189.json",
+      "event_count": 5,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-23T10:48:48Z",
+      "last_event_at": "2019-05-22T02:02:38Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10189
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10190",
+      "source_locator": "https://fyi.org.nz/request/10190.json",
+      "event_count": 7,
+      "attachment_count": 5,
+      "first_event_at": "2019-04-23T11:05:55Z",
+      "last_event_at": "2019-09-02T06:08:23Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "status_update",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10190
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 3,
+        "image/jpeg": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10191",
+      "source_locator": "https://fyi.org.nz/request/10191.json",
+      "event_count": 5,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-23T11:07:05Z",
+      "last_event_at": "2019-05-20T05:43:48Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10191
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10192",
+      "source_locator": "https://fyi.org.nz/request/10192.json",
+      "event_count": 5,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-23T11:09:19Z",
+      "last_event_at": "2019-05-18T05:42:20Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10192
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10193",
+      "source_locator": "https://fyi.org.nz/request/10193.json",
+      "event_count": 6,
+      "attachment_count": 4,
+      "first_event_at": "2019-04-23T14:47:13Z",
+      "last_event_at": "2019-05-15T23:31:57Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10193
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 2,
+        "image/jpeg": 2
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10194",
+      "source_locator": "https://fyi.org.nz/request/10194.json",
+      "event_count": 13,
+      "attachment_count": 12,
+      "first_event_at": "2019-04-23T19:58:01Z",
+      "last_event_at": "2019-06-22T13:50:13Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "response",
+        "response",
+        "status_update",
+        "status_update",
+        "response",
+        "status_update",
+        "followup_sent",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful",
+        "partially_successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10194
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 6,
+        "image/gif": 6
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10195",
+      "source_locator": "https://fyi.org.nz/request/10195.json",
+      "event_count": 6,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-23T21:21:24Z",
+      "last_event_at": "2019-09-11T02:36:17Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "partially_successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10195
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10196",
+      "source_locator": "https://fyi.org.nz/request/10196.json",
+      "event_count": 1,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-24T02:13:36Z",
+      "last_event_at": "2019-04-24T02:13:36Z",
+      "activity_path": [
+        "sent"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10196
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10197",
+      "source_locator": "https://fyi.org.nz/request/10197.json",
+      "event_count": 5,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-24T02:14:01Z",
+      "last_event_at": "2019-05-03T03:50:36Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10197
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10198",
+      "source_locator": "https://fyi.org.nz/request/10198.json",
+      "event_count": 4,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-24T02:14:25Z",
+      "last_event_at": "2019-05-21T23:38:22Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10198
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10199",
+      "source_locator": "https://fyi.org.nz/request/10199.json",
+      "event_count": 1,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-24T02:14:46Z",
+      "last_event_at": "2019-04-24T02:14:46Z",
+      "activity_path": [
+        "sent"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10199
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10200",
+      "source_locator": "https://fyi.org.nz/request/10200.json",
+      "event_count": 2,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-24T02:38:57Z",
+      "last_event_at": "2019-05-03T03:51:09Z",
+      "activity_path": [
+        "sent",
+        "response"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10200
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10201",
+      "source_locator": "https://fyi.org.nz/request/10201.json",
+      "event_count": 3,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-24T05:36:41Z",
+      "last_event_at": "2019-07-17T04:38:34Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "not_held"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10201
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "image/png": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10202",
+      "source_locator": "https://fyi.org.nz/request/10202.json",
+      "event_count": 11,
+      "attachment_count": 1,
+      "first_event_at": "2019-04-24T06:26:54Z",
+      "last_event_at": "2019-06-19T05:38:50Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "response",
+        "followup_sent",
+        "status_update",
+        "response",
+        "response",
+        "response",
+        "response",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "successful"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10202
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "application/pdf": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10203",
+      "source_locator": "https://fyi.org.nz/request/10203.json",
+      "event_count": 4,
+      "attachment_count": 3,
+      "first_event_at": "2019-04-24T13:35:53Z",
+      "last_event_at": "2019-05-23T04:08:22Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "response",
+        "response"
+      ],
+      "observed_state_labels": [
+        "waiting_response"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10203
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {
+        "image/jpeg": 2,
+        "image/png": 1
+      }
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10204",
+      "source_locator": "https://fyi.org.nz/request/10204.json",
+      "event_count": 7,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-24T15:23:27Z",
+      "last_event_at": "2019-06-10T03:34:27Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "response",
+        "followup_sent",
+        "comment",
+        "status_update"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "rejected"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10204
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    },
+    {
+      "case_id": "urn:fyi:nz-fyi:request:10205",
+      "source_locator": "https://fyi.org.nz/request/10205.json",
+      "event_count": 8,
+      "attachment_count": 0,
+      "first_event_at": "2019-04-24T15:31:31Z",
+      "last_event_at": "2019-06-10T03:31:52Z",
+      "activity_path": [
+        "sent",
+        "response",
+        "status_update",
+        "followup_sent",
+        "response",
+        "response",
+        "status_update",
+        "comment"
+      ],
+      "observed_state_labels": [
+        "waiting_response",
+        "rejected"
+      ],
+      "source_batches": [
+        "fyi-cli-real-backfill-200"
+      ],
+      "source_order": {
+        "source": "fyi-cli-real-backfill-200",
+        "request_sequence": 10205
+      },
+      "annotation_status": "pending_independent_adjudication",
+      "promotion_boundary": "engineering_only",
+      "attachment_content_types": {}
+    }
+  ]
+}
