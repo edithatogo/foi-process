@@ -17,7 +17,10 @@ def main() -> None:
         "Recurring acceptance skipped: FYI_TAKEDOWN_REVISION is not configured.",
         "steps.gate.outputs.enabled == 'true'",
         "foi-process/live-archive-manifest-profile/v2",
-        '"source_revision": revisions[-1] if revisions else None',
+        "scripts/download_allowlisted.py",
+        "--expected-sha256 \"$MANIFEST_SHA256\"",
+        'f"/resolve/{revision}/"',
+        '"source_revision": os.environ["SOURCE_REVISION"]',
         '"benchmark_only_nonpublication"',
         '"publication_performed": False',
         '"raw_content_retained": False',
@@ -27,6 +30,7 @@ def main() -> None:
     for token in required:
         assert token in workflow, f"live archive workflow is missing safety token: {token}"
     assert workflow.count("if: steps.gate.outputs.enabled == 'true'") == 3
+    assert "curl --fail" not in workflow
     print("live archive manifest workflow safety contract passed")
 
 

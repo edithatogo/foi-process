@@ -14,8 +14,12 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PACKAGE = ROOT / "data" / "bounded-real-release-150-200"
 
 
+def canonical_bytes(path: Path) -> bytes:
+    return path.read_bytes().replace(b"\r\n", b"\n")
+
+
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    return hashlib.sha256(canonical_bytes(path)).hexdigest()
 
 
 def ndjson(path: Path) -> list[dict[str, Any]]:
@@ -51,7 +55,7 @@ def validate(package: Path = DEFAULT_PACKAGE) -> dict[str, Any]:
     for name in ("event_log.jsonl", "attachments.jsonl"):
         path = package / name
         descriptor = descriptors[name]
-        if descriptor["sha256"] != sha256(path) or descriptor["byte_length"] != path.stat().st_size:
+        if descriptor["sha256"] != sha256(path) or descriptor["byte_length"] != len(canonical_bytes(path)):
             raise ValueError(f"manifest descriptor mismatch for {name}")
 
     events = ndjson(package / "event_log.jsonl")
@@ -62,6 +66,18 @@ def validate(package: Path = DEFAULT_PACKAGE) -> dict[str, Any]:
     declared = (manifest["request_count"], manifest["event_count"], manifest["attachment_count"])
     if observed != declared:
         raise ValueError(f"package counts do not reconcile: observed={observed}, declared={declared}")
+    dashboard = json.loads((package / "dashboard.json").read_text(encoding="utf-8"))
+    if dashboard["meta"]["manifest_sha256"] != sha256(package / "manifest.json"):
+        raise ValueError("dashboard manifest digest does not match canonical manifest bytes")
+    if dashboard["meta"]["event_log_sha256"] != sha256(package / "event_log.jsonl"):
+        raise ValueError("dashboard event-log digest does not match canonical event bytes")
+    dashboard_counts = (
+        dashboard["metrics"]["case_count"],
+        dashboard["metrics"]["active_event_count"],
+        dashboard["metrics"]["attachment_count"],
+    )
+    if dashboard_counts != declared:
+        raise ValueError("dashboard counts do not reconcile with the release manifest")
     return manifest
 
 
