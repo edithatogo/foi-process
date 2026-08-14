@@ -11,6 +11,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import tomllib
 from pathlib import Path
 from typing import Any
@@ -36,8 +37,17 @@ def write_json(path: Path, value: Any) -> None:
     path.write_bytes((json.dumps(value, indent=2, sort_keys=True) + "\n").encode("utf-8"))
 
 
-def command_output(command: list[str]) -> str:
-    return subprocess.run(command, cwd=ROOT, check=True, text=True, capture_output=True).stdout.strip()
+def command_output(command: list[str], attempts: int = 1) -> str:
+    result: subprocess.CompletedProcess[str] | None = None
+    for attempt in range(1, attempts + 1):
+        result = subprocess.run(command, cwd=ROOT, check=False, text=True, capture_output=True)
+        if result.returncode == 0:
+            return result.stdout.strip()
+        if attempt < attempts:
+            time.sleep(2 ** (attempt - 1))
+    assert result is not None
+    detail = result.stderr.strip() or result.stdout.strip() or "no command output"
+    raise RuntimeError(f"command failed after {attempts} attempt(s): {command!r}\n{detail}")
 
 
 def spdx_id(package: dict[str, Any]) -> str:
@@ -47,7 +57,9 @@ def spdx_id(package: dict[str, Any]) -> str:
 
 
 def build_sbom(created_at: str, software_commit: str) -> dict[str, Any]:
-    metadata = json.loads(command_output(["cargo", "metadata", "--locked", "--format-version", "1"]))
+    metadata = json.loads(
+        command_output(["cargo", "metadata", "--locked", "--format-version", "1"], attempts=3)
+    )
     packages = sorted(metadata["packages"], key=lambda package: package["id"])
     identifiers = {package["id"]: spdx_id(package) for package in packages}
     spdx_packages = []
