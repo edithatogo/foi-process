@@ -9,7 +9,7 @@ authors:
 repository-code: "https://github.com/edithatogo/foi-process"
 url: "https://github.com/edithatogo/foi-process"
 license: Apache-2.0
-version: 0.1.0 # x-release-please-version
+version: 0.2.0 # x-release-please-version
 abstract: >-
   Rust-first event spine, replay engine, and Rust4PM integration for FOI
   process intelligence. The workpack integrates evidence and process signals
