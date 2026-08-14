@@ -11,11 +11,16 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import tomllib
 from pathlib import Path
 from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def package_version() -> str:
+    return str(tomllib.loads((ROOT / "Cargo.toml").read_text(encoding="utf-8"))["package"]["version"])
 
 
 def sha256(path: Path) -> str:
@@ -156,7 +161,7 @@ def build(output: Path, benchmark: Path, created_at: str, software_commit: str, 
         "software_commit": software_commit,
         "rust_version": rust_version,
         "rust4pm_version": "0.6.0",
-        "foi_process_version": "0.1.0",
+        "foi_process_version": package_version(),
         "parameters": {"benchmark_profiles": "1k,10k,full", "publication": "synthetic-fixture"},
         "privacy_profile": {
             "sensitivity": "public",

@@ -10,4 +10,4 @@
 
 - [x] Add license files, dependency policy, Dependabot, deterministic fixture regeneration, and SBOM manifest fields.
 - [x] Generate and commit `Cargo.lock` in the Rust export environment.
-- [ ] Pin or otherwise review GitHub Action dependencies before the first protected release.
+- [x] Pin the code-release workflow actions and enforce exact tag, metadata, evidence, and attestation checks.
