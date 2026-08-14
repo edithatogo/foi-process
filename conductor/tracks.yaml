@@ -69,7 +69,7 @@ tracks:
 - id: T11
   slug: jurisdiction-case-process-modelling
   status: active
-  maturity: foundations_implemented_external_evidence_pending
+  maturity: nz_bounded_case_inventory_implemented_external_evidence_pending
   owner: foi-process/foi-o/nlp-policy-nz
   track: jurisdiction_case_process_modelling_20260721
   github_issue: https://github.com/edithatogo/foi-process/issues/39

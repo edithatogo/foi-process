@@ -46,6 +46,6 @@
 ## Active Conductor Lifecycle
 
 - T10 is completed at the repository acceptance boundary in closed issues #36 and #37; recurring package operation belongs to T12.
-- T11 / issue #39 is active with empirical sampling, adjudication, replay, and statutory-source gates remaining.
+- T11 / issue #39 is active: a deterministic 75-case bounded NZ inventory now expands empirical engineering evidence beyond AskTheEU, while broader sampling, adjudication, replay, and statutory-source gates remain.
 - T12 / issue #114 is active: immutable intake and bounded reconciliation are implemented, while durable-index acceptance, snapshot/delta equivalence, derived per-instance publication, and NZ parity remain.
 - T08 is completed: code-release attestation and the representative privacy-approved live-archive profile are independently hosted and checksummed. Production continuation and data publication remain separate gates.

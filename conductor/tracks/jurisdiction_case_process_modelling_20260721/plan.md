@@ -15,6 +15,9 @@
 ## Remaining Acceptance
 
 - [ ] Expand the representative real-case set beyond the current bounded AskTheEU evidence.
+  NZ progress: `nz-bounded-case-inventory.json` is a deterministic census of the verified
+  75-case bounded release (425 events, 179 attachments). It is bounded-release evidence,
+  not a full-corpus or legal-representativeness claim; other jurisdictions remain pending.
 - [ ] Complete independent annotation and adjudication with traceable receipts.
 - [ ] Prove replay isolation, ordering, coverage, and annotation reliability for each promoted jurisdiction.
 - [ ] Pair Mermaid and BPMN models and revalidate semantic equivalence at every increment.
