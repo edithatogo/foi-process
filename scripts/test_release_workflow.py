@@ -22,6 +22,7 @@ def main() -> None:
         "skip-github-release",
         "gh release create \"$release_tag\" --draft --target \"$GITHUB_SHA\"",
         "python scripts/check_release_commit_subject.py",
+        ".target_commitish)\" = \"$GITHUB_SHA\"",
         ".object.sha)\" = \"$GITHUB_SHA\"",
         "scripts/check_release_metadata.py",
         "scripts/build_release_evidence.py",
