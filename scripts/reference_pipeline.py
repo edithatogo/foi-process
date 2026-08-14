@@ -40,6 +40,14 @@ def privacy(disposition="publish", sensitivity="public", access="public") -> dic
         "human_reviewed": True,
     }
 
+def is_reviewed_public(value: dict[str, Any]) -> bool:
+    return (
+        value.get("human_reviewed") is True
+        and value.get("disposition") == "publish"
+        and value.get("sensitivity") == "public"
+        and value.get("access_tier") == "public"
+    )
+
 
 def evidence_record(logical: str, revision: int, text: str, captured: str, public=True) -> dict[str, Any]:
     sha = digest(text)
@@ -199,6 +207,26 @@ def materialize(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return sorted((e for e in latest.values() if e["operation"] == "upsert"), key=lambda e: (e["case_id"], e["event_time"]["timestamp"], e["position"]["sequence"], e["event_id"]))
 
 
+def project_public(events: list[dict[str, Any]], evidence: list[dict[str, Any]], objects: list[dict[str, Any]]) -> dict[str, Any]:
+    public_events=[]; withheld=0; metadata=0; evid_index={e["evidence_id"]:e for e in evidence}; object_index={o["object_id"]:o for o in objects}
+    for e in materialize(events):
+        disp=e["privacy"]["disposition"]
+        if disp in ("withhold","needs_review"): withheld+=1; continue
+        if disp=="publish" and (not is_reviewed_public(e["privacy"]) or any(link["object_id"] not in object_index or not is_reviewed_public(object_index[link["object_id"]]["privacy"]) for link in e.get("objects",[]))):
+            withheld+=1; continue
+        links=[]
+        if disp=="publish_metadata_only":
+            if e["privacy"].get("human_reviewed") is not True: withheld+=1; continue
+            metadata+=1
+        else:
+            for ref in e.get("evidence",[]):
+                rec=evid_index.get(ref["evidence_id"])
+                if rec and is_reviewed_public(rec["privacy"]):
+                    links.append({"evidence_id":rec["evidence_id"],"uri":rec["locator"].get("uri"),"media_type":rec["media_type"],"content_sha256":rec["content_sha256"]})
+        public_events.append({k:e[k] for k in ["event_id","logical_event_id","site","jurisdiction","case_id","activity","event_time","assertion_status"]} | {"source_sequence":e["position"]["sequence"],"evidence":links,"attributes":{k:v for k,v in e.get("attributes",{}).items() if k in {"authority_id","platform_state","message_direction","native_activity"}}})
+    return {"policy_id":"urn:foi-process:publication:dashboard-default","events":public_events,"withheld_event_count":withheld,"metadata_only_event_count":metadata}
+
+
 def summary(events: list[dict[str, Any]]) -> dict[str, Any]:
     active = materialize(events)
     cases: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -250,19 +278,7 @@ def generate() -> None:
     snapshot_records=[{"logical_record_id":k,"revision":v["revision"],"current_digest":v.get("digest"),"last_delta_id":next(d["delta_id"] for d in reversed(deltas) if d["logical_record_id"]==k and d["revision"]==v["revision"]),"last_event_id":v.get("event_id")} for k,v in sorted(replay.records.items())]
     snapshot={"schema_version":VERSION,"snapshot_id":sid("foi-process:replay-snapshot",[checkpoint["consumer"],checkpoint["state_hash"]]),"consumer":checkpoint["consumer"],"created_at":checkpoint["created_at"],"records":snapshot_records,"partitions":checkpoint["partitions"],"state_hash":checkpoint["state_hash"]}
     bundle={"schema_version":VERSION,"evidence":evidence,"objects":list(objects.values()),"events":events,"findings":[],"human_reviews":[],"checkpoint":checkpoint}
-    public_events=[]; withheld=0; metadata=0; evid_index={e["evidence_id"]:e for e in evidence}
-    for e in materialize(events):
-        disp=e["privacy"]["disposition"]
-        if disp in ("withhold","needs_review"): withheld+=1; continue
-        links=[]
-        if disp=="publish_metadata_only": metadata+=1
-        else:
-            for ref in e.get("evidence",[]):
-                rec=evid_index.get(ref["evidence_id"])
-                if rec and rec["privacy"]["disposition"]=="publish":
-                    links.append({"evidence_id":rec["evidence_id"],"uri":rec["locator"].get("uri"),"media_type":rec["media_type"],"content_sha256":rec["content_sha256"]})
-        public_events.append({k:e[k] for k in ["event_id","logical_event_id","site","jurisdiction","case_id","activity","event_time","assertion_status"]} | {"source_sequence":e["position"]["sequence"],"evidence":links,"attributes":{k:v for k,v in e.get("attributes",{}).items() if k in {"authority_id","native_activity"}}})
-    public={"policy_id":"urn:foi-process:publication:dashboard-default","events":public_events,"withheld_event_count":withheld,"metadata_only_event_count":metadata}
+    public=project_public(events,evidence,list(objects.values()))
     ocel={
         "events":[{"id":e["event_id"],"event_type":e["activity"],"time":e["event_time"]["timestamp"],"attributes":e.get("attributes",{})} for e in materialize(events)],
         "objects":[{"id":o["object_id"],"object_type":o["object_type"],"attributes":o.get("attributes",{})} for o in objects.values()],

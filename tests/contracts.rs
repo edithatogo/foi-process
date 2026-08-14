@@ -97,6 +97,95 @@ fn public_projection_withholds_events_linked_to_removed_objects() {
 }
 
 #[test]
+fn public_projection_withholds_unreviewed_events() {
+    let mut bundle: NormalizedBundle =
+        serde_json::from_str(include_str!("../examples/generated/normalized-bundle.json")).unwrap();
+    bundle.events[0].privacy.human_reviewed = false;
+
+    let projection = project_public(&bundle, &PublicationPolicy::dashboard_default());
+
+    assert!(!projection
+        .events
+        .iter()
+        .any(|event| event.event_id == bundle.events[0].event_id));
+}
+
+#[test]
+fn public_projection_withholds_events_linked_to_non_public_objects() {
+    let mut bundle: NormalizedBundle =
+        serde_json::from_str(include_str!("../examples/generated/normalized-bundle.json")).unwrap();
+    bundle.objects[0].privacy.sensitivity = SensitivityClass::Personal;
+
+    let projection = project_public(&bundle, &PublicationPolicy::dashboard_default());
+
+    assert_eq!(projection.events.len(), 1);
+    assert_eq!(projection.metadata_only_event_count, 1);
+    assert_eq!(projection.withheld_event_count, 3);
+}
+
+#[test]
+fn public_projection_withholds_events_with_dangling_object_links() {
+    let mut bundle: NormalizedBundle =
+        serde_json::from_str(include_str!("../examples/generated/normalized-bundle.json")).unwrap();
+    bundle.objects.clear();
+
+    let projection = project_public(&bundle, &PublicationPolicy::dashboard_default());
+
+    assert_eq!(projection.events.len(), 1);
+    assert_eq!(projection.metadata_only_event_count, 1);
+    assert_eq!(projection.withheld_event_count, 3);
+}
+
+#[test]
+fn generated_public_projection_matches_rust_policy() {
+    let bundle: NormalizedBundle =
+        serde_json::from_str(include_str!("../examples/generated/normalized-bundle.json")).unwrap();
+    let expected: PublicProjection =
+        serde_json::from_str(include_str!("../examples/generated/public-projection.json")).unwrap();
+
+    assert_eq!(
+        project_public(&bundle, &PublicationPolicy::dashboard_default()),
+        expected
+    );
+}
+
+#[test]
+fn public_projection_filters_unreviewed_evidence_and_unlisted_attributes() {
+    let mut bundle: NormalizedBundle =
+        serde_json::from_str(include_str!("../examples/generated/normalized-bundle.json")).unwrap();
+    bundle.objects[0].privacy = PrivacyAssessment {
+        sensitivity: SensitivityClass::Public,
+        access_tier: AccessTier::Public,
+        disposition: PublicationDisposition::Publish,
+        reason_codes: vec!["privacy:fixture_reviewed".to_string()],
+        assessed_by: None,
+        human_reviewed: true,
+    };
+    let evidence_id = bundle.events[0].evidence[0].evidence_id.clone();
+    bundle
+        .evidence
+        .iter_mut()
+        .find(|record| record.evidence_id == evidence_id)
+        .unwrap()
+        .privacy
+        .human_reviewed = false;
+    bundle.events[0].attributes.insert(
+        "raw_correspondence".to_string(),
+        serde_json::json!("private"),
+    );
+
+    let projection = project_public(&bundle, &PublicationPolicy::dashboard_default());
+    let event = projection
+        .events
+        .iter()
+        .find(|event| event.event_id == bundle.events[0].event_id)
+        .unwrap();
+
+    assert!(event.evidence.is_empty());
+    assert!(!event.attributes.contains_key("raw_correspondence"));
+}
+
+#[test]
 fn dashboard_summary_is_revision_order_independent() {
     let bundle: NormalizedBundle =
         serde_json::from_str(include_str!("../examples/generated/normalized-bundle.json")).unwrap();

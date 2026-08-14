@@ -33,6 +33,9 @@ def main():
     assert summary['active_event_count']==4  # corrected extension is counted once
     public=json.loads((ROOT/'examples/generated/public-projection.json').read_text())
     assert public['metadata_only_event_count']==1
+    assert public['withheld_event_count']==3
+    assert len(public['events'])==1
+    assert rp.project_public(events[:1],[],[])['withheld_event_count']==1
     closed=[e for e in public['events'] if e['activity']=='foio:ClosedObserved'][0]
     assert closed['evidence']==[]
     ocel=json.loads((ROOT/'examples/generated/ocel-projection.json').read_text())

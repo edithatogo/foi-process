@@ -37,8 +37,8 @@ tracks:
   track: T05-conformance-rules
 - id: T06
   slug: privacy-publication
-  status: active
-  maturity: projection_implemented
+  status: completed
+  maturity: acceptance_verified
   owner: foi-process/foi-o/propel
   track: T06-privacy-publication
 - id: T07
