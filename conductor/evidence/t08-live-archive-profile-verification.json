@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "observed_at": "2026-08-14T04:50:00Z",
+  "scope": "t08_representative_live_archive_profile_nonpublication",
+  "workflow": {
+    "run_id": 31771014519,
+    "url": "https://github.com/edithatogo/foi-process/actions/runs/31771014519",
+    "conclusion": "success",
+    "head_commit": "825e5e3c5029368d76fefa015a76023162c09980",
+    "event": "workflow_dispatch"
+  },
+  "source": {
+    "repository": "https://huggingface.co/datasets/edithatogo/fyi-archive-nz",
+    "revision": "bd119937c0532cc1f03ca60a7d84ca6991dab5c6",
+    "manifest_sha256": "23cab9ee0ac6986326d67c91a91e415456a1d0589c90ec1c1628556e0d0d6e1",
+    "record_count": 33217
+  },
+  "verification": {
+    "adapter_output_sha256": "fb8ab0b5fc1a2c9e9f6aac499c46949dc002884d70529726e3ac706320c34b66",
+    "full_replay_snapshot_sha256": "50b4526a2eb816e2c73788b2f6374bd8c6c0f8119a63f51bf3c440d9ef1b586e",
+    "incremental_replay_snapshot_sha256": "50b4526a2eb816e2c73788b2f6374bd8c6c0f8119a63f51bf3c440d9ef1b586e",
+    "replay_continuation_equal": true,
+    "adapter_elapsed_seconds": 39.26,
+    "adapter_peak_resident_bytes": 613445632,
+    "full_replay_elapsed_seconds": 1.61,
+    "full_replay_peak_resident_bytes": 76828672
+  },
+  "artifacts": [
+    {
+      "name": "acceptance-evidence.json",
+      "sha256": "d4b126013339095b3a09833cac503306837f00b5520fc510a6c34c6f5ac42c8c"
+    },
+    {
+      "name": "benchmark.json",
+      "sha256": "b724bd873863bc6cb8da4362b84e53baab6ee5aae409be2ae3881d052e7ef4f9"
+    }
+  ],
+  "boundaries": {
+    "operation": "benchmark_only_nonpublication",
+    "raw_content_retained": false,
+    "publication_performed": false,
+    "production_continuation_authorized": false,
+    "full_corpus_publication_claimed": false
+  }
+}

@@ -52,8 +52,8 @@ artefacts:
   RustScaleBenchmark:
     incubator: foi-process
     destination: release_evidence
-    status: synthetic_full_scale_verified
-    gate: representative_live_archive_rerun
+    status: live_archive_profile_verified
+    gate: accepted_for_code_release
   ParquetPartitionContract:
     incubator: foi-process
     destination: fyi-archive_and_foi-process

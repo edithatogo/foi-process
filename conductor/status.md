@@ -16,6 +16,7 @@
 - Public reviewed synthetic-fixture Hugging Face Dataset and no-cost Static Space verified; no real-data or full-corpus claim is implied
 - Bounded real fyi-cli/fyi-archive WARC/WACZ capture with four attachment byte/digest/linkage checks
 - Repeated 1k/10k/200k Rust benchmark, tested Parquet partition contract, and checksummed SPDX/mining release evidence
+- Hosted non-publishing Rust profile against the pinned 33,217-record public archive manifest, with source revision, timing, peak memory, deterministic adapter output, and full/incremental replay equivalence recorded
 
 ## Remaining promotion gates
 
@@ -47,4 +48,4 @@
 - T10 is completed at the repository acceptance boundary in closed issues #36 and #37; recurring package operation belongs to T12.
 - T11 / issue #39 is active with empirical sampling, adjudication, replay, and statutory-source gates remaining.
 - T12 / issue #114 is active: immutable intake and bounded reconciliation are implemented, while durable-index acceptance, snapshot/delta equivalence, derived per-instance publication, and NZ parity remain.
-- T08 retains only the representative privacy-approved live-data rerun; hosted code-release attestation is complete.
+- T08 is completed: code-release attestation and the representative privacy-approved live-archive profile are independently hosted and checksummed. Production continuation and data publication remain separate gates.
