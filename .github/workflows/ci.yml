@@ -78,6 +78,8 @@ jobs:
       - run: python scripts/validate_jurisdiction_intake.py examples/input/jurisdiction-intake.synthetic.json
       - run: python scripts/test_validate_jurisdiction_intake.py
       - run: python scripts/validate_governance_gate.py
+      - run: python scripts/validate_conductor_registry.py
+      - run: PYTHONPATH=scripts python scripts/test_validate_conductor_registry.py
       - name: Validate release metadata parity
         run: |
           version="$(python scripts/check_release_metadata.py --print-version)"

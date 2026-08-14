@@ -1,58 +1,83 @@
 tracks:
 - id: T00
   slug: contract-and-promotion
-  status: implementation_candidate
+  status: active
+  maturity: partial_contract_acceptance
   owner: foi-process/foi-o/fyi-cli
+  track: T00-contract-and-promotion
 - id: T01
   slug: deterministic-replay
-  status: implementation_candidate
+  status: active
+  maturity: replay_core_implemented
   owner: foi-process
+  track: T01-deterministic-replay
 - id: T02
   slug: rust4pm-ocel-mining
-  status: adapter_implemented
+  status: active
+  maturity: adapter_implemented
   owner: foi-process/rust4pm
+  track: T02-rust4pm-ocel-mining
 - id: T03
   slug: archive-live-adapters
-  status: acceptance_verified
+  status: completed
+  maturity: acceptance_verified
   owner: fyi-archive/fyi-cli/foi-process
+  track: T03-archive-live-adapters
 - id: T04
   slug: document-ocr-signals
-  status: contracts_implemented
+  status: deferred
+  maturity: contracts_implemented
   owner: fe-reader/nlp-policy-nz
+  track: T04-document-ocr-signals
 - id: T05
   slug: conformance-rules
-  status: trace_fixture_implemented
+  status: active
+  maturity: trace_fixture_implemented
   owner: foi-o/axiom-rules-engine/rulespec-nz
+  track: T05-conformance-rules
 - id: T06
   slug: privacy-publication
-  status: projection_implemented
+  status: active
+  maturity: projection_implemented
   owner: foi-process/foi-o/propel
+  track: T06-privacy-publication
 - id: T07
   slug: dashboard-propel-hf
-  status: repository_built_publication_pending
+  status: completed
+  maturity: reviewed_fixture_publication_verified
   owner: propel/foi-process
+  track: T07-dashboard-propel-hf
 - id: T08
   slug: scale-release-governance
-  status: synthetic_scale_and_release_evidence_implemented
+  status: active
+  maturity: hosted_code_release_attested
   owner: foi-process/fyi-archive
+  track: T08-scale-release-governance
 - id: T09
   slug: simulation-research-adoption
-  status: repository_implemented_publication_pending
+  status: completed
+  maturity: repository_scope_completed
   owner: kairos/rulesandprocesses/sourceright
+  track: T09-simulation-research-adoption
 - id: T10
   slug: full-corpus-process-mining
-  status: blocked_on_source_reconciliation
+  status: completed
+  maturity: acceptance_verified
   owner: foi-process/fyi-archive/fyi-cli
+  track: T10-full-corpus-process-mining
+  github_issue: https://github.com/edithatogo/foi-process/issues/37
 - id: T11
   slug: jurisdiction-case-process-modelling
-  status: in_progress
+  status: active
+  maturity: foundations_implemented_external_evidence_pending
   owner: foi-process/foi-o/nlp-policy-nz
   track: jurisdiction_case_process_modelling_20260721
   github_issue: https://github.com/edithatogo/foi-process/issues/39
   programme_issue: https://github.com/edithatogo/foi-o/issues/81
 - id: T12
   slug: instance-pipeline-consolidation
-  status: pending
+  status: active
+  maturity: intake_and_bounded_reconciliation_implemented
   owner: foi-process/fyi-archive/fyi-cli
   track: instance_pipeline_consolidation_20260812
   github_issue: https://github.com/edithatogo/foi-process/issues/114
@@ -60,5 +85,6 @@ tracks:
 - id: T13
   slug: security-quality-fuzzing
   status: completed
+  maturity: acceptance_verified
   owner: foi-process
   track: T13-security-quality-fuzzing
