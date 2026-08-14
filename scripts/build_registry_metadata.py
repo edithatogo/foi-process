@@ -9,6 +9,14 @@ from pathlib import Path
 from typing import Any
 
 
+SOURCE_RIGHTS_PATH = "artifacts/source-rights.json"
+SOURCE_RIGHTS_URI = (
+    "https://github.com/edithatogo/foi-process/blob/main/"
+    "docs/source-rights-and-licensing.md"
+)
+APPROVED_REVIEW_STATES = {"approved", "reviewed"}
+
+
 def read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -17,10 +25,44 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def validate_source_rights(bundle: Path, manifest: dict[str, Any]) -> str:
+    rights_path = bundle / SOURCE_RIGHTS_PATH
+    if not rights_path.is_file():
+        raise ValueError(f"dataset bundle is missing {SOURCE_RIGHTS_PATH}")
+
+    files = {item["path"]: item for item in manifest["files"]}
+    declared = files.get(SOURCE_RIGHTS_PATH)
+    if declared is None or declared.get("sha256") != sha256(rights_path):
+        raise ValueError("source-rights artifact is absent from or mismatched with the manifest")
+
+    rights = read_json(rights_path)
+    records = rights.get("records")
+    if not isinstance(records, list) or not records:
+        raise ValueError("source-rights artifact must contain at least one record")
+
+    required = {"source_id", "rights_basis", "redistribution_scope", "review_status"}
+    for record in records:
+        missing = sorted(required - record.keys())
+        if missing:
+            raise ValueError(f"source-rights record is incomplete: {missing}")
+
+    if manifest.get("classification") != "synthetic-fixture":
+        pending = [
+            record["source_id"]
+            for record in records
+            if str(record["review_status"]).lower() not in APPROVED_REVIEW_STATES
+        ]
+        if pending:
+            raise ValueError("production-derived registry metadata requires reviewed source rights: " + ", ".join(pending))
+
+    return sha256(rights_path)
+
+
 def build(bundle: Path, output: Path) -> None:
     manifest_path = bundle / "manifest.json"
     manifest = read_json(manifest_path)
     manifest_digest = sha256(manifest_path)
+    source_rights_digest = validate_source_rights(bundle, manifest)
     files = manifest["files"]
     data_files = [item for item in files if item["path"].startswith("data/")]
 
@@ -33,7 +75,7 @@ def build(bundle: Path, output: Path) -> None:
         "name": manifest["dataset_id"],
         "description": "Public-safe FOI process event logs and reproducibility artefacts.",
         "version": manifest["source_release"],
-        "license": "https://spdx.org/licenses/Apache-2.0.html",
+        "license": SOURCE_RIGHTS_URI,
         "distribution": [
             {
                 "@type": "DataDownload",
@@ -45,6 +87,7 @@ def build(bundle: Path, output: Path) -> None:
             for item in data_files
         ],
         "cr:manifestSha256": manifest_digest,
+        "cr:sourceRightsSha256": source_rights_digest,
         "cr:recordSet": [
             {
                 "@type": "cr:RecordSet",
@@ -81,7 +124,12 @@ def build(bundle: Path, output: Path) -> None:
                 "sizes": [f"{len(files)} files"],
                 "formats": ["application/jsonl", "application/json"],
                 "version": manifest["source_release"],
-                "rightsList": [{"rights": "Apache-2.0 (code); source-declared rights apply to data"}],
+                "rightsList": [
+                    {
+                        "rights": "Source-derived dataset rights; Apache-2.0 applies only to repository code",
+                        "rightsUri": SOURCE_RIGHTS_URI,
+                    }
+                ],
                 "subjects": [{"subject": "process mining"}, {"subject": "freedom of information"}],
                 "fundingReferences": [],
                 "isReferencedBy": [{"value": f"manifest-sha256:{manifest_digest}", "valueType": "ARK"}],

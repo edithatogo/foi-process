@@ -83,6 +83,8 @@ jobs:
       - run: python scripts/validate_alaveteli_evidence.py
       - run: python scripts/validate_jurisdiction_review_matrix.py
       - run: python scripts/validate_jurisdiction_review_queue.py
+      - run: python scripts/check_registry_readiness.py
+      - run: PYTHONPATH=scripts python scripts/test_registry_metadata_rights.py
       - run: python scripts/alaveteli_metadata_adapter.py examples/input/alaveteli-request-envelope.sample.json > /tmp/alaveteli-request-event.json
       - run: python -m json.tool /tmp/alaveteli-request-event.json >/dev/null
       - run: PYTHONPATH=scripts python scripts/test_alaveteli_metadata_adapter.py
@@ -96,6 +98,7 @@ jobs:
       - run: python scripts/test_security_fuzz_workflow.py
       - run: python scripts/test_scale_suite.py
       - run: python scripts/build_hf_dataset.py --output /tmp/foi-process-event-logs
+      - run: python scripts/build_registry_metadata.py --bundle /tmp/foi-process-event-logs --output /tmp/registry-metadata
       - run: python -m json.tool /tmp/foi-process-event-logs/manifest.json >/dev/null
       - run: python scripts/build_hf_space_data.py --bundle /tmp/foi-process-event-logs --output /tmp/dashboard-data.json
       - run: python -m json.tool /tmp/dashboard-data.json >/dev/null

@@ -1,4 +1,4 @@
-# Status — 2026-07-19
+# Status - 2026-08-14
 
 ## Implemented in workpack
 
@@ -38,4 +38,5 @@
 - Production publication remains blocked by explicit gate; non-publication technical review is complete
 - Scale beyond the four-request live continuation evidence only if operational monitoring requires it
 - Hosted release-evidence attestation for any real-data publication remains intentionally out of scope
-- Authenticated Dataset Viewer verification and Zenodo preservation where still outstanding
+- Bounded registry publication is complete at DOI `10.5281/zenodo.21660296`;
+  full-corpus registry expansion remains separately deferred in issue #63.

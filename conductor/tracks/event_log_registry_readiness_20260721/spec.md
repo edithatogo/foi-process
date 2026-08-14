@@ -23,3 +23,10 @@ Parent: [#63](https://github.com/edithatogo/foi-process/issues/63)
 
 The planning structure is complete when all subissues are linked, project-visible, and traceable from this track. Individual registry deliverables close only with authoritative evidence or a documented ineligibility decision.
 
+## Completion boundary
+
+The bounded release satisfies this track through Zenodo DOI
+`10.5281/zenodo.21660296` and the revision-pinned Hugging Face/Croissant
+record. It does not claim full-corpus coverage. Full-corpus registry expansion
+remains a separate, release-specific gate in issue #63.
+

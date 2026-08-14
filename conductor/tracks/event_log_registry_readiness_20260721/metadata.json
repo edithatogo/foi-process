@@ -2,15 +2,18 @@
   "track_id": "event_log_registry_readiness_20260721",
   "version": "1.0.0",
   "type": "chore",
-  "status": "planned",
+  "status": "completed",
   "created_at": "2026-07-21T00:00:00Z",
-  "updated_at": "2026-07-21T00:00:00Z",
+  "updated_at": "2026-08-14T00:00:00Z",
   "owner_repo": "edithatogo/foi-process",
   "github_parent_issue": "https://github.com/edithatogo/foi-process/issues/63",
   "github_subissues": [
     "https://github.com/edithatogo/foi-process/issues/64",
     "https://github.com/edithatogo/foi-process/issues/65"
   ],
-  "external_evidence_required": true
+  "external_evidence_required": false,
+  "completion_scope": "bounded-release",
+  "evidence_doi": "10.5281/zenodo.21660296",
+  "deferred_scope_issue": "https://github.com/edithatogo/foi-process/issues/63"
 }
 
