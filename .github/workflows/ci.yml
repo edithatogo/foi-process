@@ -106,8 +106,10 @@ jobs:
       - run: PYTHONPATH=scripts python scripts/test_download_allowlisted.py
       - run: PYTHONPATH=scripts python scripts/test_safe_extract_archive_package.py
       - run: python scripts/test_scheduled_reconciliation_workflow.py
+      - run: python scripts/test_live_archive_manifest_workflow.py
       - run: python scripts/test_security_fuzz_workflow.py
       - run: python scripts/test_scale_suite.py
+      - run: PYTHONPATH=scripts python scripts/test_bounded_real_release.py
       - run: python scripts/build_hf_dataset.py --output /tmp/foi-process-event-logs
       - run: python scripts/build_registry_metadata.py --bundle /tmp/foi-process-event-logs --output /tmp/registry-metadata
       - run: python -m json.tool /tmp/foi-process-event-logs/manifest.json >/dev/null
