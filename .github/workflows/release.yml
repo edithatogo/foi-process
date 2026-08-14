@@ -73,7 +73,7 @@ jobs:
           fi
 
           test -n "$release_id"
-          test "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$release_tag" --jq .object.sha)" = "$GITHUB_SHA"
+          test "$(gh api "repos/$GITHUB_REPOSITORY/releases/$release_id" --jq .target_commitish)" = "$GITHUB_SHA"
           test "$(gh api "repos/$GITHUB_REPOSITORY/releases/$release_id" --jq .draft)" = true
           python scripts/check_release_metadata.py "$release_tag"
           echo "release_id=$release_id" >> "$GITHUB_OUTPUT"
@@ -113,11 +113,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_ID: ${{ steps.stage.outputs.release_id }}
+          RELEASE_TAG: ${{ steps.stage.outputs.tag_name }}
         run: |
           set -euo pipefail
           gh api --method PATCH "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" \
             -F draft=false -f make_latest=true >/dev/null
           test "$(gh api "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" --jq .draft)" = false
+          test "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" --jq .object.sha)" = "$GITHUB_SHA"
 
   dispatch-release-pr-ci:
     needs: release
