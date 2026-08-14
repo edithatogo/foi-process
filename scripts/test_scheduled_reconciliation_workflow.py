@@ -53,7 +53,7 @@ def main() -> None:
             raise AssertionError(f"workflow contains forbidden surface: {forbidden}")
     downloader = DOWNLOADER.read_text(encoding="utf-8")
     for required in (
-        'ALLOWED_HOSTS = frozenset({"huggingface.co", "cdn-lfs.hf.co"})',
+        'ALLOWED_HOSTS = frozenset({"huggingface.co", "cdn-lfs.hf.co", "us.aws.cdn.hf.co"})',
         "validate_url(newurl)",
         "MAX_REDIRECTS = 5",
         "overall download timeout",
