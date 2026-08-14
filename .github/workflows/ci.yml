@@ -3,6 +3,7 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -77,6 +78,12 @@ jobs:
       - run: python scripts/validate_jurisdiction_intake.py examples/input/jurisdiction-intake.synthetic.json
       - run: python scripts/test_validate_jurisdiction_intake.py
       - run: python scripts/validate_governance_gate.py
+      - name: Validate release metadata parity
+        run: |
+          version="$(python scripts/check_release_metadata.py --print-version)"
+          python scripts/check_release_metadata.py "v$version"
+          PYTHONPATH=scripts python scripts/test_release_metadata.py
+          python scripts/test_release_workflow.py
       - run: python scripts/validate_jurisdiction_profiles.py
       - run: PYTHONPATH=scripts python scripts/test_jurisdiction_profile_semantics.py
       - run: python scripts/validate_jurisdiction_cases.py

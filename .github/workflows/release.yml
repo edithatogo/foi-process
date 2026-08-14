@@ -1,0 +1,146 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      attestations: write
+      contents: write
+      id-token: write
+      pull-requests: write
+    outputs:
+      pr: ${{ steps.release.outputs.pr }}
+      prs_created: ${{ steps.release.outputs.prs_created }}
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772
+        with:
+          toolchain: "1.88.0"
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.13"
+      - name: Validate current release metadata
+        run: python scripts/check_release_metadata.py "v$(python scripts/check_release_metadata.py --print-version)"
+      - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4
+        id: release
+        with:
+          token: ${{ github.token }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+          skip-github-release: true
+      - name: Stage an exact-commit draft release
+        id: stage
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          version="$(python scripts/check_release_metadata.py --print-version)"
+          release_tag="v$version"
+          echo "tag_name=$release_tag" >> "$GITHUB_OUTPUT"
+
+          release_id="$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
+            --paginate --slurp \
+            --jq "[.[][] | select(.tag_name == \"$release_tag\")][0].id // empty")"
+          if test -n "$release_id"; then
+            if test "$(gh api "repos/$GITHUB_REPOSITORY/releases/$release_id" --jq .draft)" = false; then
+              echo "pending=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          else
+            expected_subject="chore(main): release foi-process $version"
+            test "$(git show -s --format=%s "$GITHUB_SHA")" = "$expected_subject"
+            tag_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$release_tag" --jq .object.sha 2>/dev/null || true)"
+            if test -z "$tag_sha"; then
+              gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" \
+                -f ref="refs/tags/$release_tag" -f sha="$GITHUB_SHA" >/dev/null
+            else
+              test "$tag_sha" = "$GITHUB_SHA"
+            fi
+            gh release create "$release_tag" --draft --verify-tag \
+              --title "foi-process $release_tag" --generate-notes
+            release_id="$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
+              --paginate --slurp \
+              --jq "[.[][] | select(.tag_name == \"$release_tag\")][0].id // empty")"
+          fi
+
+          test -n "$release_id"
+          test "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$release_tag" --jq .object.sha)" = "$GITHUB_SHA"
+          test "$(gh api "repos/$GITHUB_REPOSITORY/releases/$release_id" --jq .draft)" = true
+          python scripts/check_release_metadata.py "$release_tag"
+          echo "release_id=$release_id" >> "$GITHUB_OUTPUT"
+          echo "pending=true" >> "$GITHUB_OUTPUT"
+      - name: Build and verify release evidence
+        if: steps.stage.outputs.pending == 'true'
+        run: |
+          set -euo pipefail
+          created_at="$(git show -s --format=%cI "$GITHUB_SHA")"
+          python scripts/build_release_evidence.py \
+            --benchmark benchmarks/rust-scale-windows-gnu.json \
+            --created-at "$created_at" \
+            --software-commit "$GITHUB_SHA" \
+            --source-revision v0.1.0 \
+            --output /tmp/foi-process-release-evidence
+          python scripts/verify_release_evidence.py /tmp/foi-process-release-evidence
+      - name: Upload release evidence workflow artifact
+        if: steps.stage.outputs.pending == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: foi-process-release-evidence-${{ steps.stage.outputs.tag_name }}
+          path: /tmp/foi-process-release-evidence
+          if-no-files-found: error
+      - name: Attach evidence to GitHub release
+        if: steps.stage.outputs.pending == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.stage.outputs.tag_name }}
+        run: gh release upload "$RELEASE_TAG" /tmp/foi-process-release-evidence/* --clobber
+      - name: Attest release evidence
+        if: steps.stage.outputs.pending == 'true'
+        uses: actions/attest-build-provenance@78e6cbd37d0ac1a40113c04f2037dacf1ea3f12e # v4
+        with:
+          subject-path: /tmp/foi-process-release-evidence/*
+      - name: Publish the verified draft release
+        if: steps.stage.outputs.pending == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_ID: ${{ steps.stage.outputs.release_id }}
+        run: |
+          set -euo pipefail
+          gh api --method PATCH "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" \
+            -F draft=false -f make_latest=true >/dev/null
+          test "$(gh api "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" --jq .draft)" = false
+
+  dispatch-release-pr-ci:
+    needs: release
+    if: needs.release.outputs.prs_created == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Dispatch CI for the bot-created release PR head
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_PR: ${{ needs.release.outputs.pr }}
+        run: |
+          set -euo pipefail
+          release_ref="$(jq -r '.headBranchName // empty' <<< "$RELEASE_PR")"
+          test -n "$release_ref"
+          gh workflow run ci.yml --repo "$GITHUB_REPOSITORY" --ref "$release_ref"
+          gh workflow run security-fuzz.yml --repo "$GITHUB_REPOSITORY" \
+            --ref "$release_ref" -f mode=pr-smoke

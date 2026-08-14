@@ -1,6 +1,7 @@
 {
   "title": "FOI Process Workpack",
   "description": "Rust-first event spine, replay engine, and Rust4PM integration for FOI process intelligence. FOI-O remains authoritative for legal semantics and jurisdictional profiles.",
+  "version": "0.1.0",
   "creators": [
     {
       "name": "Mordaunt, Dylan A",
