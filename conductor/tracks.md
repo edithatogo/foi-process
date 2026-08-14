@@ -15,8 +15,6 @@ track.
   ([plan](./tracks/T02-rust4pm-ocel-mining/)) - adapter implemented; round-trip and benchmark acceptance remain.
 - [ ] **T05** Conformance rules
   ([plan](./tracks/T05-conformance-rules/)) - indicative trace fixtures implemented; statutory-source promotion remains gated.
-- [ ] **T06** Privacy publication
-  ([plan](./tracks/T06-privacy-publication/)) - public projection implemented; profile and promotion acceptance remain.
 - [ ] **T11** Jurisdiction case and process modelling
   ([plan](./tracks/jurisdiction_case_process_modelling_20260721/)) - foundations implemented; [#39](https://github.com/edithatogo/foi-process/issues/39) retains empirical, adjudication, replay, and legal-promotion gates.
 - [ ] **T12** Instance archive-to-process pipeline consolidation
@@ -28,6 +26,9 @@ track.
   ([plan](./tracks/T04-document-ocr-signals/)) - contracts are implemented; full OCR/NLP fixtures remain deferred until production use requires them.
 
 ## Completed
+
+- [x] **T06** Privacy publication
+  ([plan](./tracks/T06-privacy-publication/)) - reviewed-public projection semantics, withholding regressions, and the bounded promotion decision are verified.
 
 - [x] **T08** Scale, release, and governance
   ([plan](./tracks/T08-scale-release-governance/)) - release evidence is hosted and attested; benchmark-only run [31771603638](https://github.com/edithatogo/foi-process/actions/runs/31771603638) verified the pinned 33,217-record live archive manifest through the constrained downloader without publication or raw-content retention.

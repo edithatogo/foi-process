@@ -55,6 +55,7 @@ pub struct PublicProcessEvent {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub event_time: Option<TemporalInstant>,
     pub assertion_status: AssertionStatus,
+    pub source_sequence: u64,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub confidence: Option<Confidence>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
@@ -91,13 +92,10 @@ pub fn project_public(bundle: &NormalizedBundle, policy: &PublicationPolicy) -> 
     };
 
     for event in materialize_events(&bundle.events) {
-        let linked_object_withheld = event.objects.iter().any(|link| {
-            objects.get(&link.object_id).is_some_and(|object| {
-                matches!(
-                    object.privacy.disposition,
-                    PublicationDisposition::Withhold | PublicationDisposition::NeedsReview
-                )
-            })
+        let linked_object_not_public = event.objects.iter().any(|link| {
+            objects
+                .get(&link.object_id)
+                .is_none_or(|object| !is_reviewed_public(&object.privacy))
         });
         match event.privacy.disposition {
             PublicationDisposition::Withhold | PublicationDisposition::NeedsReview => {
@@ -105,16 +103,17 @@ pub fn project_public(bundle: &NormalizedBundle, policy: &PublicationPolicy) -> 
                 continue;
             }
             PublicationDisposition::PublishMetadataOnly => {
+                if !event.privacy.human_reviewed {
+                    output.withheld_event_count += 1;
+                    continue;
+                }
                 output.metadata_only_event_count += 1;
                 output
                     .events
                     .push(public_event(event, &evidence, policy, false));
             }
             PublicationDisposition::Publish => {
-                if event.privacy.sensitivity != SensitivityClass::Public
-                    || event.privacy.access_tier != AccessTier::Public
-                    || linked_object_withheld
-                {
+                if !is_reviewed_public(&event.privacy) || linked_object_not_public {
                     output.withheld_event_count += 1;
                     continue;
                 }
@@ -141,11 +140,7 @@ fn public_event(
             .evidence
             .iter()
             .filter_map(|reference| evidence_index.get(&reference.evidence_id))
-            .filter(|record| {
-                record.privacy.disposition == PublicationDisposition::Publish
-                    && record.privacy.sensitivity == SensitivityClass::Public
-                    && record.privacy.access_tier == AccessTier::Public
-            })
+            .filter(|record| is_reviewed_public(&record.privacy))
             .map(|record| PublicEvidenceLink {
                 evidence_id: record.evidence_id.clone(),
                 uri: record.locator.uri.clone(),
@@ -172,8 +167,16 @@ fn public_event(
         activity: event.activity.clone(),
         event_time: event.event_time.clone(),
         assertion_status: event.assertion_status,
+        source_sequence: event.position.sequence,
         confidence: event.confidence,
         evidence,
         attributes,
     }
+}
+
+fn is_reviewed_public(privacy: &PrivacyAssessment) -> bool {
+    privacy.human_reviewed
+        && privacy.disposition == PublicationDisposition::Publish
+        && privacy.sensitivity == SensitivityClass::Public
+        && privacy.access_tier == AccessTier::Public
 }

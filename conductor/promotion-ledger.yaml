@@ -39,6 +39,11 @@ artefacts:
     destination: foi-o_and_sourceright
     status: fixture_ready
     gate: review_workflow_consumer_and_privacy_review
+  PublicProjection:
+    incubator: foi-process
+    destination: remains_integration_projection
+    status: acceptance_verified
+    gate: external_consumer_adoption_tracked_separately
   HuggingFaceEventLogDataset:
     incubator: foi-process
     destination: huggingface_dataset

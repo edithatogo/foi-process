@@ -1,7 +1,7 @@
 # Plan
 
-- [ ] Review classification profile
-- [ ] Generate public-safe index
-- [ ] Add regression fixtures for withholding
-- [ ] Update promotion/adoption ledger
-- [ ] Close with benchmark, fixtures, and decision record
+- [x] Review classification profile
+- [x] Generate public-safe index
+- [x] Add regression fixtures for withholding
+- [x] Update promotion/adoption ledger
+- [x] Close with benchmark, fixtures, and decision record
