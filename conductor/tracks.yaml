@@ -49,8 +49,8 @@ tracks:
   track: T07-dashboard-propel-hf
 - id: T08
   slug: scale-release-governance
-  status: active
-  maturity: hosted_code_release_attested
+  status: completed
+  maturity: acceptance_verified
   owner: foi-process/fyi-archive
   track: T08-scale-release-governance
 - id: T09

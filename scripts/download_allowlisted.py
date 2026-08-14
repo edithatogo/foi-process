@@ -13,7 +13,7 @@ import urllib.request
 from pathlib import Path
 
 
-ALLOWED_HOSTS = frozenset({"huggingface.co", "cdn-lfs.hf.co"})
+ALLOWED_HOSTS = frozenset({"huggingface.co", "cdn-lfs.hf.co", "us.aws.cdn.hf.co"})
 MAX_REDIRECTS = 5
 READ_SIZE = 1024 * 1024
 

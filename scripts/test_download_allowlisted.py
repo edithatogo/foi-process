@@ -76,6 +76,7 @@ def rejected(url: str) -> None:
 def main() -> None:
     assert validate_url("https://huggingface.co/datasets/example/archive")
     assert validate_url("https://cdn-lfs.hf.co/file?download=true")
+    assert validate_url("https://us.aws.cdn.hf.co/xet-bridge-us/object")
     assert validate_url("https://huggingface.co:443/file")
     for url in (
         "http://huggingface.co/file",

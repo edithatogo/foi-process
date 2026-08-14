@@ -8,12 +8,27 @@ on:
       manifest_url:
         description: Pinned public fyi-archive manifest URL
         required: true
-        default: https://huggingface.co/datasets/edithatogo/fyi-archive-nz/resolve/main/manifests/latest_manifest.json
+        default: https://huggingface.co/datasets/edithatogo/fyi-archive-nz/resolve/bd119937c0532cc1f03ca60a7d84ca6991dab5c6/manifests/latest_manifest.json
+        type: string
+      source_revision:
+        description: Immutable Hugging Face source revision present in manifest_url
+        required: true
+        default: bd119937c0532cc1f03ca60a7d84ca6991dab5c6
+        type: string
+      manifest_sha256:
+        description: Expected SHA-256 of the pinned manifest
+        required: true
+        default: 23cab9ee0ac6986326d67c91a91e415456a1d0589c90ec1c1628556e0d0d6e1e
         type: string
       takedown_revision:
         description: Approved fyi-archive takedown input revision
         required: false
         type: string
+      benchmark_only:
+        description: Run non-publishing T08 profile without claiming production continuation
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -22,8 +37,11 @@ jobs:
   adapter:
     runs-on: ubuntu-latest
     env:
-      MANIFEST_URL: ${{ inputs.manifest_url || 'https://huggingface.co/datasets/edithatogo/fyi-archive-nz/resolve/main/manifests/latest_manifest.json' }}
+      MANIFEST_URL: ${{ inputs.manifest_url || 'https://huggingface.co/datasets/edithatogo/fyi-archive-nz/resolve/bd119937c0532cc1f03ca60a7d84ca6991dab5c6/manifests/latest_manifest.json' }}
+      SOURCE_REVISION: ${{ inputs.source_revision || 'bd119937c0532cc1f03ca60a7d84ca6991dab5c6' }}
+      MANIFEST_SHA256: ${{ inputs.manifest_sha256 || '23cab9ee0ac6986326d67c91a91e415456a1d0589c90ec1c1628556e0d0d6e1e' }}
       TAKEDOWN_REVISION: ${{ inputs.takedown_revision || vars.FYI_TAKEDOWN_REVISION }}
+      BENCHMARK_ONLY: ${{ inputs.benchmark_only || 'false' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
@@ -32,27 +50,56 @@ jobs:
         with:
           toolchain: 1.88.0
       - name: Enforce governance and operational inputs
+        id: gate
         run: |
           set -euo pipefail
           python scripts/validate_governance_gate.py
-          test -n "${TAKEDOWN_REVISION:-}" || { echo "FYI_TAKEDOWN_REVISION variable or takedown_revision input is required"; exit 1; }
+          if [[ "$BENCHMARK_ONLY" == "true" ]]; then
+            [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]] || { echo "benchmark_only requires workflow_dispatch"; exit 1; }
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          elif [[ -n "${TAKEDOWN_REVISION:-}" ]]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          elif [[ "$GITHUB_EVENT_NAME" == "schedule" ]]; then
+            echo "::notice::Recurring acceptance skipped: FYI_TAKEDOWN_REVISION is not configured."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "FYI_TAKEDOWN_REVISION variable or takedown_revision input is required"
+            exit 1
+          fi
       - name: Download pinned manifest
+        if: steps.gate.outputs.enabled == 'true'
         env:
           MANIFEST_URL: ${{ env.MANIFEST_URL }}
         run: |
           set -euo pipefail
           mkdir -p target/live-archive-acceptance
-          curl --fail --location --retry 3 --retry-all-errors --silent --show-error \
+          python - <<'PY'
+          import os
+          import re
+
+          revision = os.environ["SOURCE_REVISION"]
+          if not re.fullmatch(r"[0-9a-f]{40}", revision):
+              raise SystemExit("source_revision must be a 40-character lowercase Git revision")
+          if f"/resolve/{revision}/" not in os.environ["MANIFEST_URL"]:
+              raise SystemExit("manifest_url does not contain the declared immutable source_revision")
+          PY
+          python scripts/download_allowlisted.py \
             "$MANIFEST_URL" \
-            --output target/live-archive-acceptance/manifest.json
+            target/live-archive-acceptance/manifest.json \
+            --expected-sha256 "$MANIFEST_SHA256" \
+            --connect-timeout 30 \
+            --overall-timeout 180 \
+            --max-bytes 25000000
       - name: Convert and verify manifest coverage
+        if: steps.gate.outputs.enabled == 'true'
         run: |
           set -euo pipefail
           manifest=target/live-archive-acceptance/manifest.json
           deltas=target/live-archive-acceptance/evidence-deltas.ndjson
           repeat=target/live-archive-acceptance/evidence-deltas-repeat.ndjson
           captured_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-          cargo run --locked --release --bin foi-process -- \
+          /usr/bin/time -f '%e %M' -o target/live-archive-acceptance/adapter.time \
+            cargo run --locked --release --bin foi-process -- \
             fyi-archive-manifest-to-deltas "$manifest" "$deltas" \
             --captured-at "$captured_at"
           cargo run --locked --release --bin foi-process -- \
@@ -72,15 +119,18 @@ jobs:
               raise SystemExit("delta stream is too small for continuation split")
           PY
           processed_at="2026-07-21T00:00:00Z"
-          cargo run --locked --release --bin foi-process -- \
+          /usr/bin/time -f '%e %M' -o target/live-archive-acceptance/full-replay.time \
+            cargo run --locked --release --bin foi-process -- \
             replay-stream "$deltas" target/live-archive-acceptance/full \
             --processed-at "$processed_at" \
             --state-out target/live-archive-acceptance/full-snapshot.json
-          cargo run --locked --release --bin foi-process -- \
+          /usr/bin/time -f '%e %M' -o target/live-archive-acceptance/incremental-first.time \
+            cargo run --locked --release --bin foi-process -- \
             replay-stream target/live-archive-acceptance/deltas-first.ndjson target/live-archive-acceptance/incremental-first \
             --processed-at "$processed_at" \
             --state-out target/live-archive-acceptance/incremental-first-snapshot.json
-          cargo run --locked --release --bin foi-process -- \
+          /usr/bin/time -f '%e %M' -o target/live-archive-acceptance/incremental-second.time \
+            cargo run --locked --release --bin foi-process -- \
             replay-stream target/live-archive-acceptance/deltas-second.ndjson target/live-archive-acceptance/incremental-second \
             --processed-at "$processed_at" \
             --state-in target/live-archive-acceptance/incremental-first-snapshot.json \
@@ -116,7 +166,14 @@ jobs:
           incremental_hash = canonical_hash(root / "incremental-final-snapshot.json")
           if full_hash != incremental_hash:
               raise SystemExit("full replay and incremental continuation snapshots differ")
+          def timing(name: str) -> dict[str, float | int]:
+              elapsed, resident_kib = (root / name).read_text(encoding="ascii").split()
+              return {"elapsed_seconds": float(elapsed), "peak_resident_bytes": int(resident_kib) * 1024}
+
           evidence = {
+              "schema": "foi-process/live-archive-manifest-profile/v2",
+              "source_url": os.environ["MANIFEST_URL"],
+              "source_revision": os.environ["SOURCE_REVISION"],
               "manifest_sha256": hashlib.sha256((root / "manifest.json").read_bytes()).hexdigest(),
               "event_delta_sha256": first,
               "record_count": declared,
@@ -124,10 +181,17 @@ jobs:
               "incremental_replay_snapshot_sha256": incremental_hash,
               "replay_continuation_equal": True,
               "adapter": "foi-process fyi-archive-manifest-to-deltas",
-              "operation": "recurring_evidence_only",
-              "takedown_revision": os.environ["TAKEDOWN_REVISION"],
+              "operation": "benchmark_only_nonpublication" if os.environ["BENCHMARK_ONLY"] == "true" else "recurring_evidence_only",
+              "takedown_revision": os.environ.get("TAKEDOWN_REVISION") or None,
               "benchmark_sha256": hashlib.sha256((root / "benchmark.json").read_bytes()).hexdigest(),
+              "live_profile": {
+                  "adapter": timing("adapter.time"),
+                  "full_replay": timing("full-replay.time"),
+                  "incremental_first": timing("incremental-first.time"),
+                  "incremental_second": timing("incremental-second.time"),
+              },
               "raw_content_retained": False,
+              "publication_performed": False,
           }
           (root / "acceptance-evidence.json").write_text(
               json.dumps(evidence, indent=2, sort_keys=True) + "\n", encoding="utf-8"
@@ -143,11 +207,15 @@ jobs:
           (root / "full-snapshot.json").unlink()
           (root / "incremental-first-snapshot.json").unlink()
           (root / "incremental-final-snapshot.json").unlink()
+          for path in root.glob("*.time"):
+              path.unlink()
           PY
       - name: Upload redacted acceptance evidence
+        if: steps.gate.outputs.enabled == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: live-archive-manifest-acceptance
           path: |
             target/live-archive-acceptance/acceptance-evidence.json
             target/live-archive-acceptance/benchmark.json
+          retention-days: 30

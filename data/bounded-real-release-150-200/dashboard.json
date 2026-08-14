@@ -469,8 +469,8 @@
   "meta": {
     "classification": "public-derived-bounded",
     "dataset_id": "edithatogo/foi-process-event-logs",
-    "event_log_sha256": "3fc5ab36f9f914cdadb54565a00233d8afd1382a5e197b8ee68217df67e1e6a4",
-    "manifest_sha256": "bfaa6b24178220f74ed2d5d33b79da26d21ffdfc520f86bead6ab022d2c4f440",
+    "event_log_sha256": "79c97ee568aafe982a8eac0e6e16ca01d4058dc63a7efddc3fb0480e13a1ceb3",
+    "manifest_sha256": "b8149a731ab43008c96f5df359cddafd57ff9a7e9b8b8e7767831d823825912e",
     "scope": "verified real batches only; not full corpus",
     "source_release": "nz-real-batches-150-200"
   },

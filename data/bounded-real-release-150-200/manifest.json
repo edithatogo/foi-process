@@ -124,14 +124,14 @@
   "event_log_complete": false,
   "files": [
     {
-      "byte_length": 123096,
+      "byte_length": 122917,
       "path": "attachments.jsonl",
-      "sha256": "133dd4c0c10260592ff7e828211a9036f310d7c266db01964cf807f2710a1a4d"
+      "sha256": "41168ae2f48669d14df4c0f43f7b9e21ef30a4e0d27be2050a08631141aee3d0"
     },
     {
-      "byte_length": 248106,
+      "byte_length": 247681,
       "path": "event_log.jsonl",
-      "sha256": "3fc5ab36f9f914cdadb54565a00233d8afd1382a5e197b8ee68217df67e1e6a4"
+      "sha256": "79c97ee568aafe982a8eac0e6e16ca01d4058dc63a7efddc3fb0480e13a1ceb3"
     }
   ],
   "publication": "not-submitted",
