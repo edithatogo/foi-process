@@ -30,7 +30,7 @@ track.
 ## Completed
 
 - [x] **T08** Scale, release, and governance
-  ([plan](./tracks/T08-scale-release-governance/)) - release evidence is hosted and attested; benchmark-only run [31771014519](https://github.com/edithatogo/foi-process/actions/runs/31771014519) verified the pinned 33,217-record live archive manifest without publication or raw-content retention.
+  ([plan](./tracks/T08-scale-release-governance/)) - release evidence is hosted and attested; benchmark-only run [31771603638](https://github.com/edithatogo/foi-process/actions/runs/31771603638) verified the pinned 33,217-record live archive manifest through the constrained downloader without publication or raw-content retention.
 - [x] **T03** Archive live adapters
   ([plan](./tracks/T03-archive-live-adapters/)) - acceptance verified.
 - [x] **T07** Dashboard and Hugging Face

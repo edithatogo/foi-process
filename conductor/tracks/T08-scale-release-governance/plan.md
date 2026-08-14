@@ -6,7 +6,7 @@
 - [x] Update promotion/adoption ledger
 - [x] Close repository work with benchmark, fixtures, and decision records
 - [x] Rerun the full profile on a representative privacy-approved live archive sample:
-  benchmark-only hosted run [`31771014519`](https://github.com/edithatogo/foi-process/actions/runs/31771014519)
+  benchmark-only hosted run [`31771603638`](https://github.com/edithatogo/foi-process/actions/runs/31771603638)
   verified all 33,217 records at pinned source revision
   `bd119937c0532cc1f03ca60a7d84ca6991dab5c6`; full and incremental replay
   produced the same canonical snapshot, and only aggregate evidence was retained.
