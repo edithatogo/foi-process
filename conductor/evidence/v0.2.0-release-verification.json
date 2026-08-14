@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "observed_at": "2026-08-14T03:56:14Z",
+  "scope": "apache_2_0_code_release_not_production_data",
+  "release": {
+    "tag": "v0.2.0",
+    "commit": "71da1b84ff8d0a50894348f61ad60947906c6359",
+    "url": "https://github.com/edithatogo/foi-process/releases/tag/v0.2.0",
+    "workflow_run": "https://github.com/edithatogo/foi-process/actions/runs/31766462302",
+    "draft": false,
+    "prerelease": false,
+    "checksum_manifest_sha256": "d6602b8a28d1eb34ba38e3208afc0d219a7282c1427bc76bc7ade2c6413b9daa"
+  },
+  "verification": {
+    "checksum_result": "verified",
+    "attestation_command": "gh attestation verify <asset> --repo edithatogo/foi-process",
+    "attestation_result": "verified"
+  },
+  "assets": [
+    {"name": "Cargo.lock", "sha256": "510e98f28d2fd3401111556b7dc061d4dbf2d48379dc5a44424ed033282c3569", "attestation": "verified"},
+    {"name": "dataset-manifest.json", "sha256": "fbadabd9c95feb0fd27d7edcf540f67343d188421412e65d152c4af8e1fc81c8", "attestation": "verified"},
+    {"name": "mining-run-manifest.json", "sha256": "d89e59ae75bf71aa94550bb1f0d5e4e21f9d436dc97e0663d030d77fe1ae5386", "attestation": "verified"},
+    {"name": "release-evidence-manifest.json", "sha256": "5d5e45d8e96be143e94af31d51f885f87a47afb1fa1066dbc53b07125c93f41b", "attestation": "verified"},
+    {"name": "rust-scale-benchmark.json", "sha256": "f8fb667687e9787a735504e6580571887566d48601de868466d299299a403468", "attestation": "verified"},
+    {"name": "sbom.spdx.json", "sha256": "4c3e6b249750884961c22ee5170ba508ca387c5fd4b61b58f1e9bd2c302893ac", "attestation": "verified"}
+  ]
+}

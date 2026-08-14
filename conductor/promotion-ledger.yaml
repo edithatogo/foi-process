@@ -42,13 +42,13 @@ artefacts:
   HuggingFaceEventLogDataset:
     incubator: foi-process
     destination: huggingface_dataset
-    status: repository_built
-    gate: hf_authentication_and_dataset_viewer_verification
+    status: reviewed_fixture_publication_verified
+    gate: approved_real_data_or_separately_versioned_full_corpus_expansion
   HuggingFaceProcessExplorer:
     incubator: foi-process
     destination: huggingface_static_space
-    status: repository_built
-    gate: hf_authentication_and_public_space_verification
+    status: reviewed_fixture_public_static_space_verified
+    gate: approved_real_data_catalogue_and_coverage_verification
   RustScaleBenchmark:
     incubator: foi-process
     destination: release_evidence
@@ -62,5 +62,5 @@ artefacts:
   ReleaseEvidencePackage:
     incubator: foi-process
     destination: github_release
-    status: locally_verified
-    gate: hosted_artifact_attestation
+    status: hosted_code_release_attested
+    gate: representative_live_data_release_review

@@ -11,4 +11,11 @@
   Mermaid/BPMN semantic validator, and positive, negative, temporal, and
   non-equivalence fixtures. Authentic sources and legal conclusions remain
   excluded.
-- [ ] At every increment pair Mermaid and BPMN, validate replay/isolation/annotation evidence, and stop at promotion/publication gates.
+
+## Remaining Acceptance
+
+- [ ] Expand the representative real-case set beyond the current bounded AskTheEU evidence.
+- [ ] Complete independent annotation and adjudication with traceable receipts.
+- [ ] Prove replay isolation, ordering, coverage, and annotation reliability for each promoted jurisdiction.
+- [ ] Pair Mermaid and BPMN models and revalidate semantic equivalence at every increment.
+- [ ] Complete statutory-source review before any legal promotion; publication and legal conclusions remain blocked until then.

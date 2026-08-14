@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "observed_at": "2026-08-14T03:56:14Z",
+  "scope": "reviewed_synthetic_fixtures_only",
+  "dataset": {
+    "id": "edithatogo/foi-process-event-logs",
+    "revision": "a89f4ba2a158b4b3fc771976662de3b5737fd122",
+    "private": false,
+    "gated": false,
+    "viewer_config": "default",
+    "viewer_split": "validation",
+    "viewer_first_rows": 1
+  },
+  "space": {
+    "id": "edithatogo/foi-process-explorer-free",
+    "revision": "02d8ba68e4c23aed9c2d97b813a0e7c0a9bc798d",
+    "private": false,
+    "sdk": "static",
+    "stage": "RUNNING"
+  },
+  "boundaries": [
+    "not_real_data_publication_evidence",
+    "not_full_corpus_evidence",
+    "production_publication_requires_separate_approval_and_receipts"
+  ]
+}
