@@ -60,8 +60,8 @@ jobs:
               exit 0
             fi
           else
-            expected_subject="chore(main): release $version"
-            test "$(git show -s --format=%s "$GITHUB_SHA")" = "$expected_subject"
+            python scripts/check_release_commit_subject.py \
+              "$(git show -s --format=%s "$GITHUB_SHA")" "$version"
             tag_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$release_tag" --jq .object.sha 2>/dev/null || true)"
             if test -z "$tag_sha"; then
               gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" \

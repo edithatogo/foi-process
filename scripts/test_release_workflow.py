@@ -21,7 +21,7 @@ def main() -> None:
         "pull-requests: write",
         "skip-github-release",
         "gh release create \"$release_tag\" --draft",
-        "expected_subject=\"chore(main): release $version\"",
+        "python scripts/check_release_commit_subject.py",
         ".object.sha)\" = \"$GITHUB_SHA\"",
         "scripts/check_release_metadata.py",
         "scripts/build_release_evidence.py",
