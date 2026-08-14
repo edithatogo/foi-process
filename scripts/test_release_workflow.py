@@ -24,6 +24,8 @@ def main() -> None:
         "-f target_commitish=\"$GITHUB_SHA\"",
         "-F draft=true",
         "python scripts/check_release_commit_subject.py",
+        "if tag_sha=\"$(gh api",
+        "tag_sha=\"\"",
         ".target_commitish)\" = \"$GITHUB_SHA\"",
         ".object.sha)\" = \"$GITHUB_SHA\"",
         "scripts/check_release_metadata.py",
