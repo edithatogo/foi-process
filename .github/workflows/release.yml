@@ -109,7 +109,7 @@ jobs:
         run: gh release upload "$RELEASE_TAG" /tmp/foi-process-release-evidence/* --clobber
       - name: Attest release evidence
         if: steps.stage.outputs.pending == 'true'
-        uses: actions/attest-build-provenance@78e6cbd37d0ac1a40113c04f2037dacf1ea3f12e # v4
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4
         with:
           subject-path: /tmp/foi-process-release-evidence/*
       - name: Publish the verified draft release
