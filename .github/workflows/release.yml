@@ -23,19 +23,19 @@ jobs:
       pr: ${{ steps.release.outputs.pr }}
       prs_created: ${{ steps.release.outputs.prs_created }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           fetch-depth: 0
           persist-credentials: false
       - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772
         with:
           toolchain: "1.88.0"
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
           python-version: "3.13"
       - name: Validate current release metadata
         run: python scripts/check_release_metadata.py "v$(python scripts/check_release_metadata.py --print-version)"
-      - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4
+      - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4.4.1
         id: release
         with:
           token: ${{ github.token }}
@@ -96,7 +96,7 @@ jobs:
           python scripts/verify_release_evidence.py /tmp/foi-process-release-evidence
       - name: Upload release evidence workflow artifact
         if: steps.stage.outputs.pending == 'true'
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: foi-process-release-evidence-${{ steps.stage.outputs.tag_name }}
           path: /tmp/foi-process-release-evidence
@@ -109,7 +109,7 @@ jobs:
         run: gh release upload "$RELEASE_TAG" /tmp/foi-process-release-evidence/* --clobber
       - name: Attest release evidence
         if: steps.stage.outputs.pending == 'true'
-        uses: actions/attest-build-provenance@78e6cbd37d0ac1a40113c04f2037dacf1ea3f12e # v4
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
           subject-path: /tmp/foi-process-release-evidence/*
       - name: Publish the verified draft release
