@@ -144,4 +144,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
-      - uses: EmbarkStudios/cargo-deny-action@v2
+      # Run the same cargo-deny policy natively: the containerized action uses
+      # musl, where this repository's pinned 1.88.0 override is unavailable.
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - name: Install cargo-deny
+        run: cargo +stable install --locked cargo-deny
+      - name: Enforce dependency licenses, advisories, bans and sources
+        run: cargo +stable deny check
