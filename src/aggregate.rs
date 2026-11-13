@@ -294,6 +294,7 @@ fn add_signed<K: Ord>(map: &mut BTreeMap<K, i64>, key: K, delta: i64) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use proptest::prelude::*;
 
     #[test]
     fn duration_buckets_are_stable() {
@@ -303,5 +304,36 @@ mod tests {
         assert_eq!(duration_bucket(2), 2);
         assert_eq!(duration_bucket(3), 2);
         assert_eq!(duration_bucket(4), 3);
+    }
+
+    proptest! {
+        #[test]
+        fn duration_bucket_is_monotone_for_nonnegative_seconds(
+            left in 0_i64..i64::MAX,
+            right in 0_i64..i64::MAX,
+        ) {
+            let lower = left.min(right);
+            let upper = left.max(right);
+            prop_assert!(duration_bucket(lower) <= duration_bucket(upper));
+        }
+
+        #[test]
+        fn duration_bucket_has_exact_power_of_two_boundaries(power in 0_u32..62) {
+            let lower = 1_i64 << power;
+            let upper = (2_i64 << power) - 1;
+            let expected = power as i32 + 1;
+            prop_assert_eq!(duration_bucket(lower), expected);
+            prop_assert_eq!(duration_bucket(upper), expected);
+        }
+
+        #[test]
+        fn reversing_an_activity_contribution_leaves_no_residual_count(
+            change in -1_000_000_i64..=1_000_000,
+        ) {
+            let mut counts = BTreeMap::<u32, i64>::new();
+            add_signed(&mut counts, 17, change);
+            add_signed(&mut counts, 17, -change);
+            prop_assert_eq!(counts.len(), 0);
+        }
     }
 }
