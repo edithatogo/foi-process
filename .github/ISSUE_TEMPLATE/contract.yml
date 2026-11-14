@@ -1,5 +1,5 @@
 name: Contract change
-about: Propose or promote a versioned contract
+description: Propose or promote a versioned contract
 labels: [contract, promotion-gate]
 body:
   - type: input
