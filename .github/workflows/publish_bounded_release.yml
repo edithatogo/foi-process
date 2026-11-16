@@ -21,6 +21,11 @@ jobs:
       SPACE_ID: edithatogo/foi-process-explorer-free
       HF_TOKEN: ${{ secrets.HF_TOKEN }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           persist-credentials: false
