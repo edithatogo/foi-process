@@ -14,3 +14,7 @@
 - Merged implementation: `1f10bfbe406838a17fc990e00a3501b6c60efcea`
 - Merged-main CI: https://github.com/edithatogo/foi-process/actions/runs/31682942769
 - Manual bounded campaign: https://github.com/edithatogo/foi-process/actions/runs/31682955991
+
+Subsequent dependency maintenance is recorded separately in
+[the 2026-11-20 repair follow-up](dependency-repair-20261120.md).
+The completed T13 implementation scope above remains historical.
