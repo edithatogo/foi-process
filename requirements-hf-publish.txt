@@ -14,15 +14,9 @@ certifi==2026.6.17 \
     # via
     #   httpcore
     #   httpx
-colorama==0.4.6 \
-    --hash=sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44 \
-    --hash=sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6
-    # via
-    #   tqdm
-    #   typer
-filelock==3.30.0 \
-    --hash=sha256:1774e682dbe443bd60f9609162fc596e2c80dc84ffc2957068953406d0520090 \
-    --hash=sha256:40632998f0772e64183bb819f086a1b9def6be1090cf1dcb9d45f46806ef279b
+filelock==4.2.1 \
+    --hash=sha256:7be2662e9e826b9bba28afc0f843a123280d799a2ea44bb5d35ccec67905ae44 \
+    --hash=sha256:c4c937ccac2a813cee448e662a56366cfb374c0f8702e75f295c412cc1c5d5a3
     # via huggingface-hub
 fsspec==2026.6.0 \
     --hash=sha256:02e0b71817df9b2169dc30a16832045764def1191b43dcff5bb85bdee212d2a1 \
